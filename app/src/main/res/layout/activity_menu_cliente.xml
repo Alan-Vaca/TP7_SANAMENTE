@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Menu_Cliente">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/login_toolbar2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="MENU" />
+
+    <Button
+        android:id="@+id/button25"
+        android:layout_width="231dp"
+        android:layout_height="57dp"
+        android:text="MI COMERCIO"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="139dp" />
+
+    <Button
+        android:id="@+id/button34"
+        android:layout_width="231dp"
+        android:layout_height="57dp"
+        android:text="MIS PEDIDOS"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="291dp" />
+
+    <Button
+        android:id="@+id/button26"
+        android:layout_width="231dp"
+        android:layout_height="57dp"
+        android:text="MI CATALOGO"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="426dp" />
+
+    <Button
+        android:id="@+id/button33"
+        android:layout_width="231dp"
+        android:layout_height="57dp"
+        android:text="NUEVO PRODUCTO"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="494dp" />
+
+    <Button
+        android:id="@+id/button27"
+        android:layout_width="126dp"
+        android:layout_height="41dp"
+        android:text="HISTORIAL"
+        tools:layout_editor_absoluteX="142dp"
+        tools:layout_editor_absoluteY="196dp" />
+
+    <Button
+        android:id="@+id/button35"
+        android:layout_width="209dp"
+        android:layout_height="41dp"
+        android:text="GENERAR REPORTE"
+        tools:layout_editor_absoluteX="101dp"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <Button
+        android:id="@+id/button29"
+        android:layout_width="231dp"
+        android:layout_height="57dp"
+        android:text="SALIR"
+        tools:layout_editor_absoluteX="90dp"
+        tools:layout_editor_absoluteY="658dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
