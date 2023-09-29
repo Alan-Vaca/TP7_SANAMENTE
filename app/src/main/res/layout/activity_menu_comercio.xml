@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Menu_Cliente">
+    tools:context=".MenuComercio">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/login_toolbar2"
@@ -22,7 +22,7 @@
         android:id="@+id/button25"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:text="MI USUARIO"
+        android:text="MI COMERCIO"
         tools:layout_editor_absoluteX="90dp"
         tools:layout_editor_absoluteY="139dp" />
 
@@ -30,7 +30,7 @@
         android:id="@+id/button34"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:text="CATALOGO"
+        android:text="MIS PEDIDOS"
         tools:layout_editor_absoluteX="90dp"
         tools:layout_editor_absoluteY="291dp" />
 
@@ -38,7 +38,7 @@
         android:id="@+id/button26"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:text="MI CARRITO"
+        android:text="MI CATALOGO"
         tools:layout_editor_absoluteX="90dp"
         tools:layout_editor_absoluteY="426dp" />
 
@@ -46,7 +46,7 @@
         android:id="@+id/button33"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:text="OFERTAS"
+        android:text="NUEVO PRODUCTO"
         tools:layout_editor_absoluteX="90dp"
         tools:layout_editor_absoluteY="494dp" />
 
@@ -62,7 +62,7 @@
         android:id="@+id/button35"
         android:layout_width="209dp"
         android:layout_height="41dp"
-        android:text="NOTIFICACIONES"
+        android:text="GENERAR REPORTE"
         tools:layout_editor_absoluteX="101dp"
         tools:layout_editor_absoluteY="98dp" />
 
@@ -73,5 +73,4 @@
         android:text="SALIR"
         tools:layout_editor_absoluteX="90dp"
         tools:layout_editor_absoluteY="658dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

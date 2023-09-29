@@ -13,6 +13,39 @@
         android:theme="@style/Theme.TP7_SANAMENTE"
         tools:targetApi="31">
         <activity
+            android:name=".ModificarProducto"
+            android:exported="false" />
+        <activity
+            android:name=".AgregarProducto"
+            android:exported="false" />
+        <activity
+            android:name=".MiUsuarioComercio"
+            android:exported="false" />
+        <activity
+            android:name=".MetodoPago"
+            android:exported="false" />
+        <activity
+            android:name=".MiCarritoCompras"
+            android:exported="false" />
+        <activity
+            android:name=".MisNotificaciones"
+            android:exported="false" />
+        <activity
+            android:name=".ModificarUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".MiUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".MenuComercio"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrarComercio"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrarCredenciales"
+            android:exported="false" />
+        <activity
             android:name=".Filtros_Pedidos"
             android:exported="false" />
         <activity
