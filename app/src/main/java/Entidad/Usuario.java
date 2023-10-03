@@ -10,6 +10,8 @@ public class Usuario {
     String Direccion;
     boolean Estado;
 
+    boolean Cliente;
+
     public Usuario() {
     }
 
@@ -75,6 +77,14 @@ public class Usuario {
 
     public void setEstado(boolean estado) {
         Estado = estado;
+    }
+
+    public boolean isCliente() {
+        return Cliente;
+    }
+
+    public void setCliente(boolean cliente) {
+        Cliente = cliente;
     }
 
     @Override
