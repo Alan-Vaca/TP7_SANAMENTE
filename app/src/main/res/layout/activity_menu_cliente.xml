@@ -22,56 +22,70 @@
         android:id="@+id/button25"
         android:layout_width="231dp"
         android:layout_height="57dp"
+        android:layout_marginTop="8dp"
         android:text="MI USUARIO"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="139dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button35" />
 
     <Button
         android:id="@+id/button34"
         android:layout_width="231dp"
         android:layout_height="57dp"
+        android:layout_marginTop="56dp"
         android:text="CATALOGO"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="291dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button27" />
 
     <Button
         android:id="@+id/button26"
         android:layout_width="231dp"
         android:layout_height="57dp"
+        android:layout_marginTop="72dp"
         android:text="MI CARRITO"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="426dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button34" />
 
     <Button
         android:id="@+id/button33"
         android:layout_width="231dp"
         android:layout_height="57dp"
+        android:layout_marginTop="8dp"
         android:text="OFERTAS"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="494dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button26" />
 
     <Button
         android:id="@+id/button27"
         android:layout_width="126dp"
         android:layout_height="41dp"
+        android:layout_marginTop="8dp"
         android:text="HISTORIAL"
-        tools:layout_editor_absoluteX="142dp"
-        tools:layout_editor_absoluteY="196dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button25" />
 
     <Button
         android:id="@+id/button35"
         android:layout_width="209dp"
         android:layout_height="41dp"
+        android:layout_marginTop="24dp"
         android:text="NOTIFICACIONES"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="98dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_toolbar2" />
 
     <Button
         android:id="@+id/button29"
         android:layout_width="231dp"
         android:layout_height="57dp"
         android:text="SALIR"
-        tools:layout_editor_absoluteX="90dp"
-        tools:layout_editor_absoluteY="658dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button33" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

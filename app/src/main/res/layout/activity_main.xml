@@ -62,17 +62,34 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ingresar"
-        tools:layout_editor_absoluteX="155dp"
-        tools:layout_editor_absoluteY="464dp" />
+        android:layout_marginTop="24dp"
+        android:onClick="Ingresar"
+        android:text="INGRESAR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sw_comerciante" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrarse"
+        android:onClick="Registrarse"
+        android:text="REGISTRARSE"
         android:textColor="#2196F3"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="540dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.129" />
+
+    <Switch
+        android:id="@+id/sw_comerciante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="COMERCIANTE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
