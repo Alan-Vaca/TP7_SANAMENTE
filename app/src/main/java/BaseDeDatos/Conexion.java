@@ -13,12 +13,12 @@ public class Conexion extends AsyncTask<String,Void, String> {
 
     //CREDENCIALES DE CONEXION PARA BASE DE DATOS REMOTA
     public static String ConexionHOST = "3306";
-    public static String ConexionUSER = "sql10648327";
-    public static String ConexionPASS = "9cyMPtn3zQ";
+    public static String ConexionUSER = "sql10650827";
+    public static String ConexionPASS = "X5VEc5C8D5";
     public static String ConexionURL = "jdbc:mysql://sql10.freesqldatabase.com:" + ConexionHOST + "/" + ConexionUSER;
 
     //CLASES PARA LAS CONSULTAS
-    public static consultasUsuario consultasUsuario;
+    public static consultasUsuario consultasUsuario = new consultasUsuario();
 
 
     //CONEXION
@@ -46,7 +46,8 @@ public class Conexion extends AsyncTask<String,Void, String> {
 
     public Usuario obtenerUsuarioXlogin(Usuario user) {
         try {
-            user = consultasUsuario.obtenerUsuarioXlogin(getConnection(),user);
+            Connection con = getConnection();
+            user = consultasUsuario.obtenerUsuarioXlogin(con,user);
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }
