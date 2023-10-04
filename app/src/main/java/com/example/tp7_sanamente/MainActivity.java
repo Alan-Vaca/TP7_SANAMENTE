@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         usuario.setNombreUsuario(user);
         usuario.setContraseña(pass);
 
-        new obtenerUsuarioXloginTask().execute(usuario);
+        //new obtenerUsuarioXloginTask().execute(usuario);
 
         /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (INICIO)*/
         boolean comerciante = esComerciante.isChecked();
