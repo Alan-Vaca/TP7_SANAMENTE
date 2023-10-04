@@ -6,6 +6,7 @@ import android.util.Log;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import Entidad.Notificacion;
 import Entidad.Usuario;
 
 
@@ -19,7 +20,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
 
     //CLASES PARA LAS CONSULTAS
     public static consultasUsuario consultasUsuario = new consultasUsuario();
-
+    public static consultasNotificaciones consultasNotificaciones = new consultasNotificaciones();
 
     //CONEXION
     public static Connection getConnection() {
@@ -60,7 +61,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
             exito = consultasUsuario.registrarUsuario(getConnection(),user);
 
             if(exito && user.isCliente()){
-                //-ALTA NOTIFICACIONES (ID USUARIO) SE DEBE SETEAR DE MANERA DEFAULT
+                altaNotificacion(user.getIdUsuario());
             }
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
@@ -82,9 +83,33 @@ public class Conexion extends AsyncTask<String,Void, String> {
     //NOTIFICACIONES
     //--------------------------------------------------------------------------------------
 
-    //-ALTA NOTIFICACIONES (ID USUARIO, NOTIFICACIONES) SE DEBE SETEAR DE MANERA DEFAULT
-    //-OBTENER NOTIFICACIONES (ID USUARIO)
-    //-MODIFICAR NOTIFICACIONES (ID USUARIO, NOTIFICACIONES)
+    public void altaNotificacion(int idUsuario) {
+        try {
+            consultasNotificaciones.altaNotificacion(getConnection(),idUsuario);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+    }
+
+    public Notificacion obtenerNotificaciones(Usuario usuario) {
+        Notificacion not = new Notificacion();
+        try {
+            Connection con = getConnection();
+            not = consultasNotificaciones.obtenerNotificaciones(getConnection(),usuario);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return not;
+    }
+    public boolean ModificarUsuario(Notificacion not) {
+        Boolean exito = false;
+        try {
+            exito = consultasNotificaciones.modificarNotificacion(getConnection(),not);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
 
     //--------------------------------------------------------------------------------------
     //RESTRICCIONES

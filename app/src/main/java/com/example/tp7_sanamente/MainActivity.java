@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         //new obtenerUsuarioXloginTask().execute(usuario);
 
-        /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (INICIO)
+        /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (INICIO)*/
         boolean comerciante = esComerciante.isChecked();
 
 
@@ -84,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
 
             if (user.getIdUsuario() > 0) {
-                boolean comerciante = esComerciante.isChecked();
-                if (!comerciante) {
+                if (!user.isCliente()) {
                     Intent ingresarcliente = new Intent(MainActivity.this, Menu_Cliente.class);
                     startActivity(ingresarcliente);
                 } else {

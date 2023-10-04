@@ -16,7 +16,9 @@ public class consultasUsuario {
     //--------------------------------------------------------------------------------------
     public Usuario obtenerUsuarioXlogin(Connection conn,Usuario user) {
         try {
-            String query = "SELECT idUsuario from usuarios where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'";
+            String query = "SELECT idUsuario,apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario,"
+            + "(select count(c.idCliente) from clientes c where c.idUsuario = idUsuario) as esCliente"
+            + " from usuarios where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'";
 
             if (conn != null) {
                 try {
@@ -24,6 +26,21 @@ public class consultasUsuario {
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs.next()) {
                         user.setIdUsuario(rs.getInt("idUsuario"));
+                        user.setApellido(rs.getString("apellido"));
+                        user.setContraseña(rs.getString("contraseña"));
+                        user.setDireccion(rs.getString("direccion"));
+                        user.setDNI(rs.getInt("dni"));
+                        user.setEstado(rs.getBoolean("estado"));
+                        user.setNombre(rs.getString("nombre"));
+                        user.setNombreUsuario(rs.getString("nombreUsuario"));
+
+                        int esCliente = 0;
+                        esCliente = (rs.getInt("esCliente"));
+                        if(esCliente > 0){
+                            user.setCliente(true);
+                        }else{
+                            user.setCliente(false);
+                        }
                     }
                     rs.close();
                     stmt.close();
@@ -46,12 +63,18 @@ public class consultasUsuario {
         Boolean exito = false;
         try {
             if (conn != null) {
-                String insertQuery = "INSERT INTO USUARIOS(" +
-                        "idUsuario " +
-                        ") VALUES (?)";
+                String insertQuery = "INSERT INTO usuarios(" +
+                "apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario" +
+                 ") VALUES (?,?,?,?,?,?,?)";
 
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-                pstmt.setInt(1, user.getIdUsuario());
+                pstmt.setString(1, user.getApellido());
+                pstmt.setString(2, user.getContraseña());
+                pstmt.setString(3, user.getDireccion());
+                pstmt.setInt(4, user.getDNI());
+                pstmt.setBoolean(5, true);
+                pstmt.setString(6, user.getNombre());
+                pstmt.setString(7, user.getNombreUsuario());
                 pstmt.executeUpdate();
 
                 pstmt.close();
@@ -72,13 +95,20 @@ public class consultasUsuario {
     public Boolean modificarUsuario(Connection conn, Usuario user) {
         try {
             if (conn != null) {
-                String updateQuery = "UPDATE USUARIOS SET " +
-                        "idUsuario = ? " +
-                        "WHERE idUsuario = ?";
+                String updateQuery = "UPDATE usuarios SET " +
+                "apellido = ?,contraseña = ?,direccion = ?,dni = ?,estado = ?,nombre = ?,nombreUsuario = ?" +
+                "WHERE idUsuario = ?";
 
                 PreparedStatement pstmt = conn.prepareStatement(updateQuery);
-                pstmt.setInt(1, user.getIdUsuario());
-                pstmt.setInt(2, user.getIdUsuario());
+                pstmt.setString(1, user.getApellido());
+                pstmt.setString(2, user.getContraseña());
+                pstmt.setString(3, user.getDireccion());
+                pstmt.setInt(4, user.getDNI());
+                pstmt.setBoolean(5, true);
+                pstmt.setString(6, user.getNombre());
+                pstmt.setString(7, user.getNombreUsuario());
+
+                pstmt.setInt(8, user.getIdUsuario());
 
                 int filas_modificadas= pstmt.executeUpdate();
                 pstmt.close();
