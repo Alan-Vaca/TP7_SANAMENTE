@@ -5,8 +5,12 @@ import android.util.Log;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
+import Entidad.Cliente;
+import Entidad.Comercio;
 import Entidad.Notificacion;
+import Entidad.Restriccion;
 import Entidad.Usuario;
 
 
@@ -21,6 +25,8 @@ public class Conexion extends AsyncTask<String,Void, String> {
     //CLASES PARA LAS CONSULTAS
     public static consultasUsuario consultasUsuario = new consultasUsuario();
     public static consultasNotificaciones consultasNotificaciones = new consultasNotificaciones();
+    public static consultasRestricciones consultasRestricciones = new consultasRestricciones();
+
 
     //CONEXION
     public static Connection getConnection() {
@@ -55,13 +61,14 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return user;
     }
 
-    public boolean RegistrarUsuario(Usuario user) {
+    public boolean RegistrarUsuarioCliente(Restriccion res) {
         Boolean exito = false;
         try {
-            exito = consultasUsuario.registrarUsuario(getConnection(),user);
-
-            if(exito && user.isCliente()){
-                altaNotificacion(user.getIdUsuario());
+            exito = consultasUsuario.registrarUsuario(getConnection(),res.getClienteAsociado().getUsuarioAsociado());
+            if(exito) {
+                altaNotificacion(res.getClienteAsociado().getUsuarioAsociado().getIdUsuario());
+                altaCliente(res.getClienteAsociado().getUsuarioAsociado());
+                altaRestricciones(res);
             }
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
@@ -69,10 +76,40 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return exito;
     }
 
-    public boolean ModificarUsuario(Usuario user) {
+    public boolean ModificarUsuarioCliente(Restriccion res, Notificacion not) {
         Boolean exito = false;
         try {
-            exito = consultasUsuario.modificarUsuario(getConnection(),user);
+            exito = consultasUsuario.modificarUsuario(getConnection(),res.getClienteAsociado().getUsuarioAsociado());
+            if(exito) {
+                ModificarRestriccion(res);
+                ModificarNotificacion(not);
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
+
+    public boolean RegistrarUsuarioComercio(Comercio com) {
+        Boolean exito = false;
+        try {
+            exito = consultasUsuario.registrarUsuario(getConnection(),com.getUsuarioAsociado());
+            if(exito) {
+                //alta comercio
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
+
+    public boolean ModificarUsuarioComercio(Comercio com) {
+        Boolean exito = false;
+        try {
+            exito = consultasUsuario.modificarUsuario(getConnection(),com.getUsuarioAsociado());
+            if(exito) {
+                //Modificar comercio
+            }
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }
@@ -101,7 +138,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return not;
     }
-    public boolean ModificarUsuario(Notificacion not) {
+    public boolean ModificarNotificacion(Notificacion not) {
         Boolean exito = false;
         try {
             exito = consultasNotificaciones.modificarNotificacion(getConnection(),not);
@@ -112,12 +149,45 @@ public class Conexion extends AsyncTask<String,Void, String> {
     }
 
     //--------------------------------------------------------------------------------------
+    //CLIENTE
+    //--------------------------------------------------------------------------------------
+
+    public void altaCliente(Usuario user) {
+        try {
+            consultasUsuario.altaCliente(getConnection(),user);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+    }
+
+    //--------------------------------------------------------------------------------------
     //RESTRICCIONES
     //--------------------------------------------------------------------------------------
 
-    //-ALTA RESTRICCIONES (ID USUARIO, ID USUARIO)
-    //-OBTENER RESTRICCIONES (ID USUARIO)
-    //-MODIFICAR RESTRICCIONES (ID USUARIO, RESTRICCIONES)
+    public void altaRestricciones(Restriccion rest) {
+        try {
+            consultasRestricciones.altaRestriccion(getConnection(),rest);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+    }
+    public Restriccion obtenerRestriccion(int idUsuario) {
+        Restriccion res = new Restriccion();
+        try {
+            Connection con = getConnection();
+            res = consultasRestricciones.obtenerRestriccion(getConnection(),idUsuario);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return res;
+    }
+    public void ModificarRestriccion(Restriccion rest) {
+        try {
+            consultasRestricciones.modificarRestriccion(getConnection(),rest);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+    }
 
     //--------------------------------------------------------------------------------------
     //COMERCIOS

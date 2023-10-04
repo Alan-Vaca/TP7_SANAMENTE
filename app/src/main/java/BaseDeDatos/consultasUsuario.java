@@ -3,11 +3,14 @@ package BaseDeDatos;
 import android.util.Log;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.sql.Date;
+import java.util.Calendar;
+import Entidad.Cliente;
 import Entidad.Usuario;
 
 public class consultasUsuario {
@@ -123,5 +126,27 @@ public class consultasUsuario {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void altaCliente(Connection conn, Usuario user) {
+        try {
+            if (conn != null) {
+                String insertQuery = "INSERT INTO clientes(idUsuario,estado,fechaCreacion) VALUES (?,?,?)";
+                Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+
+                PreparedStatement pstmt = conn.prepareStatement(insertQuery);
+                pstmt.setInt(1, user.getIdUsuario());
+                pstmt.setBoolean(2, true);
+                pstmt.setDate(3, fechaActual);
+
+                pstmt.executeUpdate();
+
+                pstmt.close();
+                conn.close();
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
     }
 }
