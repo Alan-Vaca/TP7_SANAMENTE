@@ -104,7 +104,7 @@ public class consultasUsuario {
                 pstmt.setString(2, user.getContraseña());
                 pstmt.setString(3, user.getDireccion());
                 pstmt.setInt(4, user.getDNI());
-                pstmt.setBoolean(5, true);
+                pstmt.setBoolean(5, user.isEstado());
                 pstmt.setString(6, user.getNombre());
                 pstmt.setString(7, user.getNombreUsuario());
 
