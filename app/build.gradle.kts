@@ -1,3 +1,5 @@
+
+
 plugins {
     id("com.android.application")
 }
@@ -30,6 +32,16 @@ android {
     }
 }
 dependencies {
+
+    /*
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2',{
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    */
+
+    implementation("mysql:mysql-connector-java:5.1.47")
+
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")

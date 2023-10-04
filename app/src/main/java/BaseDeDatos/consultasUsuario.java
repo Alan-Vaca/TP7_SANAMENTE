@@ -16,7 +16,7 @@ public class consultasUsuario {
     //--------------------------------------------------------------------------------------
     public Usuario obtenerUsuarioXlogin(Connection conn,Usuario user) {
         try {
-            String query = "SELECT idUsuario from USUARIOS";
+            String query = "SELECT idUsuario from usuarios where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'";
 
             if (conn != null) {
                 try {

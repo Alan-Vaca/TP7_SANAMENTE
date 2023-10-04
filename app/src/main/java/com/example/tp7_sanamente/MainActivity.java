@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         //new obtenerUsuarioXloginTask().execute(usuario);
 
-        /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (INICIO)*/
+        /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (INICIO)
         boolean comerciante = esComerciante.isChecked();
 
 
@@ -64,22 +64,26 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private class obtenerUsuarioXloginTask extends AsyncTask<Usuario, Void, Boolean> {
+    private class obtenerUsuarioXloginTask extends AsyncTask<Usuario, Void, Usuario> {
         @Override
-        protected Boolean doInBackground(Usuario... user) {
+        protected Usuario doInBackground(Usuario... user) {
             Conexion con = new Conexion();
+            Usuario us = new Usuario();
             try {
-                con.obtenerUsuarioXlogin(user[0]);
-                return true;
+                us = con.obtenerUsuarioXlogin(user[0]);
+
+                return us;
             } catch (Exception e) {
                 e.printStackTrace();
-                return false;
+                return us;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean exito) {
-            if (exito) {
+        protected void onPostExecute(Usuario user) {
+            //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
+
+            if (user.getIdUsuario() > 0) {
                 boolean comerciante = esComerciante.isChecked();
                 if (!comerciante) {
                     Intent ingresarcliente = new Intent(MainActivity.this, Menu_Cliente.class);
@@ -94,7 +98,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
 
 }
