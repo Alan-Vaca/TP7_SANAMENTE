@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:onClick="CatalogoFiltros"
         android:text="FILTROS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.713"
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="12dp"
+        android:onClick="CatalogoVerProducto"
         android:text="VER PRODUCTO"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -51,6 +53,7 @@
         android:id="@+id/button15"
         android:layout_width="375dp"
         android:layout_height="47dp"
+        android:onClick="CatalogoAgregarNuevoProducto"
         android:text="AGREGAR UN NUEVO PRODUCTO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -14,13 +14,13 @@ public class AgregarProducto extends AppCompatActivity {
         setContentView(R.layout.activity_agregar_producto);
     }
 
-    public void AgregarProducto(View view) {
-        Intent AgregarProducto = new Intent(this, Mis_Productos.class);
-        startActivity(AgregarProducto);
+    public void AgregarProductoCancelar(View view) {
+        Intent agregarProductoCancelar = new Intent(this, Mis_Productos.class);
+        startActivity(agregarProductoCancelar);
     }
 
-    public void CancelarProducto(View view) {
-        Intent CancelarProducto = new Intent(this, MenuComercio.class);
-        startActivity(CancelarProducto);
+    public void AgregarProductoAgregar(View view) {
+        Intent agregarProductoAgregar = new Intent(this, Mis_Productos.class);
+        startActivity(agregarProductoAgregar);
     }
 }
