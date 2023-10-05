@@ -17,92 +17,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Mis Historial" />
-
-    <Button
-        android:id="@+id/button37"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="667dp" />
+        app:title="Mi Historial" />
 
     <ListView
-        android:layout_width="298dp"
-        android:layout_height="578dp"
-        tools:layout_editor_absoluteX="113dp"
-        tools:layout_editor_absoluteY="147dp" />
+        android:layout_width="388dp"
+        android:layout_height="479dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button46" />
 
     <Button
         android:id="@+id/button38"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="147dp" />
-
-    <Button
-        android:id="@+id/button39"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="207dp" />
-
-    <Button
-        android:id="@+id/button40"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="272dp" />
-
-    <Button
-        android:id="@+id/button41"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="341dp" />
-
-    <Button
-        android:id="@+id/button42"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="406dp" />
-
-    <Button
-        android:id="@+id/button43"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="468dp" />
-
-    <Button
-        android:id="@+id/button44"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="535dp" />
-
-    <Button
-        android:id="@+id/button45"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="598dp" />
+        android:layout_marginBottom="36dp"
+        android:onClick="DetalleHistorial"
+        android:text="VER DETALLE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_dynamic"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/button46"
         android:layout_width="375dp"
         android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:onClick="FiltrosHistorial"
         android:text="FILTROS"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="78dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

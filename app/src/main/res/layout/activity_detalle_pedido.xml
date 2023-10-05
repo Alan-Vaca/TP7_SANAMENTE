@@ -14,6 +14,7 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="Detalles del pedido" />
@@ -22,85 +23,114 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:text="PEDIDO Nº 45644"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="97dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar5" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="CLIENTE: 11.234.567 - NOMBRE APELLIDO"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="131dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:text="COMERCIO:"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="188dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="FECHA: XX/XX/XXXX"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="297dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:text="CANTIDAD DE PRODUCTOS: 5"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="368dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="204dp"
         android:text="MONTO TOTAL: $52.000"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="583dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="NOMBRE DEL COMERCIO"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="220dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <ListView
         android:layout_width="351dp"
         android:layout_height="153dp"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="411dp" />
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <Button
         android:id="@+id/button28"
         android:layout_width="107dp"
         android:layout_height="45dp"
+        android:onClick="VolverHistorial"
         android:text="VOLVER"
-        tools:layout_editor_absoluteX="26dp"
-        tools:layout_editor_absoluteY="660dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button31"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <Button
         android:id="@+id/button30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="ImprimirPedido"
         android:text="IMPRIMIR"
-        tools:layout_editor_absoluteX="269dp"
-        tools:layout_editor_absoluteY="660dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button31"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <Button
         android:id="@+id/button31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="CalificarPedido"
         android:text="CALIFICAR"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="660dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 </androidx.constraintlayout.widget.ConstraintLayout>

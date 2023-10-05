@@ -1,10 +1,11 @@
 package com.example.tp7_sanamente;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MenuComercio extends AppCompatActivity {
 
@@ -14,12 +15,11 @@ public class MenuComercio extends AppCompatActivity {
         setContentView(R.layout.activity_menu_comercio);
     }
 
-    /* NO ES UNA PANTALLA
+
     public void MenuGenerarReporte(View view) {
-        Intent menuCliente = new Intent(this, Menu_Cliente.class);
-        startActivity(menuCliente);
+        Toast.makeText(MenuComercio.this, "SE GENERO EL SIGUIENTE REPORTE:" + '\n' + "ITEM 1", Toast.LENGTH_LONG).show();
     }
-     */
+
 
     public void MiUsuarioComercio(View view) {
         Intent miUsuarioComercio = new Intent(this, MiUsuarioComercio.class);
@@ -32,8 +32,8 @@ public class MenuComercio extends AppCompatActivity {
     }
 
     public void MenuPedidos_Comerciante(View view) {
-        Intent menuPedidos_Comerciante = new Intent(this, Pedidos_Comerciante.class);
-        startActivity(menuPedidos_Comerciante);
+        Intent Mis_Pedidos = new Intent(this, Mis_Pedidos.class);
+        startActivity(Mis_Pedidos);
     }
 
     public void MenuMis_Productos(View view) {

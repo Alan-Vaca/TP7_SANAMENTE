@@ -1,10 +1,10 @@
 package com.example.tp7_sanamente;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Registrar_Comercio extends AppCompatActivity {
 
@@ -14,8 +14,12 @@ public class Registrar_Comercio extends AppCompatActivity {
         setContentView(R.layout.activity_registrar_comercio);
     }
 
-    public void MenuPrincipal(View view){
-        Intent menuPrincipal = new Intent(this, MainActivity.class);
-        startActivity(menuPrincipal);
+    public void IngresarComercio(View view) {
+        Intent IngresarComercio = new Intent(this, MainActivity.class);
+        startActivity(IngresarComercio);
+    }
+    public void VolverRegistro(View view) {
+        Intent VolverRegistro = new Intent(this, Registrar_Usuario.class);
+        startActivity(VolverRegistro);
     }
 }

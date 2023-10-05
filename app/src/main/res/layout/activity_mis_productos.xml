@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".Mis_Productos">
 
+    <Button
+        android:id="@+id/button64"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="FILTROS"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.713"
+        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -16,92 +27,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Mis Productos" />
+        app:title="Catalogo" />
 
     <ListView
-        android:layout_width="298dp"
-        android:layout_height="578dp"
-        tools:layout_editor_absoluteX="112dp"
-        tools:layout_editor_absoluteY="65dp" />
+        android:layout_width="389dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="78dp" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="147dp" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="207dp" />
-
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="272dp" />
-
-    <Button
-        android:id="@+id/button9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="341dp" />
-
-    <Button
-        android:id="@+id/button10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="406dp" />
-
-    <Button
-        android:id="@+id/button11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="468dp" />
-
-    <Button
-        android:id="@+id/button12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="598dp" />
-
-    <Button
-        android:id="@+id/button13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="VER"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="535dp" />
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="12dp"
+        android:text="VER PRODUCTO"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Button
         android:id="@+id/button15"
         android:layout_width="375dp"
         android:layout_height="47dp"
         android:text="AGREGAR UN NUEVO PRODUCTO"
-        tools:layout_editor_absoluteX="14dp"
-        tools:layout_editor_absoluteY="667dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_dynamic" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

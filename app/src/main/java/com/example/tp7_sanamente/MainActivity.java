@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void Registrarse(View view){
-        Intent registrarse = new Intent(this, Registrar_Cliente.class);
+        Intent registrarse = new Intent(this, Registrar_Usuario.class);
         startActivity(registrarse);
     }
 

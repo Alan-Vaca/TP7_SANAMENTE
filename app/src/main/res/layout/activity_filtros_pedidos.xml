@@ -10,27 +10,34 @@
         android:id="@+id/editTextDate2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="date"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="325dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <TextView
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
         android:text="HS."
-        tools:layout_editor_absoluteX="320dp"
-        tools:layout_editor_absoluteY="351dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toEndOf="@+id/editTextTime2"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <EditText
         android:id="@+id/editTextTime2"
         android:layout_width="69dp"
         android:layout_height="44dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="time"
-        tools:layout_editor_absoluteX="243dp"
-        tools:layout_editor_absoluteY="325dp" />
+        app:layout_constraintStart_toEndOf="@+id/editTextDate2"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar8"
@@ -42,128 +49,170 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Filtros" />
+        app:title="Filtrar Pedidos" />
 
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Filtrar por nombre"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="82dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar8" />
 
     <EditText
         android:id="@+id/editTextText10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:inputType="text"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="116dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <TextView
         android:id="@+id/textView20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="Estado:"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="175dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText10" />
 
     <CheckBox
         android:id="@+id/checkBox4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Confirmados"
-        tools:layout_editor_absoluteX="20dp"
-        tools:layout_editor_absoluteY="210dp" />
+        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        app:layout_constraintHorizontal_bias="0.805"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <CheckBox
         android:id="@+id/checkBox5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Cancelados"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="210dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <CheckBox
         android:id="@+id/checkBox6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Pendientes"
-        tools:layout_editor_absoluteX="271dp"
-        tools:layout_editor_absoluteY="210dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintStart_toEndOf="@+id/checkBox5"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Fecha Desde"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="284dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
 
     <TextView
         android:id="@+id/textView22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Fecha Hasta"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="384dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
 
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:text="Ordenar por:"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="495dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
 
     <RadioButton
         android:id="@+id/radioButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="En espera"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="536dp" />
+        app:layout_constraintEnd_toStartOf="@+id/radioButton6"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <RadioButton
         android:id="@+id/radioButton6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="64dp"
         android:text="Recientes"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="536dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <Button
         android:id="@+id/button47"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="AplicarFiltroHistorial"
         android:text="APLICAR FILTROS"
-        tools:layout_editor_absoluteX="124dp"
-        tools:layout_editor_absoluteY="628dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23"
+        app:layout_constraintVertical_bias="0.778" />
 
     <EditText
         android:id="@+id/editTextDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="date"
-        tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="436dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
         android:text="HS."
-        tools:layout_editor_absoluteX="320dp"
-        tools:layout_editor_absoluteY="462dp" />
+        app:layout_constraintStart_toEndOf="@+id/editTextTime"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <EditText
         android:id="@+id/editTextTime"
         android:layout_width="69dp"
         android:layout_height="44dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="time"
-        tools:layout_editor_absoluteX="243dp"
-        tools:layout_editor_absoluteY="436dp" />
+        app:layout_constraintStart_toEndOf="@+id/editTextDate"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 </androidx.constraintlayout.widget.ConstraintLayout>

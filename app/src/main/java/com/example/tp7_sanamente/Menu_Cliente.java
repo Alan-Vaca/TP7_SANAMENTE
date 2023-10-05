@@ -1,12 +1,11 @@
 package com.example.tp7_sanamente;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
-import Entidad.Usuario;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Menu_Cliente extends AppCompatActivity {
 
@@ -42,12 +41,12 @@ public class Menu_Cliente extends AppCompatActivity {
         startActivity(menuMiCarrito);
     }
 
-    /* FALTA CREAR PANTALLA
+
     public void MenuOfertas(View view) {
-        Intent menuCliente = new Intent(this, Menu_Cliente.class);
-        startActivity(menuCliente);
+        Toast.makeText(Menu_Cliente.this, "TUS OFERTAS:" + '\n' + "ITEM 1", Toast.LENGTH_LONG).show();
+
     }
-     */
+
 
     public void MenuPrincipal(View view) {
         Intent menuPrincipal = new Intent(this, MainActivity.class);
