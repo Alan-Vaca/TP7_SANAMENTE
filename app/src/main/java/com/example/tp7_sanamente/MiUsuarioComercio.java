@@ -19,4 +19,9 @@ public class MiUsuarioComercio extends AppCompatActivity {
         startActivity(menuComercio);
     }
 
+    public void MenuMi_Comercio(View view) {
+        Intent MenuMi_Comercio = new Intent(this, Mi_Comercio.class);
+        startActivity(MenuMi_Comercio);
+    }
+
 }

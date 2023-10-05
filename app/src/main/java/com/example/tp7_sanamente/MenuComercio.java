@@ -14,7 +14,7 @@ public class MenuComercio extends AppCompatActivity {
         setContentView(R.layout.activity_menu_comercio);
     }
 
-    /* FALTA CREAR PANTALLA
+    /* NO ES UNA PANTALLA
     public void MenuGenerarReporte(View view) {
         Intent menuCliente = new Intent(this, Menu_Cliente.class);
         startActivity(menuCliente);
