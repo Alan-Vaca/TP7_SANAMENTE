@@ -131,13 +131,12 @@ public class consultasUsuario {
     public void altaCliente(Connection conn, Usuario user) {
         try {
             if (conn != null) {
-                String insertQuery = "INSERT INTO clientes(idUsuario,estado,fechaCreacion) VALUES (?,?,?)";
+                String insertQuery = "INSERT INTO clientes(idUsuario,estado,fechaCreacion) VALUES ((select max(idUsuario) from usuarios),?,?)";
                 Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
 
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-                pstmt.setInt(1, user.getIdUsuario());
-                pstmt.setBoolean(2, true);
-                pstmt.setDate(3, fechaActual);
+                pstmt.setBoolean(1, true);
+                pstmt.setDate(2, fechaActual);
 
                 pstmt.executeUpdate();
 

@@ -22,8 +22,8 @@ public class consultasRestricciones {
     public Restriccion obtenerRestriccion(Connection conn, int idUsuario) {
         Restriccion res = new Restriccion();
         try {
-            String query = "select alergico, celiaco, diabetico, hipertenso, idRestriccion from restricciones " +
-                    "inner join restriccionXcliente rc on rc.idRestriccion = idRestriccion " +
+            String query = "select r.alergico ResAlergico, r.celiaco ResCeliaco, r.diabetico ResDiabetico, r.hipertenso ResHipertenso, r.idRestriccion ResID from restricciones r " +
+                    "inner join restriccionXcliente rc on rc.idRestriccion = r.idRestriccion " +
                     "inner join clientes c on c.idCliente = rc.idCliente " +
                     "where c.idUsuario = " + idUsuario;
 
@@ -32,11 +32,11 @@ public class consultasRestricciones {
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
                     if (rs.next()) {
-                        res.setAlergico(rs.getString("alergico"));
-                        res.setCeliaco(rs.getBoolean("celiaco"));
-                        res.setDiabetico(rs.getBoolean("diabetico"));
-                        res.setHipertenso(rs.getBoolean("hipertenso"));
-                        res.setIdRestriccion(rs.getInt("idRestriccion"));
+                        res.setAlergico(rs.getString("ResAlergico"));
+                        res.setCeliaco(rs.getBoolean("ResCeliaco"));
+                        res.setDiabetico(rs.getBoolean("ResDiabetico"));
+                        res.setHipertenso(rs.getBoolean("ResHipertenso"));
+                        res.setIdRestriccion(rs.getInt("ResId"));
 
                     }
                     rs.close();

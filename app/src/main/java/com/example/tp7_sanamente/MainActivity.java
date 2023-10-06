@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("usuarioLogueado", usuarioJson);
                 editor.apply();
 
-                if (!user.isCliente()) {
+                if (user.isCliente()) {
                     Intent ingresarcliente = new Intent(MainActivity.this, Menu_Cliente.class);
                     startActivity(ingresarcliente);
                 } else {

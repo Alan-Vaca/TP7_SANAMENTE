@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.PopUpToBuilder;
 
 import BaseDeDatos.Conexion;
 import Entidad.Cliente;
@@ -34,7 +33,7 @@ public class Registrar_Cliente extends AppCompatActivity {
         user = usuarioRecibido;
 
         nombre = (EditText)findViewById(R.id.r_cli_nombre);
-        apellido = (EditText)findViewById(R.id.r_cli_apellido);
+        apellido = (EditText)findViewById(R.id.r_cli_usuario);
         dni = (EditText)findViewById(R.id.r_cli_dni);
         alergias = (EditText)findViewById(R.id.r_cli_alergias);
         direccion = (EditText)findViewById(R.id.r_cli_direccion);

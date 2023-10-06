@@ -11,6 +11,7 @@ public class Restriccion {
     String alergico;
 
     public Restriccion() {
+        alergico = "";
     }
 
     public int getIdRestriccion() {

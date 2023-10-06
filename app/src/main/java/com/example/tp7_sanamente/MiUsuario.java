@@ -2,6 +2,7 @@ package com.example.tp7_sanamente;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import BaseDeDatos.Conexion;
 import Entidad.Usuario;
 
 public class MiUsuario extends AppCompatActivity {
@@ -59,4 +61,6 @@ public class MiUsuario extends AppCompatActivity {
         Intent menuCliente = new Intent(this, Menu_Cliente.class);
         startActivity(menuCliente);
     }
+
+
 }

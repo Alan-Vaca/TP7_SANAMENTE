@@ -16,6 +16,7 @@ public class Usuario implements Parcelable{
     boolean Cliente;
 
     public Usuario() {
+        Estado = true;
     }
 
     public int getIdUsuario() {

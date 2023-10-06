@@ -167,6 +167,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public void altaRestricciones(Restriccion rest) {
         try {
             consultasRestricciones.altaRestriccion(getConnection(),rest);
+            consultasRestricciones.altaRestriccionXcliente(getConnection());
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }

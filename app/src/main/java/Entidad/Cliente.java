@@ -6,6 +6,7 @@ public class Cliente {
     Usuario usuarioAsociado;
 
     public Cliente() {
+        estado = true;
     }
 
     public int getIdCliente() {
