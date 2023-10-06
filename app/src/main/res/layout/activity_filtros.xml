@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar4" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/miUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/miApellido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -104,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:layout_constraintTop_toBottomOf="@+id/miApellido" />
 
     <CheckBox
         android:id="@+id/r_cb_hipertenso"
@@ -116,7 +116,7 @@
         app:layout_constraintEnd_toStartOf="@+id/r_cb_diabetico"
         app:layout_constraintHorizontal_bias="0.972"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/miUsuario" />
 
     <CheckBox
         android:id="@+id/r_cb_diabetico"
@@ -127,7 +127,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/miUsuario" />
 
     <CheckBox
         android:id="@+id/r_cb_celiaco"
@@ -138,7 +138,7 @@
         android:text="Diabeticos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/r_cb_diabetico"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/miUsuario" />
 
     <RadioButton
         android:id="@+id/radioButton"

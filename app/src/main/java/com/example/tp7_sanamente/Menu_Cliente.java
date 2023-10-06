@@ -1,18 +1,37 @@
 package com.example.tp7_sanamente;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+
+import Entidad.Usuario;
+
 public class Menu_Cliente extends AppCompatActivity {
 
+    Usuario user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_cliente);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
+
+        user = new Usuario();
+        if (!usuarioJson.isEmpty()) {
+            Gson gson = new Gson();
+            user = gson.fromJson(usuarioJson, Usuario.class);
+            //Toast.makeText(Menu_Cliente.this, "USUARIO INGRESADO: " + user.getIdUsuario() + "-" + user.getNombreUsuario(), Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(Menu_Cliente.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void Notificaciones(View view) {

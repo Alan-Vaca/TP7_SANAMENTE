@@ -1,6 +1,7 @@
 package com.example.tp7_sanamente;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.gson.Gson;
 
 import BaseDeDatos.Conexion;
 import Entidad.Usuario;
@@ -46,20 +49,7 @@ public class MainActivity extends AppCompatActivity {
         usuario.setNombreUsuario(user);
         usuario.setContraseña(pass);
 
-        //new obtenerUsuarioXloginTask().execute(usuario);
-
-        /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (INICIO)*/
-        boolean comerciante = esComerciante.isChecked();
-
-
-        if (!comerciante) {
-            Intent ingresarcliente = new Intent(this, Menu_Cliente.class);
-            startActivity(ingresarcliente);
-        } else {
-            Intent ingresarcomercio = new Intent(this, MenuComercio.class);
-            startActivity(ingresarcomercio);
-        }
-        /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (FINAL)*/
+        new obtenerUsuarioXloginTask().execute(usuario);
     }
 
 
@@ -84,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
 
             if (user.getIdUsuario() > 0) {
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                Gson gson = new Gson();
+                String usuarioJson = gson.toJson(user);
+                editor.putString("usuarioLogueado", usuarioJson);
+                editor.apply();
+
                 if (!user.isCliente()) {
                     Intent ingresarcliente = new Intent(MainActivity.this, Menu_Cliente.class);
                     startActivity(ingresarcliente);
@@ -92,7 +90,21 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(ingresarcomercio);
                 }
             } else {
-                Toast.makeText(MainActivity.this, "Error al ingresar. Verifique sus credenciales.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+
+                /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (INICIO)*/
+                boolean comerciante = esComerciante.isChecked();
+
+
+                if (!comerciante) {
+                    Intent ingresarcliente = new Intent(MainActivity.this, Menu_Cliente.class);
+                    startActivity(ingresarcliente);
+                } else {
+                    Intent ingresarcomercio = new Intent(MainActivity.this, MenuComercio.class);
+                    startActivity(ingresarcomercio);
+                }
+                /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (FINAL)*/
             }
         }
 
