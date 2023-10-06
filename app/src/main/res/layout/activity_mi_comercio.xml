@@ -37,7 +37,7 @@
         android:text="Propietario:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
+        app:layout_constraintTop_toBottomOf="@+id/r_cli_apellido" />
 
     <Button
         android:id="@+id/button2"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextText6" />
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/r_cli_nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -77,7 +77,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/r_cli_apellido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -87,7 +87,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+        app:layout_constraintTop_toBottomOf="@+id/r_cli_nombre" />
 
     <EditText
         android:id="@+id/editTextText5"

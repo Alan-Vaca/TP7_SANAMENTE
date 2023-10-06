@@ -47,7 +47,7 @@
         android:text="Contiene:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox2" />
+        app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico" />
 
     <TextView
         android:id="@+id/textView7"
@@ -106,19 +106,19 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/r_cb_hipertenso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:text="Celiacos"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox2"
+        app:layout_constraintEnd_toStartOf="@+id/r_cb_diabetico"
         app:layout_constraintHorizontal_bias="0.972"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/r_cb_diabetico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -129,14 +129,14 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <CheckBox
-        android:id="@+id/checkBox3"
+        android:id="@+id/r_cb_celiaco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="24dp"
         android:text="Diabeticos"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/checkBox2"
+        app:layout_constraintStart_toEndOf="@+id/r_cb_diabetico"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <RadioButton
