@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button5" />
 
     <TextView
-        android:id="@+id/miApellido"
+        android:id="@+id/fc_tv_noContiene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -74,7 +74,7 @@
         app:srcCompat="@drawable/baseline_assignment_ind_24" />
 
     <TextView
-        android:id="@+id/miUsuario"
+        android:id="@+id/fc_tv_tituloCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -91,7 +91,7 @@
         android:text="[DNI]"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/miUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_tituloCheckbox" />
 
     <Button
         android:id="@+id/button5"
@@ -102,5 +102,5 @@
         android:text="Modificar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/miApellido" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_noContiene" />
 </androidx.constraintlayout.widget.ConstraintLayout>

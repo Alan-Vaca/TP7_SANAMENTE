@@ -20,78 +20,78 @@
         app:title="Detalles del pedido" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/dp_tv_pedido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="PEDIDO Nº 45644"
+        android:text="@string/dp_tv_pedido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar5" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/dp_tv_datosCliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="CLIENTE: 11.234.567 - NOMBRE APELLIDO"
+        android:text="@string/dp_tv_datosCliente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_pedido" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/dp_tv_comercio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:text="COMERCIO:"
+        android:text="@string/dp_tv_comercio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_datosCliente" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/dp_tv_fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="FECHA: XX/XX/XXXX"
+        android:text="@string/dp_tv_fecha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_nombreComercio" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/dp_tv_cantitdadProductos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="CANTIDAD DE PRODUCTOS: 5"
+        android:text="@string/dp_tv_cantitdadProductos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_fecha" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/dp_tv_importeTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="204dp"
-        android:text="MONTO TOTAL: $52.000"
+        android:text="@string/dp_tv_importeTotal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_cantitdadProductos" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/dp_tv_nombreComercio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="NOMBRE DEL COMERCIO"
+        android:text="@string/dp_tv_nombreComercio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_comercio" />
 
     <ListView
         android:layout_width="351dp"
@@ -99,38 +99,38 @@
         android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_cantitdadProductos" />
 
     <Button
-        android:id="@+id/button28"
+        android:id="@+id/dp_bn_volver"
         android:layout_width="107dp"
         android:layout_height="45dp"
         android:onClick="VolverHistorial"
-        android:text="VOLVER"
+        android:text="@string/dp_bn_volver"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button31"
+        app:layout_constraintEnd_toStartOf="@+id/dp_bn_calificar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_importeTotal" />
 
     <Button
-        android:id="@+id/button30"
+        android:id="@+id/dp_bn_imprimir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="ImprimirPedido"
-        android:text="IMPRIMIR"
+        android:text="@string/dp_bn_imprimir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button31"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintStart_toEndOf="@+id/dp_bn_calificar"
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_importeTotal" />
 
     <Button
-        android:id="@+id/button31"
+        android:id="@+id/dp_bn_calificar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="CalificarPedido"
-        android:text="CALIFICAR"
+        android:text="@string/dp_bn_calificar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_importeTotal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

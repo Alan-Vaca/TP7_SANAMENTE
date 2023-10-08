@@ -52,4 +52,96 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <!-- ______________________________________________________ -->
+    <!-- ______________________________________________________ -->
+    <!--                        LAYOUTS                         -->
+    <!-- ______________________________________________________ -->
+    <!-- ______________________________________________________ -->
+
+    <!-- _________________  AGREGAR_PRODUCTO  _________________ -->
+    <string name="ap_tv_titulo">"Ingresa los datos en el formulario"</string>
+    <string name="ap_et_nombreDelProducto">"Nombre del producto"</string>
+    <string name="ap_tv_ingredientes">"INGREDIENTES:"</string>
+    <string name="ap_et_ingredientes">"Ej: azucar"</string>
+    <string name="ap_n_precio">"Precio"</string>
+    <string name="ap_n_stock">"Stock"</string>
+    <string name="ap_tv_etiquetadoFrontal">"Etiquetado Frontal"</string>
+
+    <!-- _________________  AGREGAR_PRODUCTO  _________________ -->
+    <string name="dp_tv_pedido">PEDIDO Nº 45644</string>
+    <string name="dp_tv_datosCliente">CLIENTE: 11.234.567 - NOMBRE APELLIDO</string>
+    <string name="dp_tv_comercio">COMERCIO:</string>
+    <string name="dp_tv_nombreComercio">NOMBRE DEL COMERCIO</string>
+    <string name="dp_tv_fecha">FECHA: XX/XX/XXXX</string>
+    <string name="dp_tv_cantitdadProductos">CANTIDAD DE PRODUCTOS: 5</string>
+    <string name="dp_tv_importeTotal">MONTO TOTAL: $</string>
+    <string name="dp_bn_volver">VOLVER</string>
+    <string name="dp_bn_calificar">CALIFICAR</string>
+    <string name="dp_bn_imprimir">IMPRIMIR</string>
+
+    <!-- _________________  FILTROS  _________________ -->
+    <string name="fc_tv_titulo">Filtrar por nombre</string>
+    <string name="fc_et_filtroNombre">Ingrese nombre</string>
+    <string name="fc_tv_tituloCheckbox">Producto apto para:</string>
+    <string name="r_cb_hipertenso">Celiacos</string>
+    <string name="r_cb_diabetico">Hipertensos</string>
+    <string name="r_cb_celiaco">Diabeticos</string>
+    <string name="fc_tv_contiene">Contiene:</string>
+    <string name="fc_et_filtroContiene">Ej: azucar</string>
+    <string name="fc_tv_noContiene">NO Contiene:</string>
+    <string name="fc_et_filtroNoContiene">Ej: leche</string>
+    <string name="fc_tv_ordernarPor">Ordenar por:</string>
+    <string name="fc_rb_calificaciones">Calificaciones</string>
+    <string name="fc_rb_precio">Ej: leche</string>
+    <string name="fc_rb_reciente">Recientes</string>
+    <string name="fc_bn_aplicarFiltros">APLICAR FILTROS</string>
+
+    <!-- _________________  FILTROS PEDIDOS _________________ -->
+    <string name="fp_tv_titulo">Filtrar por nombre</string>
+    <string name="fp_et_filtroNombre">Ingrese nombre</string>
+    <string name="fp_tv_tituloCheckbox">Estado:</string>
+    <string name="fp_cb_confirmado">Confirmados</string>
+    <string name="fp_cb_cancelado">Cancelados</string>
+    <string name="fp_cb_pendiente">Pendientes</string>
+    <string name="fp_tv_fechaDesde">Fecha Desde</string>
+    <string name="fp_et_fechaDesde">01/01/2020</string>
+    <string name="fp_et_horaDesde">00:00</string>
+    <string name="fp_tv_fechaHasta">Fecha Hasta</string>
+    <string name="fp_et_fechaHasta">01/01/2023</string>
+    <string name="fp_et_horaHasta">00:00</string>
+    <string name="fp_tv_ordenarPor">Ordenar por:</string>
+    <string name="fp_rb_enEspera">En espera</string>
+    <string name="fp_rb_recientes">Recientes</string>
+    <string name="fp_bn_aplicarFiltros">APLICAR FILTROS</string>
+
+    <!-- _________________  MENU CLIENTE  _________________ -->
+    <string name="mcli_bn_notificaciones">NOTIFICACIONES</string>
+    <string name="mcli_bn_miUsuario">MI USUARIO</string>
+    <string name="mcli_bn_historial">HISTORIAL</string>
+    <string name="mcli_bn_catalogo">CATALOGO</string>
+    <string name="mcli_bn_miCarrito">MI CARRITO</string>
+    <string name="mcli_bn_ofertas">OFERTAS</string>
+    <string name="mcli_bn_salir">SALIR</string>
+
+    <!-- _________________  MENU COMERCIO  _________________ -->
+    <string name="mcom_bn_generarReporte">asd</string>
+    <string name="mcom_bn_miComercio">asd</string>
+    <string name="mcom_bn_historial">asd</string>
+    <string name="mcom_bn_misPedidos">asd</string>
+    <string name="mcom_bn_miCatalogo">asd</string>
+    <string name="mcom_bn_nuevoProducto">asd</string>
+    <string name="mcom_bn_salir">asd</string>
+
+    <!-- _________________  METODO DE PAGO  _________________ -->
+    <string name="mp_tv_titulo">Complete los datos</string>
+    <string name="mp_tv_subtitulo">Tipo de tarjeta</string>
+    <string name="mp_et_numeroTarjeta">Numero de tarjeta</string>
+    <string name="mp_et_nombre">Nombre</string>
+    <string name="mp_et_fecha">Fecha</string>
+    <string name="mp_et_codigoSeguridad">codigo</string>
+    <string name="mp_bn_finalizarCompra">FINALIZAR COMPRA</string>
+    <string name="mp_bn_cancelarCompra">CANCELAR COMPRA</string>
+
+
 </resources>

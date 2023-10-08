@@ -2,7 +2,6 @@ package com.example.tp7_sanamente;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
-import BaseDeDatos.Conexion;
 import Entidad.Usuario;
 
 public class MiUsuario extends AppCompatActivity {
@@ -24,9 +22,9 @@ public class MiUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_usuario);
 
-        usuario = findViewById(R.id.miUsuario);
+        usuario = findViewById(R.id.fc_tv_tituloCheckbox);
         nombre = findViewById(R.id.miNombre);
-        apellido = findViewById(R.id.miApellido);
+        apellido = findViewById(R.id.fc_tv_noContiene);
         dni = findViewById(R.id.miDni);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);

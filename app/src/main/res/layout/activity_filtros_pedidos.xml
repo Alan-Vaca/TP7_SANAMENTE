@@ -7,15 +7,16 @@
     tools:context=".Filtros_Pedidos">
 
     <EditText
-        android:id="@+id/editTextDate2"
+        android:id="@+id/fp_et_fechaDesde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/fp_et_fechaDesde"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_fechaDesde" />
 
     <TextView
         android:id="@+id/textView25"
@@ -25,19 +26,20 @@
         android:text="HS."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.157"
-        app:layout_constraintStart_toEndOf="@+id/editTextTime2"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        app:layout_constraintStart_toEndOf="@+id/fp_et_horaDesde"
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_fechaDesde" />
 
     <EditText
-        android:id="@+id/editTextTime2"
+        android:id="@+id/fp_et_horaDesde"
         android:layout_width="69dp"
         android:layout_height="44dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/fp_et_horaDesde"
         android:inputType="time"
-        app:layout_constraintStart_toEndOf="@+id/editTextDate2"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        app:layout_constraintStart_toEndOf="@+id/fp_et_fechaDesde"
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_fechaDesde" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar8"
@@ -52,148 +54,150 @@
         app:title="Filtrar Pedidos" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/fp_tv_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Filtrar por nombre"
+        android:text="@string/fp_tv_titulo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar8" />
 
     <EditText
-        android:id="@+id/editTextText10"
+        android:id="@+id/fp_et_filtroNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:hint="@string/fp_et_filtroNombre"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_titulo" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/fp_tv_tituloCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Estado:"
+        android:text="@string/fp_tv_tituloCheckbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText10" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_et_filtroNombre" />
 
     <CheckBox
-        android:id="@+id/checkBox4"
+        android:id="@+id/fp_cb_confirmado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Confirmados"
-        app:layout_constraintEnd_toStartOf="@+id/checkBox5"
+        android:text="@string/fp_cb_confirmado"
+        app:layout_constraintEnd_toStartOf="@+id/fp_cb_cancelado"
         app:layout_constraintHorizontal_bias="0.805"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_tituloCheckbox" />
 
     <CheckBox
-        android:id="@+id/checkBox5"
+        android:id="@+id/fp_cb_cancelado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Cancelados"
+        android:text="@string/fp_cb_cancelado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_tituloCheckbox" />
 
     <CheckBox
-        android:id="@+id/checkBox6"
+        android:id="@+id/fp_cb_pendiente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Pendientes"
+        android:text="@string/fp_cb_pendiente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.255"
-        app:layout_constraintStart_toEndOf="@+id/checkBox5"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintStart_toEndOf="@+id/fp_cb_cancelado"
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_tituloCheckbox" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/fp_tv_fechaDesde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Fecha Desde"
+        android:text="@string/fp_tv_fechaDesde"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox4" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_cb_confirmado" />
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/fp_tv_fechaHasta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Fecha Hasta"
+        android:text="@string/fp_tv_fechaHasta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_et_fechaDesde" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/fp_tv_ordenarPor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Ordenar por:"
+        android:text="@string/fp_tv_ordenarPor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_et_fechaHasta" />
 
     <RadioButton
-        android:id="@+id/radioButton2"
+        android:id="@+id/fp_rb_enEspera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="En espera"
-        app:layout_constraintEnd_toStartOf="@+id/radioButton6"
+        android:text="@string/fp_rb_enEspera"
+        app:layout_constraintEnd_toStartOf="@+id/fp_rb_recientes"
         app:layout_constraintHorizontal_bias="0.451"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor" />
 
     <RadioButton
-        android:id="@+id/radioButton6"
+        android:id="@+id/fp_rb_recientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="64dp"
-        android:text="Recientes"
+        android:text="@string/fp_rb_recientes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor" />
 
     <Button
-        android:id="@+id/button47"
+        android:id="@+id/fp_bn_aplicarFiltros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="AplicarFiltroHistorial"
-        android:text="APLICAR FILTROS"
+        android:text="@string/fp_bn_aplicarFiltros"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23"
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor"
         app:layout_constraintVertical_bias="0.778" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/fp_et_fechaHasta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/fp_et_fechaHasta"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_fechaHasta" />
 
     <TextView
         android:id="@+id/textView24"
@@ -202,17 +206,18 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="44dp"
         android:text="HS."
-        app:layout_constraintStart_toEndOf="@+id/editTextTime"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintStart_toEndOf="@+id/fp_et_horaHasta"
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_fechaHasta" />
 
     <EditText
-        android:id="@+id/editTextTime"
+        android:id="@+id/fp_et_horaHasta"
         android:layout_width="69dp"
         android:layout_height="44dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="@string/fp_et_horaHasta"
         android:inputType="time"
-        app:layout_constraintStart_toEndOf="@+id/editTextDate"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+        app:layout_constraintStart_toEndOf="@+id/fp_et_fechaHasta"
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_fechaHasta" />
 </androidx.constraintlayout.widget.ConstraintLayout>

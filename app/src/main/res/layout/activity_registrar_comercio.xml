@@ -16,11 +16,11 @@
         android:text="CANCELAR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText9"
+        app:layout_constraintTop_toBottomOf="@+id/fc_et_filtroNoContiene"
         app:layout_constraintVertical_bias="0.404" />
 
     <EditText
-        android:id="@+id/editTextText9"
+        android:id="@+id/fc_et_filtroNoContiene"
         android:layout_width="211dp"
         android:layout_height="100dp"
         android:layout_marginTop="36dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
     <EditText
-        android:id="@+id/editTextText8"
+        android:id="@+id/fc_et_filtroContiene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -79,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.178"
         app:layout_constraintStart_toEndOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText9"
+        app:layout_constraintTop_toBottomOf="@+id/fc_et_filtroNoContiene"
         app:layout_constraintVertical_bias="0.404" />
 
     <TextView
@@ -91,7 +91,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText8" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_et_filtroContiene" />
 
     <TextView
         android:id="@+id/textView27"

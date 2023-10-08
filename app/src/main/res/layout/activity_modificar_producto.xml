@@ -19,7 +19,7 @@
         app:title="MODIFICAR PRODUCTO" />
 
     <TextView
-        android:id="@+id/textView42"
+        android:id="@+id/ap_tv_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar15" />
 
     <TextView
-        android:id="@+id/textView43"
+        android:id="@+id/ap_tv_ingredientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -49,7 +49,7 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView43" />
+        app:layout_constraintTop_toBottomOf="@+id/ap_tv_ingredientes" />
 
     <EditText
         android:id="@+id/ap_n_precio"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ap_et_ingredientes" />
 
     <TextView
-        android:id="@+id/textView44"
+        android:id="@+id/ap_tv_etiquetadoFrontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -88,31 +88,31 @@
         app:layout_constraintTop_toBottomOf="@+id/ap_et_ingredientes" />
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/ap_sp_item1"
         android:layout_width="209dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView44" />
+        app:layout_constraintTop_toBottomOf="@+id/ap_tv_etiquetadoFrontal" />
 
     <Spinner
-        android:id="@+id/spinner4"
+        android:id="@+id/ap_sp_item2"
         android:layout_width="209dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner3" />
+        app:layout_constraintTop_toBottomOf="@+id/ap_sp_item1" />
 
     <Spinner
-        android:id="@+id/spinner5"
+        android:id="@+id/ap_sp_item3"
         android:layout_width="209dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner4" />
+        app:layout_constraintTop_toBottomOf="@+id/ap_sp_item2" />
 
     <Button
         android:id="@+id/button62"
@@ -123,7 +123,7 @@
         android:text="CANCELAR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner5"
+        app:layout_constraintTop_toBottomOf="@+id/ap_sp_item3"
         app:layout_constraintVertical_bias="0.511" />
 
     <Button
@@ -137,7 +137,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.863"
         app:layout_constraintStart_toEndOf="@+id/button62"
-        app:layout_constraintTop_toBottomOf="@+id/spinner5"
+        app:layout_constraintTop_toBottomOf="@+id/ap_sp_item3"
         app:layout_constraintVertical_bias="0.511" />
 
     <TextView
@@ -149,6 +149,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView42" />
+        app:layout_constraintTop_toBottomOf="@+id/ap_tv_titulo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

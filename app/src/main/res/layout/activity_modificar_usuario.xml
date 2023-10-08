@@ -128,7 +128,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.717"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintStart_toEndOf="@+id/fc_tv_contiene"
         app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico" />
 
     <EditText
@@ -149,7 +149,7 @@
         app:layout_constraintTop_toBottomOf="@+id/r_cli_alergias" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/fc_tv_contiene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -169,7 +169,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_contiene" />
 
     <TextView
         android:id="@+id/textView5"

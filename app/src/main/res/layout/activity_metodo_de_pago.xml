@@ -7,51 +7,51 @@
     tools:context=".Metodo_De_Pago">
 
     <Button
-        android:id="@+id/button18"
+        android:id="@+id/mp_bn_cancelarCompra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="MetodoDePagoCancelarCompra"
-        android:text="CANCELAR COMPRA"
+        android:text="@string/mp_bn_cancelarCompra"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button17"
+        app:layout_constraintTop_toBottomOf="@+id/mp_bn_finalizarCompra"
         app:layout_constraintVertical_bias="0.164" />
 
     <EditText
-        android:id="@+id/editTextText13"
+        android:id="@+id/mp_et_fecha"
         android:layout_width="120dp"
         android:layout_height="39dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:hint="Fecha"
+        android:hint="@string/mp_et_fecha"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.578"
-        app:layout_constraintStart_toEndOf="@+id/editTextText12"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText11" />
+        app:layout_constraintStart_toEndOf="@+id/mp_et_nombre"
+        app:layout_constraintTop_toBottomOf="@+id/mp_et_numeroTarjeta" />
 
     <EditText
-        android:id="@+id/editTextText12"
+        android:id="@+id/mp_et_nombre"
         android:layout_width="151dp"
         android:layout_height="39dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:hint="Nombre"
+        android:hint="@string/mp_et_nombre"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText11" />
+        app:layout_constraintTop_toBottomOf="@+id/mp_et_numeroTarjeta" />
 
     <EditText
-        android:id="@+id/editTextText11"
+        android:id="@+id/mp_et_numeroTarjeta"
         android:layout_width="347dp"
         android:layout_height="39dp"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:hint="Numero de tarjeta"
+        android:hint="@string/mp_et_numeroTarjeta"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,29 +70,16 @@
         app:title="Método de pago" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/mp_tv_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Complete los datos"
+        android:text="@string/mp_tv_titulo"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <EditText
-        android:id="@+id/editTextText10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="Código"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.159"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText12" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -101,26 +88,40 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/mp_tv_subtitulo" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/mp_tv_subtitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="Tipo de tarjeta"
+        android:text="@string/mp_tv_subtitulo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo" />
 
     <Button
-        android:id="@+id/button17"
+        android:id="@+id/mp_bn_finalizarCompra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
         android:onClick="MetodoDePagoFinalizarCompra"
-        android:text="FINALIZAR COMPRA"
+        android:text="@string/mp_bn_finalizarCompra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText10" />
+        app:layout_constraintTop_toBottomOf="@+id/mp_et_codigoSeguridad" />
+
+    <EditText
+        android:id="@+id/mp_et_codigoSeguridad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:width="80dp"
+        android:ems="10"
+        android:hint="@string/mp_et_codigoSeguridad"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.159"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mp_et_nombre" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,92 +19,95 @@
         app:title="Filtros para Catalogo" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/fc_tv_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Filtrar por nombre"
+        android:text="@string/fc_tv_titulo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar4" />
 
     <TextView
-        android:id="@+id/miUsuario"
+        android:id="@+id/fc_tv_tituloCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Producto apto para:"
+        android:text="@string/fc_tv_tituloCheckbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText7" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_et_filtroNombre" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/fc_tv_contiene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Contiene:"
+        android:text="@string/fc_tv_contiene"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico" />
 
     <TextView
-        android:id="@+id/miApellido"
+        android:id="@+id/fc_tv_noContiene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="NO Contiene:"
+        android:text="@string/fc_tv_noContiene"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText8" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_et_filtroContiene" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/fc_tv_ordernarPor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Ordenar por:"
+        android:text="@string/fc_tv_ordernarPor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText9" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_et_filtroNoContiene" />
 
     <EditText
-        android:id="@+id/editTextText7"
+        android:id="@+id/fc_et_filtroNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="@string/fc_et_filtroNombre"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_titulo" />
 
     <EditText
-        android:id="@+id/editTextText8"
+        android:id="@+id/fc_et_filtroContiene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:hint="@string/fc_et_filtroContiene"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_contiene" />
 
     <EditText
-        android:id="@+id/editTextText9"
+        android:id="@+id/fc_et_filtroNoContiene"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
+        android:hint="@string/fc_et_filtroNoContiene"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/miApellido" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_noContiene" />
 
     <CheckBox
         android:id="@+id/r_cb_hipertenso"
@@ -112,22 +115,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:text="Celiacos"
+        android:text="@string/r_cb_hipertenso"
         app:layout_constraintEnd_toStartOf="@+id/r_cb_diabetico"
         app:layout_constraintHorizontal_bias="0.972"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/miUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_tituloCheckbox" />
 
     <CheckBox
         android:id="@+id/r_cb_diabetico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Hipertensos"
+        android:text="r_cb_diabetico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/miUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_tituloCheckbox" />
 
     <CheckBox
         android:id="@+id/r_cb_celiaco"
@@ -135,53 +138,53 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="24dp"
-        android:text="Diabeticos"
+        android:text="r_cb_celiaco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/r_cb_diabetico"
-        app:layout_constraintTop_toBottomOf="@+id/miUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_tituloCheckbox" />
 
     <RadioButton
-        android:id="@+id/radioButton"
+        android:id="@+id/fc_rb_reciente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Recientes"
+        android:text="fc_rb_reciente"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.616"
-        app:layout_constraintStart_toEndOf="@+id/radioButton4"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintStart_toEndOf="@+id/fc_rb_precio"
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor" />
 
     <RadioButton
-        android:id="@+id/radioButton4"
+        android:id="@+id/fc_rb_precio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Precio"
+        android:text="@string/fc_rb_precio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor" />
 
     <RadioButton
-        android:id="@+id/radioButton3"
+        android:id="@+id/fc_rb_calificaciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Calificaciones"
-        app:layout_constraintEnd_toStartOf="@+id/radioButton4"
+        android:text="fc_rb_calificaciones"
+        app:layout_constraintEnd_toStartOf="@+id/fc_rb_precio"
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor" />
 
     <Button
-        android:id="@+id/button24"
+        android:id="@+id/fc_bn_aplicarFiltros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="FiltrosAplicarFiltros"
-        android:text="APLICAR FILTROS"
+        android:text="@string/fc_bn_aplicarFiltros"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioButton4" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_rb_precio" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

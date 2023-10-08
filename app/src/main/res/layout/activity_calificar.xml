@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar6" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/mp_tv_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/mp_tv_subtitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/mp_tv_subtitulo" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -69,7 +69,7 @@
         android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
         app:srcCompat="@drawable/baseline_star_24" />
 
     <ImageView
@@ -79,7 +79,7 @@
         android:layout_marginTop="52dp"
         android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
         app:srcCompat="@drawable/baseline_star_24" />
 
     <ImageView
@@ -90,7 +90,7 @@
         app:layout_constraintEnd_toStartOf="@+id/imageView5"
         app:layout_constraintHorizontal_bias="0.611"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
         app:srcCompat="@drawable/baseline_star_24" />
 
     <ImageView
@@ -100,7 +100,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="52dp"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
         app:srcCompat="@drawable/baseline_star_half_24" />
 
     <ImageView
@@ -112,7 +112,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
         app:srcCompat="@drawable/baseline_star_outline_24" />
 
     <Button
