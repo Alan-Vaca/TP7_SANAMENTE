@@ -104,7 +104,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
         try {
             exito = consultasUsuario.registrarUsuario(getConnection(),com.getUsuarioAsociado());
             if(exito) {
-                RegistrarUsuarioComercio(com);
+                altaComercio(com);
             }
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());

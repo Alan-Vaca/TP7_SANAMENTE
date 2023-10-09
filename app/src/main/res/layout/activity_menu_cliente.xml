@@ -90,7 +90,7 @@
         android:layout_width="231dp"
         android:layout_height="57dp"
         android:onClick="MenuPrincipal"
-        android:text="mcli_bn_salir"
+        android:text="SALIR"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

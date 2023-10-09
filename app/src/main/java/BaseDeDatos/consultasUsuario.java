@@ -20,8 +20,8 @@ public class consultasUsuario {
     public Usuario obtenerUsuarioXlogin(Connection conn,Usuario user) {
         try {
             String query = "SELECT idUsuario,apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario,"
-            + "(select count(c.idCliente) from clientes c where c.idUsuario = idUsuario) as esCliente"
-            + " from usuarios where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'";
+            + "(select count(c.idCliente) from clientes c where c.idUsuario = u.idUsuario) as esCliente"
+            + " from usuarios u where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'";
 
             if (conn != null) {
                 try {
@@ -62,15 +62,17 @@ public class consultasUsuario {
     //--------------------------------------------------------------------------------------
     //CONSULTA DE TIPO INSERT
     //--------------------------------------------------------------------------------------
-    public Boolean registrarUsuario(Connection conn, Usuario user) {
+    public Boolean registrarUsuario(Connection conn, Usuario user) throws SQLException {
         Boolean exito = false;
+        PreparedStatement pstmt = null; // Declarar el PreparedStatement fuera del bloque try para que pueda cerrarse en el bloque finally.
+
         try {
             if (conn != null) {
                 String insertQuery = "INSERT INTO usuarios(" +
-                "apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario" +
-                 ") VALUES (?,?,?,?,?,?,?)";
+                        "apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario" +
+                        ") VALUES (?,?,?,?,?,?,?)";
 
-                PreparedStatement pstmt = conn.prepareStatement(insertQuery);
+                pstmt = conn.prepareStatement(insertQuery);
                 pstmt.setString(1, user.getApellido());
                 pstmt.setString(2, user.getContraseña());
                 pstmt.setString(3, user.getDireccion());
@@ -80,14 +82,19 @@ public class consultasUsuario {
                 pstmt.setString(7, user.getNombreUsuario());
                 pstmt.executeUpdate();
 
-                pstmt.close();
-                conn.close();
                 exito = true;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             exito = false;
             Log.d("ERROR-DB", e.toString());
             e.printStackTrace();
+        } finally {
+            if (pstmt != null) {
+                pstmt.close(); // Cierra el PreparedStatement en el bloque finally.
+            }
+            if (conn != null) {
+                conn.close(); // Cierra la conexión en el bloque finally después de todas las operaciones.
+            }
         }
         return exito;
     }
@@ -149,7 +156,7 @@ public class consultasUsuario {
         }
     }
 
-    public void altaComercio(Connection conn, Comercio comercio) {
+    public void altaComercio(Connection conn, Comercio comercio) throws SQLException {
         try {
             if (conn != null) {
                 String insertQuery = "INSERT INTO comercios(idUsuario,estado,fechaCreacion,cuit,horarios,nombreComercio) VALUES ((select max(idUsuario) from usuarios),?,?,?,?,?)";
@@ -168,6 +175,7 @@ public class consultasUsuario {
                 conn.close();
             }
         } catch (Exception e) {
+            conn.close();
             Log.d("ERROR-DB", e.toString());
             e.printStackTrace();
         }
