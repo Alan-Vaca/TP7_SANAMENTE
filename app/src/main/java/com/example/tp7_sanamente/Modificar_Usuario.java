@@ -15,6 +15,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import BaseDeDatos.Conexion;
+import Entidad.Cliente;
+import Entidad.Comercio;
+import Entidad.Notificacion;
 import Entidad.Restriccion;
 import Entidad.Usuario;
 
@@ -22,7 +25,8 @@ public class Modificar_Usuario extends AppCompatActivity {
 
     TextView nombreApellido,dni,usuario,alergia,direccion,pass0,pass1,pass2;
     CheckBox hipertenso,celiaco,diabetico;
-
+Usuario user;
+    Restriccion restriccion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,7 @@ public class Modificar_Usuario extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
 
-        Usuario user = new Usuario();
+        user = new Usuario();
 
         if (!usuarioJson.isEmpty()) {
             Gson gson = new Gson();
@@ -55,7 +59,6 @@ public class Modificar_Usuario extends AppCompatActivity {
                 String dniTxt = String.valueOf(user.getDNI());
                 dni.setText(dniTxt);
                 direccion.setText(user.getDireccion());
-
                 new Modificar_Usuario.cargarRestricciones().execute(user);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
@@ -66,7 +69,47 @@ public class Modificar_Usuario extends AppCompatActivity {
         }
     }
 
-    public void MenuMiUsuario(View view) {
+
+    public void ModificarClienteUsuario(View view) {
+
+        String Usuario = usuario.getText().toString();
+        String Alergia = alergia.getText().toString();
+        String Direccion = direccion.getText().toString();
+        String Pass0 = pass0.getText().toString();
+        String Pass1 = pass1.getText().toString();
+        String Pass2 = pass2.getText().toString();
+
+        boolean Hipertenso = hipertenso.isChecked();
+        boolean Celiaco = celiaco.isChecked();
+        boolean Diabetico = diabetico.isChecked();
+
+        //IF -- LAS CONTRASEÑA ACTUAL DEBE SER IGUAL A LA DE user.getContraseña
+        //SI ES VALIDO EL CONDICIONAL ANTERIOR LA PASS 1 Y PASS 2 DEBEN SER IGUALES
+        //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
+
+        user.setNombreUsuario(Usuario);
+        user.setDireccion(Direccion);
+        user.setContraseña(Pass1);
+
+        restriccion.setAlergico(Alergia);
+        restriccion.setHipertenso(Hipertenso);
+        restriccion.setCeliaco(Celiaco);
+        restriccion.setDiabetico(Diabetico);
+
+        if(validarCliente(user)) {
+            Cliente cliente = new Cliente();
+            restriccion.setClienteAsociado(cliente);
+            restriccion.getClienteAsociado().setUsuarioAsociado(user);
+            new Modificar_Usuario.modificarCliente().execute(restriccion);
+            MenuirMiUsuario(view);
+        }
+    }
+
+    public boolean validarCliente(Usuario usuario){
+        return true;
+    }
+
+    public void MenuirMiUsuario(View view) {
         Intent menuMiUsuario = new Intent(this, MiUsuario.class);
         startActivity(menuMiUsuario);
     }
@@ -94,6 +137,40 @@ public class Modificar_Usuario extends AppCompatActivity {
                     celiaco.setChecked(res.isCeliaco());
                     diabetico.setChecked(res.isDiabetico());
                     alergia.setText(res.getAlergico());
+
+                    restriccion = new Restriccion();
+                    restriccion = res;
+            } else {
+                Toast.makeText(Modificar_Usuario.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private class modificarCliente extends AsyncTask<Restriccion, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Restriccion... restriccion) {
+            Conexion con = new Conexion();
+            try {
+                Notificacion notificacion = new Notificacion();
+                return con.ModificarUsuarioCliente(restriccion[0],notificacion);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            if (bool) {
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                Gson gson = new Gson();
+                String usuarioJson = gson.toJson(restriccion.getClienteAsociado().getUsuarioAsociado());
+                editor.putString("usuarioLogueado", usuarioJson);
+                editor.apply();
+
+                Toast.makeText(Modificar_Usuario.this, "EL COMERCIO HA SIDO MODIFICADO CON EXITO", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(Modificar_Usuario.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }
