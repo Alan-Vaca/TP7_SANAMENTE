@@ -20,13 +20,12 @@ public class consultasNotificaciones {
             if (conn != null) {
                 String insertQuery = "INSERT INTO notificaciones(" +
                         "idUsuario,ofertas,pedidos,productos" +
-                        ") VALUES (?,?,?,?)";
+                        ") VALUES ((select max(idUsuario) from usuarios),?,?,?)";
 
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-                pstmt.setInt(1, idUsuario);
+                pstmt.setBoolean(1, false);
                 pstmt.setBoolean(2, false);
                 pstmt.setBoolean(3, false);
-                pstmt.setBoolean(4, false);
                 pstmt.executeUpdate();
 
                 pstmt.close();
@@ -78,14 +77,14 @@ public class consultasNotificaciones {
         try {
             if (conn != null) {
                 String updateQuery = "UPDATE notificaciones SET " +
-                        "ofertas = ?,pedidos = ?,productos = ?" +
-                        "WHERE idNotificacion = ?";
+                        "ofertas = ?,pedidos = ?,productos = ? " +
+                        "WHERE idUsuario = ?";
 
                 PreparedStatement pstmt = conn.prepareStatement(updateQuery);
                 pstmt.setBoolean(1, not.isOfertas());
                 pstmt.setBoolean(2, not.isPedidos());
                 pstmt.setBoolean(3, not.isProductos());
-                pstmt.setInt(4, not.getIdNotificacion());
+                pstmt.setInt(4, not.getUsuarioAsociado().getIdUsuario());
 
                 int filas_modificadas= pstmt.executeUpdate();
                 pstmt.close();

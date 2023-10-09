@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar12" />
 
     <Switch
-        android:id="@+id/switch1"
+        android:id="@+id/switch_pedidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView34" />
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/switch_productos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -49,29 +49,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+        app:layout_constraintTop_toBottomOf="@+id/switch_pedidos" />
 
     <Switch
-        android:id="@+id/switch3"
+        android:id="@+id/switch_ofertas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
         android:text="Ofertas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch2" />
+        app:layout_constraintTop_toBottomOf="@+id/switch_productos" />
 
     <Button
         android:id="@+id/button54"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:onClick="MenuCliente"
+        android:onClick="ModificarNotificaciones"
         android:text="APLICAR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch3" />
+        app:layout_constraintTop_toBottomOf="@+id/switch_ofertas" />
 
     <Button
         android:id="@+id/button55"
