@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/r_cli_dni" />
 
     <EditText
-        android:id="@+id/r_cli_usuario"
+        android:id="@+id/mod_c_direccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -62,7 +62,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/r_cli_nombre" />
+        app:layout_constraintTop_toBottomOf="@+id/mod_c_comercio" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -78,7 +78,7 @@
         app:title="Registrar cliente" />
 
     <EditText
-        android:id="@+id/r_cli_nombre"
+        android:id="@+id/mod_c_comercio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -112,7 +112,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/r_cli_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion" />
 
     <CheckBox
         android:id="@+id/r_cb_hipertenso"

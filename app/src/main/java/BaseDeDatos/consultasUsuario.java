@@ -15,6 +15,8 @@ import Entidad.Restriccion;
 import Entidad.Usuario;
 
 public class consultasUsuario {
+
+
     //--------------------------------------------------------------------------------------
     //CONSULTAS DE TIPO SELECT
     //--------------------------------------------------------------------------------------
@@ -210,5 +212,33 @@ public class consultasUsuario {
         }
 
         return comercio;
+    }
+
+    public static void modificarComercio(Connection conn, Comercio comercio) {
+        try {
+            if (conn != null) {
+                String updateQuery = "UPDATE comercios SET " +
+                        "nombreComercio = ?,horarios = ?,cuit = ?,estado = ? " +
+                        "WHERE idComercio = ?";
+
+                PreparedStatement pstmt = conn.prepareStatement(updateQuery);
+                pstmt.setString(1, comercio.getNombreComercio());
+                pstmt.setString(2, comercio.getHorarios());
+                pstmt.setInt(3, comercio.getCuit());
+                pstmt.setBoolean(4, comercio.isEstado());
+
+                pstmt.setInt(5, comercio.getIdComercio());
+
+                int filas_modificadas= pstmt.executeUpdate();
+                pstmt.close();
+                conn.close();
+            }
+            else {
+                Log.d("ERROR-DB", "NO hay conexion");
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
     }
 }

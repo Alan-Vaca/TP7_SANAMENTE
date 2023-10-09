@@ -32,8 +32,8 @@ public class Registrar_Cliente extends AppCompatActivity {
         Usuario usuarioRecibido = getIntent().getParcelableExtra("usuarioInsert");
         user = usuarioRecibido;
 
-        nombre = (EditText)findViewById(R.id.r_cli_nombre);
-        apellido = (EditText)findViewById(R.id.r_cli_usuario);
+        nombre = (EditText)findViewById(R.id.mod_c_comercio);
+        apellido = (EditText)findViewById(R.id.mod_c_direccion);
         dni = (EditText)findViewById(R.id.r_cli_dni);
         alergias = (EditText)findViewById(R.id.r_cli_alergias);
         direccion = (EditText)findViewById(R.id.r_cli_direccion);

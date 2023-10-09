@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,9 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import BaseDeDatos.Conexion;
-import Entidad.Cliente;
 import Entidad.Comercio;
-import Entidad.Restriccion;
 import Entidad.Usuario;
 
 public class Registrar_Comercio extends AppCompatActivity {
@@ -30,7 +27,7 @@ public class Registrar_Comercio extends AppCompatActivity {
         Usuario usuarioRecibido = getIntent().getParcelableExtra("usuarioInsert");
         user = usuarioRecibido;
 
-        cuit = (EditText)findViewById(R.id.r_com_cuit);
+        cuit = (EditText)findViewById(R.id.mod_c_usuario);
         nombre = (EditText)findViewById(R.id.r_com_nombre);
         cierre = (EditText)findViewById(R.id.r_com_cierre);
         apertura = (EditText)findViewById(R.id.r_com_apertura);

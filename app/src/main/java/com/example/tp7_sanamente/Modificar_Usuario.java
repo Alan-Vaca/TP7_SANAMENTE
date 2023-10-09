@@ -30,7 +30,7 @@ public class Modificar_Usuario extends AppCompatActivity {
 
         nombreApellido = (TextView)findViewById(R.id.mod_nombre_apellido);
         dni = (TextView)findViewById(R.id.mod_dni);
-        usuario = (TextView)findViewById(R.id.r_cli_usuario);
+        usuario = (TextView)findViewById(R.id.mod_c_direccion);
         alergia = (TextView)findViewById(R.id.r_cli_alergias);
         direccion = (TextView)findViewById(R.id.r_cli_direc);
         pass0 = (TextView)findViewById(R.id.r_cli_pass_actual);

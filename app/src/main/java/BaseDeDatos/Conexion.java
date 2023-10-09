@@ -117,7 +117,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
         try {
             exito = consultasUsuario.modificarUsuario(getConnection(),com.getUsuarioAsociado());
             if(exito) {
-                //Modificar comercio
+                ModificarComercio(com);
             }
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
@@ -221,7 +221,13 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return comercio;
     }
-    //-MODIFICAR COMERCIO (ID USUARIO, COMERCIO)
+    public void ModificarComercio(Comercio comercio) {
+        try {
+            BaseDeDatos.consultasUsuario.modificarComercio(getConnection(),comercio);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+    }
 
     //--------------------------------------------------------------------------------------
     //PRODUCTOS
