@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.Calendar;
 
 import Entidad.Comercio;
+import Entidad.Restriccion;
 import Entidad.Usuario;
 
 public class consultasUsuario {
@@ -179,5 +180,35 @@ public class consultasUsuario {
             Log.d("ERROR-DB", e.toString());
             e.printStackTrace();
         }
+    }
+
+    public Comercio obtenerComercio(Connection conn, int idUsuario) {
+        Comercio comercio = new Comercio();
+        try {
+            String query = "select nombreComercio,idComercio, horarios,cuit,estado from comercios where idUsuario = " + idUsuario;
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next()) {
+                        comercio.setNombreComercio(rs.getString("nombreComercio"));
+                        comercio.setIdComercio(rs.getInt("idComercio"));
+                        comercio.setHorarios(rs.getString("horarios"));
+                        comercio.setCuit(rs.getInt("cuit"));
+                        comercio.setEstado(rs.getBoolean("estado"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return comercio;
     }
 }

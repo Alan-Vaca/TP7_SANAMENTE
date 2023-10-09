@@ -210,7 +210,17 @@ public class Conexion extends AsyncTask<String,Void, String> {
             Log.d("BD-ERROR", e.toString());
         }
     }
-    //-OBTENER COMERCIO (ID USUARIO)
+
+    public Comercio obtenerComercio(int idUsuario) {
+        Comercio comercio = new Comercio();
+        try {
+            Connection con = getConnection();
+            comercio = consultasUsuario.obtenerComercio(getConnection(),idUsuario);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return comercio;
+    }
     //-MODIFICAR COMERCIO (ID USUARIO, COMERCIO)
 
     //--------------------------------------------------------------------------------------

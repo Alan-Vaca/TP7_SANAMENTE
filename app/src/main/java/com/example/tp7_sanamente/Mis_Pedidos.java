@@ -28,4 +28,9 @@ public class Mis_Pedidos extends AppCompatActivity {
     public void CancelarPedido(View view) {
         Toast.makeText(Mis_Pedidos.this, "PEDIDO CANCELADO", Toast.LENGTH_LONG).show();
     }
+
+    public void MenuComercio(View view) {
+        Intent MenuComercio = new Intent(this, MenuComercio.class);
+        startActivity(MenuComercio);
+    }
 }

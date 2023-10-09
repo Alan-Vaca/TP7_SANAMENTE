@@ -23,4 +23,9 @@ public class MiHistorial extends AppCompatActivity {
         Intent DetalleHistorial = new Intent(this, Detalle_Pedido.class);
         startActivity(DetalleHistorial);
     }
+
+    public void MenuCliente(View view) {
+        Intent MenuCliente = new Intent(this, Menu_Cliente.class);
+        startActivity(MenuCliente);
+    }
 }

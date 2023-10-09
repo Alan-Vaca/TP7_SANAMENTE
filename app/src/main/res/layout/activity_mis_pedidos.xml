@@ -54,12 +54,26 @@
 
     <Button
         android:id="@+id/button46"
-        android:layout_width="375dp"
+        android:layout_width="wrap_content"
         android:layout_height="47dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:onClick="FiltrosPedidos"
         android:text="FILTROS"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="MenuComercio"
+        android:text="VOLVER AL MENU PRINCIPAL"
+        app:layout_constraintBottom_toTopOf="@+id/_dynamic"
+        app:layout_constraintEnd_toStartOf="@+id/button46"
+        app:layout_constraintHorizontal_bias="0.321"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar7"
+        app:layout_constraintVertical_bias="0.521" />
 </androidx.constraintlayout.widget.ConstraintLayout>

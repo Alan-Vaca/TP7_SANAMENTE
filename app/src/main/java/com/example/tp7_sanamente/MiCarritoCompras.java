@@ -1,10 +1,10 @@
 package com.example.tp7_sanamente;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MiCarritoCompras extends AppCompatActivity {
 
@@ -22,5 +22,10 @@ public class MiCarritoCompras extends AppCompatActivity {
     public void MiCarritoDeComprasComprar(View view) {
         Intent miCarritoDeComprasComprar = new Intent(this, Metodo_De_Pago.class);
         startActivity(miCarritoDeComprasComprar);
+    }
+
+    public void MenuCliente(View view) {
+        Intent MenuCliente = new Intent(this, Menu_Cliente.class);
+        startActivity(MenuCliente);
     }
 }
