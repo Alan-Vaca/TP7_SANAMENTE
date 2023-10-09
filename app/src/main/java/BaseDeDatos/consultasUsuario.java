@@ -219,7 +219,7 @@ public class consultasUsuario {
             if (conn != null) {
                 String updateQuery = "UPDATE comercios SET " +
                         "nombreComercio = ?,horarios = ?,cuit = ?,estado = ? " +
-                        "WHERE idComercio = ?";
+                        "WHERE idUsuario = ?";
 
                 PreparedStatement pstmt = conn.prepareStatement(updateQuery);
                 pstmt.setString(1, comercio.getNombreComercio());
@@ -227,7 +227,7 @@ public class consultasUsuario {
                 pstmt.setInt(3, comercio.getCuit());
                 pstmt.setBoolean(4, comercio.isEstado());
 
-                pstmt.setInt(5, comercio.getIdComercio());
+                pstmt.setInt(5, comercio.getUsuarioAsociado().getIdUsuario());
 
                 int filas_modificadas= pstmt.executeUpdate();
                 pstmt.close();

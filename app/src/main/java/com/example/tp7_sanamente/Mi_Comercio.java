@@ -50,6 +50,7 @@ public class Mi_Comercio extends AppCompatActivity {
                 direccionComercio.setText(user.getDireccion());
                 nombreUsuario.setText(user.getNombreUsuario());
 
+                comercio.setUsuarioAsociado(user);
                 new Mi_Comercio.cargarComercio().execute(user);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
@@ -93,6 +94,7 @@ public class Mi_Comercio extends AppCompatActivity {
         comercio.getUsuarioAsociado().setContraseña(ContraseñaNueva1);
 
         if(validarComercio(comercio)) {
+            new Mi_Comercio.modificarComercio().execute(comercio);
             MenuMiUsuarioComercio(view);
         }
     }
@@ -124,7 +126,39 @@ public class Mi_Comercio extends AppCompatActivity {
 
                 horarioApertura.setText(horarios[0]);
                 horarioCierre.setText(horarios[1]);
+
                 comercio.setUsuarioAsociado(user);
+            } else {
+                Toast.makeText(Mi_Comercio.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private class modificarComercio extends AsyncTask<Comercio, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Comercio... comercio) {
+            Conexion con = new Conexion();
+            try {
+                con.ModificarUsuarioComercio(comercio[0]);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            if (bool) {
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                Gson gson = new Gson();
+                String usuarioJson = gson.toJson(comercio.getUsuarioAsociado());
+                editor.putString("usuarioLogueado", usuarioJson);
+                editor.apply();
+
+                Toast.makeText(Mi_Comercio.this, "EL COMERCIO HA SIDO MODIFICADO CON EXITO", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(Mi_Comercio.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }

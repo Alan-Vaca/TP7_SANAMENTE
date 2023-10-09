@@ -72,6 +72,8 @@ public class MiUsuarioComercio extends AppCompatActivity {
         startActivity(MenuMi_Comercio);
     }
 
+
+
     private class cargarComercio extends AsyncTask<Usuario, Void, Comercio> {
         @Override
         protected Comercio doInBackground(Usuario... user) {
