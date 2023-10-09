@@ -45,6 +45,15 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return null;
     }
 
+    public void cerrarConexion() {
+        try {
+            Connection con = getConnection();
+            con.close();
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+    }
+
     //CONSULTAS - A LA BASE DE DATOS
 
     //--------------------------------------------------------------------------------------
@@ -95,7 +104,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
         try {
             exito = consultasUsuario.registrarUsuario(getConnection(),com.getUsuarioAsociado());
             if(exito) {
-                //alta comercio
+                RegistrarUsuarioComercio(com);
             }
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
@@ -194,7 +203,13 @@ public class Conexion extends AsyncTask<String,Void, String> {
     //COMERCIOS
     //--------------------------------------------------------------------------------------
 
-    //-ALTA COMERCIO (ID USUARIO, COMERCIO)
+    public void altaComercio(Comercio comercio) {
+        try {
+            consultasUsuario.altaComercio(getConnection(),comercio);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+    }
     //-OBTENER COMERCIO (ID USUARIO)
     //-MODIFICAR COMERCIO (ID USUARIO, COMERCIO)
 

@@ -8,9 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
 import java.util.Calendar;
-import Entidad.Cliente;
+
+import Entidad.Comercio;
 import Entidad.Usuario;
 
 public class consultasUsuario {
@@ -137,6 +137,30 @@ public class consultasUsuario {
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
                 pstmt.setBoolean(1, true);
                 pstmt.setDate(2, fechaActual);
+
+                pstmt.executeUpdate();
+
+                pstmt.close();
+                conn.close();
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void altaComercio(Connection conn, Comercio comercio) {
+        try {
+            if (conn != null) {
+                String insertQuery = "INSERT INTO comercios(idUsuario,estado,fechaCreacion,cuit,horarios,nombreComercio) VALUES ((select max(idUsuario) from usuarios),?,?,?,?,?)";
+                Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+
+                PreparedStatement pstmt = conn.prepareStatement(insertQuery);
+                pstmt.setBoolean(1, true);
+                pstmt.setDate(2, fechaActual);
+                pstmt.setInt(3,comercio.getCuit());
+                pstmt.setString(4,comercio.getHorarios());
+                pstmt.setString(5,comercio.getNombreComercio());
 
                 pstmt.executeUpdate();
 

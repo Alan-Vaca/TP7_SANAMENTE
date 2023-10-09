@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         esComerciante = (Switch)findViewById(R.id.sw_comerciante);
         contraseña = (EditText)findViewById(R.id.ContraseñaLogin);
         usuario = (EditText)findViewById(R.id.UsuarioLogin);
+
+        //En caso de haber tenido un error anteriormente
+        new cerrarConexion().execute(true);
     }
 
 
@@ -52,7 +55,23 @@ public class MainActivity extends AppCompatActivity {
         new obtenerUsuarioXloginTask().execute(usuario);
     }
 
+    private class cerrarConexion extends AsyncTask<Boolean, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Boolean... bool) {
+            Conexion con = new Conexion();
+            try {
+                con.cerrarConexion();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
 
+        @Override
+        protected void onPostExecute(Boolean bool) {
+        }
+    }
 
     private class obtenerUsuarioXloginTask extends AsyncTask<Usuario, Void, Usuario> {
         @Override
