@@ -6,9 +6,11 @@ import android.util.Log;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 import Entidad.Cliente;
 import Entidad.Comercio;
+import Entidad.Etiquetado;
 import Entidad.Notificacion;
 import Entidad.Restriccion;
 import Entidad.Usuario;
@@ -26,7 +28,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public static consultasUsuario consultasUsuario = new consultasUsuario();
     public static consultasNotificaciones consultasNotificaciones = new consultasNotificaciones();
     public static consultasRestricciones consultasRestricciones = new consultasRestricciones();
-
+    public static consultasEtiquetados consultasEtiquetados = new consultasEtiquetados();
 
     //CONEXION
     public static Connection getConnection() {
@@ -229,6 +231,8 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
     }
 
+
+
     //--------------------------------------------------------------------------------------
     //PRODUCTOS
     //--------------------------------------------------------------------------------------
@@ -243,6 +247,18 @@ public class Conexion extends AsyncTask<String,Void, String> {
     //--------------------------------------------------------------------------------------
 
     //-ALTA ETIQUETADO (ID PRODUCTO)
+
+    public ArrayList<Etiquetado> obtenerListadoEtiquetado() {
+        ArrayList<Etiquetado> listaEtiquetado = new ArrayList<Etiquetado>();
+        try {
+            Connection con = getConnection();
+            listaEtiquetado = consultasEtiquetados.obtenerListadoEtiquetado(getConnection());
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaEtiquetado;
+    }
+
     //-OBTENER ETIQUETADO (ID PRODUCTO)
     //-MODIFICAR ETIQUETADO (ID PRODUCTO, ETIQUETADO)
 
