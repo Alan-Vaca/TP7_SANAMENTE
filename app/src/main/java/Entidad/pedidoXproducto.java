@@ -43,11 +43,7 @@ public class pedidoXproducto {
 
     @Override
     public String toString() {
-        return "pedidoXproducto{" +
-                "idPedidoXproducto=" + idPedidoXproducto +
-                ", producto=" + producto +
-                ", cantidad=" + cantidad +
-                ", pedidoAsociado=" + pedidoAsociado +
-                '}';
+        float precioXcantidad = producto.getPrecio() * cantidad;
+        return producto.getNombre().toUpperCase() + " - " + cantidad + " Unidades - $" + precioXcantidad;
     }
 }

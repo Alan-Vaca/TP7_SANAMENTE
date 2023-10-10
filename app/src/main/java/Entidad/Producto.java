@@ -7,6 +7,10 @@ public class Producto {
     float precio;
     String nombre;
 
+    boolean estado;
+
+
+
     public Producto() {
     }
 
@@ -50,15 +54,17 @@ public class Producto {
         this.nombre = nombre;
     }
 
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
     @Override
     public String toString() {
-        return "Producto{" +
-                "idProducto=" + idProducto +
-                ", ingredientes='" + ingredientes + '\'' +
-                ", stock=" + stock +
-                ", precio=" + precio +
-                ", nombre='" + nombre + '\'' +
-                '}';
+        return nombre.toUpperCase() + " - $" + precio;
     }
 }
 

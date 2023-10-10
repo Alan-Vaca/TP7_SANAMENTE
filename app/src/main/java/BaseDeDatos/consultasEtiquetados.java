@@ -3,6 +3,7 @@ package BaseDeDatos;
 import android.util.Log;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,6 +52,26 @@ public class consultasEtiquetados {
         }
 
         return listadoEtiquetado;
+    }
+
+    public void agregarProductoXetiquetado(Connection conn, int idEtiquetado) {
+        try {
+            if (conn != null) {
+                String insertQuery = "INSERT INTO productoXetiquetado(" +
+                        "idProducto, idEtiquetado" +
+                        ") VALUES ((select max(idProducto) from productos),?)";
+
+                PreparedStatement pstmt = conn.prepareStatement(insertQuery);
+                pstmt.setInt(1, idEtiquetado);
+                pstmt.executeUpdate();
+
+                pstmt.close();
+                conn.close();
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
     }
 
     //--------------------------------------------------------------------------------------

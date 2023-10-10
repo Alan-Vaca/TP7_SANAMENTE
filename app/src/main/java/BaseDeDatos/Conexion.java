@@ -12,6 +12,7 @@ import Entidad.Cliente;
 import Entidad.Comercio;
 import Entidad.Etiquetado;
 import Entidad.Notificacion;
+import Entidad.Producto;
 import Entidad.Restriccion;
 import Entidad.Usuario;
 
@@ -29,6 +30,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public static consultasNotificaciones consultasNotificaciones = new consultasNotificaciones();
     public static consultasRestricciones consultasRestricciones = new consultasRestricciones();
     public static consultasEtiquetados consultasEtiquetados = new consultasEtiquetados();
+    public static consultasProductos consultasProductos = new consultasProductos();
 
     //CONEXION
     public static Connection getConnection() {
@@ -237,7 +239,27 @@ public class Conexion extends AsyncTask<String,Void, String> {
     //PRODUCTOS
     //--------------------------------------------------------------------------------------
 
-    //-ALTA PRODUCTO
+    public boolean altaProducto(Producto producto, Comercio comercio, int idEtiquetado1, int idEtiquetado2, int idEtiquetado3) {
+        Boolean exito = false;
+        try {
+            Connection con = getConnection();
+            exito = consultasProductos.agregarProducto(getConnection(),producto,comercio);
+            if(exito) {
+                if(idEtiquetado1 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado1);
+                }
+                if(idEtiquetado2 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado2);
+                }
+                if(idEtiquetado3 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado3);
+                }
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
     //-OBTENER PRODUCTO (ID PRODUCTO)
     //-MODIFICAR PRODUCTO (ID COMERCIO, PRODUCTO)
     //-LISTAR PRODUCTOS (FILTROS) DEBERA INCLUIR EL NOMBRE DE LOS COMERCIOS ASOCIADOS
@@ -258,6 +280,8 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return listaEtiquetado;
     }
+
+
 
     //-OBTENER ETIQUETADO (ID PRODUCTO)
     //-MODIFICAR ETIQUETADO (ID PRODUCTO, ETIQUETADO)

@@ -1,6 +1,7 @@
 package com.example.tp7_sanamente;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -12,17 +13,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
+import Entidad.Comercio;
 import Entidad.Etiquetado;
 import Entidad.Producto;
+import Entidad.Usuario;
 
 public class AgregarProducto extends AppCompatActivity {
 
     EditText nombreProducto, ingredientes, precio, inventario;
     Spinner etiquetado1, etiquetado2, etiquetado3;
     ArrayList<Etiquetado> listaEtiquetados;
+    Usuario user;
+    Comercio comercio;
+
+    int idEtiquetado1,idEtiquetado2,idEtiquetado3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +47,33 @@ public class AgregarProducto extends AppCompatActivity {
         etiquetado2 = (Spinner)findViewById(R.id.ap_sp_item2);
         etiquetado3 = (Spinner)findViewById(R.id.ap_sp_item3);
 
+        idEtiquetado1 = 0;
+        idEtiquetado2 = 0;
+        idEtiquetado3 = 0;
+
         listaEtiquetados = new ArrayList<Etiquetado>();
 
         new AgregarProducto.obtenerListadoEtiquetado().execute();
 
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
+
+        comercio = new Comercio();
+        user = new Usuario();
+
+
+        if (!usuarioJson.isEmpty()) {
+            Gson gson = new Gson();
+            try{
+                user = gson.fromJson(usuarioJson, Usuario.class);
+                new AgregarProducto.cargarComercio().execute(user);
+            } catch (JsonSyntaxException e) {
+                e.printStackTrace();
+                Toast.makeText(AgregarProducto.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG).show();
+            }
+        }else{
+            Toast.makeText(AgregarProducto.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+        }
     }
 
     private class obtenerListadoEtiquetado extends AsyncTask<Producto, Void, ArrayList<Etiquetado>> {
@@ -84,12 +117,29 @@ public class AgregarProducto extends AppCompatActivity {
     }
 
     public void AgregarProductoAgregar(View view) {
+        Producto producto = new Producto();
+
+        producto.setNombre(nombreProducto.getText().toString());
+        producto.setIngredientes(ingredientes.getText().toString());
+        producto.setStock(Integer.parseInt(inventario.getText().toString()));
+        producto.setPrecio(Float.parseFloat(precio.getText().toString()));
+
+         idEtiquetado1 = etiquetado1.getSelectedItemPosition();
+         idEtiquetado2 = etiquetado2.getSelectedItemPosition();
+         idEtiquetado3 = etiquetado3.getSelectedItemPosition();
+
+        if(validarProducto(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
+
+        }
+    }
+
+    public boolean validarProducto(Producto producto, int id1, int id2, int id3){
         boolean isValid = true;
         String productNameTxt = nombreProducto.getText().toString();
         String ingredientsTxt = ingredientes.getText().toString();
         int price = 0;
         int stock = 0;
-        
+
 
         // Validar nombre de producto
         if (productNameTxt.isEmpty()) {
@@ -128,10 +178,55 @@ public class AgregarProducto extends AppCompatActivity {
         }
 
 
-        if(isValid == true)
-        {
-            Intent agregarProductoAgregar = new Intent(this, Mis_Productos.class);
-            startActivity(agregarProductoAgregar);
+        return isValid;
+    }
+
+    private class cargarComercio extends AsyncTask<Usuario, Void, Comercio> {
+        @Override
+        protected Comercio doInBackground(Usuario... user) {
+            Conexion con = new Conexion();
+            Comercio comercio = new Comercio();
+            try {
+                comercio = con.obtenerComercio(user[0].getIdUsuario());
+                return comercio;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return comercio;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Comercio comercio) {
+            if (comercio.getIdComercio() > 0) {
+                comercio.setUsuarioAsociado(user);
+            } else {
+                Toast.makeText(AgregarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    private class agregarProducto extends AsyncTask<Producto, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Producto... producto) {
+            Conexion con = new Conexion();
+            boolean exito = false;
+            try {
+                exito = con.altaProducto(producto[0],comercio,idEtiquetado1,idEtiquetado2,idEtiquetado3);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return exito;
+            }
+            return exito;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            if (bool) {
+                Toast.makeText(AgregarProducto.this, "PRODUCTO AGREGADO CON EXITO", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(AgregarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
