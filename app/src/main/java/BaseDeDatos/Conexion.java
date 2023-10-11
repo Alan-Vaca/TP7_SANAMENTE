@@ -262,8 +262,30 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return exito;
     }
-    //-OBTENER PRODUCTO (ID PRODUCTO)
-    //-MODIFICAR PRODUCTO (ID COMERCIO, PRODUCTO)
+
+    public boolean modificarProducto(Producto producto, int idEtiquetado1, int idEtiquetado2, int idEtiquetado3) {
+        Boolean exito = false;
+        try {
+            Connection con = getConnection();
+            exito = consultasProductos.modificarProducto(getConnection(),producto);
+            if(exito) {
+                consultasEtiquetados.eliminarProductoXetiquetado(getConnection(),producto.getIdProducto());
+
+                if(idEtiquetado1 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado1);
+                }
+                if(idEtiquetado2 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado2);
+                }
+                if(idEtiquetado3 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado3);
+                }
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
 
     public ArrayList<Producto> obtenerListadoProductos(Usuario user) {
         ArrayList<Producto> listaProducto = new ArrayList<Producto>();

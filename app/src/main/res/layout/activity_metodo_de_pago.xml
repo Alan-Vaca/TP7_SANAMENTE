@@ -23,39 +23,37 @@
         android:id="@+id/mp_et_fecha"
         android:layout_width="120dp"
         android:layout_height="39dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="@string/mp_et_fecha"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.578"
-        app:layout_constraintStart_toEndOf="@+id/mp_et_nombre"
-        app:layout_constraintTop_toBottomOf="@+id/mp_et_numeroTarjeta" />
+        app:layout_constraintStart_toEndOf="@+id/textView18"
+        app:layout_constraintTop_toBottomOf="@+id/mp_et_nombre" />
 
     <EditText
         android:id="@+id/mp_et_nombre"
-        android:layout_width="151dp"
+        android:layout_width="347dp"
         android:layout_height="39dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/mp_et_nombre"
         android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mp_et_numeroTarjeta" />
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <EditText
         android:id="@+id/mp_et_numeroTarjeta"
         android:layout_width="347dp"
         android:layout_height="39dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/mp_et_numeroTarjeta"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -85,7 +83,7 @@
         android:id="@+id/spinner"
         android:layout_width="251dp"
         android:layout_height="31dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mp_tv_subtitulo" />
@@ -94,7 +92,7 @@
         android:id="@+id/mp_tv_subtitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:text="@string/mp_tv_subtitulo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,24 +102,63 @@
         android:id="@+id/mp_bn_finalizarCompra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="72dp"
         android:onClick="MetodoDePagoFinalizarCompra"
         android:text="@string/mp_bn_finalizarCompra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mp_et_codigoSeguridad" />
+        app:layout_constraintTop_toBottomOf="@+id/mp_et_fecha" />
 
     <EditText
         android:id="@+id/mp_et_codigoSeguridad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="39dp"
         android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
         android:width="80dp"
         android:ems="10"
-        android:hint="@string/mp_et_codigoSeguridad"
+        android:hint="Cod"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.159"
+        app:layout_constraintTop_toBottomOf="@+id/mp_et_nombre" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="Numero de tarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Nombre del propietario de la tajerta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mp_et_numeroTarjeta" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
+        android:text="Vencimiento:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mp_et_nombre" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="12dp"
+        android:text="Codigo:"
+        app:layout_constraintEnd_toStartOf="@+id/mp_et_codigoSeguridad"
         app:layout_constraintTop_toBottomOf="@+id/mp_et_nombre" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,7 +27,7 @@ public class ModificarProducto extends AppCompatActivity {
     Spinner etiquetado_1, etiquetado_2,etiquetado_3;
     ArrayList<Etiquetado> listaEtiquetados;
     TextView nombreProducto, ingredienteProducto, precioProducto, stockProducto, detalleStock;
-
+    int idEtiquetado1,idEtiquetado2,idEtiquetado3;
     Button btnModificarAgregarCarrito;
     Usuario user;
     Producto productoSeleccionado;
@@ -180,8 +180,65 @@ public class ModificarProducto extends AppCompatActivity {
     }
 
     public void ModificarProductoModificar(View view) {
-        Intent modificarProductoModificar = new Intent(this, Mis_Productos.class);
-        startActivity(modificarProductoModificar);
+        Producto producto = new Producto();
+
+        producto = productoSeleccionado;
+        producto.setNombre(nombreProducto.getText().toString());
+        producto.setIngredientes(ingredienteProducto.getText().toString());
+        producto.setStock(Integer.parseInt(stockProducto.getText().toString()));
+        producto.setPrecio(Float.parseFloat(precioProducto.getText().toString()));
+
+        idEtiquetado1 = etiquetado_1.getSelectedItemPosition();
+        idEtiquetado2 = etiquetado_2.getSelectedItemPosition();
+        idEtiquetado3 = etiquetado_3.getSelectedItemPosition();
+
+        if(!user.isCliente()){
+            if(validarProductoXmodificar(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
+                new ModificarProducto.modificarProducto().execute(producto);
+            }
+        }else{
+            if(validarProductoXagregarCarrito(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
+                //new ModificarProducto.agregarAlcarritoXproducto().execute(producto);
+            }
+        }
+
+    }
+
+    public boolean validarProductoXmodificar(Producto producto, int id1, int id2, int id3){
+        //DEBE VALIDAR TODOS LOS DATOS INGRESADOS A MODIFICAR
+        return true;
+    }
+
+    public boolean validarProductoXagregarCarrito(Producto producto, int id1, int id2, int id3){
+        //DEBE VALIDAR LA CANTIDAD SOLICITA Y QUE EL CLIENTE SEA APTO PARA COMPRAR DEPENDIENDO SUS RESTRICCIONES
+        return true;
+    }
+
+
+    private class modificarProducto extends AsyncTask<Producto, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Producto... producto) {
+            Conexion con = new Conexion();
+            boolean exito = false;
+            try {
+                exito = con.modificarProducto(producto[0],idEtiquetado1,idEtiquetado2,idEtiquetado3);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return exito;
+            }
+            return exito;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            if (bool) {
+                Toast.makeText(ModificarProducto.this, "PRODUCTO MODIFICADO CON EXITO", Toast.LENGTH_LONG).show();
+                Intent volverAlCatalogo = new Intent(ModificarProducto.this, Mis_Productos.class);
+                startActivity(volverAlCatalogo);
+            } else {
+                Toast.makeText(ModificarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }

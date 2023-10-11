@@ -121,12 +121,24 @@ public class consultasEtiquetados {
     }
 
     //--------------------------------------------------------------------------------------
-    //CONSULTA DE TIPO INSERT
+    //CONSULTA DE TIPO DELETE
     //--------------------------------------------------------------------------------------
 
+    public void eliminarProductoXetiquetado(Connection conn,int idProducto) {
+        try {
+            if (conn != null) {
+                String deleteQuery = "DELETE FROM productoXetiquetado WHERE idProducto = ?";
 
-    //--------------------------------------------------------------------------------------
-    //CONSULTA DE TIPO UPDATE
-    //--------------------------------------------------------------------------------------
+                PreparedStatement pstmt = conn.prepareStatement(deleteQuery);
+                pstmt.setInt(1, idProducto);
+                pstmt.executeUpdate();
 
+                pstmt.close();
+                conn.close();
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
+    }
 }

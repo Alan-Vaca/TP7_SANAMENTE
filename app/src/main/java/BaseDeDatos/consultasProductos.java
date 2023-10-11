@@ -109,4 +109,36 @@ public class consultasProductos {
     //CONSULTA DE TIPO UPDATE
     //--------------------------------------------------------------------------------------
 
+    public Boolean modificarProducto(Connection conn, Producto producto) throws SQLException {
+        try {
+            if (conn != null) {
+                String updateQuery = "UPDATE productos SET " +
+                        "nombreProducto = ?,ingredientes = ?,precio = ?,stock = ?,estado = ? " +
+                        "WHERE idProducto = ?";
+
+                PreparedStatement pstmt = conn.prepareStatement(updateQuery);
+                pstmt.setString(1, producto.getNombre());
+                pstmt.setString(2, producto.getIngredientes());
+                pstmt.setFloat(3, producto.getPrecio());
+                pstmt.setInt(4, producto.getStock());
+                pstmt.setBoolean(5, producto.isEstado());
+
+                pstmt.setInt(6, producto.getIdProducto());
+
+                int filas_modificadas= pstmt.executeUpdate();
+                pstmt.close();
+                conn.close();
+                return filas_modificadas > 0;
+            }
+            else {
+                Log.d("ERROR-DB", "NO hay conexion");
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
 }
