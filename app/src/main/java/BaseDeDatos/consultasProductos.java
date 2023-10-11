@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import Entidad.Comercio;
 import Entidad.Producto;
+import Entidad.Usuario;
 
 public class consultasProductos {
 
@@ -18,17 +19,19 @@ public class consultasProductos {
     //CONSULTAS DE TIPO SELECT
     //--------------------------------------------------------------------------------------
 
-    public ArrayList<Producto> obtenerListadoProductos(Connection conn,boolean xCliente,int idComercio) {
+    public ArrayList<Producto> obtenerListadoProductos(Connection conn, Usuario user) {
         ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
 
         try {
-            String query = "select idProducto, nombreProducto, ingredientes, precio, stock, estado from productos where 1 = 1 ";
-            if(xCliente){
+            String query = "select idProducto, nombreProducto, ingredientes, precio, stock, p.estado, p.idComercio from productos p ";
+
+
+            if(user.isCliente()){
                 //Si es para el cliente mostrara todos los productos con estado activo
-                query += "and estado = 1";
+                query += "where estado = 1";
             }else {
                 //si es para el comerciante mostrara todos los productos que cargo sin importar el estado
-                query += "and idComercio = " + idComercio;
+                query += "inner join comercios c on c.IdComercio = p.idComercio where c.idUsuario = " + user.getIdUsuario() ;
             }
 
 
@@ -45,6 +48,7 @@ public class consultasProductos {
                         producto.setPrecio(rs.getFloat("precio"));
                         producto.setStock(rs.getInt("stock"));
                         producto.setEstado(rs.getBoolean("estado"));
+                        producto.setIdComercio(rs.getInt("idComercio"));
 
                         listadoProducto.add(producto);
                     }

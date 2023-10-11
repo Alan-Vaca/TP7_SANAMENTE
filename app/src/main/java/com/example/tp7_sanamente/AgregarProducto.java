@@ -129,7 +129,7 @@ public class AgregarProducto extends AppCompatActivity {
          idEtiquetado3 = etiquetado3.getSelectedItemPosition();
 
         if(validarProducto(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
-
+            new AgregarProducto.agregarProducto().execute(producto);
         }
     }
 
@@ -196,8 +196,9 @@ public class AgregarProducto extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Comercio comercio) {
-            if (comercio.getIdComercio() > 0) {
+        protected void onPostExecute(Comercio comercioObtenido) {
+            if (comercioObtenido.getIdComercio() > 0) {
+                comercio = comercioObtenido;
                 comercio.setUsuarioAsociado(user);
             } else {
                 Toast.makeText(AgregarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
@@ -224,6 +225,8 @@ public class AgregarProducto extends AppCompatActivity {
         protected void onPostExecute(Boolean bool) {
             if (bool) {
                 Toast.makeText(AgregarProducto.this, "PRODUCTO AGREGADO CON EXITO", Toast.LENGTH_LONG).show();
+                Intent volverAlmenu = new Intent(AgregarProducto.this, MenuComercio.class);
+                startActivity(volverAlmenu);
             } else {
                 Toast.makeText(AgregarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }

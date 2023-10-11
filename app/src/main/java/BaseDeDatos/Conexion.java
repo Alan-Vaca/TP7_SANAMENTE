@@ -264,7 +264,17 @@ public class Conexion extends AsyncTask<String,Void, String> {
     }
     //-OBTENER PRODUCTO (ID PRODUCTO)
     //-MODIFICAR PRODUCTO (ID COMERCIO, PRODUCTO)
-    //-LISTAR PRODUCTOS (FILTROS) DEBERA INCLUIR EL NOMBRE DE LOS COMERCIOS ASOCIADOS
+
+    public ArrayList<Producto> obtenerListadoProductos(Usuario user) {
+        ArrayList<Producto> listaProducto = new ArrayList<Producto>();
+        try {
+            Connection con = getConnection();
+            listaProducto = consultasProductos.obtenerListadoProductos(getConnection(),user);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaProducto;
+    }
 
     //--------------------------------------------------------------------------------------
     //ETIQUETADO

@@ -6,12 +6,21 @@ public class Producto {
     int stock;
     float precio;
     String nombre;
+    int idComercio;
 
     boolean estado;
 
 
 
     public Producto() {
+    }
+
+    public int getIdComercio() {
+        return idComercio;
+    }
+
+    public void setIdComercio(int idComercio) {
+        this.idComercio = idComercio;
     }
 
     public int getIdProducto() {
