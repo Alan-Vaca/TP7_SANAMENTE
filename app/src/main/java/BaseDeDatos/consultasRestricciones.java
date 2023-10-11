@@ -82,10 +82,30 @@ public class consultasRestricciones {
     public void altaRestriccionXcliente(Connection conn) {
         try {
             if (conn != null) {
-                String insertQuery = "INSERT INTO restriccionXcliente(idRestriccion,idCliente) VALUES (" +
-                        "(select max(idRestriccion) from restricciones),(select max(idCliente) from clientes))";
+                String selectMaxIdQuery = "SELECT max(idRestriccion) FROM restricciones";
+                PreparedStatement selectMaxIdStmt = conn.prepareStatement(selectMaxIdQuery);
+                ResultSet resultSet = selectMaxIdStmt.executeQuery();
+                int maxIdRestriccion = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+                if (resultSet.next()) {
+                    maxIdRestriccion = resultSet.getInt(1);
+                }
+
+                selectMaxIdQuery = "SELECT max(idCliente) FROM clientes";
+                selectMaxIdStmt = conn.prepareStatement(selectMaxIdQuery);
+                resultSet = selectMaxIdStmt.executeQuery();
+                int maxIdCliente = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+                if (resultSet.next()) {
+                    maxIdCliente = resultSet.getInt(1);
+                }
+
+                String insertQuery = "INSERT INTO restriccionXcliente(idRestriccion,idCliente) VALUES (?,?)";
+
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
+                pstmt.setInt(1, maxIdRestriccion);
+                pstmt.setInt(2, maxIdCliente);
                 pstmt.executeUpdate();
+
+
 
                 pstmt.close();
                 conn.close();

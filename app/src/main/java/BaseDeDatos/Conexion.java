@@ -21,8 +21,8 @@ public class Conexion extends AsyncTask<String,Void, String> {
 
     //CREDENCIALES DE CONEXION PARA BASE DE DATOS REMOTA
     public static String ConexionHOST = "3306";
-    public static String ConexionUSER = "sql10650827";
-    public static String ConexionPASS = "X5VEc5C8D5";
+    public static String ConexionUSER = "sql10652400";
+    public static String ConexionPASS = "H1E7UP5V5e";
     public static String ConexionURL = "jdbc:mysql://sql10.freesqldatabase.com:" + ConexionHOST + "/" + ConexionUSER;
 
     //CLASES PARA LAS CONSULTAS
@@ -77,6 +77,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public boolean RegistrarUsuarioCliente(Restriccion res) {
         Boolean exito = false;
         try {
+            res.getClienteAsociado().getUsuarioAsociado().setCliente(true);
             exito = consultasUsuario.registrarUsuario(getConnection(),res.getClienteAsociado().getUsuarioAsociado());
             if(exito) {
                 altaNotificacion(res.getClienteAsociado().getUsuarioAsociado().getIdUsuario());
@@ -106,6 +107,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public boolean RegistrarUsuarioComercio(Comercio com) {
         Boolean exito = false;
         try {
+            com.getUsuarioAsociado().setCliente(false);
             exito = consultasUsuario.registrarUsuario(getConnection(),com.getUsuarioAsociado());
             if(exito) {
                 altaComercio(com);

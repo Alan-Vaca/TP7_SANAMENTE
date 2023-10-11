@@ -23,7 +23,7 @@ public class consultasUsuario {
     public Usuario obtenerUsuarioXlogin(Connection conn,Usuario user) {
         try {
             String query = "SELECT idUsuario,apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario,"
-            + "(select count(c.idCliente) from clientes c where c.idUsuario = u.idUsuario) as esCliente"
+            + "esCliente"
             + " from usuarios u where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'";
 
             if (conn != null) {
@@ -39,14 +39,8 @@ public class consultasUsuario {
                         user.setEstado(rs.getBoolean("estado"));
                         user.setNombre(rs.getString("nombre"));
                         user.setNombreUsuario(rs.getString("nombreUsuario"));
+                        user.setCliente(rs.getBoolean("esCliente"));
 
-                        int esCliente = 0;
-                        esCliente = (rs.getInt("esCliente"));
-                        if(esCliente > 0){
-                            user.setCliente(true);
-                        }else{
-                            user.setCliente(false);
-                        }
                     }
                     rs.close();
                     stmt.close();
@@ -72,8 +66,8 @@ public class consultasUsuario {
         try {
             if (conn != null) {
                 String insertQuery = "INSERT INTO usuarios(" +
-                        "apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario" +
-                        ") VALUES (?,?,?,?,?,?,?)";
+                        "apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario,esCliente" +
+                        ") VALUES (?,?,?,?,?,?,?,?)";
 
                 pstmt = conn.prepareStatement(insertQuery);
                 pstmt.setString(1, user.getApellido());
@@ -83,6 +77,7 @@ public class consultasUsuario {
                 pstmt.setBoolean(5, true);
                 pstmt.setString(6, user.getNombre());
                 pstmt.setString(7, user.getNombreUsuario());
+                pstmt.setBoolean(8, user.isCliente());
                 pstmt.executeUpdate();
 
                 exito = true;
@@ -141,12 +136,21 @@ public class consultasUsuario {
     public void altaCliente(Connection conn, Usuario user) {
         try {
             if (conn != null) {
-                String insertQuery = "INSERT INTO clientes(idUsuario,estado,fechaCreacion) VALUES ((select max(idUsuario) from usuarios),?,?)";
+                String selectMaxIdQuery = "SELECT max(idUsuario) FROM usuarios";
+                PreparedStatement selectMaxIdStmt = conn.prepareStatement(selectMaxIdQuery);
+                ResultSet resultSet = selectMaxIdStmt.executeQuery();
+                int maxId = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+                if (resultSet.next()) {
+                    maxId = resultSet.getInt(1);
+                }
+
+                String insertQuery = "INSERT INTO clientes(idUsuario,estado,fechaCreacion) VALUES (?,?,?)";
                 Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
 
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-                pstmt.setBoolean(1, true);
-                pstmt.setDate(2, fechaActual);
+                pstmt.setInt(1,maxId);
+                pstmt.setBoolean(2, true);
+                pstmt.setDate(3, fechaActual);
 
                 pstmt.executeUpdate();
 
@@ -162,15 +166,26 @@ public class consultasUsuario {
     public void altaComercio(Connection conn, Comercio comercio) throws SQLException {
         try {
             if (conn != null) {
-                String insertQuery = "INSERT INTO comercios(idUsuario,estado,fechaCreacion,cuit,horarios,nombreComercio) VALUES ((select max(idUsuario) from usuarios),?,?,?,?,?)";
+
+                String selectMaxIdQuery = "SELECT max(idUsuario) FROM usuarios";
+                PreparedStatement selectMaxIdStmt = conn.prepareStatement(selectMaxIdQuery);
+                ResultSet resultSet = selectMaxIdStmt.executeQuery();
+                int maxId = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+                if (resultSet.next()) {
+                    maxId = resultSet.getInt(1);
+                }
+
+
+                String insertQuery = "INSERT INTO comercios(idUsuario,estado,fechaCreacion,cuit,horarios,nombreComercio) VALUES (?,?,?,?,?,?)";
                 Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
 
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-                pstmt.setBoolean(1, true);
-                pstmt.setDate(2, fechaActual);
-                pstmt.setInt(3,comercio.getCuit());
-                pstmt.setString(4,comercio.getHorarios());
-                pstmt.setString(5,comercio.getNombreComercio());
+                pstmt.setInt(1,maxId);
+                pstmt.setBoolean(2, true);
+                pstmt.setDate(3, fechaActual);
+                pstmt.setInt(4,comercio.getCuit());
+                pstmt.setString(5,comercio.getHorarios());
+                pstmt.setString(6,comercio.getNombreComercio());
 
                 pstmt.executeUpdate();
 

@@ -17,15 +17,25 @@ public class consultasNotificaciones {
     //--------------------------------------------------------------------------------------
     public void altaNotificacion(Connection conn, int idUsuario) {
         try {
+
+            String selectMaxIdQuery = "SELECT max(idUsuario) FROM usuarios";
+            PreparedStatement selectMaxIdStmt = conn.prepareStatement(selectMaxIdQuery);
+            ResultSet resultSet = selectMaxIdStmt.executeQuery();
+            int maxIdUsuario = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+            if (resultSet.next()) {
+                maxIdUsuario = resultSet.getInt(1);
+            }
+
             if (conn != null) {
                 String insertQuery = "INSERT INTO notificaciones(" +
                         "idUsuario,ofertas,pedidos,productos" +
-                        ") VALUES ((select max(idUsuario) from usuarios),?,?,?)";
+                        ") VALUES (?,?,?,?)";
 
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-                pstmt.setBoolean(1, false);
+                pstmt.setInt(1, maxIdUsuario);
                 pstmt.setBoolean(2, false);
                 pstmt.setBoolean(3, false);
+                pstmt.setBoolean(4, false);
                 pstmt.executeUpdate();
 
                 pstmt.close();

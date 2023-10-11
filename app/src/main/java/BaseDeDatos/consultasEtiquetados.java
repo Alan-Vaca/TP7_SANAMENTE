@@ -57,12 +57,21 @@ public class consultasEtiquetados {
     public void agregarProductoXetiquetado(Connection conn, int idEtiquetado) {
         try {
             if (conn != null) {
+                String selectMaxIdQuery = "SELECT max(idProducto) FROM productos";
+                PreparedStatement selectMaxIdStmt = conn.prepareStatement(selectMaxIdQuery);
+                ResultSet resultSet = selectMaxIdStmt.executeQuery();
+                int maxIdProducto = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+                if (resultSet.next()) {
+                    maxIdProducto = resultSet.getInt(1);
+                }
+
                 String insertQuery = "INSERT INTO productoXetiquetado(" +
                         "idProducto, idEtiquetado" +
-                        ") VALUES ((select max(idProducto) from productos),?)";
+                        ") VALUES (?,?)";
 
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-                pstmt.setInt(1, idEtiquetado);
+                pstmt.setInt(1, maxIdProducto);
+                pstmt.setInt(2, idEtiquetado);
                 pstmt.executeUpdate();
 
                 pstmt.close();
