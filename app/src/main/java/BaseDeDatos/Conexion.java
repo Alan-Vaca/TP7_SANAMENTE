@@ -293,9 +293,18 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return listaEtiquetado;
     }
 
+    public ArrayList<Etiquetado> obtenerListadoEtiquetadoXproducto(Producto producto) {
+        ArrayList<Etiquetado> listaEtiquetado = new ArrayList<Etiquetado>();
+        try {
+            Connection con = getConnection();
+            listaEtiquetado = consultasEtiquetados.obtenerListadoEtiquetadoXproducto(getConnection(),producto);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaEtiquetado;
+    }
 
 
-    //-OBTENER ETIQUETADO (ID PRODUCTO)
     //-MODIFICAR ETIQUETADO (ID PRODUCTO, ETIQUETADO)
 
     //--------------------------------------------------------------------------------------

@@ -68,6 +68,7 @@ public class Mis_Productos extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Producto productoSeleccionado = listaProductos.get(position);
+
                 detalle.setText(productoSeleccionado.getIdProducto() + " - " + productoSeleccionado.getNombre() + " - $" + productoSeleccionado.getPrecio());
                 if(user.isCliente()){
                     cantidadTxt.setText("0");
@@ -75,6 +76,14 @@ public class Mis_Productos extends AppCompatActivity {
                     String stock = String.valueOf(productoSeleccionado.getStock());
                     cantidadTxt.setText(stock);
                 }
+
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                Gson gson = new Gson();
+                String productoJson = gson.toJson(productoSeleccionado);
+                editor.putString("productoSeleccionado", productoJson);
+                editor.apply();
             }
         });
     }

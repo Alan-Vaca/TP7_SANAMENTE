@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import Entidad.Etiquetado;
+import Entidad.Producto;
 
 public class consultasEtiquetados {
 
@@ -53,6 +54,42 @@ public class consultasEtiquetados {
 
         return listadoEtiquetado;
     }
+
+    public ArrayList<Etiquetado> obtenerListadoEtiquetadoXproducto(Connection conn, Producto producto) {
+        ArrayList<Etiquetado> listadoEtiquetado = new ArrayList<Etiquetado>();
+
+        try {
+            String query = "select e.idEtiquetado as PidEtiquetado, e.descripcion as Pdescripcion, e.estado as Pestado from etiquetados e "+
+                    "inner join productoXetiquetado ep on e.idEtiquetado = ep.idEtiquetado where ep.idProducto = " + producto.getIdProducto();
+
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        Etiquetado etiquetado = new Etiquetado();
+
+                        etiquetado.setIdEtiquetado(rs.getInt("PidEtiquetado"));
+                        etiquetado.setDescripcion(rs.getString("Pdescripcion"));
+                        etiquetado.setEstado(rs.getBoolean("Pestado"));
+
+                        listadoEtiquetado.add(etiquetado);
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return listadoEtiquetado;
+    }
+
 
     public void agregarProductoXetiquetado(Connection conn, int idEtiquetado) {
         try {

@@ -1,6 +1,9 @@
 package Entidad;
 
-public class Producto {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Producto implements Parcelable{
     int idProducto;
     String ingredientes;
     int stock;
@@ -75,5 +78,50 @@ public class Producto {
     public String toString() {
         return nombre.toUpperCase() + " - $" + precio;
     }
+
+
+
+
+
+
+
+    protected Producto(Parcel in) {
+        idProducto = in.readInt();
+        ingredientes = in.readString();
+        nombre = in.readString();
+        stock = in.readInt();
+        idComercio = in.readInt();
+        estado = in.readByte() != 0;
+        precio = in.readFloat();
+    }
+
+    public static final Parcelable.Creator<Producto> CREATOR = new Parcelable.Creator<Producto>() {
+        @Override
+        public Producto createFromParcel(Parcel in) {
+            return new Producto(in);
+        }
+
+        @Override
+        public Producto[] newArray(int size) {
+            return new Producto[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idProducto);
+        dest.writeString(ingredientes);
+        dest.writeString(nombre);
+        dest.writeFloat(precio);
+        dest.writeInt(stock);
+        dest.writeInt(idComercio);
+        dest.writeByte((byte) (estado ? 1 : 0));
+    }
+
 }
 
