@@ -1,15 +1,39 @@
 package com.example.tp7_sanamente;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import BaseDeDatos.Conexion;
+import Entidad.Pedido;
+import Entidad.Usuario;
+import Entidad.pedidoXproducto;
 
 public class Metodo_De_Pago extends AppCompatActivity {
 
     EditText numeroTarjeta, nombreTarjeta, fecha, codSeguridad;
+    Spinner tipoPago;
+    Usuario user;
+    String[] mediosPago = {"Seleccione", "Tarjeta de debito", "Tarjeta de credito"};
+
+    ArrayList<pedidoXproducto> misProductosPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,31 +44,98 @@ public class Metodo_De_Pago extends AppCompatActivity {
         nombreTarjeta = (EditText)findViewById(R.id.mp_et_nombre);
         fecha = (EditText)findViewById(R.id.mp_et_fecha);
         codSeguridad = (EditText)findViewById(R.id.mp_et_codigoSeguridad);
+        tipoPago = (Spinner)findViewById(R.id.spinnerTipoPago);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Metodo_De_Pago.this, android.R.layout.simple_spinner_dropdown_item, mediosPago);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        tipoPago.setAdapter(adapter);
+
+        SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String listaComoJson = preferences.getString("listadoCarrito", "");
+        Type type = new TypeToken<ArrayList<pedidoXproducto>>(){}.getType();
+        ArrayList<pedidoXproducto> listadoCarrito = gson.fromJson(listaComoJson, type);
+        misProductosPedido = listadoCarrito;
+
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
+
+        user = new Usuario();
+        if (!usuarioJson.isEmpty()) {
+            Gson gsonUser = new Gson();
+            user = gsonUser.fromJson(usuarioJson, Usuario.class);
+        }else{
+            Toast.makeText(Metodo_De_Pago.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+        }
     }
 
 
 
 
     public void MetodoDePagoFinalizarCompra(View view) {
+        if(validarMetodoPago()){
+            //Contendra los datos de todos los pedidos
+            Pedido pedidoGeneral = new Pedido();
+            int IDtipoPago = tipoPago.getSelectedItemPosition();
+            pedidoGeneral.setMedioPago(IDtipoPago);
+            int estado = 1;
+            pedidoGeneral.setEstado(estado); //INICIO EL ESTADO
+            Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+            pedidoGeneral.setFecha(fechaActual);
+            float monto = 0;
+            for (pedidoXproducto item : misProductosPedido) {
+                monto += (item.getCantidad() * item.getProducto().getPrecio());
+            }
+            pedidoGeneral.setMonto(monto);
+
+            new Metodo_De_Pago.agregarPedido().execute(pedidoGeneral);
+        }
+    }
+
+
+    private class agregarPedido extends AsyncTask<Pedido, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Pedido... pedido) {
+            Conexion con = new Conexion();
+            boolean exito = false;
+            try {
+                exito = con.altaPedido(user,pedido[0],misProductosPedido);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return exito;
+            }
+            return exito;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            if (bool) {
+                Toast.makeText(Metodo_De_Pago.this, "EL PEDIDO YA FUE SOLICITADO, REVISA TU HISTORIAL", Toast.LENGTH_LONG).show();
+                Intent historial = new Intent(Metodo_De_Pago.this, MiHistorial.class);
+                startActivity(historial);
+            } else {
+                Toast.makeText(Metodo_De_Pago.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    public Boolean validarMetodoPago(){
         boolean isValid = true;
 
-        // valida que el numero de la tarjeta contenga 16 dígitos
         if(numeroTarjeta.getText().toString().length() != 16) {
             numeroTarjeta.setError("El número de tarjeta debe contener 16 dígitos");
             isValid = false;
         } else {
-            numeroTarjeta.setError(null); // Limpia el error
+            numeroTarjeta.setError(null);
         }
-
-        // valida que el nombre de la tarjeta no contenga más de 24 caracteres
         if(nombreTarjeta.getText().toString().length() > 24) {
             nombreTarjeta.setError("El nombre de tarjeta no puede exceder los 24 caracteres");
             isValid = false;
         } else {
-            nombreTarjeta.setError(null); // Limpia el error
+            nombreTarjeta.setError(null);
         }
-
-        // valida que el formato de la tarjeta tenga un formato correcto "mm/aa"
         String[] fechaArray = fecha.getText().toString().split("/");
         if(fechaArray.length != 2) {
             fecha.setError("El formato de fecha debe ser mm/aa");
@@ -56,22 +147,23 @@ public class Metodo_De_Pago extends AppCompatActivity {
                 fecha.setError("Fecha de expiración inválida");
                 isValid = false;
             } else {
-                fecha.setError(null); // Limpia el error
+                fecha.setError(null);
             }
         }
 
-        // valida que el código de seguridad solo sea de 3 dígitos
         if(codSeguridad.getText().toString().length() != 3) {
             codSeguridad.setError("El código de seguridad debe contener 3 dígitos");
             isValid = false;
         } else {
-            codSeguridad.setError(null); // Limpia el error
+            codSeguridad.setError(null);
         }
 
-        if(isValid) {
-            Intent metodoDePagoFinalizarCompra = new Intent(this, MiHistorial.class);
-            startActivity(metodoDePagoFinalizarCompra);
-        }
+        //if(isValid) {
+        //    Intent metodoDePagoFinalizarCompra = new Intent(this, MiHistorial.class);
+        //    startActivity(metodoDePagoFinalizarCompra);
+        //}
+
+        return isValid;
     }
 
     public void MetodoDePagoCancelarCompra(View view) {

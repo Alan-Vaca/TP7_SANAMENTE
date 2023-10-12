@@ -39,7 +39,7 @@ public class Pedido {
     }
 
     public int getEstado() {
-        return estado;
+        return this.estado;
     }
 
     public void setEstado(int estado) {

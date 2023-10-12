@@ -5,16 +5,18 @@ import android.util.Log;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import Entidad.Cliente;
 import Entidad.Comercio;
 import Entidad.Etiquetado;
 import Entidad.Notificacion;
+import Entidad.Pedido;
 import Entidad.Producto;
 import Entidad.Restriccion;
 import Entidad.Usuario;
+import Entidad.pedidoXproducto;
 
 
 public class Conexion extends AsyncTask<String,Void, String> {
@@ -31,6 +33,9 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public static consultasRestricciones consultasRestricciones = new consultasRestricciones();
     public static consultasEtiquetados consultasEtiquetados = new consultasEtiquetados();
     public static consultasProductos consultasProductos = new consultasProductos();
+    public static consultasComercios consultasComercios = new consultasComercios();
+    public static consultasHistoriales consultasHistoriales = new consultasHistoriales();
+    public static consultasPedidos consultasPedidos = new consultasPedidos();
 
     //CONEXION
     public static Connection getConnection() {
@@ -327,13 +332,37 @@ public class Conexion extends AsyncTask<String,Void, String> {
     }
 
 
+
+
     //-MODIFICAR ETIQUETADO (ID PRODUCTO, ETIQUETADO)
 
     //--------------------------------------------------------------------------------------
     //PEDIDOS
     //--------------------------------------------------------------------------------------
 
-    //-ALTA PEDIDO (LISTADO DE PRODUCTOS, IDCLIENTE) A TODOS LOS PRODUCTOS SE DEBERA RESTAR LA CANTIDAD EN EL STOCK
+    public boolean altaPedido(Usuario usuario,Pedido pedido, ArrayList<pedidoXproducto> misProductosPedido) {
+        Boolean exito = false;
+        try {
+            Map<Integer, ArrayList<pedidoXproducto>> productosAgrupados = new HashMap<>();
+            // Iteramos sobre misProductosPedido para agruparlos por idComercio
+            for (pedidoXproducto producto : misProductosPedido) {
+                int idComercio = producto.getProducto().getIdComercio();
+                if (!productosAgrupados.containsKey(idComercio)) {
+                    productosAgrupados.put(idComercio, new ArrayList<>());
+                }
+                productosAgrupados.get(idComercio).add(producto);
+            }
+            // Iteramos sobre los grupos de productos y registramos uno a uno
+            for (ArrayList<pedidoXproducto> grupoProductos : productosAgrupados.values()) {
+                ArrayList<pedidoXproducto> misProductosPedidoxComercio = grupoProductos;
+
+                exito = consultasPedidos.registrarPedidoXcomercio(getConnection(), misProductosPedidoxComercio, pedido, usuario);
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
     //-DETALLE PEDIDO (ID PEDIDO)
     //-ESTADO PEDIDO (ID PEDIDO, ESTADO) SE CAMBIARA EL ESTADO (entregado, cancelado, confirmado)
     //-LISTAR PEDIDOS (FILTROS)
