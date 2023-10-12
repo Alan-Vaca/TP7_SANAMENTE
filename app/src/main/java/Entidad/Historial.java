@@ -7,7 +7,7 @@ public class Historial {
     Cliente clientePedido;
     Pedido pedidoRealizado;
     Date fecha;
-    int estado; //(1 entregado, 2 cancelado, 3 confirmado)
+    int estado;
 
     public Historial() {
     }
@@ -48,18 +48,24 @@ public class Historial {
         return estado;
     }
 
+    public String getEstadoString(){
+        if(this.estado == 1){
+            return "PENDIENTE";
+        } else if(this.estado == 2){
+            return "ENTREGADO";
+        } else if (this.estado == 3) {
+            return  "CONFIRMADO";
+        }else{
+            return "CANCELADO";
+        }
+    }
+
     public void setEstado(int estado) {
         this.estado = estado;
     }
 
     @Override
     public String toString() {
-        return "Historial{" +
-                "idHistorial=" + idHistorial +
-                ", clientePedido=" + clientePedido +
-                ", pedidoRealizado=" + pedidoRealizado +
-                ", fecha=" + fecha +
-                ", estado=" + estado +
-                '}';
+        return "Pedido N°" + getPedidoRealizado().getIdPedido() + " - " + getFecha().toString() + " - " + getEstadoString();
     }
 }

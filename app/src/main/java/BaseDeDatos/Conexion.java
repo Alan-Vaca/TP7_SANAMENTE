@@ -11,6 +11,7 @@ import java.util.Map;
 
 import Entidad.Comercio;
 import Entidad.Etiquetado;
+import Entidad.Historial;
 import Entidad.Notificacion;
 import Entidad.Pedido;
 import Entidad.Producto;
@@ -380,7 +381,27 @@ public class Conexion extends AsyncTask<String,Void, String> {
     //HISTORIAL
     //--------------------------------------------------------------------------------------
 
-    //-CONSULTAR HISTORIAL (FILTROS, IDCLIENTE) SE SUMARA LOS PEDIDOS Y CALIFICACION PERSONAL EN CASO DE TENERLA
+    public ArrayList<Historial> obtenerListadoHistorial(Usuario user) {
+        ArrayList<Historial> listaHistorial = new ArrayList<Historial>();
+        try {
+            Connection con = getConnection();
+            listaHistorial = consultasHistoriales.obtenerListadoHistorial(getConnection(),user);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaHistorial;
+    }
+
+    public ArrayList<Pedido> obtenerListadoPedidos(Usuario user) {
+        ArrayList<Pedido> listaPedido = new ArrayList<Pedido>();
+        try {
+            Connection con = getConnection();
+            listaPedido = consultasHistoriales.obtenerListadoPedidos(getConnection(),user);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaPedido;
+    }
 
     //--------------------------------------------------------------------------------------
     //REPORTE

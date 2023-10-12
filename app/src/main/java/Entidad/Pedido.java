@@ -70,16 +70,20 @@ public class Pedido {
         this.comercio = comercio;
     }
 
+    public String getEstadoString(){
+        if(this.estado == 1){
+            return "PENDIENTE";
+        } else if(this.estado == 2){
+            return "ENTREGADO";
+        } else if (this.estado == 3) {
+            return  "CONFIRMADO";
+        }else{
+            return "CANCELADO";
+        }
+    }
+
     @Override
     public String toString() {
-        return "Pedido{" +
-                "idPedido=" + idPedido +
-                ", monto=" + monto +
-                ", fecha=" + fecha +
-                ", estado=" + estado +
-                ", medioPago=" + medioPago +
-                ", cliente=" + cliente +
-                ", comercio=" + comercio +
-                '}';
+        return "N°" + idPedido + " - " + getEstadoString() + " - " + "$" + monto + " - FECHA: " + fecha.toString();
     }
 }

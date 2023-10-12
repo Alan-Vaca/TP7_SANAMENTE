@@ -20,6 +20,7 @@
         app:title="Mis Pedidos" />
 
     <ListView
+        android:id="@+id/grd_Pedidos"
         android:layout_width="393dp"
         android:layout_height="507dp"
         android:layout_marginTop="12dp"

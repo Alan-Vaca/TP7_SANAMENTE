@@ -20,6 +20,7 @@
         app:title="Mi Historial" />
 
     <ListView
+        android:id="@+id/grd_Historial"
         android:layout_width="388dp"
         android:layout_height="479dp"
         android:layout_marginTop="16dp"
