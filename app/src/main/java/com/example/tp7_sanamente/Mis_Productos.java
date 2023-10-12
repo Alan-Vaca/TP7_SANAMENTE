@@ -1,5 +1,6 @@
 package com.example.tp7_sanamente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -15,12 +16,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
 import Entidad.Producto;
 import Entidad.Usuario;
+import Entidad.pedidoXproducto;
 
 public class Mis_Productos extends AppCompatActivity {
 
@@ -29,6 +33,10 @@ public class Mis_Productos extends AppCompatActivity {
     ListView lv_Catalogo;
     Button btnAdd;
     ArrayList<Producto> listaProductos;
+    ArrayList<pedidoXproducto> listadoCarrito;
+    Producto productoSeleccionado;
+
+    boolean listaCargada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +48,20 @@ public class Mis_Productos extends AppCompatActivity {
         cantidadTxt = (TextView)findViewById(R.id.catalogoCantidad);
         detalle = (TextView)findViewById(R.id.catalogoDetalle);
 
+        listaCargada = false;
+
+        SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+        Gson gsonCarrito = new Gson();
+        String listaComoJson = preferences.getString("listadoCarrito", "");
+        Type type = new TypeToken<ArrayList<pedidoXproducto>>(){}.getType();
+        listadoCarrito = gsonCarrito.fromJson(listaComoJson, type);
+
+        if (listadoCarrito != null && !listadoCarrito.isEmpty()) {
+            listaCargada = true;
+        }
+
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
-
         user = new Usuario();
         if (!usuarioJson.isEmpty()) {
             Gson gson = new Gson();
@@ -67,7 +86,8 @@ public class Mis_Productos extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Producto productoSeleccionado = listaProductos.get(position);
+                productoSeleccionado = new Producto();
+                productoSeleccionado = listaProductos.get(position);
 
                 detalle.setText(productoSeleccionado.getIdProducto() + " - " + productoSeleccionado.getNombre() + " - $" + productoSeleccionado.getPrecio());
                 if(user.isCliente()){
@@ -135,6 +155,46 @@ public class Mis_Productos extends AppCompatActivity {
         if(user.isCliente()){
             int cantidadSolicitada = Integer.parseInt(cantidadTxt.getText().toString());
             if(!cantidadTxt.getText().toString().isEmpty() && cantidadSolicitada >0) {
+
+                pedidoXproducto ProductoCarrito = new pedidoXproducto();
+                ProductoCarrito.setProducto(productoSeleccionado);
+                ProductoCarrito.setCantidad(cantidadSolicitada);
+
+                if (listaCargada) {
+                    int index = -1;
+                    for (int i = 0; i < listadoCarrito.size(); i++) {
+                        if (listadoCarrito.get(i).getProducto().getIdProducto() == productoSeleccionado.getIdProducto()) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    if (index != -1) {
+                        pedidoXproducto productoExistente = listadoCarrito.get(index);
+                        int nuevaCantidad = productoExistente.getCantidad() + cantidadSolicitada;
+                        productoExistente.setCantidad(nuevaCantidad);
+                    } else {
+                        pedidoXproducto ProductoXCarrito = new pedidoXproducto();
+                        ProductoXCarrito.setProducto(productoSeleccionado);
+                        ProductoXCarrito.setCantidad(cantidadSolicitada);
+                        listadoCarrito.add(ProductoXCarrito);
+                    }
+                } else {
+                    // Si la lista no está cargada, simplemente agrega el nuevo producto
+                    pedidoXproducto ProductoXCarrito = new pedidoXproducto();
+                    ProductoXCarrito.setProducto(productoSeleccionado);
+                    ProductoXCarrito.setCantidad(cantidadSolicitada);
+                    listadoCarrito.add(ProductoXCarrito);
+                }
+
+                SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                Gson gson = new Gson();
+                String listaComoJson = gson.toJson(listadoCarrito);
+                editor.putString("listadoCarrito", listaComoJson);
+                editor.apply();
+
+
                 Intent agregarAlcarrito = new Intent(this, MiCarritoCompras.class);
                 startActivity(agregarAlcarrito);
             }

@@ -1,5 +1,6 @@
 package com.example.tp7_sanamente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -13,8 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import BaseDeDatos.Conexion;
 import Entidad.Usuario;
+import Entidad.pedidoXproducto;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -93,6 +97,16 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
 
             if (user.getIdUsuario() > 0) {
+                ArrayList<pedidoXproducto> listadoCarrito = new ArrayList<pedidoXproducto>();
+
+                SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorCarrito = preferences.edit();
+                Gson gsonCarrito = new Gson();
+                String listaComoJson = gsonCarrito.toJson(listadoCarrito);
+                editorCarrito.putString("listadoCarrito", listaComoJson);
+                editorCarrito.apply();
+
+
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 

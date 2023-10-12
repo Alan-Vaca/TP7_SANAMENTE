@@ -1,5 +1,6 @@
 package com.example.tp7_sanamente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -14,13 +15,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
 import Entidad.Etiquetado;
 import Entidad.Producto;
 import Entidad.Usuario;
+import Entidad.pedidoXproducto;
 
 public class ModificarProducto extends AppCompatActivity {
 
@@ -31,6 +35,9 @@ public class ModificarProducto extends AppCompatActivity {
     Button btnModificarAgregarCarrito;
     Usuario user;
     Producto productoSeleccionado;
+
+    ArrayList<pedidoXproducto> listadoCarrito;
+    boolean listaCargada;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +54,18 @@ public class ModificarProducto extends AppCompatActivity {
 
         detalleStock = (TextView)findViewById(R.id.txtInfoStock);
         btnModificarAgregarCarrito = (Button)findViewById(R.id.btnModAddCart);
+
+
+        listaCargada = false;
+        SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+        Gson gsonCarrito = new Gson();
+        String listaComoJson = preferences.getString("listadoCarrito", "");
+        Type type = new TypeToken<ArrayList<pedidoXproducto>>(){}.getType();
+        listadoCarrito = gsonCarrito.fromJson(listaComoJson, type);
+
+        if (listadoCarrito != null && !listadoCarrito.isEmpty()) {
+            listaCargada = true;
+        }
 
         listaEtiquetados = new ArrayList<Etiquetado>();
 
@@ -185,7 +204,9 @@ public class ModificarProducto extends AppCompatActivity {
         producto = productoSeleccionado;
         producto.setNombre(nombreProducto.getText().toString());
         producto.setIngredientes(ingredienteProducto.getText().toString());
-        producto.setStock(Integer.parseInt(stockProducto.getText().toString()));
+        if(!user.isCliente()) {
+            producto.setStock(Integer.parseInt(stockProducto.getText().toString()));
+        }
         producto.setPrecio(Float.parseFloat(precioProducto.getText().toString()));
 
         idEtiquetado1 = etiquetado_1.getSelectedItemPosition();
@@ -198,7 +219,56 @@ public class ModificarProducto extends AppCompatActivity {
             }
         }else{
             if(validarProductoXagregarCarrito(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
-                //new ModificarProducto.agregarAlcarritoXproducto().execute(producto);
+
+
+                int cantidadSolicitada = Integer.parseInt(stockProducto.getText().toString());
+                if(!stockProducto.getText().toString().isEmpty() && cantidadSolicitada >0) {
+
+                    pedidoXproducto ProductoCarrito = new pedidoXproducto();
+                    ProductoCarrito.setProducto(productoSeleccionado);
+                    ProductoCarrito.setCantidad(cantidadSolicitada);
+
+                    if (listaCargada) {
+                        int index = -1;
+                        for (int i = 0; i < listadoCarrito.size(); i++) {
+                            if (listadoCarrito.get(i).getProducto().getIdProducto() == productoSeleccionado.getIdProducto()) {
+                                index = i;
+                                break;
+                            }
+                        }
+
+                        if (index != -1) {
+                            pedidoXproducto productoExistente = listadoCarrito.get(index);
+                            int nuevaCantidad = productoExistente.getCantidad() + cantidadSolicitada;
+                            productoExistente.setCantidad(nuevaCantidad);
+                        } else {
+                            pedidoXproducto ProductoXCarrito = new pedidoXproducto();
+                            ProductoXCarrito.setProducto(productoSeleccionado);
+                            ProductoXCarrito.setCantidad(cantidadSolicitada);
+                            listadoCarrito.add(ProductoXCarrito);
+                        }
+                    } else {
+                        // Si la lista no está cargada, simplemente agrega el nuevo producto
+                        pedidoXproducto ProductoXCarrito = new pedidoXproducto();
+                        ProductoXCarrito.setProducto(productoSeleccionado);
+                        ProductoXCarrito.setCantidad(cantidadSolicitada);
+                        listadoCarrito.add(ProductoXCarrito);
+                    }
+
+                    SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    Gson gson = new Gson();
+                    String listaComoJson = gson.toJson(listadoCarrito);
+                    editor.putString("listadoCarrito", listaComoJson);
+                    editor.apply();
+
+
+                    Intent agregarAlcarrito = new Intent(this, MiCarritoCompras.class);
+                    startActivity(agregarAlcarrito);
+                }
+                else {
+                    Toast.makeText(ModificarProducto.this, "SELECCIONE LA CANTIDAD A COMPRAR PARA AGREGAR AL CARRITO", Toast.LENGTH_LONG).show();
+                }
             }
         }
 

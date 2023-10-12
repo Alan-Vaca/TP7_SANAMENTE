@@ -1,16 +1,17 @@
 package com.example.tp7_sanamente;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -117,20 +118,24 @@ public class AgregarProducto extends AppCompatActivity {
     }
 
     public void AgregarProductoAgregar(View view) {
-        Producto producto = new Producto();
 
-        producto.setNombre(nombreProducto.getText().toString());
-        producto.setIngredientes(ingredientes.getText().toString());
-        producto.setStock(Integer.parseInt(inventario.getText().toString()));
-        producto.setPrecio(Float.parseFloat(precio.getText().toString()));
+        //if(confirmar("DESEA AGREGAR UN NUEVO PRODUCTO?")) {
 
-         idEtiquetado1 = etiquetado1.getSelectedItemPosition();
-         idEtiquetado2 = etiquetado2.getSelectedItemPosition();
-         idEtiquetado3 = etiquetado3.getSelectedItemPosition();
+            Producto producto = new Producto();
 
-        if(validarProducto(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
-            new AgregarProducto.agregarProducto().execute(producto);
-        }
+            producto.setNombre(nombreProducto.getText().toString());
+            producto.setIngredientes(ingredientes.getText().toString());
+            producto.setStock(Integer.parseInt(inventario.getText().toString()));
+            producto.setPrecio(Float.parseFloat(precio.getText().toString()));
+
+            idEtiquetado1 = etiquetado1.getSelectedItemPosition();
+            idEtiquetado2 = etiquetado2.getSelectedItemPosition();
+            idEtiquetado3 = etiquetado3.getSelectedItemPosition();
+
+            if (validarProducto(producto, idEtiquetado1, idEtiquetado2, idEtiquetado3)) {
+                new AgregarProducto.agregarProducto().execute(producto);
+            }
+        //}
     }
 
     public boolean validarProducto(Producto producto, int id1, int id2, int id3){
@@ -231,5 +236,26 @@ public class AgregarProducto extends AppCompatActivity {
                 Toast.makeText(AgregarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+
+    public Boolean confirmar(String mensaje){
+        final boolean[] resultado = {false}; // Utilizamos un array para poder modificar el valor desde el diálogo
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(mensaje)
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        resultado[0] = true;
+                    }
+                })
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        resultado[0] = false;
+                    }
+                });
+        builder.create().show();
+
+        return resultado[0];
     }
 }
