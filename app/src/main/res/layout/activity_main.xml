@@ -86,10 +86,23 @@
         android:id="@+id/sw_comerciante"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="72dp"
         android:text="COMERCIANTE"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ContraseñaLogin" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="224dp"
+        android:layout_height="55dp"
+        android:text="El switch solo funciona de manera de DEBUG, no estara integrado en la aplicacion final"
+        android:textAlignment="center"
+        android:textIsSelectable="false"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/sw_comerciante"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
