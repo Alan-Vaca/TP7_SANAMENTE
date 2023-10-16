@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import Entidad.Cliente;
 import Entidad.Comercio;
 import Entidad.Etiquetado;
 import Entidad.Historial;
@@ -181,6 +182,17 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
     }
 
+    public Cliente obtenerClienteXid(int idCliente) {
+        Cliente cliente = new Cliente();
+        try {
+            Connection con = getConnection();
+            cliente = consultasUsuario.obtenerClienteXid(getConnection(),idCliente);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return cliente;
+    }
+
     //--------------------------------------------------------------------------------------
     //RESTRICCIONES
     //--------------------------------------------------------------------------------------
@@ -221,6 +233,17 @@ public class Conexion extends AsyncTask<String,Void, String> {
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }
+    }
+
+    public Comercio obtenerComercioXid(int idComercio) {
+        Comercio comercio = new Comercio();
+        try {
+            Connection con = getConnection();
+            comercio = consultasUsuario.obtenerComercioXid(getConnection(),idComercio);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return comercio;
     }
 
     public Comercio obtenerComercio(int idUsuario) {
@@ -364,7 +387,16 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return exito;
     }
-    //-DETALLE PEDIDO (ID PEDIDO)
+    public ArrayList<pedidoXproducto> obtenerListadoPedidosXid(int idPedido) {
+        ArrayList<pedidoXproducto> listaPedido = new ArrayList<pedidoXproducto>();
+        try {
+            Connection con = getConnection();
+            listaPedido = consultasPedidos.obtenerListadoPedidosXid(getConnection(),idPedido);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaPedido;
+    }
     //-ESTADO PEDIDO (ID PEDIDO, ESTADO) SE CAMBIARA EL ESTADO (entregado, cancelado, confirmado)
     //-LISTAR PEDIDOS (FILTROS)
 
@@ -402,6 +434,9 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return listaPedido;
     }
+
+
+
 
     //--------------------------------------------------------------------------------------
     //REPORTE

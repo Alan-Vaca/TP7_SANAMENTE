@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ public class Mis_Pedidos extends AppCompatActivity {
 
     ListView lv_pedidos;
     ArrayList<Pedido> listadoPedidos;
-
+    Pedido pedidoSeleccionado;
     Usuario user;
 
     @Override
@@ -46,6 +47,23 @@ public class Mis_Pedidos extends AppCompatActivity {
         }else{
             Toast.makeText(Mis_Pedidos.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }
+
+        lv_pedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                pedidoSeleccionado = new Pedido();
+                pedidoSeleccionado = listadoPedidos.get(position);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                Gson gson = new Gson();
+                String pedidoJson = gson.toJson(pedidoSeleccionado);
+                editor.putString("pedidoSeleccionado", pedidoJson);
+                editor.apply();
+            }
+        });
 
 
     }

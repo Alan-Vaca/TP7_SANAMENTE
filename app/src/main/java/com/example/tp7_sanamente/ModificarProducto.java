@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,12 +31,12 @@ public class ModificarProducto extends AppCompatActivity {
 
     Spinner etiquetado_1, etiquetado_2,etiquetado_3;
     ArrayList<Etiquetado> listaEtiquetados;
-    TextView nombreProducto, ingredienteProducto, precioProducto, stockProducto, detalleStock;
+    TextView nombreProducto, ingredienteProducto, precioProducto, stockProducto, detalleStock, TxtEstadoTitulo,TxtEstado;
     int idEtiquetado1,idEtiquetado2,idEtiquetado3;
-    Button btnModificarAgregarCarrito;
+    Button btnModificarAgregarCarrito,btnEstado;
     Usuario user;
     Producto productoSeleccionado;
-
+    Toolbar toolbarModificar;
     ArrayList<pedidoXproducto> listadoCarrito;
     boolean listaCargada;
     @Override
@@ -55,6 +56,11 @@ public class ModificarProducto extends AppCompatActivity {
         detalleStock = (TextView)findViewById(R.id.txtInfoStock);
         btnModificarAgregarCarrito = (Button)findViewById(R.id.btnModAddCart);
 
+        TxtEstadoTitulo = (TextView)findViewById(R.id.txtEstadoT);
+        TxtEstado = (TextView)findViewById(R.id.txtEstadoE);
+        btnEstado = (Button)findViewById(R.id.btnEstadoB);
+
+        toolbarModificar = (Toolbar)findViewById(R.id.toolbarMod);
 
         listaCargada = false;
         SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
@@ -86,6 +92,11 @@ public class ModificarProducto extends AppCompatActivity {
                 etiquetado_1.setEnabled(false);
                 etiquetado_2.setEnabled(false);
                 etiquetado_3.setEnabled(false);
+                toolbarModificar.setTitle("DETALLES DEL PRODUCTO");
+                TxtEstadoTitulo.setText("");
+                TxtEstado.setText("");
+                btnEstado.setText("");
+                btnEstado.setEnabled(false);
 
                 btnModificarAgregarCarrito.setText("AGREGAR AL CARRITO");
                 detalleStock.setText("CANTIDAD A COMPRAR:");
@@ -112,16 +123,23 @@ public class ModificarProducto extends AppCompatActivity {
             String precioUnitario = String.valueOf(productoSeleccionado.getPrecio());
             precioProducto.setText(precioUnitario);
 
+
             if(user.isCliente()){
                 stockProducto.setText("0");
             }else {
                 String stockdelProducto = String.valueOf(productoSeleccionado.getStock());
                 stockProducto.setText(stockdelProducto);
+                TxtEstado.setText(productoSeleccionado.EstadoString());
+                if(productoSeleccionado.isEstado()){
+                    btnEstado.setText("DAR DE BAJA");
+                }else{
+                    btnEstado.setText("REACTIVAR");
+                }
             }
             new ModificarProducto.obtenerEtiquetadosXproducto().execute(productoSeleccionado);
 
         }else{
-            Toast.makeText(ModificarProducto.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+            Toast.makeText(ModificarProducto.this, "PRODUCTO NO SELECCIONADO", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -192,6 +210,13 @@ public class ModificarProducto extends AppCompatActivity {
 
     }
 
+    public void ModificarProductoESTADO(View view) {
+        Producto producto = new Producto();
+
+        producto = productoSeleccionado;
+        producto.setEstado(!producto.isEstado());
+        new ModificarProducto.modificarProducto().execute(producto);
+    }
 
     public void ModificarProductoCancelar(View view) {
         Intent modificarProductoCancelar = new Intent(this, Mis_Productos.class);

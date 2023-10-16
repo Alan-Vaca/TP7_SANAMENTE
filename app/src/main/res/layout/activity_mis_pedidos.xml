@@ -21,8 +21,8 @@
 
     <ListView
         android:id="@+id/grd_Pedidos"
-        android:layout_width="393dp"
-        android:layout_height="507dp"
+        android:layout_width="374dp"
+        android:layout_height="501dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="28dp"
         android:onClick="DetallePedidos"
-        android:text="VER DETALLES DEL PEDIDO"
+        android:text="VER"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +52,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toEndOf="@+id/button38" />
 
     <Button
@@ -77,4 +78,15 @@
         app:layout_constraintEnd_toStartOf="@+id/button46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
+
+    <Button
+        android:id="@+id/button17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="268dp"
+        android:layout_marginBottom="28dp"
+        android:text="CONFIRMAR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

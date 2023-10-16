@@ -80,7 +80,13 @@ public class Producto implements Parcelable{
     }
 
 
-
+    public String EstadoString(){
+        if(isEstado()){
+            return "ACTIVO";
+        }else{
+            return "INACTIVO";
+        }
+    }
 
 
 

@@ -1,8 +1,11 @@
 package Entidad;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Pedido {
+public class Pedido implements Parcelable{
     int idPedido;
     Float monto;
     Date fecha;
@@ -11,7 +14,14 @@ public class Pedido {
     Cliente cliente;
     Comercio comercio;
 
-    public Pedido() {;
+    public Pedido() {
+        idPedido = 0; // Inicializa idPedido con un valor adecuado
+        monto = 0.0f; // Inicializa monto con un valor adecuado
+        fecha = new Date(); // Inicializa fecha con un valor adecuado
+        estado = 0; // Inicializa estado con un valor adecuado
+        medioPago = 0; // Inicializa medioPago con un valor adecuado
+        cliente = new Cliente(); // Inicializa cliente con un objeto Cliente adecuado
+        comercio = new Comercio(); // Inicializa comercio con un objeto Comercio adecuado
     }
 
     public int getIdPedido() {
@@ -85,5 +95,46 @@ public class Pedido {
     @Override
     public String toString() {
         return "N°" + idPedido + " - " + getEstadoString() + " - " + "$" + monto + " - FECHA: " + fecha.toString();
+    }
+
+
+
+    protected Pedido(Parcel in) {
+        idPedido = in.readInt();
+        monto = in.readFloat();
+        fecha = (Date) in.readSerializable(); // Lee la fecha como serializable
+        estado = in.readInt();
+        medioPago = in.readInt();
+        cliente = in.readParcelable(Cliente.class.getClassLoader()); // Lee un objeto Cliente
+        comercio = in.readParcelable(Comercio.class.getClassLoader()); // Lee un objeto Comercio
+
+    }
+
+    public static final Parcelable.Creator<Pedido> CREATOR = new Parcelable.Creator<Pedido>() {
+        @Override
+        public Pedido createFromParcel(Parcel in) {
+            return new Pedido(in);
+        }
+
+        @Override
+        public Pedido[] newArray(int size) {
+            return new Pedido[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(idPedido);
+        dest.writeFloat(monto);
+        dest.writeSerializable(fecha); // Escribe la fecha como serializable
+        dest.writeInt(estado);
+        dest.writeInt(medioPago);
+        dest.writeParcelable(cliente, flags); // Escribe el objeto Cliente
+        dest.writeParcelable(comercio, flags);
     }
 }

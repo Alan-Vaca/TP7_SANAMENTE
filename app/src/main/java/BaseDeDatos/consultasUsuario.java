@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 
+import Entidad.Cliente;
 import Entidad.Comercio;
 import Entidad.Restriccion;
 import Entidad.Usuario;
@@ -255,5 +256,69 @@ public class consultasUsuario {
             Log.d("ERROR-DB", e.toString());
             e.printStackTrace();
         }
+    }
+
+    public Cliente obtenerClienteXid(Connection conn, int idCliente) {
+        Cliente cliente = new Cliente();
+        try {
+            String query = "SELECT c.idCliente as idClienteC,u.idUsuario as idUsuarioU, u.apellido as apellidoU, u.nombre as nombreU, u.dni as dniU" +
+                    " FROM usuarios u INNER JOIN clientes c on c.idUsuario = u.idUsuario where c.idCliente = " + idCliente;
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next()) {
+                        Usuario user = new Usuario();
+                        user.setIdUsuario(rs.getInt("idUsuarioU"));
+                        user.setApellido(rs.getString("apellidoU"));
+                        user.setNombre(rs.getString("nombreU"));
+                        user.setDNI(rs.getInt("dniU"));
+
+                        cliente.setUsuarioAsociado(user);
+                        cliente.setIdCliente(rs.getInt("idClienteC"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return cliente;
+    }
+
+    public Comercio obtenerComercioXid(Connection conn, int idComercio) {
+        Comercio comercio = new Comercio();
+        try {
+            String query = "select nombreComercio,idComercio, horarios,cuit,estado from comercios where idComercio = " + idComercio;
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next()) {
+                        comercio.setNombreComercio(rs.getString("nombreComercio"));
+                        comercio.setIdComercio(rs.getInt("idComercio"));
+                        comercio.setHorarios(rs.getString("horarios"));
+                        comercio.setCuit(rs.getInt("cuit"));
+                        comercio.setEstado(rs.getBoolean("estado"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return comercio;
     }
 }

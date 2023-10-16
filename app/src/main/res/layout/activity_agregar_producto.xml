@@ -8,7 +8,7 @@
     tools:context=".AgregarProducto">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar15"
+        android:id="@+id/toolbarMod"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar15" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMod" />
 
     <EditText
         android:id="@+id/ap_et_nombreDelProducto"
