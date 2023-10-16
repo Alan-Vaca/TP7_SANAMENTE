@@ -23,8 +23,8 @@ public class consultasProductos {
         ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
 
         try {
-            String query = "select idProducto, nombreProducto, ingredientes, precio, stock, p.estado, p.idComercio from productos p ";
-
+            String query = "select p.idProducto productoID, nombreProducto, ingredientes, precio, stock, p.estado, p.idComercio, "
+            +"(select avg(calificacion) as puntaje from calificaciones where idProducto = p.idProducto) as puntaje from productos p ";
 
             if(user.isCliente()){
                 //Si es para el cliente mostrara todos los productos con estado activo
@@ -42,14 +42,14 @@ public class consultasProductos {
                     while (rs.next()) {
                         Producto producto = new Producto();
 
-                        producto.setIdProducto(rs.getInt("idProducto"));
+                        producto.setIdProducto(rs.getInt("productoID"));
                         producto.setNombre(rs.getString("nombreProducto"));
                         producto.setIngredientes(rs.getString("ingredientes"));
                         producto.setPrecio(rs.getFloat("precio"));
                         producto.setStock(rs.getInt("stock"));
                         producto.setEstado(rs.getBoolean("estado"));
                         producto.setIdComercio(rs.getInt("idComercio"));
-
+                        producto.setPuntaje(rs.getFloat("puntaje"));
                         listadoProducto.add(producto);
                     }
                     rs.close();

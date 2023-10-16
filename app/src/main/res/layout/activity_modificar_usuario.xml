@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion" />
 
     <EditText
-        android:id="@+id/r_cli_alergias"
+        android:id="@+id/txtComentarios"
         android:layout_width="210dp"
         android:layout_height="92dp"
         android:layout_marginTop="12dp"
@@ -146,7 +146,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.67"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/r_cli_alergias" />
+        app:layout_constraintTop_toBottomOf="@+id/txtComentarios" />
 
     <TextView
         android:id="@+id/fc_tv_contiene"
@@ -229,7 +229,7 @@
         app:layout_constraintTop_toBottomOf="@+id/r_cli_pass_repetir" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/estrella5"
         android:layout_width="105dp"
         android:layout_height="104dp"
         android:layout_marginTop="16dp"
@@ -246,7 +246,7 @@
         android:layout_marginStart="52dp"
         android:layout_marginTop="16dp"
         android:text="Apellido + Nombre"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/estrella5"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
@@ -256,7 +256,7 @@
         android:layout_marginStart="52dp"
         android:layout_marginTop="12dp"
         android:text="DNI"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/estrella5"
         app:layout_constraintTop_toBottomOf="@+id/mod_nombre_apellido" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,7 +35,7 @@ public class Registrar_Cliente extends AppCompatActivity {
         nombre = (EditText)findViewById(R.id.mod_c_comercio);
         apellido = (EditText)findViewById(R.id.mod_c_direccion);
         dni = (EditText)findViewById(R.id.r_cli_dni);
-        alergias = (EditText)findViewById(R.id.r_cli_alergias);
+        alergias = (EditText)findViewById(R.id.txtComentarios);
         direccion = (EditText)findViewById(R.id.r_cli_direccion);
         hipertenso = (CheckBox)findViewById(R.id.r_cb_hipertenso);
         diabetico = (CheckBox)findViewById(R.id.r_cb_diabetico);

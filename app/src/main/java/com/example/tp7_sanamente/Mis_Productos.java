@@ -29,7 +29,7 @@ import Entidad.pedidoXproducto;
 public class Mis_Productos extends AppCompatActivity {
 
     Usuario user;
-    TextView txt_StockCantidad, cantidadTxt, detalle;
+    TextView txt_StockCantidad, cantidadTxt, detalle, puntaje;
     ListView lv_Catalogo;
     Button btnAdd;
     ArrayList<Producto> listaProductos;
@@ -47,7 +47,7 @@ public class Mis_Productos extends AppCompatActivity {
         txt_StockCantidad = (TextView)findViewById(R.id.txtStockCantidad);
         cantidadTxt = (TextView)findViewById(R.id.catalogoCantidad);
         detalle = (TextView)findViewById(R.id.catalogoDetalle);
-
+        puntaje = (TextView)findViewById(R.id.txtPuntajeCatalogo);
         listaCargada = false;
 
         SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
@@ -90,6 +90,7 @@ public class Mis_Productos extends AppCompatActivity {
                 productoSeleccionado = listaProductos.get(position);
 
                 detalle.setText(productoSeleccionado.getIdProducto() + " - " + productoSeleccionado.getNombre() + " - $" + productoSeleccionado.getPrecio());
+                puntaje.setText("POSEE " + productoSeleccionado.getPuntaje() + " ESTRELLAS DE 5");
                 if(user.isCliente()){
                     cantidadTxt.setText("0");
                 }else{

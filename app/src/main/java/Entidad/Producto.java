@@ -13,7 +13,7 @@ public class Producto implements Parcelable{
 
     boolean estado;
 
-
+    float puntaje;
 
     public Producto() {
     }
@@ -74,9 +74,17 @@ public class Producto implements Parcelable{
         this.estado = estado;
     }
 
+    public float getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(float puntaje) {
+        this.puntaje = puntaje;
+    }
+
     @Override
     public String toString() {
-        return nombre.toUpperCase() + " - $" + precio;
+        return nombre.toUpperCase() + " - $" + precio + " - " + puntaje + " de 5";
     }
 
 
@@ -99,6 +107,7 @@ public class Producto implements Parcelable{
         idComercio = in.readInt();
         estado = in.readByte() != 0;
         precio = in.readFloat();
+        puntaje = in.readFloat();
     }
 
     public static final Parcelable.Creator<Producto> CREATOR = new Parcelable.Creator<Producto>() {
@@ -124,6 +133,7 @@ public class Producto implements Parcelable{
         dest.writeString(ingredientes);
         dest.writeString(nombre);
         dest.writeFloat(precio);
+        dest.writeFloat(puntaje);
         dest.writeInt(stock);
         dest.writeInt(idComercio);
         dest.writeByte((byte) (estado ? 1 : 0));

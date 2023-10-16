@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import Entidad.CalificacionXcliente;
 import Entidad.Cliente;
 import Entidad.Comercio;
 import Entidad.Etiquetado;
@@ -38,6 +39,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public static consultasComercios consultasComercios = new consultasComercios();
     public static consultasHistoriales consultasHistoriales = new consultasHistoriales();
     public static consultasPedidos consultasPedidos = new consultasPedidos();
+    public static consultasCalificaciones consultasCalificaciones = new consultasCalificaciones();
 
     //CONEXION
     public static Connection getConnection() {
@@ -423,10 +425,24 @@ public class Conexion extends AsyncTask<String,Void, String> {
     //CALIFICACIONES
     //--------------------------------------------------------------------------------------
 
-    //-EXISTE CALIFICACION (IDPEDIDO, IDCLIENTE) DEBERA VERIFICAR SI EXISTE PARA SABER SI ES UN ALTA O UN UPDATE
-    //-CALIFICAR (ID PEDIDO, IDCLIENTE) DEBERA APLICAR LA CALIFICACION A TODOS LOS PRODUCTOS DE ESE PEDIDO
-    //-MODIFICAR CALIFICACION (ID PEDIDO, IDCLIENTE) DEBERA APLICAR LA CALIFICACION A TODOS LOS PRODUCTOS DE ESE PEDIDO
-    //-OBTENER PROMEDIO DE CALIFICACION (ID PRODUCTO) DEBERA HACER UNA MEDIA/PROMEDIO DE TODAS LAS CALIFICACIONES
+    public boolean calificarPuntaje(int idPedido,CalificacionXcliente calificacionXcliente) {
+        Boolean exito = false;
+        try {
+            ArrayList<pedidoXproducto> productos = new ArrayList<pedidoXproducto>();
+            productos = obtenerListadoPedidosXid(idPedido);
+            if(productos.size() > 0){
+                for(pedidoXproducto producto : productos){
+                    calificacionXcliente.setProducto(producto.getProducto());
+                    exito = consultasCalificaciones.calificarPuntaje(getConnection(),calificacionXcliente);
+                }
+            }else{
+                exito = false;
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
 
     //--------------------------------------------------------------------------------------
     //HISTORIAL

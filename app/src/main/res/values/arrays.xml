@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="star_resources">
+        <item>@drawable/baseline_star_outline_24</item>
+        <item>@drawable/baseline_star_half_24</item>
+        <item>@drawable/baseline_star_24</item>
+        <item>@drawable/baseline_star_half_24</item>
+        <item>@drawable/baseline_star_outline_24</item>
+    </array>
+</resources>
