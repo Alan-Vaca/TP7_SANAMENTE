@@ -77,7 +77,7 @@ public class Detalle_Pedido extends AppCompatActivity {
                 numeroPedido.setText("PEDIDO N°" + pedidoSeleccionado.getIdPedido());
                 estado.setText("ESTADO: " + pedidoSeleccionado.getEstadoString());
                 fecha.setText(pedidoSeleccionado.getFecha().toString());
-                montoTotal.setText(pedidoSeleccionado.getMonto().toString());
+                montoTotal.setText("MONTO TOTAL: $" + pedidoSeleccionado.getMonto().toString());
                 calificar.setText("");
                 calificar.setEnabled(false);
 
@@ -100,20 +100,12 @@ public class Detalle_Pedido extends AppCompatActivity {
             Intent VolverHistorial = new Intent(this, MiHistorial.class);
             startActivity(VolverHistorial);
         }else {
-            VolverPedidos(view);
+            onBackPressed();
         }
     }
 
 
-    public void CancelarPedido(View view) {
-        pedidoSeleccionado.setEstado(4);
-        //modificar estado
-    }
 
-    public void ConfirmarPedido(View view) {
-        pedidoSeleccionado.setEstado(3);
-        //modificar estado
-    }
 
 
     public void VolverPedidos(View view) {
@@ -178,6 +170,8 @@ public class Detalle_Pedido extends AppCompatActivity {
             }
         }
     }
+
+
 
     private class obtenerListado extends AsyncTask<Integer, Void, ArrayList<pedidoXproducto>> {
         @Override

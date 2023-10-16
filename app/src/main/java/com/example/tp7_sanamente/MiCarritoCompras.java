@@ -91,6 +91,10 @@ public class MiCarritoCompras extends AppCompatActivity {
         String listaComoJson = gson.toJson(misProductosPedido);
         editor.putString("listadoCarrito", listaComoJson);
         editor.apply();
+
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     public void MiCarritoDeComprasEliminarItem(View view) {

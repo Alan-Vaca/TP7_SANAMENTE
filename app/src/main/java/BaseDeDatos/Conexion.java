@@ -397,8 +397,16 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return listaPedido;
     }
-    //-ESTADO PEDIDO (ID PEDIDO, ESTADO) SE CAMBIARA EL ESTADO (entregado, cancelado, confirmado)
-    //-LISTAR PEDIDOS (FILTROS)
+
+    public boolean cambiarEstadoPedido(Pedido pedido, Integer estado) {
+        Boolean exito = false;
+        try {
+            exito = consultasPedidos.cambiarEstadoPedido(getConnection(), pedido, estado);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
 
     //--------------------------------------------------------------------------------------
     //CALIFICACIONES

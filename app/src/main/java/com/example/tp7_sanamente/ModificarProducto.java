@@ -60,7 +60,7 @@ public class ModificarProducto extends AppCompatActivity {
         TxtEstado = (TextView)findViewById(R.id.txtEstadoE);
         btnEstado = (Button)findViewById(R.id.btnEstadoB);
 
-        toolbarModificar = (Toolbar)findViewById(R.id.toolbarMod);
+        //toolbarModificar = (Toolbar)findViewById(R.id.toolbarMod);
 
         listaCargada = false;
         SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
@@ -92,7 +92,7 @@ public class ModificarProducto extends AppCompatActivity {
                 etiquetado_1.setEnabled(false);
                 etiquetado_2.setEnabled(false);
                 etiquetado_3.setEnabled(false);
-                toolbarModificar.setTitle("DETALLES DEL PRODUCTO");
+                //toolbarModificar.setTitle("DETALLES DEL PRODUCTO");
                 TxtEstadoTitulo.setText("");
                 TxtEstado.setText("");
                 btnEstado.setText("");

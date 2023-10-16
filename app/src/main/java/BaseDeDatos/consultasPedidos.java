@@ -164,6 +164,51 @@ public class consultasPedidos {
 
     }
 
+    public Boolean cambiarEstadoPedido(Connection conn, Pedido pedido, Integer estado) throws SQLException {
+        Boolean exito = false;
+        PreparedStatement pstmt = null;
+
+        try {
+            if (conn != null) {
+
+                String updateQuery = "UPDATE pedidos SET " +
+                        "estado = ? " +
+                        "WHERE idPedido = ?";
+
+                pstmt = conn.prepareStatement(updateQuery);
+                pstmt.setInt(1, estado);
+                pstmt.setInt(2, pedido.getIdPedido());
+
+                int filas_modificadas= pstmt.executeUpdate();
+
+                String insertQueryH = "INSERT INTO historial(" +
+                        "idCliente,idPedido,fecha,estado" +
+                        ") VALUES (?,?,?,?)";
+
+                pstmt = conn.prepareStatement(insertQueryH);
+                pstmt.setInt(1, pedido.getCliente().getIdCliente());
+                pstmt.setInt(2, pedido.getIdPedido());
+                pstmt.setDate(3, (Date) pedido.getFecha());
+                pstmt.setInt(4, estado);
+                pstmt.executeUpdate();
+
+                exito = true;
+            }
+        } catch (SQLException e) {
+            exito = false;
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
+
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+        return exito;
+    }
+
     //--------------------------------------------------------------------------------------
     //CONSULTA DE TIPO UPDATE
     //--------------------------------------------------------------------------------------

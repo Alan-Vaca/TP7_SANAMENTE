@@ -112,11 +112,47 @@ public class Mis_Pedidos extends AppCompatActivity {
     }
 
     public void CancelarPedido(View view) {
-        Toast.makeText(Mis_Pedidos.this, "PEDIDO CANCELADO", Toast.LENGTH_LONG).show();
+        pedidoSeleccionado.setEstado(4);
+        new Mis_Pedidos.cambiarEstadoPedido().execute(pedidoSeleccionado.getEstado());
+
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
+    public void ConfirmarPedido(View view) {
+        pedidoSeleccionado.setEstado(3);
+        new Mis_Pedidos.cambiarEstadoPedido().execute(pedidoSeleccionado.getEstado());
+
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     public void MenuComercio(View view) {
         Intent MenuComercio = new Intent(this, MenuComercio.class);
         startActivity(MenuComercio);
+    }
+
+    private class cambiarEstadoPedido extends AsyncTask<Integer, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Integer... estado) {
+            Conexion con = new Conexion();
+            boolean bol = false;
+            try {
+                bol = con.cambiarEstadoPedido(pedidoSeleccionado,estado[0]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return bol;
+        }
+        @Override
+        protected void onPostExecute(Boolean bol) {
+            if (bol) {
+                Toast.makeText(Mis_Pedidos.this, "EL PEDIDO CAMBIO DE ESTADO EXITOSAMENTE", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(Mis_Pedidos.this, "ERROR AL CAMBIAR EL ESTADO", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
