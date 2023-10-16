@@ -398,6 +398,17 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return listaPedido;
     }
 
+    public Pedido obtenerPedidoXid(int idPedido) {
+        Pedido pedido = new Pedido();
+        try {
+            Connection con = getConnection();
+            pedido = consultasPedidos.obtenerPedidoXid(getConnection(),idPedido);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return pedido;
+    }
+
     public boolean cambiarEstadoPedido(Pedido pedido, Integer estado) {
         Boolean exito = false;
         try {

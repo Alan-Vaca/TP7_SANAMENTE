@@ -9,7 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import Entidad.Cliente;
+import Entidad.Comercio;
 import Entidad.Pedido;
 import Entidad.Producto;
 import Entidad.Usuario;
@@ -94,7 +97,8 @@ public class consultasPedidos {
                 pstmt = conn.prepareStatement(insertQueryH);
                 pstmt.setInt(1, idCliente);
                 pstmt.setInt(2, idPedido);
-                pstmt.setDate(3, (Date) pedido.getFecha());
+                Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+                pstmt.setDate(3, (Date) fechaActual);
                 pstmt.setInt(4, pedido.getEstado());
                 pstmt.executeUpdate();
 
@@ -188,7 +192,8 @@ public class consultasPedidos {
                 pstmt = conn.prepareStatement(insertQueryH);
                 pstmt.setInt(1, pedido.getCliente().getIdCliente());
                 pstmt.setInt(2, pedido.getIdPedido());
-                pstmt.setDate(3, (Date) pedido.getFecha());
+                Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+                pstmt.setDate(3, (Date) fechaActual);
                 pstmt.setInt(4, estado);
                 pstmt.executeUpdate();
 
@@ -209,8 +214,41 @@ public class consultasPedidos {
         return exito;
     }
 
-    //--------------------------------------------------------------------------------------
-    //CONSULTA DE TIPO UPDATE
-    //--------------------------------------------------------------------------------------
+    public Pedido obtenerPedidoXid(Connection conn, int idPedido) {
+        Pedido pedido = new Pedido();
+        try {
+            String query = "select idPedido,idCliente,idComercio,monto,fecha,estado,medioPago from pedidos where idPedido = " + idPedido;
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next()) {
+                        pedido.setIdPedido(rs.getInt("idPedido"));
+                        Cliente cliente = new Cliente();
+                        cliente.setIdCliente(rs.getInt("idCliente"));
+                        pedido.setCliente(cliente);
+                        Comercio comercio = new Comercio();
+                        comercio.setIdComercio(rs.getInt("idComercio"));
+                        pedido.setComercio(comercio);
+                        pedido.setMonto(rs.getFloat("monto"));
+                        pedido.setFecha(rs.getDate("fecha"));
+                        pedido.setEstado(rs.getInt("estado"));
+                        pedido.setMedioPago(rs.getInt("medioPago"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return pedido;
+    }
+
 
 }

@@ -64,7 +64,7 @@ public class Detalle_Pedido extends AppCompatActivity {
 
         detallesDelPedido = new ArrayList<pedidoXproducto>();
 
-        if(!user.isCliente()) {
+        //if(!user.isCliente()) {
 
             SharedPreferences sharedPreferencesProducto = getSharedPreferences("MyPrefs", MODE_PRIVATE);
             String pedidoJson = sharedPreferencesProducto.getString("pedidoSeleccionado", "");
@@ -78,8 +78,18 @@ public class Detalle_Pedido extends AppCompatActivity {
                 estado.setText("ESTADO: " + pedidoSeleccionado.getEstadoString());
                 fecha.setText(pedidoSeleccionado.getFecha().toString());
                 montoTotal.setText("MONTO TOTAL: $" + pedidoSeleccionado.getMonto().toString());
-                calificar.setText("");
-                calificar.setEnabled(false);
+
+                if(user.isCliente()){
+                    calificar.setText("CALIFICAR");
+                    if(pedidoSeleccionado.getEstado() == 2){
+                        calificar.setEnabled(true);
+                    }else{
+                        calificar.setEnabled(false);
+                    }
+                }else {
+                    calificar.setText("");
+                    calificar.setEnabled(false);
+                }
 
                 new Detalle_Pedido.obtenerCliente().execute(pedidoSeleccionado.getCliente().getIdCliente());
                 new Detalle_Pedido.obtenerComercio().execute(pedidoSeleccionado.getComercio().getIdComercio());
@@ -90,7 +100,7 @@ public class Detalle_Pedido extends AppCompatActivity {
                 Log.e("JSON_ERROR", e.getMessage());
             }
 
-        }
+        //}
     }
 
 

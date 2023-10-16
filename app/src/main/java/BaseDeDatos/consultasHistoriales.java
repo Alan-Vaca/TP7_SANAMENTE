@@ -20,17 +20,19 @@ public class consultasHistoriales {
 
         try {
             String query = "select h.idHistorial as HidHistorial, h.idPedido as HidPedido, h.idCliente as HidCliente, h.fecha as Hfecha, h.estado as Hestado "
-                    + "from historial h "
-                    + "inner join pedidos p on p.idPedido = h.idPedido "
-                    + "inner join clientes c on c.idCliente = h.idCliente ";
+                    + "from historial h ";
 
                     if(user.isCliente()) {
-                        query += "where c.idUsuario = " + user.getIdUsuario() + " order by h.estado";
+                        query += "INNER JOIN ( SELECT idPedido, MAX(idHistorial) AS MaxIdHistorial FROM historial ";
+                        query += "GROUP BY idPedido) latest_h ON h.idPedido = latest_h.idPedido AND h.idHistorial = latest_h.MaxIdHistorial ";
+                        query += "INNER JOIN clientes c ON c.idCliente = h.idCliente ";
+                        query += "where c.idUsuario = " + user.getIdUsuario();
+                        query += " ORDER BY Hfecha DESC";
                     }else{
+                        query += "inner join pedidos p on p.idPedido = h.idPedido ";
+                        query += "inner join clientes c on c.idCliente = h.idCliente ";
                         query += "inner join comercios cc on cc.idComercio = p.idComercio where cc.idUsuario = " + user.getIdUsuario() + " order by h.estado";
                     }
-
-
 
             if (conn != null) {
                 try {
