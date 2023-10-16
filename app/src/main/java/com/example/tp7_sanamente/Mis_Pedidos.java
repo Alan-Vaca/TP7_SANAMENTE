@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ public class Mis_Pedidos extends AppCompatActivity {
     ArrayList<Pedido> listadoPedidos;
     Pedido pedidoSeleccionado;
     Usuario user;
-
+    Button cancelar, confirmar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,8 @@ public class Mis_Pedidos extends AppCompatActivity {
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
 
         lv_pedidos = (ListView)findViewById(R.id.grd_Pedidos);
-
+        cancelar = (Button)findViewById(R.id.btnCancelar);
+        confirmar = (Button)findViewById(R.id.btnConfirmar);
         listadoPedidos = new ArrayList<Pedido>();
 
         user = new Usuario();
@@ -47,6 +49,9 @@ public class Mis_Pedidos extends AppCompatActivity {
         }else{
             Toast.makeText(Mis_Pedidos.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }
+
+        confirmar.setEnabled(false);
+        cancelar.setEnabled(false);
 
         lv_pedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,6 +67,25 @@ public class Mis_Pedidos extends AppCompatActivity {
                 String pedidoJson = gson.toJson(pedidoSeleccionado);
                 editor.putString("pedidoSeleccionado", pedidoJson);
                 editor.apply();
+
+
+                if(pedidoSeleccionado.getEstado() == 1){
+                    //PENDIENTE
+                    cancelar.setEnabled(true);
+                    confirmar.setEnabled(true);
+                }else if (pedidoSeleccionado.getEstado() == 2) {
+                    //ENTREGADO
+                    cancelar.setEnabled(false);
+                    confirmar.setEnabled(false);
+                }else if (pedidoSeleccionado.getEstado() == 3) {
+                    //CONFIRMADO
+                    confirmar.setEnabled(false);
+                    cancelar.setEnabled(true);
+                }else {
+                    //CANCELADO
+                    confirmar.setEnabled(false);
+                    cancelar.setEnabled(false);
+                }
             }
         });
 
