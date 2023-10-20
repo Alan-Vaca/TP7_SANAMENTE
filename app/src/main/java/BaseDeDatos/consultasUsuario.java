@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 
+import Entidad.Cliente;
 import Entidad.Comercio;
 import Entidad.Restriccion;
 import Entidad.Usuario;
@@ -23,7 +24,7 @@ public class consultasUsuario {
     public Usuario obtenerUsuarioXlogin(Connection conn,Usuario user) {
         try {
             String query = "SELECT idUsuario,apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario,"
-            + "(select count(c.idCliente) from clientes c where c.idUsuario = u.idUsuario) as esCliente"
+            + "esCliente"
             + " from usuarios u where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'";
 
             if (conn != null) {
@@ -39,14 +40,8 @@ public class consultasUsuario {
                         user.setEstado(rs.getBoolean("estado"));
                         user.setNombre(rs.getString("nombre"));
                         user.setNombreUsuario(rs.getString("nombreUsuario"));
+                        user.setCliente(rs.getBoolean("esCliente"));
 
-                        int esCliente = 0;
-                        esCliente = (rs.getInt("esCliente"));
-                        if(esCliente > 0){
-                            user.setCliente(true);
-                        }else{
-                            user.setCliente(false);
-                        }
                     }
                     rs.close();
                     stmt.close();
@@ -72,8 +67,8 @@ public class consultasUsuario {
         try {
             if (conn != null) {
                 String insertQuery = "INSERT INTO usuarios(" +
-                        "apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario" +
-                        ") VALUES (?,?,?,?,?,?,?)";
+                        "apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario,esCliente" +
+                        ") VALUES (?,?,?,?,?,?,?,?)";
 
                 pstmt = conn.prepareStatement(insertQuery);
                 pstmt.setString(1, user.getApellido());
@@ -83,6 +78,7 @@ public class consultasUsuario {
                 pstmt.setBoolean(5, true);
                 pstmt.setString(6, user.getNombre());
                 pstmt.setString(7, user.getNombreUsuario());
+                pstmt.setBoolean(8, user.isCliente());
                 pstmt.executeUpdate();
 
                 exito = true;
@@ -141,12 +137,21 @@ public class consultasUsuario {
     public void altaCliente(Connection conn, Usuario user) {
         try {
             if (conn != null) {
-                String insertQuery = "INSERT INTO clientes(idUsuario,estado,fechaCreacion) VALUES ((select max(idUsuario) from usuarios),?,?)";
+                String selectMaxIdQuery = "SELECT max(idUsuario) FROM usuarios";
+                PreparedStatement selectMaxIdStmt = conn.prepareStatement(selectMaxIdQuery);
+                ResultSet resultSet = selectMaxIdStmt.executeQuery();
+                int maxId = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+                if (resultSet.next()) {
+                    maxId = resultSet.getInt(1);
+                }
+
+                String insertQuery = "INSERT INTO clientes(idUsuario,estado,fechaCreacion) VALUES (?,?,?)";
                 Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
 
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-                pstmt.setBoolean(1, true);
-                pstmt.setDate(2, fechaActual);
+                pstmt.setInt(1,maxId);
+                pstmt.setBoolean(2, true);
+                pstmt.setDate(3, fechaActual);
 
                 pstmt.executeUpdate();
 
@@ -162,15 +167,26 @@ public class consultasUsuario {
     public void altaComercio(Connection conn, Comercio comercio) throws SQLException {
         try {
             if (conn != null) {
-                String insertQuery = "INSERT INTO comercios(idUsuario,estado,fechaCreacion,cuit,horarios,nombreComercio) VALUES ((select max(idUsuario) from usuarios),?,?,?,?,?)";
+
+                String selectMaxIdQuery = "SELECT max(idUsuario) FROM usuarios";
+                PreparedStatement selectMaxIdStmt = conn.prepareStatement(selectMaxIdQuery);
+                ResultSet resultSet = selectMaxIdStmt.executeQuery();
+                int maxId = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+                if (resultSet.next()) {
+                    maxId = resultSet.getInt(1);
+                }
+
+
+                String insertQuery = "INSERT INTO comercios(idUsuario,estado,fechaCreacion,cuit,horarios,nombreComercio) VALUES (?,?,?,?,?,?)";
                 Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
 
                 PreparedStatement pstmt = conn.prepareStatement(insertQuery);
-                pstmt.setBoolean(1, true);
-                pstmt.setDate(2, fechaActual);
-                pstmt.setInt(3,comercio.getCuit());
-                pstmt.setString(4,comercio.getHorarios());
-                pstmt.setString(5,comercio.getNombreComercio());
+                pstmt.setInt(1,maxId);
+                pstmt.setBoolean(2, true);
+                pstmt.setDate(3, fechaActual);
+                pstmt.setInt(4,comercio.getCuit());
+                pstmt.setString(5,comercio.getHorarios());
+                pstmt.setString(6,comercio.getNombreComercio());
 
                 pstmt.executeUpdate();
 
@@ -240,5 +256,69 @@ public class consultasUsuario {
             Log.d("ERROR-DB", e.toString());
             e.printStackTrace();
         }
+    }
+
+    public Cliente obtenerClienteXid(Connection conn, int idCliente) {
+        Cliente cliente = new Cliente();
+        try {
+            String query = "SELECT c.idCliente as idClienteC,u.idUsuario as idUsuarioU, u.apellido as apellidoU, u.nombre as nombreU, u.dni as dniU" +
+                    " FROM usuarios u INNER JOIN clientes c on c.idUsuario = u.idUsuario where c.idCliente = " + idCliente;
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next()) {
+                        Usuario user = new Usuario();
+                        user.setIdUsuario(rs.getInt("idUsuarioU"));
+                        user.setApellido(rs.getString("apellidoU"));
+                        user.setNombre(rs.getString("nombreU"));
+                        user.setDNI(rs.getInt("dniU"));
+
+                        cliente.setUsuarioAsociado(user);
+                        cliente.setIdCliente(rs.getInt("idClienteC"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return cliente;
+    }
+
+    public Comercio obtenerComercioXid(Connection conn, int idComercio) {
+        Comercio comercio = new Comercio();
+        try {
+            String query = "select nombreComercio,idComercio, horarios,cuit,estado from comercios where idComercio = " + idComercio;
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next()) {
+                        comercio.setNombreComercio(rs.getString("nombreComercio"));
+                        comercio.setIdComercio(rs.getInt("idComercio"));
+                        comercio.setHorarios(rs.getString("horarios"));
+                        comercio.setCuit(rs.getInt("cuit"));
+                        comercio.setEstado(rs.getBoolean("estado"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return comercio;
     }
 }

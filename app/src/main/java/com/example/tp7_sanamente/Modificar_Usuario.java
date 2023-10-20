@@ -16,7 +16,6 @@ import com.google.gson.JsonSyntaxException;
 
 import BaseDeDatos.Conexion;
 import Entidad.Cliente;
-import Entidad.Comercio;
 import Entidad.Notificacion;
 import Entidad.Restriccion;
 import Entidad.Usuario;
@@ -35,7 +34,7 @@ Usuario user;
         nombreApellido = (TextView)findViewById(R.id.mod_nombre_apellido);
         dni = (TextView)findViewById(R.id.mod_dni);
         usuario = (TextView)findViewById(R.id.mod_c_direccion);
-        alergia = (TextView)findViewById(R.id.r_cli_alergias);
+        alergia = (TextView)findViewById(R.id.txtComentarios);
         direccion = (TextView)findViewById(R.id.r_cli_direc);
         pass0 = (TextView)findViewById(R.id.r_cli_pass_actual);
         pass1 = (TextView)findViewById(R.id.r_cli_pass_nuevo);

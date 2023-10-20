@@ -7,7 +7,7 @@
     tools:context=".ModificarProducto">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar15"
+        android:id="@+id/toolbarMod"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -19,35 +19,25 @@
         app:title="MODIFICAR PRODUCTO" />
 
     <TextView
-        android:id="@+id/ap_tv_titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Ingresa los datos en el formulario"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar15" />
-
-    <TextView
         android:id="@+id/ap_tv_ingredientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:text="INGREDIENTES:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView46" />
+        app:layout_constraintTop_toBottomOf="@+id/ap_et_nombreDelProductoMod" />
 
     <EditText
         android:id="@+id/ap_et_ingredientes"
         android:layout_width="252dp"
-        android:layout_height="99dp"
+        android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ap_tv_ingredientes" />
 
@@ -55,11 +45,11 @@
         android:id="@+id/ap_n_precio"
         android:layout_width="131dp"
         android:layout_height="51dp"
-        android:layout_marginStart="68dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Precio"
         android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ap_et_ingredientes" />
 
@@ -67,12 +57,11 @@
         android:id="@+id/ap_tv_etiquetadoFrontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="16dp"
         android:text="Etiquetado Frontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ap_et_ingredientes" />
+        app:layout_constraintTop_toBottomOf="@+id/ap_n_precio" />
 
     <EditText
         android:id="@+id/ap_n_stock"
@@ -83,33 +72,32 @@
         android:hint="Stock"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.283"
-        app:layout_constraintStart_toEndOf="@+id/ap_n_precio"
-        app:layout_constraintTop_toBottomOf="@+id/ap_et_ingredientes" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInfoStock" />
 
     <Spinner
         android:id="@+id/ap_sp_item1"
-        android:layout_width="209dp"
+        android:layout_width="309dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ap_tv_etiquetadoFrontal" />
 
     <Spinner
         android:id="@+id/ap_sp_item2"
-        android:layout_width="209dp"
+        android:layout_width="309dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ap_sp_item1" />
 
     <Spinner
         android:id="@+id/ap_sp_item3"
-        android:layout_width="209dp"
+        android:layout_width="309dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ap_sp_item2" />
@@ -118,37 +106,107 @@
         android:id="@+id/button62"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="40dp"
         android:onClick="ModificarProductoCancelar"
         android:text="CANCELAR"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnModAddCart"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ap_sp_item3"
-        app:layout_constraintVertical_bias="0.511" />
+        app:layout_constraintTop_toBottomOf="@+id/ap_n_stock"
+        app:layout_constraintVertical_bias="0.75" />
 
     <Button
-        android:id="@+id/button63"
+        android:id="@+id/btnEstadoB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="76dp"
+        android:layout_marginTop="36dp"
+        android:onClick="ModificarProductoESTADO"
+        android:text="DAR DE BAJA"
+        app:layout_constraintBottom_toTopOf="@+id/btnModAddCart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.858"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ap_n_stock"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnModAddCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
         android:onClick="ModificarProductoModificar"
-        android:text="MODIFICAR"
+        android:text="MODIFICAR PRODUCTO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.863"
-        app:layout_constraintStart_toEndOf="@+id/button62"
-        app:layout_constraintTop_toBottomOf="@+id/ap_sp_item3"
-        app:layout_constraintVertical_bias="0.511" />
+        app:layout_constraintTop_toBottomOf="@+id/ap_n_stock"
+        app:layout_constraintVertical_bias="0.75" />
 
     <TextView
         android:id="@+id/textView46"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="[NOMBRE DEL PRODUCTO]"
+        android:layout_marginTop="12dp"
+        android:text="PRODUCTO"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ap_tv_titulo" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMod" />
+
+    <TextView
+        android:id="@+id/txtInfoStock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="CANTIDAD A COMPRAR / STOCK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ap_sp_item3" />
+
+    <EditText
+        android:id="@+id/ap_et_nombreDelProductoMod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView46" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="12dp"
+        android:text="$"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toStartOf="@+id/ap_n_precio"
+        app:layout_constraintTop_toBottomOf="@+id/ap_et_ingredientes" />
+
+    <TextView
+        android:id="@+id/txtEstadoT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="ESTADO: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ap_n_stock" />
+
+    <TextView
+        android:id="@+id/txtEstadoE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="ACTIVO"
+        app:layout_constraintEnd_toStartOf="@+id/btnEstadoB"
+        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintStart_toEndOf="@+id/txtEstadoT"
+        app:layout_constraintTop_toBottomOf="@+id/ap_n_stock" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

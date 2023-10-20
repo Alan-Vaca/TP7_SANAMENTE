@@ -20,8 +20,9 @@
         app:title="Mis Pedidos" />
 
     <ListView
-        android:layout_width="393dp"
-        android:layout_height="507dp"
+        android:id="@+id/grd_Pedidos"
+        android:layout_width="374dp"
+        android:layout_height="501dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,22 +35,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="28dp"
         android:onClick="DetallePedidos"
-        android:text="VER DETALLES DEL PEDIDO"
+        android:text="VER"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintHorizontal_bias="0.005"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/btnCancelar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
         android:onClick="CancelarPedido"
-        android:text="CANCELAR"
+        android:text="CANCELAR PEDIDO"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toEndOf="@+id/button38" />
 
     <Button
@@ -58,7 +61,8 @@
         android:layout_height="47dp"
         android:layout_marginTop="12dp"
         android:onClick="FiltrosPedidos"
-        android:text="FILTROS"
+        android:text="AÑADIR FILTROS"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.951"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,12 +72,22 @@
         android:id="@+id/button11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:onClick="MenuComercio"
         android:text="VOLVER AL MENU PRINCIPAL"
-        app:layout_constraintBottom_toTopOf="@+id/_dynamic"
         app:layout_constraintEnd_toStartOf="@+id/button46"
-        app:layout_constraintHorizontal_bias="0.321"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar7"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
+
+    <Button
+        android:id="@+id/btnConfirmar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="268dp"
+        android:layout_marginBottom="28dp"
+        android:onClick="ConfirmarPedido"
+        android:text="CONFIRMAR"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

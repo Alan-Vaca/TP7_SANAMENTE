@@ -34,10 +34,6 @@ public class Etiquetado {
 
     @Override
     public String toString() {
-        return "Etiquetado{" +
-                "idEtiquetado=" + idEtiquetado +
-                ", descripcion='" + descripcion + '\'' +
-                ", estado=" + estado +
-                '}';
+        return descripcion;
     }
 }

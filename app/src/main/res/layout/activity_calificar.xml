@@ -19,25 +19,28 @@
         app:title="Calificar" />
 
     <TextView
-        android:id="@+id/textView16"
+        android:id="@+id/txtComercioC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="[COMERCIO]"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar6" />
 
     <TextView
-        android:id="@+id/mp_tv_titulo"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtDireccionC"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="[DIRECCION DEL COMERCIO]"
+        android:layout_marginTop="20dp"
+        android:text="Seleccione la cantidad de puntaje clickeando sobre las estrellas."
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+        app:layout_constraintTop_toBottomOf="@+id/txtComercioC" />
 
     <TextView
         android:id="@+id/mp_tv_subtitulo"
@@ -47,10 +50,10 @@
         android:text="COMENTARIOS:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toBottomOf="@+id/estrella3" />
 
     <EditText
-        android:id="@+id/r_cli_alergias"
+        android:id="@+id/txtComentarios"
         android:layout_width="238dp"
         android:layout_height="199dp"
         android:layout_marginTop="16dp"
@@ -63,56 +66,56 @@
         app:layout_constraintTop_toBottomOf="@+id/mp_tv_subtitulo" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/estrella3"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
-        app:srcCompat="@drawable/baseline_star_24" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDireccionC"
+        app:srcCompat="@drawable/baseline_star_outline_24" /> <!-- Cambiado a estrella vacía -->
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/estrella2"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
-        app:srcCompat="@drawable/baseline_star_24" />
+        app:layout_constraintEnd_toStartOf="@+id/estrella3"
+        app:layout_constraintTop_toBottomOf="@+id/txtDireccionC"
+        app:srcCompat="@drawable/baseline_star_outline_24" /> <!-- Cambiado a estrella vacía -->
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/estrella1"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="52dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+        app:layout_constraintEnd_toStartOf="@+id/estrella2"
         app:layout_constraintHorizontal_bias="0.611"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
-        app:srcCompat="@drawable/baseline_star_24" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDireccionC"
+        app:srcCompat="@drawable/baseline_star_outline_24" /> <!-- Cambiado a estrella vacía -->
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/estrella4"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="52dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
-        app:srcCompat="@drawable/baseline_star_half_24" />
+        app:layout_constraintStart_toEndOf="@+id/estrella3"
+        app:layout_constraintTop_toBottomOf="@+id/txtDireccionC"
+        app:srcCompat="@drawable/baseline_star_outline_24" /> <!-- Cambiado a estrella vacía -->
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/estrella5"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/mp_tv_titulo"
+        app:layout_constraintStart_toEndOf="@+id/estrella4"
+        app:layout_constraintTop_toBottomOf="@+id/txtDireccionC"
         app:srcCompat="@drawable/baseline_star_outline_24" />
 
     <Button
@@ -137,6 +140,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/r_cli_alergias" />
+        app:layout_constraintTop_toBottomOf="@+id/txtComentarios" />
+
+    <TextView
+        android:id="@+id/txtPuntaje"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="PUNTAJE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDireccionC" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

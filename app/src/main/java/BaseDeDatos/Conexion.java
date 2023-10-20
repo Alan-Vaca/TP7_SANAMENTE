@@ -5,28 +5,41 @@ import android.util.Log;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import Entidad.CalificacionXcliente;
 import Entidad.Cliente;
 import Entidad.Comercio;
+import Entidad.Etiquetado;
+import Entidad.Historial;
 import Entidad.Notificacion;
+import Entidad.Pedido;
+import Entidad.Producto;
 import Entidad.Restriccion;
 import Entidad.Usuario;
+import Entidad.pedidoXproducto;
 
 
 public class Conexion extends AsyncTask<String,Void, String> {
 
     //CREDENCIALES DE CONEXION PARA BASE DE DATOS REMOTA
     public static String ConexionHOST = "3306";
-    public static String ConexionUSER = "sql10650827";
-    public static String ConexionPASS = "X5VEc5C8D5";
+    public static String ConexionUSER = "sql10652400";
+    public static String ConexionPASS = "H1E7UP5V5e";
     public static String ConexionURL = "jdbc:mysql://sql10.freesqldatabase.com:" + ConexionHOST + "/" + ConexionUSER;
 
     //CLASES PARA LAS CONSULTAS
     public static consultasUsuario consultasUsuario = new consultasUsuario();
     public static consultasNotificaciones consultasNotificaciones = new consultasNotificaciones();
     public static consultasRestricciones consultasRestricciones = new consultasRestricciones();
-
+    public static consultasEtiquetados consultasEtiquetados = new consultasEtiquetados();
+    public static consultasProductos consultasProductos = new consultasProductos();
+    public static consultasComercios consultasComercios = new consultasComercios();
+    public static consultasHistoriales consultasHistoriales = new consultasHistoriales();
+    public static consultasPedidos consultasPedidos = new consultasPedidos();
+    public static consultasCalificaciones consultasCalificaciones = new consultasCalificaciones();
 
     //CONEXION
     public static Connection getConnection() {
@@ -73,6 +86,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public boolean RegistrarUsuarioCliente(Restriccion res) {
         Boolean exito = false;
         try {
+            res.getClienteAsociado().getUsuarioAsociado().setCliente(true);
             exito = consultasUsuario.registrarUsuario(getConnection(),res.getClienteAsociado().getUsuarioAsociado());
             if(exito) {
                 altaNotificacion(res.getClienteAsociado().getUsuarioAsociado().getIdUsuario());
@@ -102,6 +116,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public boolean RegistrarUsuarioComercio(Comercio com) {
         Boolean exito = false;
         try {
+            com.getUsuarioAsociado().setCliente(false);
             exito = consultasUsuario.registrarUsuario(getConnection(),com.getUsuarioAsociado());
             if(exito) {
                 altaComercio(com);
@@ -169,6 +184,17 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
     }
 
+    public Cliente obtenerClienteXid(int idCliente) {
+        Cliente cliente = new Cliente();
+        try {
+            Connection con = getConnection();
+            cliente = consultasUsuario.obtenerClienteXid(getConnection(),idCliente);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return cliente;
+    }
+
     //--------------------------------------------------------------------------------------
     //RESTRICCIONES
     //--------------------------------------------------------------------------------------
@@ -211,6 +237,17 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
     }
 
+    public Comercio obtenerComercioXid(int idComercio) {
+        Comercio comercio = new Comercio();
+        try {
+            Connection con = getConnection();
+            comercio = consultasUsuario.obtenerComercioXid(getConnection(),idComercio);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return comercio;
+    }
+
     public Comercio obtenerComercio(int idUsuario) {
         Comercio comercio = new Comercio();
         try {
@@ -229,46 +266,212 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
     }
 
+
+
     //--------------------------------------------------------------------------------------
     //PRODUCTOS
     //--------------------------------------------------------------------------------------
 
-    //-ALTA PRODUCTO
-    //-OBTENER PRODUCTO (ID PRODUCTO)
-    //-MODIFICAR PRODUCTO (ID COMERCIO, PRODUCTO)
-    //-LISTAR PRODUCTOS (FILTROS) DEBERA INCLUIR EL NOMBRE DE LOS COMERCIOS ASOCIADOS
+    public boolean altaProducto(Producto producto, Comercio comercio, int idEtiquetado1, int idEtiquetado2, int idEtiquetado3) {
+        Boolean exito = false;
+        try {
+            Connection con = getConnection();
+            exito = consultasProductos.agregarProducto(getConnection(),producto,comercio);
+            if(exito) {
+                if(idEtiquetado1 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado1);
+                }
+                if(idEtiquetado2 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado2);
+                }
+                if(idEtiquetado3 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado3);
+                }
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
+
+    public boolean modificarProducto(Producto producto, int idEtiquetado1, int idEtiquetado2, int idEtiquetado3) {
+        Boolean exito = false;
+        try {
+            Connection con = getConnection();
+            exito = consultasProductos.modificarProducto(getConnection(),producto);
+            if(exito) {
+                consultasEtiquetados.eliminarProductoXetiquetado(getConnection(),producto.getIdProducto());
+
+                if(idEtiquetado1 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado1);
+                }
+                if(idEtiquetado2 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado2);
+                }
+                if(idEtiquetado3 > 0){
+                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado3);
+                }
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
+
+    public ArrayList<Producto> obtenerListadoProductos(Usuario user) {
+        ArrayList<Producto> listaProducto = new ArrayList<Producto>();
+        try {
+            Connection con = getConnection();
+            listaProducto = consultasProductos.obtenerListadoProductos(getConnection(),user);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaProducto;
+    }
 
     //--------------------------------------------------------------------------------------
     //ETIQUETADO
     //--------------------------------------------------------------------------------------
 
     //-ALTA ETIQUETADO (ID PRODUCTO)
-    //-OBTENER ETIQUETADO (ID PRODUCTO)
+
+    public ArrayList<Etiquetado> obtenerListadoEtiquetado() {
+        ArrayList<Etiquetado> listaEtiquetado = new ArrayList<Etiquetado>();
+        try {
+            Connection con = getConnection();
+            listaEtiquetado = consultasEtiquetados.obtenerListadoEtiquetado(getConnection());
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaEtiquetado;
+    }
+
+    public ArrayList<Etiquetado> obtenerListadoEtiquetadoXproducto(Producto producto) {
+        ArrayList<Etiquetado> listaEtiquetado = new ArrayList<Etiquetado>();
+        try {
+            Connection con = getConnection();
+            listaEtiquetado = consultasEtiquetados.obtenerListadoEtiquetadoXproducto(getConnection(),producto);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaEtiquetado;
+    }
+
+
+
+
     //-MODIFICAR ETIQUETADO (ID PRODUCTO, ETIQUETADO)
 
     //--------------------------------------------------------------------------------------
     //PEDIDOS
     //--------------------------------------------------------------------------------------
 
-    //-ALTA PEDIDO (LISTADO DE PRODUCTOS, IDCLIENTE) A TODOS LOS PRODUCTOS SE DEBERA RESTAR LA CANTIDAD EN EL STOCK
-    //-DETALLE PEDIDO (ID PEDIDO)
-    //-ESTADO PEDIDO (ID PEDIDO, ESTADO) SE CAMBIARA EL ESTADO (entregado, cancelado, confirmado)
-    //-LISTAR PEDIDOS (FILTROS)
+    public boolean altaPedido(Usuario usuario,Pedido pedido, ArrayList<pedidoXproducto> misProductosPedido) {
+        Boolean exito = false;
+        try {
+            Map<Integer, ArrayList<pedidoXproducto>> productosAgrupados = new HashMap<>();
+            // Iteramos sobre misProductosPedido para agruparlos por idComercio
+            for (pedidoXproducto producto : misProductosPedido) {
+                int idComercio = producto.getProducto().getIdComercio();
+                if (!productosAgrupados.containsKey(idComercio)) {
+                    productosAgrupados.put(idComercio, new ArrayList<>());
+                }
+                productosAgrupados.get(idComercio).add(producto);
+            }
+            // Iteramos sobre los grupos de productos y registramos uno a uno
+            for (ArrayList<pedidoXproducto> grupoProductos : productosAgrupados.values()) {
+                ArrayList<pedidoXproducto> misProductosPedidoxComercio = grupoProductos;
+
+                exito = consultasPedidos.registrarPedidoXcomercio(getConnection(), misProductosPedidoxComercio, pedido, usuario);
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
+    public ArrayList<pedidoXproducto> obtenerListadoPedidosXid(int idPedido) {
+        ArrayList<pedidoXproducto> listaPedido = new ArrayList<pedidoXproducto>();
+        try {
+            Connection con = getConnection();
+            listaPedido = consultasPedidos.obtenerListadoPedidosXid(getConnection(),idPedido);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaPedido;
+    }
+
+    public Pedido obtenerPedidoXid(int idPedido) {
+        Pedido pedido = new Pedido();
+        try {
+            Connection con = getConnection();
+            pedido = consultasPedidos.obtenerPedidoXid(getConnection(),idPedido);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return pedido;
+    }
+
+    public boolean cambiarEstadoPedido(Pedido pedido, Integer estado) {
+        Boolean exito = false;
+        try {
+            exito = consultasPedidos.cambiarEstadoPedido(getConnection(), pedido, estado);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
 
     //--------------------------------------------------------------------------------------
     //CALIFICACIONES
     //--------------------------------------------------------------------------------------
 
-    //-EXISTE CALIFICACION (IDPEDIDO, IDCLIENTE) DEBERA VERIFICAR SI EXISTE PARA SABER SI ES UN ALTA O UN UPDATE
-    //-CALIFICAR (ID PEDIDO, IDCLIENTE) DEBERA APLICAR LA CALIFICACION A TODOS LOS PRODUCTOS DE ESE PEDIDO
-    //-MODIFICAR CALIFICACION (ID PEDIDO, IDCLIENTE) DEBERA APLICAR LA CALIFICACION A TODOS LOS PRODUCTOS DE ESE PEDIDO
-    //-OBTENER PROMEDIO DE CALIFICACION (ID PRODUCTO) DEBERA HACER UNA MEDIA/PROMEDIO DE TODAS LAS CALIFICACIONES
+    public boolean calificarPuntaje(int idPedido,CalificacionXcliente calificacionXcliente) {
+        Boolean exito = false;
+        try {
+            ArrayList<pedidoXproducto> productos = new ArrayList<pedidoXproducto>();
+            productos = obtenerListadoPedidosXid(idPedido);
+            if(productos.size() > 0){
+                for(pedidoXproducto producto : productos){
+                    calificacionXcliente.setProducto(producto.getProducto());
+                    exito = consultasCalificaciones.calificarPuntaje(getConnection(),calificacionXcliente);
+                }
+            }else{
+                exito = false;
+            }
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
 
     //--------------------------------------------------------------------------------------
     //HISTORIAL
     //--------------------------------------------------------------------------------------
 
-    //-CONSULTAR HISTORIAL (FILTROS, IDCLIENTE) SE SUMARA LOS PEDIDOS Y CALIFICACION PERSONAL EN CASO DE TENERLA
+    public ArrayList<Historial> obtenerListadoHistorial(Usuario user) {
+        ArrayList<Historial> listaHistorial = new ArrayList<Historial>();
+        try {
+            Connection con = getConnection();
+            listaHistorial = consultasHistoriales.obtenerListadoHistorial(getConnection(),user);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaHistorial;
+    }
+
+    public ArrayList<Pedido> obtenerListadoPedidos(Usuario user) {
+        ArrayList<Pedido> listaPedido = new ArrayList<Pedido>();
+        try {
+            Connection con = getConnection();
+            listaPedido = consultasHistoriales.obtenerListadoPedidos(getConnection(),user);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaPedido;
+    }
+
+
+
 
     //--------------------------------------------------------------------------------------
     //REPORTE
