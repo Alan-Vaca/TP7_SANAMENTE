@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:onClick="MenuComercio"
-        android:text="VOLVER AL MENU PRINCIPAL"
+        android:text="@string/button_volverMenuPrincipal"
         app:layout_constraintEnd_toStartOf="@+id/button46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar7" />

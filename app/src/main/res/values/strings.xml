@@ -59,6 +59,70 @@
     <!-- ______________________________________________________ -->
     <!-- ______________________________________________________ -->
 
+    <!-- _________________  STRINGS DE USO COMUN  _________________ -->
+    <string name="button_aplicarFiltros">"APLICAR FILTROS"</string>
+    <string name="button_calificar">"CALIFICAR"</string>
+    <string name="button_cancelar">"CANCELAR"</string>
+    <string name="button_cancelarCompra">"CANCELAR COMPRA"</string>
+    <string name="button_darDeBaja">"DAR DE BAJA"</string>
+    <string name="button_filtros">"FILTROS"</string>
+    <string name="button_modificar">"MODIFICAR"</string>
+    <string name="button_registrar">"REGISTRAR"</string>
+    <string name="button_salir">"button_salir"</string>
+    <string name="button_volver">"VOLVER"</string>
+    <string name="button_volverMenuPrincipal">"VOLVER AL MENU PRINCIPAL"</string>
+
+    <string name="checkbox_celiaco">"CELIACO"</string>
+    <string name="checkbox_diabetico">"DIABETICO"</string>
+    <string name="checkbox_hipertenso">"HIPERTENSO"</string>
+
+    <string name="hint_ejemplo_apellido">"APELLIDO"</string>
+    <string name="hint_ejemplo_apertura">"APERTURA"</string>
+    <string name="hint_ejemplo_azucar">"EJ: AZUCAR"</string>
+    <string name="hint_ejemplo_cierre">"CIERRE"</string>
+    <string name="hint_ejemplo_contraseña">"CONTRASEÑA"</string>
+    <string name="hint_ejemplo_contraseñaActual">"CONTRASEÑA ACTUAL"</string>
+    <string name="hint_ejemplo_direccion">"DIRECCION 123"</string>
+    <string name="hint_ejemplo_fecha">"01/01/2020"</string>
+    <string name="hint_ejemplo_horas">"00:00"</string>
+    <string name="hint_ejemplo_ingredientes">"ESCRIBA LOS INGREDIENTES QUE LE GENERAN ALERGIAS, SEPARADAS POR COMA"</string>
+    <string name="hint_ejemplo_leche">"EJ: LECHE"</string>
+    <string name="hint_ejemplo_nombre">"INGRESE NOMBRE"</string>
+    <string name="hint_ejemplo_nuevaContraseña">"NUEVA CONTRASEÑA"</string>
+    <string name="hint_ejemplo_stock">"STOCK"</string>
+
+
+    <string name="switch_ofertas">"OFERTAS"</string>
+    <string name="switch_productos">"PRODUCTOS"</string>
+
+    <string name="tv_alergias">"ALERGIAS"</string>
+    <string name="tv_direccion">"DIRECCION"</string>
+    <string name="tv_dni">"DNI"</string>
+    <string name="tv_estado">"ESTADO:"</string>
+    <string name="tv_etiquetadoFrontal">"ETIQUETADO FRONTAL"</string>
+    <string name="tv_fecha">"FECHA"</string>
+    <string name="tv_filtroNombre">"FILTRAR POR NOMBRE"</string>
+    <string name="tv_horarios">"HORARIOS"</string>
+    <string name="tv_ingredientes">"INGREDIENTES"</string>
+    <string name="tv_nombre">"NOMBRE"</string>
+    <string name="tv_nombreComercio">"NOMBRE DEL COMERCIO"</string>
+    <string name="tv_nombreTarjeta">"NOMBRE DEL PROPIETARIO DE LA TARJETA"</string>
+    <string name="tv_nombreUsuario">"NOMBRE DE USUARIO"</string>
+    <string name="tv_ordernarPor">"ORDENAR POR:"</string>
+    <string name="tv_precio">"PRECIO"</string>
+    <string name="tv_recientes">"RECIENTES"</string>
+    <string name="tv_repetirContraseña">"REPETIR CONTRASEÑA"</string>
+    <string name="tv_usuario">"USUARIO"</string>
+
+
+
+
+
+
+
+
+    <!-- _________________  AGREGAR_PRODUCTO  _________________ -->
+
     <!-- _________________  AGREGAR_PRODUCTO  _________________ -->
     <string name="ap_tv_titulo">"Ingresa los datos en el formulario"</string>
     <string name="ap_et_nombreDelProducto">"Nombre del producto"</string>
@@ -142,6 +206,5 @@
     <string name="mp_et_codigoSeguridad">codigo</string>
     <string name="mp_bn_finalizarCompra">FINALIZAR COMPRA</string>
     <string name="mp_bn_cancelarCompra">CANCELAR COMPRA</string>
-
 
 </resources>

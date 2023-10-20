@@ -58,7 +58,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="8dp"
         android:onClick="MenuOfertas"
-        android:text="@string/mcli_bn_ofertas"
+        android:text="@string/switch_ofertas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miCarrito" />
@@ -90,7 +90,7 @@
         android:layout_width="231dp"
         android:layout_height="57dp"
         android:onClick="MenuPrincipal"
-        android:text="SALIR"
+        android:text="@string/button_salir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

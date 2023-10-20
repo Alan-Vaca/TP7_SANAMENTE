@@ -88,7 +88,7 @@
         android:layout_width="231dp"
         android:layout_height="57dp"
         android:onClick="MenuPrincipal"
-        android:text="SALIR"
+        android:text="@string/button_salir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
