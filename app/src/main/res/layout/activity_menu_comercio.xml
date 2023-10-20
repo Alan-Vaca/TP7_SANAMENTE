@@ -24,7 +24,7 @@
         android:layout_width="231dp"
         android:layout_height="57dp"
         android:onClick="MiUsuarioComercio"
-        android:text="MI COMERCIO"
+        android:text="@string/button_miComercio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_notificaciones" />
@@ -35,7 +35,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="68dp"
         android:onClick="MenuPedidos_Comerciante"
-        android:text="MIS PEDIDOS"
+        android:text="@string/button_misPedidos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_historial" />
@@ -46,7 +46,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="80dp"
         android:onClick="MenuMis_Productos"
-        android:text="MI CATALOGO"
+        android:text="@string/button_miCatalogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_catalogo" />
@@ -57,7 +57,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="8dp"
         android:onClick="MenuAgregarProducto"
-        android:text="NUEVO PRODUCTO"
+        android:text="@string/button_nuevoProducto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miCarrito" />
@@ -67,7 +67,7 @@
         android:layout_width="126dp"
         android:layout_height="41dp"
         android:onClick="MenuHistorial"
-        android:text="HISTORIAL"
+        android:text="@string/button_historial"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miUsuario" />
@@ -78,7 +78,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="28dp"
         android:onClick="MenuGenerarReporte"
-        android:text="GENERAR REPORTE"
+        android:text="@string/button_generarReportes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_toolbar2" />

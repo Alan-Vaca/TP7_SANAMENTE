@@ -36,7 +36,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="56dp"
         android:onClick="MenuCatalogo"
-        android:text="@string/mcli_bn_catalogo"
+        android:text="@string/button_catalogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_historial" />
@@ -47,7 +47,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="72dp"
         android:onClick="MenuMiCarrito"
-        android:text="@string/mcli_bn_miCarrito"
+        android:text="@string/button_miCarrito"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_catalogo" />
@@ -69,7 +69,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="8dp"
         android:onClick="MenuHistorial"
-        android:text="@string/mcli_bn_historial"
+        android:text="@string/button_historial"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miUsuario" />
@@ -80,7 +80,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="24dp"
         android:onClick="Notificaciones"
-        android:text="@string/mcli_bn_notificaciones"
+        android:text="@string/button_notificaciones"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_toolbar2" />

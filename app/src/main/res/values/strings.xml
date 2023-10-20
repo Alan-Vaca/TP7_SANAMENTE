@@ -63,33 +63,38 @@
     <string name="button_aplicarFiltros">"APLICAR FILTROS"</string>
     <string name="button_calificar">"CALIFICAR"</string>
     <string name="button_cancelar">"CANCELAR"</string>
+    <string name="button_agregar">"AGREGAR"</string>
     <string name="button_cancelarCompra">"CANCELAR COMPRA"</string>
     <string name="button_darDeBaja">"DAR DE BAJA"</string>
+    <string name="button_historial">HISTORIAL</string>
     <string name="button_filtros">"FILTROS"</string>
     <string name="button_modificar">"MODIFICAR"</string>
     <string name="button_registrar">"REGISTRAR"</string>
-    <string name="button_salir">"button_salir"</string>
+    <string name="button_imprimir">"IMPRIMIR"</string>
+    <string name="button_salir">"SALIR"</string>
+    <string name="button_guardar">"GUARDAR"</string>
     <string name="button_volver">"VOLVER"</string>
     <string name="button_volverMenuPrincipal">"VOLVER AL MENU PRINCIPAL"</string>
 
-    <string name="checkbox_celiaco">"CELIACO"</string>
-    <string name="checkbox_diabetico">"DIABETICO"</string>
-    <string name="checkbox_hipertenso">"HIPERTENSO"</string>
+    <string name="checkbox_celiaco">"Celiaco"</string>
+    <string name="checkbox_diabetico">"Diabetico"</string>
+    <string name="checkbox_hipertenso">"Hipertenso"</string>
 
-    <string name="hint_ejemplo_apellido">"APELLIDO"</string>
-    <string name="hint_ejemplo_apertura">"APERTURA"</string>
-    <string name="hint_ejemplo_azucar">"EJ: AZUCAR"</string>
-    <string name="hint_ejemplo_cierre">"CIERRE"</string>
-    <string name="hint_ejemplo_contraseña">"CONTRASEÑA"</string>
-    <string name="hint_ejemplo_contraseñaActual">"CONTRASEÑA ACTUAL"</string>
-    <string name="hint_ejemplo_direccion">"DIRECCION 123"</string>
+    <string name="hint_ejemplo_apellido">"Apellido"</string>
+    <string name="hint_ejemplo_apertura">"Apertira"</string>
+    <string name="hint_ejemplo_azucar">"EJ: Azucar"</string>
+    <string name="hint_ejemplo_cierre">"Cierre"</string>
+    <string name="hint_ejemplo_contraseña">"Contraseña"</string>
+    <string name="hint_ejemplo_contraseñaActual">"Contraseña actual"</string>
+    <string name="hint_ejemplo_direccion">"Direccion 123"</string>
     <string name="hint_ejemplo_fecha">"01/01/2020"</string>
     <string name="hint_ejemplo_horas">"00:00"</string>
-    <string name="hint_ejemplo_ingredientes">"ESCRIBA LOS INGREDIENTES QUE LE GENERAN ALERGIAS, SEPARADAS POR COMA"</string>
-    <string name="hint_ejemplo_leche">"EJ: LECHE"</string>
-    <string name="hint_ejemplo_nombre">"INGRESE NOMBRE"</string>
-    <string name="hint_ejemplo_nuevaContraseña">"NUEVA CONTRASEÑA"</string>
-    <string name="hint_ejemplo_stock">"STOCK"</string>
+    <string name="hint_ejemplo_ingredientes">"Escriba los ingredientes que le generan alergias, separadas por una coma"</string>
+    <string name="hint_ejemplo_leche">"EJ: Leche"</string>
+    <string name="hint_ejemplo_nombre">"Ingrese nombre"</string>
+    <string name="hint_ejemplo_nuevaContraseña">"Nueva contraseña"</string>
+    <string name="hint_ejemplo_stock">"Stock"</string>
+    <string name="hint_ejemplo_precio">"Precio"</string>
 
 
     <string name="switch_ofertas">"OFERTAS"</string>
@@ -116,95 +121,69 @@
 
 
 
-
-
-
-
-
     <!-- _________________  AGREGAR_PRODUCTO  _________________ -->
 
-    <!-- _________________  AGREGAR_PRODUCTO  _________________ -->
-    <string name="ap_tv_titulo">"Ingresa los datos en el formulario"</string>
-    <string name="ap_et_nombreDelProducto">"Nombre del producto"</string>
-    <string name="ap_tv_ingredientes">"INGREDIENTES:"</string>
-    <string name="ap_et_ingredientes">"Ej: azucar"</string>
-    <string name="ap_n_precio">"Precio"</string>
-    <string name="ap_n_stock">"Stock"</string>
-    <string name="ap_tv_etiquetadoFrontal">"Etiquetado Frontal"</string>
+    <string name="tv_AP_titulo">"INGRESA LOS DATOS EN EL FORMULARIO"</string>
+    <string name="hint_ejemplo_nombreDelProducto">"Nombre del producto"</string>
 
-    <!-- _________________  AGREGAR_PRODUCTO  _________________ -->
-    <string name="dp_tv_pedido">PEDIDO Nº 45644</string>
-    <string name="dp_tv_datosCliente">CLIENTE: 11.234.567 - NOMBRE APELLIDO</string>
-    <string name="dp_tv_comercio">COMERCIO:</string>
-    <string name="dp_tv_nombreComercio">NOMBRE DEL COMERCIO</string>
-    <string name="dp_tv_fecha">FECHA: XX/XX/XXXX</string>
-    <string name="dp_tv_cantitdadProductos">CANTIDAD DE PRODUCTOS: 5</string>
-    <string name="dp_tv_importeTotal">MONTO TOTAL: $</string>
-    <string name="dp_bn_volver">VOLVER</string>
-    <string name="dp_bn_calificar">CALIFICAR</string>
-    <string name="dp_bn_imprimir">IMPRIMIR</string>
+    <!-- _________________  CALIFICAR  _________________ -->
+    <string name="tv_CA_comercio">"COMERCIO:"</string>
+    <string name="tv_CA_comentario">"COMENTARIO:"</string>
+    <string name="tv_CA_puntaje">"PUNTAJE"</string>
+    <string name="tv_CA_comercioDescripcion">"Seleccione la cantidad de puntaje clickeando sobre las estrellas."</string>
+
+    <!-- _________________  DETALLE PEDIDO  _________________ -->
+    <string name="tv_DP_titulo">"PEDIDO N° 45644:"</string>
+    <string name="tv_DP_estado">"ESTADO:"</string>
+    <string name="tv_DP_comercio">"COMERCIO:"</string>
+    <string name="tv_DP_fecha">"FECHA"</string>
+    <string name="tv_DP_cantidadProductos">"CANTIDAD DE PRODUCTOS:"</string>
+    <string name="tv_DP_montoTotal">"MONTO TOTAL: $"</string>
+    <string name="tv_datosCliente">"CLIENTE: 11.234.567 - NOMBRE APELLIDO"</string>
 
     <!-- _________________  FILTROS  _________________ -->
-    <string name="fc_tv_titulo">Filtrar por nombre</string>
-    <string name="fc_et_filtroNombre">Ingrese nombre</string>
-    <string name="fc_tv_tituloCheckbox">Producto apto para:</string>
-    <string name="r_cb_hipertenso">Celiacos</string>
-    <string name="r_cb_diabetico">Hipertensos</string>
-    <string name="r_cb_celiaco">Diabeticos</string>
-    <string name="fc_tv_contiene">Contiene:</string>
-    <string name="fc_et_filtroContiene">Ej: azucar</string>
-    <string name="fc_tv_noContiene">NO Contiene:</string>
-    <string name="fc_et_filtroNoContiene">Ej: leche</string>
-    <string name="fc_tv_ordernarPor">Ordenar por:</string>
-    <string name="fc_rb_calificaciones">Calificaciones</string>
-    <string name="fc_rb_precio">Ej: leche</string>
-    <string name="fc_rb_reciente">Recientes</string>
-    <string name="fc_bn_aplicarFiltros">APLICAR FILTROS</string>
+    <string name="rb_califiaciones">CALIFICACIONES</string>
+    <string name="tv_prodAptoPara">Producto apto para:</string>
+    <string name="tv_contiene">CONTIENE</string>
+    <string name="tv_noContiene">NO CONTIENE</string>
 
     <!-- _________________  FILTROS PEDIDOS _________________ -->
-    <string name="fp_tv_titulo">Filtrar por nombre</string>
-    <string name="fp_et_filtroNombre">Ingrese nombre</string>
-    <string name="fp_tv_tituloCheckbox">Estado:</string>
-    <string name="fp_cb_confirmado">Confirmados</string>
-    <string name="fp_cb_cancelado">Cancelados</string>
-    <string name="fp_cb_pendiente">Pendientes</string>
-    <string name="fp_tv_fechaDesde">Fecha Desde</string>
-    <string name="fp_et_fechaDesde">01/01/2020</string>
-    <string name="fp_et_horaDesde">00:00</string>
-    <string name="fp_tv_fechaHasta">Fecha Hasta</string>
-    <string name="fp_et_fechaHasta">01/01/2023</string>
-    <string name="fp_et_horaHasta">00:00</string>
-    <string name="fp_tv_ordenarPor">Ordenar por:</string>
-    <string name="fp_rb_enEspera">En espera</string>
-    <string name="fp_rb_recientes">Recientes</string>
-    <string name="fp_bn_aplicarFiltros">APLICAR FILTROS</string>
+    <string name="checkbox_cancelados">Cancelados</string>
+    <string name="checkbox_confirmados">Confirmados</string>
+    <string name="checkbox_pendientes">Pendientes</string>
+    <string name="tv_enEspera">EN ESPERA</string>
+    <string name="tv_fechaDesde">FECHA DESDE</string>
+    <string name="tv_fechaHasta">FECHA HASTA</string>
+    <string name="tv_hs">HS.</string>
+
+    <!-- _________________  MAIN _________________ -->
+    <string name="button_ingresar">INGRESAR</string>
+    <string name="button_registrarse">REGISTRARSE</string>
+    <string name="tv_LG_titulo">SANAMENTE</string>
+
 
     <!-- _________________  MENU CLIENTE  _________________ -->
-    <string name="mcli_bn_notificaciones">NOTIFICACIONES</string>
-    <string name="mcli_bn_miUsuario">MI USUARIO</string>
-    <string name="mcli_bn_historial">HISTORIAL</string>
-    <string name="mcli_bn_catalogo">CATALOGO</string>
-    <string name="mcli_bn_miCarrito">MI CARRITO</string>
-    <string name="mcli_bn_ofertas">OFERTAS</string>
-    <string name="mcli_bn_salir">SALIR</string>
+    <string name="button_catalogo">CATALOGO</string>
+    <string name="button_miCarrito">MI CARRITO</string>
+    <string name="button_miUsuario">MI USUARIO</string>
+    <string name="button_notificaciones">NOTIFICACIONES</string>
 
     <!-- _________________  MENU COMERCIO  _________________ -->
-    <string name="mcom_bn_generarReporte">asd</string>
-    <string name="mcom_bn_miComercio">asd</string>
-    <string name="mcom_bn_historial">asd</string>
-    <string name="mcom_bn_misPedidos">asd</string>
-    <string name="mcom_bn_miCatalogo">asd</string>
-    <string name="mcom_bn_nuevoProducto">asd</string>
-    <string name="mcom_bn_salir">asd</string>
+    <string name="button_generarReportes">GENERAR REPORTE</string>
+    <string name="button_miCatalogo">MI CATALOGO</string>
+    <string name="button_miComercio">MI COMERCIO</string>
+    <string name="button_misPedidos">MIS PEDIDOS</string>
+    <string name="button_nuevoProducto">NUEVO PRODUCTO</string>
 
     <!-- _________________  METODO DE PAGO  _________________ -->
-    <string name="mp_tv_titulo">Complete los datos</string>
-    <string name="mp_tv_subtitulo">Tipo de tarjeta</string>
-    <string name="mp_et_numeroTarjeta">Numero de tarjeta</string>
-    <string name="mp_et_nombre">Nombre</string>
-    <string name="mp_et_fecha">Fecha</string>
-    <string name="mp_et_codigoSeguridad">codigo</string>
-    <string name="mp_bn_finalizarCompra">FINALIZAR COMPRA</string>
-    <string name="mp_bn_cancelarCompra">CANCELAR COMPRA</string>
+    <string name="hint_ejemplo_codTarjeta">123</string>
+    <string name="hint_ejemplo_numTarjeta">1234 5678 1234 5678</string>
+    <string name="tv_MP_codigo">CODIGO</string>
+    <string name="tv_MP_titulo">COMPLETE LOS DATOS</string>
+    <string name="button_finalizarCompra">FINALIZAR COMPRA</string>
+    <string name="tv_MP_numTarjeta">NUMERO DE TARJETA</string>
+    <string name="tv_MP_tipoTarjeta">TIPO DE TARJETA</string>
+    <string name="tv_MP_vencimiento">VENCIMIENTO</string>
+
 
 </resources>
