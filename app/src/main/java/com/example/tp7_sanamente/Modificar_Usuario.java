@@ -83,30 +83,57 @@ Usuario user;
         boolean Celiaco = celiaco.isChecked();
         boolean Diabetico = diabetico.isChecked();
 
+
         //IF -- LAS CONTRASEÑA ACTUAL DEBE SER IGUAL A LA DE user.getContraseña
-        //SI ES VALIDO EL CONDICIONAL ANTERIOR LA PASS 1 Y PASS 2 DEBEN SER IGUALES
-        //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
+        if(Pass0.equals(user.getContraseña())){
 
-        user.setNombreUsuario(Usuario);
-        user.setDireccion(Direccion);
-        user.setContraseña(Pass1);
+            //SI ES VALIDO EL CONDICIONAL ANTERIOR LA PASS 1 Y PASS 2 DEBEN SER IGUALES
+            if(Pass1.equals(Pass2)) {
+                user.setNombreUsuario(Usuario);
+                user.setDireccion(Direccion);
+                user.setContraseña(Pass1);
 
-        restriccion.setAlergico(Alergia);
-        restriccion.setHipertenso(Hipertenso);
-        restriccion.setCeliaco(Celiaco);
-        restriccion.setDiabetico(Diabetico);
+                restriccion.setAlergico(Alergia);
+                restriccion.setHipertenso(Hipertenso);
+                restriccion.setCeliaco(Celiaco);
+                restriccion.setDiabetico(Diabetico);
 
-        if(validarCliente(user)) {
-            Cliente cliente = new Cliente();
-            restriccion.setClienteAsociado(cliente);
-            restriccion.getClienteAsociado().setUsuarioAsociado(user);
-            new Modificar_Usuario.modificarCliente().execute(restriccion);
-            MenuirMiUsuario(view);
+                //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
+                if (validarCliente(user)) {
+                    //Cliente cliente = new Cliente();
+                    //restriccion.setClienteAsociado(cliente);
+                    //restriccion.getClienteAsociado().setUsuarioAsociado(user);
+                    //new Modificar_Usuario.modificarCliente().execute(restriccion);
+                    //MenuirMiUsuario(view);
+                    Toast.makeText(Modificar_Usuario.this, "Usuario validado correctamente", Toast.LENGTH_LONG).show();
+                }
+            }
+            else{
+                pass2.setError("Las contraseñas no coinciden");
+            }
         }
+        else{
+            pass0.setError("La contraseña actual es incorrecta");
+        }
+
     }
 
     public boolean validarCliente(Usuario usuario){
-        return true;
+        boolean isValid = true;
+        String Alergia = alergia.getText().toString();
+        String Direccion = direccion.getText().toString();
+        String Pass0 = pass0.getText().toString();
+        String Pass1 = pass1.getText().toString();
+        String Pass2 = pass2.getText().toString();
+
+        //valida que Alergia no contenga al menos un caracter, y si está nulo que devuelva vacío
+
+        //valida que Direccion no contenga al menos 3 caracteres, si tiene menos o está vacío marca un error en el campo informando.
+
+        //valida que pass1 o pass2 sea una sola palabra y no contenga caracteres especiales, si empieza con un "espacio" elimina el espacio en blanco
+
+
+        return isValid;
     }
 
     public void MenuirMiUsuario(View view) {

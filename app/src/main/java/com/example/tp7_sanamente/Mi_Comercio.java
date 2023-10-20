@@ -84,22 +84,45 @@ public class Mi_Comercio extends AppCompatActivity {
         String ContraseñaNueva2 = contraseñaNueva2.getText().toString();
 
         //IF -- LAS CONTRASEÑA ACTUAL DEBE SER IGUAL A LA DE comercio.user.getContraseña
-        //SI ES VALIDO EL CONDICIONAL ANTERIOR LA NUEVA 1 Y NUEVA 2 DEBEN SER IGUALES
-        //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
-        comercio.setNombreComercio(NombreComercio);
-        comercio.setHorarios(HorarioApertura + "-:-" + HorarioCierre);
+        if(ContraseñaActual.equals(comercio.getUsuarioAsociado().getContraseña()) ){
 
-        comercio.getUsuarioAsociado().setNombreUsuario(NombreUsuario);
-        comercio.getUsuarioAsociado().setDireccion(DireccionComercio);
-        comercio.getUsuarioAsociado().setContraseña(ContraseñaNueva1);
+            //SI ES VALIDO EL CONDICIONAL ANTERIOR LA NUEVA 1 Y NUEVA 2 DEBEN SER IGUALES
+            if(ContraseñaNueva1.equals(ContraseñaNueva2)){
+                comercio.setNombreComercio(NombreComercio);
+                comercio.setHorarios(HorarioApertura + "-:-" + HorarioCierre);
 
-        if(validarComercio(comercio)) {
-            new Mi_Comercio.modificarComercio().execute(comercio);
-            MenuMiUsuarioComercio(view);
+                comercio.getUsuarioAsociado().setNombreUsuario(NombreUsuario);
+                comercio.getUsuarioAsociado().setDireccion(DireccionComercio);
+                comercio.getUsuarioAsociado().setContraseña(ContraseñaNueva1);
+
+                //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
+                if(validarComercio(comercio)) {
+                    //new Mi_Comercio.modificarComercio().execute(comercio);
+                    //MenuMiUsuarioComercio(view);
+                    Toast.makeText(Mi_Comercio.this, "Exito", Toast.LENGTH_LONG).show();
+                }
+            }
+            else{
+                Toast.makeText(Mi_Comercio.this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
+            }
         }
+        else{
+            contraseñaActual.setError("La contraseña actual es incorrecta");
+        }
+
+
+
+
+
+
     }
 
     public boolean validarComercio(Comercio comercio){
+        //(que ninguno inicie con espacio en blanco). En caso de iniciar, lo tiene que borrar
+        //que no tenga espacios password ni esté vacío
+        //que no tenga caracteres especiales password ni esté vacío
+        //que el horario sea válido
+
         return true;
     }
 
