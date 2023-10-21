@@ -81,7 +81,7 @@
     <string name="checkbox_hipertenso">"Hipertenso"</string>
 
     <string name="hint_ejemplo_apellido">"Apellido"</string>
-    <string name="hint_ejemplo_apertura">"Apertira"</string>
+    <string name="hint_ejemplo_apertura">"Apertura"</string>
     <string name="hint_ejemplo_azucar">"EJ: Azucar"</string>
     <string name="hint_ejemplo_cierre">"Cierre"</string>
     <string name="hint_ejemplo_contraseña">"Contraseña"</string>
@@ -185,5 +185,59 @@
     <string name="tv_MP_tipoTarjeta">TIPO DE TARJETA</string>
     <string name="tv_MP_vencimiento">VENCIMIENTO</string>
 
+    <!-- _________________  MI CARRITO DE COMPRAS  _________________ -->
+    <string name="button_agregarMasProductos">AGREGAR MAS PRODUCTOS AL CARRITO</string>
+    <string name="button_eliminar">ELIMINAR</string>
+    <string name="button_pagar">PAGAR</string>
+    <string name="tv_MCC_montoTotal">MONTO TOTAL:</string>
+    <string name="tv_MCC_signoPesos">$</string>
+
+    <!-- _________________  MI HISTORIAL  _________________ -->
+    <string name="button_confirmarEntrega">CONFIRMAR ENTREGA</string>
+    <string name="button_verDetalle">VER DETALLE</string>
+
+    <!-- _________________  MI USUARIO COMERCIO  _________________ -->
+    <string name="tv_MUC_cuitComercio">CUIT COMERCIO</string>
+    <string name="tv_MUC_direccionComercio">DIRECCION DEL COMERCIO</string>
+    <string name="tv_MUC_apellidoYnombre">NOMBRE + APELLIDO</string>
+    <string name="tv_MUC_propietario">PROPIETARIO</string>
+
+    <!-- _________________  MIS NOTIFICACIONES  _________________ -->
+    <string name="button_aplicar">APLICAR</string>
+    <string name="tv_notificarmeSobre">NOTIFICARME SOBRE:</string>
+    <string name="switch_pedidos">PEDIDOS</string>
+
+    <!-- _________________  MIS PEDIDOS  _________________ -->
+    <string name="button_añadirFiltros">AÑADIR FILTROS</string>
+    <string name="button_cancelarPedido">CANCELAR PEDIDO</string>
+    <string name="button_confirmar">CONFIRMAR</string>
+    <string name="button_ver">VER</string>
+
+    <!-- _________________  MIS PEDIDOS  _________________ -->
+    <string name="button_agregarNuevoProducto">AGREGAR NUEVO PRODUCTO / AL CARRITO</string>
+    <string name="button_verProducto">VER PRODUCTO</string>
+    <string name="tv_MP_productoSeleccionado">PRODUCTO SELECCIONADO</string>
+    <string name="tv_MP_productoYprecio">[Nombre producto] [precio]</string>
+    <string name="tv_MP_poseeEstrellas">POSEE 5 ESTRELLAS DE 5</string>
+    <string name="tv_MP_stockCantidad">Stock / Cantidad a comprar</string>
+    <string name="hint_ejemplo_catalogoCantidad">0</string>
+
+    <!-- _________________  MODIFICAR PRODUCTO  _________________ -->
+    <string name="tv_modP_Activo">ACTIVO</string>
+    <string name="tv_modP_cantidadAcomprar">CANTIDAD A COMPRAR / STOCK</string>
+    <string name="button_modificarProducto">MODIFICAR PRODUCTO</string>
+
+    <!-- _________________  MODIFICAR PRODUCTO  _________________ -->
+    <string name="tv_RC_titulo">INGRESE LOS DATOS EN EL FORMULARIO</string>
+
+    <!-- _________________  MODIFICAR PRODUCTO  _________________ -->
+    <string name="hint_ejemplo_cuit">CUIT</string>
+    <string name="tv_rcom_datosComercio">DATOS DEL COMERCIO</string>
+    <string name="tv_rcom_titulo">DATOS DEL PROPIETARIO</string>
+
+    <!-- _________________  MODIFICAR USUARIO  _________________ -->
+    <string name="button_continuar">CONTINUAR</string>
+    <string name="switch_cuentaComerciante">CUENTA COMERCIANTE</string>
+    <string name="tv_ru_tipoDeCuenta">TIPO DE CUENTA</string>
 
 </resources>

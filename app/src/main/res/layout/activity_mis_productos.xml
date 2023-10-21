@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:onClick="CatalogoVerProducto"
-        android:text="VER PRODUCTO"
+        android:text="@string/button_verProducto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +58,7 @@
         android:layout_height="47dp"
         android:layout_marginBottom="32dp"
         android:onClick="CatalogoAgregarNuevoProducto"
-        android:text="AGREGAR NUEVO PRODUCTO / AL CARRITO"
+        android:text="@string/button_agregarNuevoProducto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
@@ -81,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="PRODUCTO SELECCIONADO:"
+        android:text="@string/tv_MP_productoSeleccionado"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtStockCantidad"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="16dp"
-        android:text="[Nombre producto] - [precio]"
+        android:text="@string/tv_MP_productoYprecio"
         app:layout_constraintBottom_toTopOf="@+id/catalogoCantidad"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="28dp"
-        android:text="Stock / Cantidad a comprar:"
+        android:text="@string/tv_MP_stockCantidad"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/btnAgregarProducto"
         app:layout_constraintStart_toStartOf="parent" />
@@ -116,6 +116,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
+        android:hint="@string/hint_ejemplo_catalogoCantidad"
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/btnAgregarProducto"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -125,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="POSEE 5 ESTRELLAS DE 5"
+        android:text="@string/tv_MP_poseeEstrellas"
         app:layout_constraintBottom_toTopOf="@+id/txtStockCantidad"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
