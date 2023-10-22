@@ -32,30 +32,42 @@ public class Filtros_Pedidos extends AppCompatActivity {
 
         // Validar que fechaDesde pertenezca a un formato dd/mm/aaaa. Si no, mostrar mensaje de error
         String fechaDesdeStr = fechaDesde.getText().toString();
-        if (!isValidDateFormat(fechaDesdeStr, "dd/MM/yyyy")) {
+        if (!fechaDesdeStr.isEmpty() && !isValidDateFormat(fechaDesdeStr, "dd/MM/yyyy")) {
             fechaDesde.setError("Formato de fecha inválido");
             isValid = false;
+        }
+        else{
+            fechaDesde.setError(null);
         }
 
         // Validar que horaDesde pertenezca a un formato 00:00. Si no, mostrar mensaje de error
         String horaDesdeStr = horaDesde.getText().toString();
-        if (!isValidDateFormat(horaDesdeStr, "HH:mm")) {
+        if (!horaDesdeStr.isEmpty() && !isValidDateFormat(horaDesdeStr, "HH:mm")) {
             horaDesde.setError("Formato de hora inválido");
             isValid = false;
+        }
+        else{
+            horaDesde.setError(null);
         }
 
         // Validar que fechaHasta pertenezca a un formato dd/mm/aaaa. Si no, mostrar mensaje de error
         String fechaHastaStr = fechaHasta.getText().toString();
-        if (!isValidDateFormat(fechaHastaStr, "dd/MM/yyyy")) {
+        if (!fechaHastaStr.isEmpty() && !isValidDateFormat(fechaHastaStr, "dd/MM/yyyy")) {
             fechaHasta.setError("Formato de fecha inválido");
             isValid = false;
+        }
+        else{
+            fechaHasta.setError(null);
         }
 
         // Validar que horaHasta pertenezca a un formato 00:00. Si no, mostrar mensaje de error
         String horaHastaStr = horaHasta.getText().toString();
-        if (!isValidDateFormat(horaHastaStr, "HH:mm")) {
+        if (!horaHastaStr.isEmpty() && !isValidDateFormat(horaHastaStr, "HH:mm")) {
             horaHasta.setError("Formato de hora inválido");
             isValid = false;
+        }
+        else{
+            horaHasta.setError(null);
         }
 
         if(isValid) {
@@ -74,9 +86,9 @@ public class Filtros_Pedidos extends AppCompatActivity {
     // Función para validar el formato de fecha y hora
     private boolean isValidDateFormat(String value, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
-        sdf.setLenient(false);
+        sdf.setLenient(false); //es estricto al momento de analizar la fecha
         try {
-            sdf.parse(value);
+            sdf.parse(value);// Analiza la cadena "value" en un objeto Date utilizando el formato de fecha definido en "sdf"
             return true;
         } catch (ParseException e) {
             return false;
