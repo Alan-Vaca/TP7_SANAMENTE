@@ -41,6 +41,10 @@ public class Registrar_Usuario extends AppCompatActivity {
             Toast.makeText(Registrar_Usuario.this, "DEBE INGRESAR UN NOMBRE DE USUARIO", Toast.LENGTH_LONG).show();
             return;
         }
+        if(userTxt.equals(pass2Txt)){
+            Toast.makeText(Registrar_Usuario.this, "El usuario y la contraseña no pueden ser iguales", Toast.LENGTH_LONG).show();
+            return;
+        }
         if(passTxt.equals(pass2Txt)){
             userNew.setNombreUsuario(userTxt);
             userNew.setContraseña(passTxt);

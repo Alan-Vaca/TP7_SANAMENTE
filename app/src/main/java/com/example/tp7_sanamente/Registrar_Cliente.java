@@ -48,28 +48,78 @@ public class Registrar_Cliente extends AppCompatActivity {
     }
 
     public void IngresarCliente(View view) {
+        String dniStr = dni.getText().toString().trim();
+
 
         Restriccion restriccion = new Restriccion();
         restriccion.setAlergico(alergias.getText().toString());
         restriccion.setHipertenso(hipertenso.isChecked());
         restriccion.setDiabetico(hipertenso.isChecked());
         restriccion.setCeliaco(celiaco.isChecked());
-
         Cliente cliente = new Cliente();
         user.setNombre(nombre.getText().toString());
         user.setApellido(apellido.getText().toString());
-        user.setDNI(Integer.parseInt(dni.getText().toString()));
+        //Tengo que validar antes sino la app rompe
+        if (!dniStr.isEmpty()) {   user.setDNI(Integer.parseInt(dni.getText().toString().trim()));  }
         user.setDireccion(direccion.getText().toString());
         cliente.setUsuarioAsociado(user);
         restriccion.setClienteAsociado(cliente);
 
+
         if(validarCliente(restriccion)) {
-            new registrarCliente().execute(restriccion);
+            //new registrarCliente().execute(restriccion);
         }
     }
 
-    public boolean validarCliente(Restriccion res){
-        return true;
+    public boolean validarCliente(Restriccion res) {
+        boolean isValid = true;
+        StringBuilder errorMessage = new StringBuilder("Complete los siguientes campos:\n");
+
+        // Obtener el cliente asociado desde la restricción.
+        Cliente clienteAsociado = res.getClienteAsociado();
+
+        // Validar que el cliente asociado no sea nulo.
+        if (clienteAsociado != null) {
+            // Obtener el usuario asociado al cliente.
+            Usuario usuarioAsociado = clienteAsociado.getUsuarioAsociado();
+
+            // Validar que los campos del usuario asociado no estén vacíos o nulos.
+            if (usuarioAsociado != null) {
+                if (usuarioAsociado.getNombre() == null || usuarioAsociado.getNombre().isEmpty()) {
+                    isValid = false;
+                    errorMessage.append("- Nombre\n");
+                }
+
+                if (usuarioAsociado.getApellido() == null || usuarioAsociado.getApellido().isEmpty()) {
+                    isValid = false;
+                    errorMessage.append("- Apellido\n");
+                }
+
+                if (usuarioAsociado.getDNI() <= 0) {
+                    isValid = false;
+                    errorMessage.append("- DNI\n");
+                }
+
+                if (usuarioAsociado.getDireccion() == null || usuarioAsociado.getDireccion().isEmpty()) {
+                    isValid = false;
+                    errorMessage.append("- Dirección\n");
+                }
+            } else {
+                isValid = false;
+                errorMessage.append("- Usuario asociado es nulo\n");
+            }
+        } else {
+            // Si el cliente asociado es nulo, la restricción no es válida.
+            isValid = false;
+            errorMessage.append("- Cliente asociado es nulo\n");
+        }
+
+        // Mostrar mensaje de error si la validación falla.
+        if (!isValid) {
+            Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG).show();
+        }
+
+        return isValid;
     }
 
 

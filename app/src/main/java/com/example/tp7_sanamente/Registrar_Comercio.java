@@ -40,26 +40,117 @@ public class Registrar_Comercio extends AppCompatActivity {
     }
 
     public void IngresarComercio(View view) {
+        String dniStr = usuario_dni.getText().toString().trim();
+        String cuitStr = cuit.getText().toString().trim();
+
 
         Comercio comercio = new Comercio();
-        comercio.setCuit(Integer.parseInt(cuit.getText().toString()));
+        //Tengo que validar antes sino la app rompe
+        if (!cuitStr.isEmpty()) {   comercio.setCuit(Integer.parseInt(cuit.getText().toString().trim()));  }
         comercio.setNombreComercio(nombre.getText().toString());
         String horarios = (apertura.getText().toString()) + "-:-" + (cierre.getText().toString());
         comercio.setHorarios(horarios);
-
-        user.setDNI(Integer.parseInt((usuario_dni.getText().toString())));
+        //Tengo que validar antes sino la app rompe
+        if (!dniStr.isEmpty()) {   user.setDNI(Integer.parseInt((usuario_dni.getText().toString())));  }
         user.setNombre(usuario_nombre.getText().toString());
         user.setApellido(usuario_apellido.getText().toString());
         user.setDireccion(direccion.getText().toString());
 
         comercio.setUsuarioAsociado(user);
         if(validarComercio(comercio)) {
-            new registrarComercio().execute(comercio);
+            //new registrarComercio().execute(comercio);
         }
     }
 
-    public boolean validarComercio(Comercio comercio){
-        return true;
+    public boolean validarComercio(Comercio comercio) {
+        Boolean isValid = true;
+        StringBuilder errorMessage = new StringBuilder("Complete o corrija los siguientes campos:\n");
+
+        if (comercio.getUsuarioAsociado().getDNI() <= 0) {
+            errorMessage.append("- DNI\n");
+            isValid = false;
+        }
+        /* Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
+        else if(comercio.getUsuarioAsociado().getDNI() < 99999 ||
+                comercio.getUsuarioAsociado().getDNI() > 1000000000)
+        {
+            errorMessage.append("- DNI inválido\n");
+            isValid = false;
+        }*/
+
+        if (comercio.getUsuarioAsociado().getNombre().isEmpty()) {
+            errorMessage.append("- Nombre\n");
+            isValid = false;
+        }
+
+        if (comercio.getUsuarioAsociado().getApellido().isEmpty()) {
+            errorMessage.append("- Apellido\n");
+            isValid = false;
+        }
+
+        if (comercio.getCuit() <= 0) {
+            errorMessage.append("- CUIT\n");
+            isValid = false;
+        }
+        /* Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
+        else if(comercio.getCuit() < 999999 || comercio.getCuit() > 1000000000)
+        {
+            errorMessage.append("- CUIT inválido\n");
+            isValid = false;
+        }*/
+
+
+        if (comercio.getNombreComercio().isEmpty()) {
+            errorMessage.append("- Nombre comercio\n");
+            isValid = false;
+        }
+
+
+        String[] horarios = comercio.getHorarios().split(":");
+        //Apertura
+        if (horarios[0].trim().equals("-")) {
+            errorMessage.append("- Apertura\n");
+            isValid = false;
+        }
+        else if(horarios[0].length() != 2 || !validarFormatoHorario(horarios[0]) ){
+            errorMessage.append("- Apertura inválida\n");
+            isValid = false;
+        }
+
+        //Cierre
+        if (horarios[1].trim().equals("-")) {
+            errorMessage.append("- Cierre\n");
+            isValid = false;
+        }
+        else if(horarios[1].length() != 2 || !validarFormatoHorario(horarios[1])){
+            errorMessage.append("- Cierre inválido\n");
+            isValid = false;
+        }
+
+        if (comercio.getUsuarioAsociado().getDireccion().isEmpty()) {
+            errorMessage.append("- Direccion\n");
+            isValid = false;
+        }
+
+        if (!isValid) {
+            Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG).show();
+        }
+        return isValid;
+    }
+
+    private boolean validarFormatoHorario(String horario) {
+        // El horario debe tener el formato "00:00"
+        String[] partes = horario.split(":");
+        if (partes.length == 2) {
+            try {
+                int horas = Integer.parseInt(partes[0]);
+                int minutos = Integer.parseInt(partes[1]);
+                return horas >= 0 && horas <= 23 && minutos >= 0 && minutos <= 59;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return false;
     }
 
     public void VolverRegistro(View view) {
