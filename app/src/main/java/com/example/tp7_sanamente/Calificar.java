@@ -179,6 +179,10 @@ public class Calificar extends AppCompatActivity {
 
     public boolean ValidarCalificacion(CalificacionXcliente calificacion){
         //VALIDAR COMENTARIO
+        if (calificacion.getComentario().trim().isEmpty()) {
+            Toast.makeText(Calificar.this, "Por favor, ingrese un comentario válido", Toast.LENGTH_LONG).show();
+            return false;
+        }
         return true;
     }
 

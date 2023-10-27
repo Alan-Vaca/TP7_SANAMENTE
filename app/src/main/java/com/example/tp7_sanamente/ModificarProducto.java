@@ -232,7 +232,8 @@ public class ModificarProducto extends AppCompatActivity {
         if(!user.isCliente()) {
             producto.setStock(Integer.parseInt(stockProducto.getText().toString()));
         }
-        producto.setPrecio(Float.parseFloat(precioProducto.getText().toString()));
+        if (!precioProducto.getText().toString().isEmpty()) {  producto.setPrecio(Float.parseFloat(precioProducto.getText().toString()));  }
+
 
         idEtiquetado1 = etiquetado_1.getSelectedItemPosition();
         idEtiquetado2 = etiquetado_2.getSelectedItemPosition();
@@ -300,12 +301,61 @@ public class ModificarProducto extends AppCompatActivity {
     }
 
     public boolean validarProductoXmodificar(Producto producto, int id1, int id2, int id3){
+        boolean isValid = true;
+        StringBuilder errorMessage = new StringBuilder("Complete o corrija los siguientes campos:\n");
+
         //DEBE VALIDAR TODOS LOS DATOS INGRESADOS A MODIFICAR
-        return true;
+        if (producto == null ) {
+            isValid = false;
+            errorMessage.append("- NO SE SELECCIONÓ UN PRODUCTO\n");
+
+        }
+
+        if (producto.getNombre() == null || producto.getNombre().isEmpty()) {
+            isValid = false;
+            errorMessage.append("- NOMBRE\n");
+
+        }
+
+        if(producto.getIngredientes() == null && producto.getIngredientes().isEmpty()){
+            isValid = false;
+            errorMessage.append("- INGREDIENTES\n");
+
+        }
+        else if(producto.getIngredientes().replaceAll("[^a-zA-Z]", "").length() < 3){
+            isValid = false;
+            errorMessage.append("- INGREDIENTES debe contener al menos 3 caracteres\n");
+        }
+
+        if(producto.getPrecio() <= 0){
+            isValid = false;
+            errorMessage.append("- Precio\n");
+
+        }
+
+        if(producto.getStock() <= 0){
+            isValid = false;
+            errorMessage.append("- Stock\n");
+
+        }
+
+
+        if (!isValid) {
+            Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG).show();
+        }
+        return isValid;
+
     }
 
     public boolean validarProductoXagregarCarrito(Producto producto, int id1, int id2, int id3){
         //DEBE VALIDAR LA CANTIDAD SOLICITA Y QUE EL CLIENTE SEA APTO PARA COMPRAR DEPENDIENDO SUS RESTRICCIONES
+        //Este me parece que debería advertir en caso de que sea celiaco que el producto contiene harina en vez de prohibirle comprarlo
+
+        if (producto.getStock() <= 0) {
+            Toast.makeText(ModificarProducto.this, "Ingrese la cantidad a comprar para agregar al carrito.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         return true;
     }
 
