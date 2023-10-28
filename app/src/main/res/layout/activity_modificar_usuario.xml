@@ -22,7 +22,7 @@
         android:id="@+id/r_cb_celiaco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:text="@string/checkbox_celiaco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.915"
@@ -33,24 +33,11 @@
         android:id="@+id/r_cb_diabetico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:text="@string/checkbox_diabetico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion" />
-
-    <EditText
-        android:id="@+id/mod_c_direccion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="@string/tv_usuario"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.86"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mod_dni" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -107,7 +94,7 @@
         android:id="@+id/r_cb_hipertenso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:text="@string/checkbox_hipertenso"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.055"
@@ -176,10 +163,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="97dp"
         android:text="@string/hint_ejemplo_contraseña"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="502dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView30"
@@ -245,5 +233,16 @@
         android:text="@string/tv_dni"
         app:layout_constraintStart_toEndOf="@+id/estrella5"
         app:layout_constraintTop_toBottomOf="@+id/mod_nombre_apellido" />
+
+    <TextView
+        android:id="@+id/mod_c_direccion"
+        android:layout_width="198dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/tv_usuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.812"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mod_dni" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

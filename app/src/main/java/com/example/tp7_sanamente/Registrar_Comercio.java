@@ -58,7 +58,7 @@ public class Registrar_Comercio extends AppCompatActivity {
 
         comercio.setUsuarioAsociado(user);
         if(validarComercio(comercio)) {
-            //new registrarComercio().execute(comercio);
+            new registrarComercio().execute(comercio);
         }
     }
 
@@ -70,13 +70,13 @@ public class Registrar_Comercio extends AppCompatActivity {
             errorMessage.append("- DNI\n");
             isValid = false;
         }
-        /* Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
+        // Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
         else if(comercio.getUsuarioAsociado().getDNI() < 99999 ||
                 comercio.getUsuarioAsociado().getDNI() > 1000000000)
         {
             errorMessage.append("- DNI inválido\n");
             isValid = false;
-        }*/
+        }
 
         if (comercio.getUsuarioAsociado().getNombre().isEmpty()) {
             errorMessage.append("- Nombre\n");

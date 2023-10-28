@@ -92,18 +92,23 @@ Usuario user;
                 user.setDireccion(Direccion);
                 user.setContraseña(Pass1);
 
-                restriccion.setAlergico(Alergia);
+                if(Alergia.isEmpty()){
+                    restriccion.setAlergico("");
+                }
+                else{
+                    restriccion.setAlergico(Alergia);
+                }
                 restriccion.setHipertenso(Hipertenso);
                 restriccion.setCeliaco(Celiaco);
                 restriccion.setDiabetico(Diabetico);
 
                 //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
                 if (validarCliente(user)) {
-                    //Cliente cliente = new Cliente();
-                    //restriccion.setClienteAsociado(cliente);
-                    //restriccion.getClienteAsociado().setUsuarioAsociado(user);
-                    //new Modificar_Usuario.modificarCliente().execute(restriccion);
-                    //MenuirMiUsuario(view);
+                    Cliente cliente = new Cliente();
+                    restriccion.setClienteAsociado(cliente);
+                    restriccion.getClienteAsociado().setUsuarioAsociado(user);
+                    new Modificar_Usuario.modificarCliente().execute(restriccion);
+                    MenuirMiUsuario(view);
                     Toast.makeText(Modificar_Usuario.this, "Usuario validado correctamente", Toast.LENGTH_LONG).show();
                 }
             }
@@ -125,12 +130,30 @@ Usuario user;
         String Pass1 = pass1.getText().toString();
         String Pass2 = pass2.getText().toString();
 
-        //valida que Alergia no contenga al menos un caracter, y si está nulo que devuelva vacío
 
         //valida que Direccion no contenga al menos 3 caracteres, si tiene menos o está vacío marca un error en el campo informando.
+        if(Direccion.isEmpty()){
+            Toast.makeText(Modificar_Usuario.this, "La direccion no puede estar vacía", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(Direccion.length() <= 3){
+            Toast.makeText(Modificar_Usuario.this, "La dirección debe contener más caracteres", Toast.LENGTH_LONG).show();
+            return false;
+        }
 
         //valida que pass1 o pass2 sea una sola palabra y no contenga caracteres especiales, si empieza con un "espacio" elimina el espacio en blanco
+        // Verificar que los campos de contraseña no tengan espacios en blanco y no estén vacíos
+        if (Pass1.trim().isEmpty() || Pass1.contains(" ")) {
+            Toast.makeText(Modificar_Usuario.this, "La nueva contraseña no puede contener espacios en blanco o estar vacía", Toast.LENGTH_LONG).show();
+            return false;
+        }
 
+
+        // Verificar que la contraseña no contenga caracteres especiales (solo letras y números permitidos)
+        if (!Pass1.matches("[a-zA-Z0-9]+")) {
+            Toast.makeText(Modificar_Usuario.this, "La nueva contraseña solo puede contener letras y números", Toast.LENGTH_LONG).show();
+            return false;
+        }
 
         return isValid;
     }

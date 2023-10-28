@@ -97,8 +97,8 @@ public class Mi_Comercio extends AppCompatActivity {
 
                 //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
                 if(validarComercio(comercio)) {
-                    //new Mi_Comercio.modificarComercio().execute(comercio);
-                    //MenuMiUsuarioComercio(view);
+                    new Mi_Comercio.modificarComercio().execute(comercio);
+                    MenuMiUsuarioComercio(view);
                     Toast.makeText(Mi_Comercio.this, "Exito", Toast.LENGTH_LONG).show();
                 }
             }
@@ -117,11 +117,51 @@ public class Mi_Comercio extends AppCompatActivity {
 
     }
 
-    public boolean validarComercio(Comercio comercio){
-        //(que ninguno inicie con espacio en blanco). En caso de iniciar, lo tiene que borrar
-        //que no tenga espacios password ni esté vacío
-        //que no tenga caracteres especiales password ni esté vacío
-        //que el horario sea válido
+    public boolean validarComercio(Comercio comercio) {
+        // Verificar que ningún campo inicie con espacio en blanco
+        if (comercio.getNombreComercio().startsWith(" ") ||
+                comercio.getUsuarioAsociado().getNombreUsuario().startsWith(" ") ||
+                comercio.getUsuarioAsociado().getDireccion().startsWith(" ")) {
+            Toast.makeText(Mi_Comercio.this, "Ningún campo debe empezar con espacio en blanco", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        // Verificar que los campos de contraseña no tengan espacios en blanco y no estén vacíos
+        String nuevaContraseña = comercio.getUsuarioAsociado().getContraseña();
+        if (nuevaContraseña.trim().isEmpty() || nuevaContraseña.contains(" ")) {
+            Toast.makeText(Mi_Comercio.this, "La contraseña no puede contener espacios en blanco o estar vacía", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        // Verificar que la contraseña no contenga caracteres especiales (solo letras y números permitidos)
+        if (!nuevaContraseña.matches("[a-zA-Z0-9]+")) {
+            Toast.makeText(Mi_Comercio.this, "La contraseña solo puede contener letras y números", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+
+        // Verificar que el horario sea válido (apertura menor que cierre)
+        String[] horarios = comercio.getHorarios().split("-:-");
+
+
+        if (horarios[0].isEmpty() || horarios[1].isEmpty()) {
+            Toast.makeText(Mi_Comercio.this, "Los campos de horario no pueden estar vacíos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        String[] aperturaParts = horarios[0].split(":");
+        String[] cierreParts = horarios[1].split(":");
+
+        int aperturaHoras = Integer.parseInt(aperturaParts[0]);
+        int aperturaMinutos = Integer.parseInt(aperturaParts[1]);
+
+        int cierreHoras = Integer.parseInt(cierreParts[0]);
+        int cierreMinutos = Integer.parseInt(cierreParts[1]);
+
+        if (aperturaHoras > cierreHoras || (aperturaHoras == cierreHoras && aperturaMinutos > cierreMinutos)) {
+            Toast.makeText(Mi_Comercio.this, "El horario de apertura debe ser antes que el horario de cierre", Toast.LENGTH_LONG).show();
+            return false;
+        }
 
         return true;
     }
