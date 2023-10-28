@@ -108,6 +108,7 @@ public class MiCarritoCompras extends AppCompatActivity {
             editor.putString("listadoCarrito", listaComoJson);
             editor.apply();
 
+            /* refresca la página */
             Intent intent = getIntent();
             finish();
             startActivity(intent);

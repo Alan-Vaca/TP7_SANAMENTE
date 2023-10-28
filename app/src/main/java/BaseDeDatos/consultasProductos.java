@@ -141,4 +141,66 @@ public class consultasProductos {
 
     }
 
+
+    //--------------------------------------------------------------------------------------
+    //FILTRO
+    //--------------------------------------------------------------------------------------
+    public ArrayList<Producto> obtenerListadoProductosFiltrados(
+            Connection conn, Usuario user,
+            String nombre, String contiene, String noContiene,
+            String ordenarPor, boolean hipertenso, boolean diabetico, boolean celiaco) {
+
+        ArrayList<Producto> listadoFiltrado = obtenerListadoProductos(conn, user);
+
+        // Aplica filtros según sea necesario
+        listadoFiltrado = filtrarPorNombre(listadoFiltrado, nombre);
+        listadoFiltrado = filtrarPorContiene(listadoFiltrado, contiene);
+        listadoFiltrado = filtrarPorNoContiene(listadoFiltrado, noContiene);
+        // Agrega más métodos de filtro según tus necesidades
+
+        // Ordena la lista si es necesario
+        ordenarListado(listadoFiltrado, ordenarPor);
+
+        return listadoFiltrado;
+    }
+
+    private ArrayList<Producto> filtrarPorNombre(ArrayList<Producto> lista, String nombre) {
+        ArrayList<Producto> listaFiltrada = new ArrayList<>();
+        for (Producto producto : lista) {
+            if (producto.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                listaFiltrada.add(producto);
+            }
+        }
+        return listaFiltrada;
+    }
+
+    public ArrayList<Producto> filtrarPorContiene(ArrayList<Producto> lista, String contiene) {
+
+        ArrayList<Producto> listaFiltrada = new ArrayList<>();
+        Log.d("PruebaLog", String.valueOf(contiene));
+
+        if (!contiene.isEmpty()) {
+            for (Producto producto : lista) {
+                if (producto.getIngredientes().toLowerCase().contains(contiene.toLowerCase())) {
+                    listaFiltrada.add(producto);
+                }
+            }
+        } else {
+            // Si la cadena contiene está vacía, devuelve la lista original sin filtrar
+            listaFiltrada.addAll(lista);
+        }
+        Log.d("PruebaLog", String.valueOf(listaFiltrada));
+        return listaFiltrada;
+    }
+
+    private ArrayList<Producto> filtrarPorNoContiene(ArrayList<Producto> lista, String noContiene) {
+        // Implementa la lógica para filtrar por no contiene según tus necesidades
+        return lista;
+    }
+
+    private void ordenarListado(ArrayList<Producto> lista, String ordenarPor) {
+        // Implementa la lógica para ordenar según tus necesidades
+        // Puedes utilizar Collections.sort() u otros métodos de ordenamiento
+    }
+
 }

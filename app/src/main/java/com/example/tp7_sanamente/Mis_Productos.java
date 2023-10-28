@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,7 +26,6 @@ import BaseDeDatos.Conexion;
 import Entidad.Producto;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
-
 public class Mis_Productos extends AppCompatActivity {
 
     Usuario user;
@@ -33,10 +33,12 @@ public class Mis_Productos extends AppCompatActivity {
     ListView lv_Catalogo;
     Button btnAdd;
     ArrayList<Producto> listaProductos;
+
     ArrayList<pedidoXproducto> listadoCarrito;
     Producto productoSeleccionado;
 
     boolean listaCargada;
+    boolean listaProductosConFiltro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,30 @@ public class Mis_Productos extends AppCompatActivity {
             listaCargada = true;
         }
 
+
+        try {
+
+
+            SharedPreferences preferencesFiltrado = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+            Gson gsonFiltrado = new Gson();
+            String listaComoJsonFiltrados = preferencesFiltrado.getString("listadoProductosFiltrados", "");
+            Type typeFiltrado = new TypeToken<ArrayList<Producto>>() {
+            }.getType();
+
+
+            listaProductos = gsonFiltrado.fromJson(listaComoJsonFiltrados, typeFiltrado);
+        }   catch (Exception e) {
+            Log.d("Filtro.obtener", e.toString());
+        }
+
+
+
+        if (listaProductos != null && !listaProductos.isEmpty()) {
+            listaProductosConFiltro = true;
+        }
+
+
+
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
         user = new Usuario();
@@ -77,7 +103,20 @@ public class Mis_Productos extends AppCompatActivity {
                 cantidadTxt.setText("0");
             }
 
-            new Mis_Productos.obtenerListadoProducto().execute(user);
+            if (!listaProductosConFiltro ) {
+                new Mis_Productos.obtenerListadoProducto().execute(user);
+            }else{
+                if (listaProductos.size() > 0) {
+
+                    ArrayAdapter<Producto> adapter = new ArrayAdapter<>(Mis_Productos.this, android.R.layout.simple_spinner_dropdown_item, listaProductos);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    lv_Catalogo.setAdapter(adapter);
+
+                } else {
+                    Toast.makeText(Mis_Productos.this, "HUBO UN ERROR AL CONSULTAR LOS PRODUCTO FILTRADOS", Toast.LENGTH_LONG).show();
+                }
+            }
         }else{
             Toast.makeText(Mis_Productos.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }
@@ -149,6 +188,7 @@ public class Mis_Productos extends AppCompatActivity {
 
     public void CatalogoFiltros(View view) {
         Intent catalogoFiltros = new Intent(this, Filtros.class);
+        catalogoFiltros.putParcelableArrayListExtra("listaProductos", listaProductos);
         startActivity(catalogoFiltros);
     }
 

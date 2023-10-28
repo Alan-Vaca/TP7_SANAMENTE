@@ -1,22 +1,214 @@
 package com.example.tp7_sanamente;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import BaseDeDatos.Conexion;
+import BaseDeDatos.consultasProductos;
+import Entidad.Producto;
+import Entidad.Usuario;
+import Entidad.pedidoXproducto;
 
 public class Filtros extends AppCompatActivity {
 
+
+    EditText filtroNombre, filtroContiene, filtroNoContiene;
+    RadioButton rbCalificaciones, rbPrecio, rbReciente;
+    RadioButton cbHipertenso, cbDiabetico, cbCeliaco;
+    ListView lvFiltros;
+    Usuario user;
+    ArrayList<Producto> listaProductosObtenido;
+    ArrayList<Producto> listaProductos;
+
+    ArrayList<Producto> listaFiltrada;
+
+
+    consultasProductos consultaProductos;
+
+
+    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros);
+       // listaProductos = getIntent().getParcelableArrayListExtra("listaProductos");
+
+
+        //filtroNombre = findViewById(R.id.fc_et_filtroNombre);
+
+        filtroContiene = findViewById(R.id.r_com_nombre);
+
+        /*
+        filtroNoContiene = findViewById(R.id.r_com_direccion);
+        rbCalificaciones = findViewById(R.id.fc_rb_calificaciones);
+        rbPrecio = findViewById(R.id.fc_rb_precio);
+        rbReciente = findViewById(R.id.fc_rb_reciente);
+        cbHipertenso = findViewById(R.id.r_cb_hipertenso);
+        cbDiabetico = findViewById(R.id.r_cb_diabetico);
+        cbCeliaco = findViewById(R.id.r_cb_celiaco);
+
+
+        */
+
+
+        listaProductos = new ArrayList<Producto>();
+
+
+
+
+        lvFiltros = findViewById(R.id.grd_catalogo);
+
+        consultaProductos = new consultasProductos();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
+        user = new Usuario();
+        if (!usuarioJson.isEmpty()) {
+            Gson gson = new Gson();
+            user = gson.fromJson(usuarioJson, Usuario.class);
+
+            new Filtros.obtenerListadoProducto().execute(user);
+        }else{
+            Toast.makeText(Filtros.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+        }
+
+        Button btnAplicarFiltros = findViewById(R.id.fc_bn_aplicarFiltros);
+        btnAplicarFiltros.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                aplicarFiltros(view);
+            }
+        });
+
+    }
+
+    public void aplicarFiltros(View view) {
+
+
+        //String nombre = filtroNombre.getText().toString().trim();
+        String contiene = filtroContiene.getText().toString().trim();
+       // String noContiene = filtroNoContiene.getText().toString().trim();
+
+/*
+        String ordenarPor = "";
+        if (rbCalificaciones.isChecked()) {
+            ordenarPor = "calificaciones";
+        } else if (rbPrecio.isChecked()) {
+            ordenarPor = "precio";
+        } else if (rbReciente.isChecked()) {
+            ordenarPor = "reciente";
+        }
+
+        boolean hipertenso = cbHipertenso.isChecked();
+        boolean diabetico = cbDiabetico.isChecked();
+        boolean celiaco = cbCeliaco.isChecked();
+*/
+
+       // new AplicarFiltrosTask().execute(nombre, contiene, noContiene, ordenarPor, hipertenso,
+         //       diabetico, celiaco);
+        new AplicarFiltrosTask().execute(contiene);
+    }
+
+    private class AplicarFiltrosTask extends AsyncTask<Object, Void, ArrayList<Producto>> {
+        @Override
+        protected ArrayList<Producto> doInBackground(Object... params) {
+
+            String contiene = (String) params[0];
+            /*
+            String contiene = (String) params[1];
+            String noContiene = (String) params[2];
+            String ordenarPor = (String) params[3];
+            boolean hipertenso = (boolean) params[4];
+            boolean diabetico = (boolean) params[5];
+            boolean celiaco = (boolean) params[6];
+*/
+         
+
+            listaProductosObtenido = consultaProductos.filtrarPorContiene(listaProductos, contiene);
+
+
+            return listaProductosObtenido;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Producto> listaProductosObtenido) {
+            Log.d("PruebaLog", String.valueOf(listaProductosObtenido));
+            listaFiltrada = listaProductosObtenido;
+
+            Log.d("PruebaLog", String.valueOf(listaFiltrada));
+            try {
+                SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                Gson gson = new Gson();
+                String listaComoJson = gson.toJson(listaFiltrada);
+                editor.putString("listadoProductosFiltrados", listaComoJson);
+                editor.apply();
+            }
+            catch (Exception e) {
+                Log.d("Filtro.enviar", e.toString());
+            }
+
+
+            ArrayAdapter<Producto> adapter = new ArrayAdapter<>(Filtros.this, android.R.layout.simple_spinner_dropdown_item, listaFiltrada);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            lvFiltros.setAdapter(adapter);
+        }
+
     }
 
 
+
+    private class obtenerListadoProducto extends AsyncTask<Usuario, Void, ArrayList<Producto>> {
+        @Override
+        protected ArrayList<Producto> doInBackground(Usuario... usuario) {
+
+            Conexion con = new Conexion();
+            try {
+                listaProductos = con.obtenerListadoProductos(usuario[0]);
+
+                return listaProductos;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return listaProductos;
+            }
+        }
+        @Override
+        protected void onPostExecute(ArrayList<Producto> listaProductosObtenido) {
+            //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
+
+            if (listaProductosObtenido.size() > 0) {
+                listaProductos = listaProductosObtenido;
+
+            }
+        }
+
+    }
+}
+
+/*
     public void FiltrosAplicarFiltros(View view) {
         Intent filtrosAplicarFiltros = new Intent(this, Mis_Productos.class);
         startActivity(filtrosAplicarFiltros);
     }
 }
+*/
