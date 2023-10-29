@@ -52,6 +52,8 @@ public class Mis_Productos extends AppCompatActivity {
         puntaje = (TextView)findViewById(R.id.txtPuntajeCatalogo);
         listaCargada = false;
 
+
+
         SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
         Gson gsonCarrito = new Gson();
         String listaComoJson = preferences.getString("listadoCarrito", "");
@@ -64,14 +66,11 @@ public class Mis_Productos extends AppCompatActivity {
 
 
         try {
-
-
-            SharedPreferences preferencesFiltrado = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+            SharedPreferences preferencesFiltrado = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
             Gson gsonFiltrado = new Gson();
             String listaComoJsonFiltrados = preferencesFiltrado.getString("listadoProductosFiltrados", "");
             Type typeFiltrado = new TypeToken<ArrayList<Producto>>() {
             }.getType();
-
 
             listaProductos = gsonFiltrado.fromJson(listaComoJsonFiltrados, typeFiltrado);
         }   catch (Exception e) {
@@ -79,11 +78,9 @@ public class Mis_Productos extends AppCompatActivity {
         }
 
 
-
         if (listaProductos != null && !listaProductos.isEmpty()) {
             listaProductosConFiltro = true;
         }
-
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -190,6 +187,7 @@ public class Mis_Productos extends AppCompatActivity {
         Intent catalogoFiltros = new Intent(this, Filtros.class);
         catalogoFiltros.putParcelableArrayListExtra("listaProductos", listaProductos);
         startActivity(catalogoFiltros);
+
     }
 
     public void CatalogoAgregarNuevoProducto(View view) {
@@ -235,7 +233,6 @@ public class Mis_Productos extends AppCompatActivity {
                 editor.putString("listadoCarrito", listaComoJson);
                 editor.apply();
 
-
                 Intent agregarAlcarrito = new Intent(this, MiCarritoCompras.class);
                 startActivity(agregarAlcarrito);
             }
@@ -251,7 +248,6 @@ public class Mis_Productos extends AppCompatActivity {
 
     public void VolverMenu(View view) {
         if(user.isCliente()) {
-
             Intent MenuCliente = new Intent(this, Menu_Cliente.class);
             startActivity(MenuCliente);
         }else {

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -34,7 +35,7 @@ public class Filtros extends AppCompatActivity {
 
     EditText filtroNombre, filtroContiene, filtroNoContiene;
     RadioButton rbCalificaciones, rbPrecio, rbReciente;
-    RadioButton cbHipertenso, cbDiabetico, cbCeliaco;
+    CheckBox cbHipertenso, cbDiabetico, cbCeliaco;
     ListView lvFiltros;
     Usuario user;
     ArrayList<Producto> listaProductosObtenido;
@@ -51,34 +52,24 @@ public class Filtros extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros);
-       // listaProductos = getIntent().getParcelableArrayListExtra("listaProductos");
 
 
-        //filtroNombre = findViewById(R.id.fc_et_filtroNombre);
-
+        filtroNombre = findViewById(R.id.fc_et_filtroNombre);
+        cbHipertenso = findViewById(R.id.r_cb_hipertenso);
+        cbDiabetico = findViewById(R.id.r_cb_diabetico);
+        cbCeliaco = findViewById(R.id.r_cb_celiaco);
         filtroContiene = findViewById(R.id.r_com_nombre);
-
-        /*
         filtroNoContiene = findViewById(R.id.r_com_direccion);
         rbCalificaciones = findViewById(R.id.fc_rb_calificaciones);
         rbPrecio = findViewById(R.id.fc_rb_precio);
         rbReciente = findViewById(R.id.fc_rb_reciente);
-        cbHipertenso = findViewById(R.id.r_cb_hipertenso);
-        cbDiabetico = findViewById(R.id.r_cb_diabetico);
-        cbCeliaco = findViewById(R.id.r_cb_celiaco);
-
-
-        */
 
 
         listaProductos = new ArrayList<Producto>();
-
-
-
-
-        lvFiltros = findViewById(R.id.grd_catalogo);
-
         consultaProductos = new consultasProductos();
+        lvFiltros = findViewById(R.id.grd_catalogo);
+        Button btnAplicarFiltros = findViewById(R.id.fc_bn_aplicarFiltros);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
@@ -92,7 +83,7 @@ public class Filtros extends AppCompatActivity {
             Toast.makeText(Filtros.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }
 
-        Button btnAplicarFiltros = findViewById(R.id.fc_bn_aplicarFiltros);
+
         btnAplicarFiltros.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,12 +95,13 @@ public class Filtros extends AppCompatActivity {
 
     public void aplicarFiltros(View view) {
 
-
-        //String nombre = filtroNombre.getText().toString().trim();
+        String nombre = filtroNombre.getText().toString().trim();
+        boolean hipertenso = cbHipertenso.isChecked();
+        boolean diabetico = cbDiabetico.isChecked();
+        boolean celiaco = cbCeliaco.isChecked();
         String contiene = filtroContiene.getText().toString().trim();
-       // String noContiene = filtroNoContiene.getText().toString().trim();
+        String noContiene = filtroNoContiene.getText().toString().trim();
 
-/*
         String ordenarPor = "";
         if (rbCalificaciones.isChecked()) {
             ordenarPor = "calificaciones";
@@ -119,64 +111,57 @@ public class Filtros extends AppCompatActivity {
             ordenarPor = "reciente";
         }
 
-        boolean hipertenso = cbHipertenso.isChecked();
-        boolean diabetico = cbDiabetico.isChecked();
-        boolean celiaco = cbCeliaco.isChecked();
-*/
 
-       // new AplicarFiltrosTask().execute(nombre, contiene, noContiene, ordenarPor, hipertenso,
-         //       diabetico, celiaco);
-        new AplicarFiltrosTask().execute(contiene);
+         new AplicarFiltrosTask().execute(nombre, hipertenso, diabetico, celiaco, contiene,
+               noContiene, ordenarPor);
+
     }
 
     private class AplicarFiltrosTask extends AsyncTask<Object, Void, ArrayList<Producto>> {
         @Override
         protected ArrayList<Producto> doInBackground(Object... params) {
 
-            String contiene = (String) params[0];
-            /*
-            String contiene = (String) params[1];
-            String noContiene = (String) params[2];
-            String ordenarPor = (String) params[3];
-            boolean hipertenso = (boolean) params[4];
-            boolean diabetico = (boolean) params[5];
-            boolean celiaco = (boolean) params[6];
-*/
-         
 
-            listaProductosObtenido = consultaProductos.filtrarPorContiene(listaProductos, contiene);
+            String filtroNombre = (String) params[0];
+            boolean hipertenso = (boolean) params[1];
+            boolean diabetico = (boolean) params[2];
+            boolean celiaco = (boolean) params[3];
+            String contiene = (String) params[4];
+            String noContiene = (String) params[5];
+            String ordenarPor = (String) params[6];
 
+            listaProductosObtenido = consultaProductos.obtenerListadoProductosFiltrados(listaProductos,
+                    filtroNombre, contiene, noContiene, ordenarPor, hipertenso, diabetico, celiaco);
 
             return listaProductosObtenido;
+
         }
 
         @Override
         protected void onPostExecute(ArrayList<Producto> listaProductosObtenido) {
-            Log.d("PruebaLog", String.valueOf(listaProductosObtenido));
             listaFiltrada = listaProductosObtenido;
 
-            Log.d("PruebaLog", String.valueOf(listaFiltrada));
             try {
-                SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 Gson gson = new Gson();
                 String listaComoJson = gson.toJson(listaFiltrada);
                 editor.putString("listadoProductosFiltrados", listaComoJson);
                 editor.apply();
+
             }
             catch (Exception e) {
                 Log.d("Filtro.enviar", e.toString());
             }
 
-
             ArrayAdapter<Producto> adapter = new ArrayAdapter<>(Filtros.this, android.R.layout.simple_spinner_dropdown_item, listaFiltrada);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             lvFiltros.setAdapter(adapter);
+
+
         }
 
     }
-
-
 
     private class obtenerListadoProducto extends AsyncTask<Usuario, Void, ArrayList<Producto>> {
         @Override
@@ -185,7 +170,6 @@ public class Filtros extends AppCompatActivity {
             Conexion con = new Conexion();
             try {
                 listaProductos = con.obtenerListadoProductos(usuario[0]);
-
                 return listaProductos;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -198,10 +182,8 @@ public class Filtros extends AppCompatActivity {
 
             if (listaProductosObtenido.size() > 0) {
                 listaProductos = listaProductosObtenido;
-
             }
         }
-
     }
 }
 

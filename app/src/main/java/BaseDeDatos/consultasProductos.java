@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import Entidad.Comercio;
 import Entidad.Producto;
@@ -41,7 +43,6 @@ public class consultasProductos {
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         Producto producto = new Producto();
-
                         producto.setIdProducto(rs.getInt("productoID"));
                         producto.setNombre(rs.getString("nombreProducto"));
                         producto.setIngredientes(rs.getString("ingredientes"));
@@ -146,38 +147,41 @@ public class consultasProductos {
     //FILTRO
     //--------------------------------------------------------------------------------------
     public ArrayList<Producto> obtenerListadoProductosFiltrados(
-            Connection conn, Usuario user,
+            ArrayList<Producto> lista,
             String nombre, String contiene, String noContiene,
             String ordenarPor, boolean hipertenso, boolean diabetico, boolean celiaco) {
 
-        ArrayList<Producto> listadoFiltrado = obtenerListadoProductos(conn, user);
 
-        // Aplica filtros según sea necesario
+        ArrayList<Producto> listadoFiltrado = lista;
+
+
+        // Filtros
         listadoFiltrado = filtrarPorNombre(listadoFiltrado, nombre);
         listadoFiltrado = filtrarPorContiene(listadoFiltrado, contiene);
         listadoFiltrado = filtrarPorNoContiene(listadoFiltrado, noContiene);
-        // Agrega más métodos de filtro según tus necesidades
-
-        // Ordena la lista si es necesario
         ordenarListado(listadoFiltrado, ordenarPor);
 
         return listadoFiltrado;
     }
 
-    private ArrayList<Producto> filtrarPorNombre(ArrayList<Producto> lista, String nombre) {
+    public ArrayList<Producto> filtrarPorNombre(ArrayList<Producto> lista, String nombre) {
         ArrayList<Producto> listaFiltrada = new ArrayList<>();
-        for (Producto producto : lista) {
-            if (producto.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
-                listaFiltrada.add(producto);
+
+        if (!nombre.isEmpty()) {
+            for (Producto producto : lista) {
+                if (producto.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                    listaFiltrada.add(producto);
+                }
             }
+        } else {
+            // Si la cadena contiene está vacía, devuelve la lista original sin filtrar
+            listaFiltrada.addAll(lista);
         }
         return listaFiltrada;
     }
 
     public ArrayList<Producto> filtrarPorContiene(ArrayList<Producto> lista, String contiene) {
-
         ArrayList<Producto> listaFiltrada = new ArrayList<>();
-        Log.d("PruebaLog", String.valueOf(contiene));
 
         if (!contiene.isEmpty()) {
             for (Producto producto : lista) {
@@ -189,18 +193,40 @@ public class consultasProductos {
             // Si la cadena contiene está vacía, devuelve la lista original sin filtrar
             listaFiltrada.addAll(lista);
         }
-        Log.d("PruebaLog", String.valueOf(listaFiltrada));
         return listaFiltrada;
     }
 
-    private ArrayList<Producto> filtrarPorNoContiene(ArrayList<Producto> lista, String noContiene) {
-        // Implementa la lógica para filtrar por no contiene según tus necesidades
-        return lista;
+    public ArrayList<Producto> filtrarPorNoContiene(ArrayList<Producto> lista, String noContiene) {
+        ArrayList<Producto> listaFiltrada = new ArrayList<>();
+
+        if (!noContiene.isEmpty()) {
+            for (Producto producto : lista) {
+                if (!producto.getIngredientes().toLowerCase().contains(noContiene.toLowerCase())) {
+                    listaFiltrada.add(producto);
+                }
+            }
+        } else {
+            // Si la cadena contiene está vacía, devuelve la lista original sin filtrar
+            listaFiltrada.addAll(lista);
+        }
+        return listaFiltrada;
     }
 
-    private void ordenarListado(ArrayList<Producto> lista, String ordenarPor) {
-        // Implementa la lógica para ordenar según tus necesidades
-        // Puedes utilizar Collections.sort() u otros métodos de ordenamiento
+    public void ordenarListado(ArrayList<Producto> lista, String ordenarPor) {
+        switch (ordenarPor) {
+            case "calificaciones":
+                Collections.sort(lista, (p1, p2) -> Float.compare(p2.getPuntaje(), p1.getPuntaje()));
+                break;
+            case "precio":
+                Collections.sort(lista, Comparator.comparing(Producto::getPrecio));
+                break;
+            case "reciente":
+                Collections.sort(lista, (p1, p2) -> Integer.compare(p2.getIdProducto(), p1.getIdProducto()));
+                break;
+            default:
+                // No se aplica ordenamiento, cb sin selección
+                break;
+        }
     }
 
 }

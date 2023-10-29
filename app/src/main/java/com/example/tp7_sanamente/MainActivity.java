@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 ArrayList<Producto> listaFiltrada = new ArrayList<Producto>();
-                SharedPreferences preferencesFiltro = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                SharedPreferences preferencesFiltro = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editorFiltro = preferencesFiltro.edit();
                 Gson gsonFiltro = new Gson();
                 String listaComoJsonFiltrada = gsonFiltro.toJson(listaFiltrada);
