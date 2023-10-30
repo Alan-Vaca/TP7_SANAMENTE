@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -17,6 +18,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
+import Entidad.Producto;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
 
@@ -105,6 +107,15 @@ public class MainActivity extends AppCompatActivity {
                 String listaComoJson = gsonCarrito.toJson(listadoCarrito);
                 editorCarrito.putString("listadoCarrito", listaComoJson);
                 editorCarrito.apply();
+
+
+                ArrayList<Producto> listaFiltrada = new ArrayList<Producto>();
+                SharedPreferences preferencesFiltro = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorFiltro = preferencesFiltro.edit();
+                Gson gsonFiltro = new Gson();
+                String listaComoJsonFiltrada = gsonFiltro.toJson(listaFiltrada);
+                editorFiltro.putString("listadoProductosFiltrados", listaComoJsonFiltrada);
+                editorFiltro.apply();
 
 
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);

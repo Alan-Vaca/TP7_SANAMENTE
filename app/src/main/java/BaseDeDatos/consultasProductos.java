@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import Entidad.Comercio;
 import Entidad.Producto;
@@ -41,7 +43,6 @@ public class consultasProductos {
                     ResultSet rs = stmt.executeQuery(query);
                     while (rs.next()) {
                         Producto producto = new Producto();
-
                         producto.setIdProducto(rs.getInt("productoID"));
                         producto.setNombre(rs.getString("nombreProducto"));
                         producto.setIngredientes(rs.getString("ingredientes"));
@@ -139,6 +140,93 @@ public class consultasProductos {
         }
         return false;
 
+    }
+
+
+    //--------------------------------------------------------------------------------------
+    //FILTRO
+    //--------------------------------------------------------------------------------------
+    public ArrayList<Producto> obtenerListadoProductosFiltrados(
+            ArrayList<Producto> lista,
+            String nombre, String contiene, String noContiene,
+            String ordenarPor, boolean hipertenso, boolean diabetico, boolean celiaco) {
+
+
+        ArrayList<Producto> listadoFiltrado = lista;
+
+
+        // Filtros
+        listadoFiltrado = filtrarPorNombre(listadoFiltrado, nombre);
+        listadoFiltrado = filtrarPorContiene(listadoFiltrado, contiene);
+        listadoFiltrado = filtrarPorNoContiene(listadoFiltrado, noContiene);
+        ordenarListado(listadoFiltrado, ordenarPor);
+
+        return listadoFiltrado;
+    }
+
+    public ArrayList<Producto> filtrarPorNombre(ArrayList<Producto> lista, String nombre) {
+        ArrayList<Producto> listaFiltrada = new ArrayList<>();
+
+        if (!nombre.isEmpty()) {
+            for (Producto producto : lista) {
+                if (producto.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                    listaFiltrada.add(producto);
+                }
+            }
+        } else {
+            // Si la cadena contiene está vacía, devuelve la lista original sin filtrar
+            listaFiltrada.addAll(lista);
+        }
+        return listaFiltrada;
+    }
+
+    public ArrayList<Producto> filtrarPorContiene(ArrayList<Producto> lista, String contiene) {
+        ArrayList<Producto> listaFiltrada = new ArrayList<>();
+
+        if (!contiene.isEmpty()) {
+            for (Producto producto : lista) {
+                if (producto.getIngredientes().toLowerCase().contains(contiene.toLowerCase())) {
+                    listaFiltrada.add(producto);
+                }
+            }
+        } else {
+            // Si la cadena contiene está vacía, devuelve la lista original sin filtrar
+            listaFiltrada.addAll(lista);
+        }
+        return listaFiltrada;
+    }
+
+    public ArrayList<Producto> filtrarPorNoContiene(ArrayList<Producto> lista, String noContiene) {
+        ArrayList<Producto> listaFiltrada = new ArrayList<>();
+
+        if (!noContiene.isEmpty()) {
+            for (Producto producto : lista) {
+                if (!producto.getIngredientes().toLowerCase().contains(noContiene.toLowerCase())) {
+                    listaFiltrada.add(producto);
+                }
+            }
+        } else {
+            // Si la cadena contiene está vacía, devuelve la lista original sin filtrar
+            listaFiltrada.addAll(lista);
+        }
+        return listaFiltrada;
+    }
+
+    public void ordenarListado(ArrayList<Producto> lista, String ordenarPor) {
+        switch (ordenarPor) {
+            case "calificaciones":
+                Collections.sort(lista, (p1, p2) -> Float.compare(p2.getPuntaje(), p1.getPuntaje()));
+                break;
+            case "precio":
+                Collections.sort(lista, Comparator.comparing(Producto::getPrecio));
+                break;
+            case "reciente":
+                Collections.sort(lista, (p1, p2) -> Integer.compare(p2.getIdProducto(), p1.getIdProducto()));
+                break;
+            default:
+                // No se aplica ordenamiento, cb sin selección
+                break;
+        }
     }
 
 }
