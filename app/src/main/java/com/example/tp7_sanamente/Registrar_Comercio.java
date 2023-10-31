@@ -46,7 +46,10 @@ public class Registrar_Comercio extends AppCompatActivity {
 
         Comercio comercio = new Comercio();
         //Tengo que validar antes sino la app rompe
-        if (!cuitStr.isEmpty()) {   comercio.setCuit(Integer.parseInt(cuit.getText().toString().trim()));  }
+        if (!cuitStr.isEmpty()) {
+            int test = Integer.parseInt(cuitStr);
+            comercio.setCuit(test);
+        }
         comercio.setNombreComercio(nombre.getText().toString());
         String horarios = (apertura.getText().toString()) + "-:-" + (cierre.getText().toString());
         comercio.setHorarios(horarios);
@@ -106,13 +109,24 @@ public class Registrar_Comercio extends AppCompatActivity {
         }
 
 
-        String[] horarios = comercio.getHorarios().split(":");
+        String[] horarios = comercio.getHorarios().split("-:-");
+        if (horarios.length != 2) {
+            errorMessage.append("- Horarios inválidos\n");
+            isValid = false;
+        } else {
+            String[] horarioAper = horarios[0].split(":");
+            String[] horarioCierre = horarios[1].split(":");
+
+            // Resto del código para validar apertura y cierre de horario
+            // ...
+        }
+
         //Apertura
-        if (horarios[0].trim().equals("-")) {
+        if (horarios[0].isEmpty()) {
             errorMessage.append("- Apertura\n");
             isValid = false;
         }
-        else if(horarios[0].length() != 2 || !validarFormatoHorario(horarios[0]) ){
+        else if(horarioAper.length != 2 || !validarFormatoHorario(horarioAper) ){
             errorMessage.append("- Apertura inválida\n");
             isValid = false;
         }

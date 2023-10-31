@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuAdmin">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/toolbar_admin" />
+
+    <LinearLayout
+        android:id="@+id/linearCliente"
+        android:layout_width="367dp"
+        android:layout_height="290dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar10">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/baseline_person_pin_24" />
+
+        <TextView
+            android:id="@+id/admin_tv_cliente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tv_Cliente" />
+
+        <Button
+            android:id="@+id/admin_cliente_notificaciones"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_notificaciones" />
+
+        <Button
+            android:id="@+id/admin_cliente_miUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_miUsuario" />
+
+        <Button
+            android:id="@+id/admin_cliente_historial"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_historial" />
+
+        <Button
+            android:id="@+id/admin_cliente_catalogo"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_catalogo" />
+
+        <Button
+            android:id="@+id/admin_cliente_miCarrito"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_miCarrito" />
+
+        <Button
+            android:id="@+id/admin_cliente_ofertas"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/switch_ofertas" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearComercio"
+        android:layout_width="378dp"
+        android:layout_height="286dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/button30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearCliente">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/baseline_shopping_cart_24" />
+
+        <TextView
+            android:id="@+id/admin_tv_comercio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/tv_Comercio" />
+
+        <Button
+            android:id="@+id/admin_comercio_generarReporte"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_generarReportes" />
+
+        <Button
+            android:id="@+id/admin_comercio_miComercio"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_miComercio" />
+
+        <Button
+            android:id="@+id/admin_comercio_Historial"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_historial" />
+
+        <Button
+            android:id="@+id/admin_comercio_misPedidos"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_misPedidos" />
+
+        <Button
+            android:id="@+id/admin_comercio_miCatalogo"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_miCatalogo" />
+
+        <Button
+            android:id="@+id/admin_comercio_nuevoProduct"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/button_nuevoProducto" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/button_salir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearComercio" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
