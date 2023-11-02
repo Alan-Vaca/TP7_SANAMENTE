@@ -16,7 +16,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Filtros para Catalogo" />
+        app:title="FILTROS"
+        app:titleTextColor="#FFFFFF"
+        />
 
     <TextView
         android:id="@+id/fc_tv_titulo"

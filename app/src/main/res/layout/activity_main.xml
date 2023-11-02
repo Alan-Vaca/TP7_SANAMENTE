@@ -17,8 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_toolbar"
-        app:layout_constraintVertical_bias="0.532" />
+        app:layout_constraintTop_toBottomOf="@+id/UsuarioLogin"
+        app:layout_constraintVertical_bias="0.088" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/login_toolbar"
@@ -30,7 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Login" />
+        app:titleTextColor="#FFFFFF"
+        app:title="LOGIN" />
 
     <EditText
         android:id="@+id/UsuarioLogin"
@@ -43,26 +44,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_toolbar"
-        app:layout_constraintVertical_bias="0.389" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_LG_titulo"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/UsuarioLogin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_toolbar"
-        app:layout_constraintVertical_bias="0.38" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.124" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="123dp"
+        android:layout_marginTop="48dp"
         android:onClick="Ingresar"
         android:text="@string/button_ingresar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,13 +63,36 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:onClick="Registrarse"
         android:text="@string/button_registrarse"
         android:textColor="#2196F3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="SALIR DE SANAMENTE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.129" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.075" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="297dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_toolbar"
+        app:srcCompat="@mipmap/ic_banner_foreground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

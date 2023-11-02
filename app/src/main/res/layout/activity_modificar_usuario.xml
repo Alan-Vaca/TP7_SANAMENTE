@@ -49,7 +49,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Modificar usuario" />
+        app:titleTextColor="#FFFFFF"
+        app:title="MODIFICAR USUARIO" />
 
     <EditText
         android:id="@+id/r_cli_pass_nuevo"

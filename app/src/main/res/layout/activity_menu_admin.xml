@@ -18,7 +18,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/toolbar_admin" />
+        app:title="@string/toolbar_admin"
+        app:titleTextColor="#FFFFFF"
+        />
 
     <LinearLayout
         android:id="@+id/linearCliente"

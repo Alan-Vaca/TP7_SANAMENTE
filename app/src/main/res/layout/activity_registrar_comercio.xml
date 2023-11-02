@@ -56,7 +56,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Registrar Comercio" />
+        app:titleTextColor="#FFFFFF"
+        app:title="REGISTRAR COMERCIO" />
 
     <EditText
         android:id="@+id/mod_c_usuario"

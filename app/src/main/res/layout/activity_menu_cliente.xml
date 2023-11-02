@@ -17,6 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="#FFFFFF"
         app:title="MENU" />
 
     <Button
@@ -56,7 +57,7 @@
         android:id="@+id/mcli_bn_ofertas"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="68dp"
         android:onClick="MenuOfertas"
         android:text="@string/switch_ofertas"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,6 +95,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mcli_bn_ofertas" />
+        app:layout_constraintTop_toBottomOf="@+id/mcli_bn_ofertas"
+        app:layout_constraintVertical_bias="0.19" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
