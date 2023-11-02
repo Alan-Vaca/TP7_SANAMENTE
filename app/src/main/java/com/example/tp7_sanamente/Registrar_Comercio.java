@@ -108,38 +108,48 @@ public class Registrar_Comercio extends AppCompatActivity {
             isValid = false;
         }
 
-
+        // Verificar que el horario sea válido (apertura menor que cierre)
         String[] horarios = comercio.getHorarios().split("-:-");
-        if (horarios.length != 2) {
-            errorMessage.append("- Horarios inválidos\n");
-            isValid = false;
-        } else {
-            String[] horarioAper = horarios[0].split(":");
-            String[] horarioCierre = horarios[1].split(":");
 
-            // Resto del código para validar apertura y cierre de horario
-            // ...
+
+        if(horarios.length > 1) {
+            if (horarios[0].isEmpty() || horarios[1].isEmpty()) {
+                errorMessage.append("- Horarios\n");
+                isValid = false;
+            }
+            if (!horarios[0].isEmpty() && !validarFormatoHorario(horarios[0])) {
+                errorMessage.append("- Apertura inválida\n");
+                isValid = false;
+            }
+
+            if (!horarios[1].isEmpty() && !validarFormatoHorario(horarios[1])) {
+                errorMessage.append("- Cierre inválido\n");
+                isValid = false;
+            }
+
+            String[] aperturaParts = horarios[0].split(":");
+            String[] cierreParts = horarios[1].split(":");
+
+            if (aperturaParts.length > 1 && cierreParts.length > 1) {
+                int aperturaHoras = Integer.parseInt(aperturaParts[0]);
+                int aperturaMinutos = Integer.parseInt(aperturaParts[1]);
+
+                int cierreHoras = Integer.parseInt(cierreParts[0]);
+                int cierreMinutos = Integer.parseInt(cierreParts[1]);
+
+
+                if (aperturaHoras > cierreHoras || (aperturaHoras == cierreHoras && aperturaMinutos > cierreMinutos)) {
+                    errorMessage.append("- Horarios incoherentes\n");
+                    isValid = false;
+                }
+            }
+        }
+        else {
+            errorMessage.append("- Horarios\n");
+            isValid = false;
         }
 
-        //Apertura
-        if (horarios[0].isEmpty()) {
-            errorMessage.append("- Apertura\n");
-            isValid = false;
-        }
-        else if(horarioAper.length != 2 || !validarFormatoHorario(horarioAper) ){
-            errorMessage.append("- Apertura inválida\n");
-            isValid = false;
-        }
 
-        //Cierre
-        if (horarios[1].trim().equals("-")) {
-            errorMessage.append("- Cierre\n");
-            isValid = false;
-        }
-        else if(horarios[1].length() != 2 || !validarFormatoHorario(horarios[1])){
-            errorMessage.append("- Cierre inválido\n");
-            isValid = false;
-        }
 
         if (comercio.getUsuarioAsociado().getDireccion().isEmpty()) {
             errorMessage.append("- Direccion\n");

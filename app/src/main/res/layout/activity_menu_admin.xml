@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="ClienteMenuHistorial"
     tools:context=".MenuAdmin">
 
     <androidx.appcompat.widget.Toolbar
@@ -46,12 +47,14 @@
             android:id="@+id/admin_cliente_notificaciones"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ClienteNotificaciones"
             android:text="@string/button_notificaciones" />
 
         <Button
             android:id="@+id/admin_cliente_miUsuario"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ClienteMenuMiUsuario"
             android:text="@string/button_miUsuario" />
 
         <Button
@@ -64,18 +67,21 @@
             android:id="@+id/admin_cliente_catalogo"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ClienteMenuCatalogo"
             android:text="@string/button_catalogo" />
 
         <Button
             android:id="@+id/admin_cliente_miCarrito"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ClienteMenuMiCarrito"
             android:text="@string/button_miCarrito" />
 
         <Button
             android:id="@+id/admin_cliente_ofertas"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ClienteMenuOfertas"
             android:text="@string/switch_ofertas" />
 
     </LinearLayout>
@@ -107,36 +113,42 @@
             android:id="@+id/admin_comercio_generarReporte"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ComercioMenuGenerarReporte"
             android:text="@string/button_generarReportes" />
 
         <Button
             android:id="@+id/admin_comercio_miComercio"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ComercioMiUsuarioComercio"
             android:text="@string/button_miComercio" />
 
         <Button
             android:id="@+id/admin_comercio_Historial"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ComercioMenuHistorial"
             android:text="@string/button_historial" />
 
         <Button
             android:id="@+id/admin_comercio_misPedidos"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ComercioMenuPedidos_Comerciante"
             android:text="@string/button_misPedidos" />
 
         <Button
             android:id="@+id/admin_comercio_miCatalogo"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ComercioMenuMis_Productos"
             android:text="@string/button_miCatalogo" />
 
         <Button
             android:id="@+id/admin_comercio_nuevoProduct"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ComercioMenuAgregarProducto"
             android:text="@string/button_nuevoProducto" />
     </LinearLayout>
 
@@ -145,12 +157,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:onClick="Salir"
         android:text="@string/button_salir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearComercio" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

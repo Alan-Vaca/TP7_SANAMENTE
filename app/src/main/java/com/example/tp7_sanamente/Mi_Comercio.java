@@ -144,26 +144,59 @@ public class Mi_Comercio extends AppCompatActivity {
         String[] horarios = comercio.getHorarios().split("-:-");
 
 
-        if (horarios[0].isEmpty() || horarios[1].isEmpty()) {
-            Toast.makeText(Mi_Comercio.this, "Los campos de horario no pueden estar vacíos", Toast.LENGTH_LONG).show();
-            return false;
+        if(horarios.length > 1) {
+            if (horarios[0].isEmpty() || horarios[1].isEmpty()) {
+                Toast.makeText(Mi_Comercio.this, "Horarios vacios", Toast.LENGTH_LONG).show();
+                return false;
+            }
+            if (!horarios[0].isEmpty() && !validarFormatoHorario(horarios[0])) {
+                Toast.makeText(Mi_Comercio.this, "Formato de horarios inválidos", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            if (!horarios[1].isEmpty() && !validarFormatoHorario(horarios[1])) {
+                Toast.makeText(Mi_Comercio.this, "Formato de horarios inválidos", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            String[] aperturaParts = horarios[0].split(":");
+            String[] cierreParts = horarios[1].split(":");
+
+            if (aperturaParts.length > 1 && cierreParts.length > 1) {
+                int aperturaHoras = Integer.parseInt(aperturaParts[0]);
+                int aperturaMinutos = Integer.parseInt(aperturaParts[1]);
+
+                int cierreHoras = Integer.parseInt(cierreParts[0]);
+                int cierreMinutos = Integer.parseInt(cierreParts[1]);
+
+
+                if (aperturaHoras > cierreHoras || (aperturaHoras == cierreHoras && aperturaMinutos > cierreMinutos)) {
+                    Toast.makeText(Mi_Comercio.this, "Horarios incoherentes", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }
         }
-
-        String[] aperturaParts = horarios[0].split(":");
-        String[] cierreParts = horarios[1].split(":");
-
-        int aperturaHoras = Integer.parseInt(aperturaParts[0]);
-        int aperturaMinutos = Integer.parseInt(aperturaParts[1]);
-
-        int cierreHoras = Integer.parseInt(cierreParts[0]);
-        int cierreMinutos = Integer.parseInt(cierreParts[1]);
-
-        if (aperturaHoras > cierreHoras || (aperturaHoras == cierreHoras && aperturaMinutos > cierreMinutos)) {
-            Toast.makeText(Mi_Comercio.this, "El horario de apertura debe ser antes que el horario de cierre", Toast.LENGTH_LONG).show();
+        else {
+            Toast.makeText(Mi_Comercio.this, "Horario vacio", Toast.LENGTH_LONG).show();
             return false;
         }
 
         return true;
+    }
+
+    private boolean validarFormatoHorario(String horario) {
+        // El horario debe tener el formato "00:00"
+        String[] partes = horario.split(":");
+        if (partes.length == 2) {
+            try {
+                int horas = Integer.parseInt(partes[0]);
+                int minutos = Integer.parseInt(partes[1]);
+                return horas >= 0 && horas <= 23 && minutos >= 0 && minutos <= 59;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return false;
     }
 
     private class cargarComercio extends AsyncTask<Usuario, Void, Comercio> {
