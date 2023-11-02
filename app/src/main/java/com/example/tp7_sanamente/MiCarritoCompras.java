@@ -161,7 +161,18 @@ public class MiCarritoCompras extends AppCompatActivity {
     }
 
     public void MenuCliente(View view) {
-        Intent MenuCliente = new Intent(this, Menu_Cliente.class);
-        startActivity(MenuCliente);
+        // Recuperar el booleano isAdmin de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent MenuCliente = new Intent(this, MenuAdmin.class);
+            startActivity(MenuCliente);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            Intent MenuCliente = new Intent(this, Menu_Cliente.class);
+            startActivity(MenuCliente);
+        }
     }
 }

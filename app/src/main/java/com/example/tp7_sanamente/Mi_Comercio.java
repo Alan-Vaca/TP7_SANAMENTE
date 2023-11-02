@@ -68,8 +68,19 @@ public class Mi_Comercio extends AppCompatActivity {
     }
 
     public void MenuComercio(View view) {
-        Intent menuComercio = new Intent(this, MenuComercio.class);
-        startActivity(menuComercio);
+        // Recuperar el booleano isAdmin de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent menuComercio = new Intent(this, MenuAdmin.class);
+            startActivity(menuComercio);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            Intent menuComercio = new Intent(this, MenuComercio.class);
+            startActivity(menuComercio);
+        }
     }
 
     public void Modificar(View view) {

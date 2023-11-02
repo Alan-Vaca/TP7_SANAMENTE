@@ -154,8 +154,19 @@ public class Mis_Pedidos extends AppCompatActivity {
     }
 
     public void MenuComercio(View view) {
-        Intent MenuComercio = new Intent(this, MenuComercio.class);
-        startActivity(MenuComercio);
+        // Recuperar el booleano isAdmin de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent MenuComercio = new Intent(this, MenuAdmin.class);
+            startActivity(MenuComercio);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            Intent MenuComercio = new Intent(this, MenuComercio.class);
+            startActivity(MenuComercio);
+        }
     }
 
     private class cambiarEstadoPedido extends AsyncTask<Integer, Void, Boolean> {

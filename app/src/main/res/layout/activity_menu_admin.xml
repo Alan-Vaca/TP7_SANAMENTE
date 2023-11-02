@@ -61,6 +61,7 @@
             android:id="@+id/admin_cliente_historial"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:onClick="ClienteMenuHistorial"
             android:text="@string/button_historial" />
 
         <Button

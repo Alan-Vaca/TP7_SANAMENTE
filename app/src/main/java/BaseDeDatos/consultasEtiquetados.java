@@ -120,6 +120,29 @@ public class consultasEtiquetados {
         }
     }
 
+    public void agregarProductoXetiquetadoXID(Connection conn, int idEtiquetado, int idProducto) {
+        try {
+            if (conn != null) {
+
+
+                String insertQuery = "INSERT INTO productoXetiquetado(" +
+                        "idProducto, idEtiquetado" +
+                        ") VALUES (?,?)";
+
+                PreparedStatement pstmt = conn.prepareStatement(insertQuery);
+                pstmt.setInt(1, idProducto);
+                pstmt.setInt(2, idEtiquetado);
+                pstmt.executeUpdate();
+
+                pstmt.close();
+                conn.close();
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
+    }
+
     //--------------------------------------------------------------------------------------
     //CONSULTA DE TIPO DELETE
     //--------------------------------------------------------------------------------------

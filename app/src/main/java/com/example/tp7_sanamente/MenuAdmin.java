@@ -29,7 +29,7 @@ public class MenuAdmin extends AppCompatActivity {
 
     public void LoguearseComoCliente(){
         Usuario usuario = new Usuario();
-        usuario.setNombreUsuario("cliente");
+        usuario.setNombreUsuario("admin");
         usuario.setContraseña("123");
 
         new MenuAdmin.obtenerUsuarioXloginTask().execute(usuario);
@@ -37,7 +37,7 @@ public class MenuAdmin extends AppCompatActivity {
 
     public void LoguearseComoComercio(){
         Usuario usuario = new Usuario();
-        usuario.setNombreUsuario("comercio");
+        usuario.setNombreUsuario("admin");
         usuario.setContraseña("321");
 
         new MenuAdmin.obtenerUsuarioXloginTask().execute(usuario);

@@ -229,9 +229,21 @@ public class AgregarProducto extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bool) {
             if (bool) {
-                Toast.makeText(AgregarProducto.this, "PRODUCTO AGREGADO CON EXITO", Toast.LENGTH_LONG).show();
-                Intent volverAlmenu = new Intent(AgregarProducto.this, MenuComercio.class);
-                startActivity(volverAlmenu);
+                // Recuperar el booleano isAdmin de SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+                if(isAdmin) {
+                    // El usuario es un administrador, realiza las acciones correspondientes
+                    Toast.makeText(AgregarProducto.this, "PRODUCTO AGREGADO CON EXITO", Toast.LENGTH_LONG).show();
+                    Intent volverAlmenu = new Intent(AgregarProducto.this, MenuAdmin.class);
+                    startActivity(volverAlmenu);
+                } else {
+                    // El usuario no es un administrador, realiza las acciones correspondientes
+                    Toast.makeText(AgregarProducto.this, "PRODUCTO AGREGADO CON EXITO", Toast.LENGTH_LONG).show();
+                    Intent volverAlmenu = new Intent(AgregarProducto.this, MenuComercio.class);
+                    startActivity(volverAlmenu);
+                }
             } else {
                 Toast.makeText(AgregarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }

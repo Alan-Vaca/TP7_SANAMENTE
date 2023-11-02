@@ -247,12 +247,23 @@ public class Mis_Productos extends AppCompatActivity {
     }
 
     public void VolverMenu(View view) {
-        if(user.isCliente()) {
-            Intent MenuCliente = new Intent(this, Menu_Cliente.class);
+        // Recuperar el booleano isAdmin de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent MenuCliente = new Intent(this, MenuAdmin.class);
             startActivity(MenuCliente);
-        }else {
-            Intent MenuComercio = new Intent(this, MenuComercio.class);
-            startActivity(MenuComercio);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            if(user.isCliente()) {
+                Intent MenuCliente = new Intent(this, Menu_Cliente.class);
+                startActivity(MenuCliente);
+            }else {
+                Intent MenuComercio = new Intent(this, MenuComercio.class);
+                startActivity(MenuComercio);
+            }
         }
     }
 }

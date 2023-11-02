@@ -56,8 +56,18 @@ public class MiUsuario extends AppCompatActivity {
     }
 
     public void MenuCliente(View view) {
-        Intent menuCliente = new Intent(this, Menu_Cliente.class);
-        startActivity(menuCliente);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent menuCliente = new Intent(this, MenuAdmin.class);
+            startActivity(menuCliente);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            Intent menuCliente = new Intent(this, Menu_Cliente.class);
+            startActivity(menuCliente);
+        }
     }
 
 
