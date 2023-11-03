@@ -208,9 +208,8 @@ public class MiHistorial extends AppCompatActivity {
         pedidoSeleccionado.setCliente(cliente);
         new MiHistorial.cambiarEstadoPedido().execute(pedidoSeleccionado.getEstado());
 
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+        Intent DetalleHistorial = new Intent(this, Detalle_Pedido.class);
+        startActivity(DetalleHistorial);
     }
 
     private class cambiarEstadoPedido extends AsyncTask<Integer, Void, Boolean> {
