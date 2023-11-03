@@ -55,7 +55,7 @@ public class consultasEtiquetados {
         return listadoEtiquetado;
     }
 
-    public ArrayList<Etiquetado> obtenerListadoEtiquetadoXproducto(Connection conn, Producto producto) {
+        public ArrayList<Etiquetado> obtenerListadoEtiquetadoXproducto(Connection conn, Producto producto) {
         ArrayList<Etiquetado> listadoEtiquetado = new ArrayList<Etiquetado>();
 
         try {

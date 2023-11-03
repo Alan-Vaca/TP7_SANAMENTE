@@ -1,9 +1,12 @@
 package com.example.tp7_sanamente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,13 +17,22 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import BaseDeDatos.Conexion;
 import Entidad.Cliente;
 import Entidad.Historial;
 import Entidad.Pedido;
+import Entidad.Producto;
 import Entidad.Usuario;
 
 public class MiHistorial extends AppCompatActivity {
@@ -31,6 +43,7 @@ public class MiHistorial extends AppCompatActivity {
     Pedido pedidoSeleccionado;
     Usuario user;
     Button confirmarEntrega;
+    boolean listaHistorialConFiltro;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +54,57 @@ public class MiHistorial extends AppCompatActivity {
 
         lv_historial = (ListView)findViewById(R.id.grd_Historial);
         confirmarEntrega = (Button)findViewById(R.id.btnConfirmarEntrega);
-        listadoHistorial = new ArrayList<Historial>();
+        // listadoHistorial = new ArrayList<Historial>();
+        listaHistorialConFiltro = false;
+
+
+        try {
+
+            SharedPreferences preferencesFiltradoHistorial = getSharedPreferences("mi_prefHistorial", Context.MODE_PRIVATE);
+
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd")
+                    .create();
+
+            String listaComoJsonFiltradosHistorial = preferencesFiltradoHistorial.getString("listadoHistorialesFiltrado", "");
+            Type typeFiltradoHistorial = new TypeToken<ArrayList<Historial>>() {}.getType();
+            listadoHistorial = gson.fromJson(listaComoJsonFiltradosHistorial, typeFiltradoHistorial);
+
+
+        }   catch (Exception e) {
+            Log.e("Error FiltroHistorial", "Error en la conversión de JSON a lista de Historial", e);
+        }
+
+
+        if (listadoHistorial != null && !listadoHistorial.isEmpty()) {
+            listaHistorialConFiltro = true;
+        }
+
 
         user = new Usuario();
         if (!usuarioJson.isEmpty()) {
             Gson gson = new Gson();
             user = gson.fromJson(usuarioJson, Usuario.class);
-            new MiHistorial.obtenerListadoHistorial().execute(user);
+
+            //  new MiHistorial.obtenerListadoHistorial().execute(user);
+
+
+
+            if (!listaHistorialConFiltro ) {
+                new MiHistorial.obtenerListadoHistorial().execute(user);
+            }else{
+                if (listadoHistorial.size() > 0) {
+
+                    ArrayAdapter<Historial> adapter = new ArrayAdapter<>(MiHistorial.this, android.R.layout.simple_spinner_dropdown_item, listadoHistorial);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    lv_historial.setAdapter(adapter);
+
+                } else {
+                    Toast.makeText(MiHistorial.this, "HUBO UN ERROR AL CONSULTAR LOS HISTORIALES", Toast.LENGTH_LONG).show();
+                }
+            }
+
 
             if(user.isCliente()){
                 confirmarEntrega.setEnabled(false);
@@ -59,6 +116,7 @@ public class MiHistorial extends AppCompatActivity {
         }else{
             Toast.makeText(MiHistorial.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }
+
 
 
         lv_historial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,7 +145,6 @@ public class MiHistorial extends AppCompatActivity {
             Conexion con = new Conexion();
             try {
                 listadoHistorial = con.obtenerListadoHistorial(usuario[0]);
-
                 return listadoHistorial;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -116,6 +173,7 @@ public class MiHistorial extends AppCompatActivity {
     public void FiltrosHistorial(View view) {
         //Se usa el mismo que el de pedidos
         Intent FiltrosHistorial = new Intent(this, Filtros_Pedidos.class);
+        FiltrosHistorial.putExtra("isHistorial", true);
         startActivity(FiltrosHistorial);
     }
     public void DetalleHistorial(View view) {

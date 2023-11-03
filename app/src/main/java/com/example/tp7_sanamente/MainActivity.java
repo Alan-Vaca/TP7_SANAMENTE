@@ -1,3 +1,4 @@
+
 package com.example.tp7_sanamente;
 
 import android.content.Context;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
+import Entidad.Historial;
 import Entidad.Producto;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
@@ -116,6 +118,16 @@ public class MainActivity extends AppCompatActivity {
                 String listaComoJsonFiltrada = gsonFiltro.toJson(listaFiltrada);
                 editorFiltro.putString("listadoProductosFiltrados", listaComoJsonFiltrada);
                 editorFiltro.apply();
+
+
+                ArrayList<Historial> listadoHistorialesFiltrado = new ArrayList<Historial>();
+                SharedPreferences preferencesFiltradoHistorial = getSharedPreferences("mi_prefHistorial", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorFiltradoHistorial = preferencesFiltradoHistorial.edit();
+                Gson gsonFiltradoHistorial = new Gson();
+                String listaComoJsonFiltradosHistorial = gsonFiltradoHistorial.toJson(listadoHistorialesFiltrado);
+                editorFiltradoHistorial.putString("listadoHistorialesFiltrado", listaComoJsonFiltradosHistorial);
+                editorFiltradoHistorial.apply();
+
 
 
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);

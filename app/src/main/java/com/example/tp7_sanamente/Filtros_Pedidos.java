@@ -1,20 +1,58 @@
+
+
+
+
 package com.example.tp7_sanamente;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Locale;
+
+import BaseDeDatos.Conexion;
+import BaseDeDatos.consultasHistoriales;
+import BaseDeDatos.consultasPedidos;
+import BaseDeDatos.consultasProductos;
+import Entidad.Historial;
+import Entidad.Pedido;
+import Entidad.Producto;
+import Entidad.Usuario;
 
 
 public class Filtros_Pedidos extends AppCompatActivity {
 
     EditText fechaDesde, horaDesde, fechaHasta, horaHasta;
+    CheckBox cbConfirmado, cbCancelado, cbPendiente;
+    RadioButton rbEnEspera, rbRecientes;
+    Usuario user;
+    ArrayList<Historial> listadoHistorialesFiltrado, listadoHistorialesObtenido;
+    ArrayList<Historial> listadoHistorial;
+    ArrayList<Pedido> listadoPedidos;
+    consultasHistoriales consultasHistoriales;
+
+
+    boolean isHistorial;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,19 +62,49 @@ public class Filtros_Pedidos extends AppCompatActivity {
         horaDesde = (EditText)findViewById(R.id.fp_et_horaDesde);
         fechaHasta = (EditText)findViewById(R.id.fp_et_fechaHasta);
         horaHasta = (EditText)findViewById(R.id.fp_et_horaHasta);
+        cbConfirmado = findViewById(R.id.fp_cb_confirmado);
+        cbCancelado = findViewById(R.id.fp_cb_cancelado);
+        cbPendiente = findViewById(R.id.fp_cb_pendiente);
+        rbEnEspera = findViewById(R.id.fp_rb_enEspera);
+        rbRecientes = findViewById(R.id.fp_rb_recientes);
+
+        consultasHistoriales = new consultasHistoriales();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
+        user = new Usuario();
+        if (!usuarioJson.isEmpty()) {
+            Gson gson = new Gson();
+            user = gson.fromJson(usuarioJson, Usuario.class);
+        }else{
+            Toast.makeText(Filtros_Pedidos.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+        }
+
+
+        Intent intent = getIntent();
+        isHistorial = intent.getBooleanExtra("isHistorial", false);
+
+
+        /////////
+        /*
+        CLIENTE TIENE SOLO HISTORIAL
+        COMERCIO TIENE LOS DOS
+        */
     }
 
     public void AplicarFiltroHistorial(View view) {
         //AplicarFiltroPedido(view);
+
         boolean isValid = true;
+
+        ///////////// VALIDACIONES FECHAS  //////////////////////
 
         // Validar que fechaDesde pertenezca a un formato dd/mm/aaaa. Si no, mostrar mensaje de error
         String fechaDesdeStr = fechaDesde.getText().toString();
         if (!fechaDesdeStr.isEmpty() && !isValidDateFormat(fechaDesdeStr, "dd/MM/yyyy")) {
             fechaDesde.setError("Formato de fecha inválido");
             isValid = false;
-        }
-        else{
+        } else {
             fechaDesde.setError(null);
         }
 
@@ -45,8 +113,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
         if (!horaDesdeStr.isEmpty() && !isValidDateFormat(horaDesdeStr, "HH:mm")) {
             horaDesde.setError("Formato de hora inválido");
             isValid = false;
-        }
-        else{
+        } else {
             horaDesde.setError(null);
         }
 
@@ -55,8 +122,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
         if (!fechaHastaStr.isEmpty() && !isValidDateFormat(fechaHastaStr, "dd/MM/yyyy")) {
             fechaHasta.setError("Formato de fecha inválido");
             isValid = false;
-        }
-        else{
+        } else {
             fechaHasta.setError(null);
         }
 
@@ -65,16 +131,115 @@ public class Filtros_Pedidos extends AppCompatActivity {
         if (!horaHastaStr.isEmpty() && !isValidDateFormat(horaHastaStr, "HH:mm")) {
             horaHasta.setError("Formato de hora inválido");
             isValid = false;
-        }
-        else{
+        } else {
             horaHasta.setError(null);
         }
 
-        if(isValid) {
-        Intent AplicarFiltroHistorial = new Intent(this, MiHistorial.class);
-        startActivity(AplicarFiltroHistorial);
+
+        ///////////// VALIDACIONES FECHAS  //////////////////////
+
+        boolean confirmado = cbConfirmado.isChecked();
+        boolean cancelado = cbCancelado.isChecked();
+        boolean pendiente = cbPendiente.isChecked();
+        String orden;
+        if(rbEnEspera.isChecked()){orden = "en espera";}
+        else if (rbRecientes.isChecked()){ orden = "recientes"; }
+        else {orden = "";}
+
+
+        if(isValid) { //
+            if (isHistorial) {
+                new AplicarFiltrosHistorialTask().execute(fechaDesdeStr, fechaHastaStr, horaDesdeStr,
+                        horaHastaStr, confirmado, cancelado, pendiente, orden);
+            }
+            else if (!isHistorial) {
+                new AplicarFiltrosPedidoTask().execute(fechaDesdeStr, fechaHastaStr, horaDesdeStr,
+                        horaHastaStr, confirmado, cancelado, pendiente, orden);
+            }
+        }else {
+            Toast.makeText(Filtros_Pedidos.this, "Por favor, ingresa fechas y horas en el formato correcto", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private class AplicarFiltrosHistorialTask extends AsyncTask<Object, Void, ArrayList<Historial>> {
+        @Override
+        protected ArrayList<Historial> doInBackground(Object... params) {
+
+
+            String fechaDesde = (String) params[0];
+            String fechaHasta = (String) params[1];
+            String horaDesde = (String) params[2];
+            String horaHasta = (String) params[3];
+            boolean confirmado = (boolean) params[4];
+            boolean cancelado = (boolean) params[5];
+            boolean pendiente = (boolean) params[6];
+            String orden = (String) params[7];
+
+            Conexion con = new Conexion();
+            try {
+                listadoHistorial = con.obtenerListadoHistorial(user);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            listadoHistorialesObtenido = consultasHistoriales.obtenerListadoHistorialesFiltrado(listadoHistorial, fechaDesde, fechaHasta,
+                    confirmado, cancelado, pendiente, orden);
+
+            return listadoHistorialesObtenido;
+
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Historial> historiales) {
+/*
+            Intent filtroHistorial = new Intent(Filtros_Pedidos.this, MiHistorial.class);
+            startActivity(filtroHistorial);
+            */
+
+            listadoHistorialesFiltrado = listadoHistorialesObtenido;
+
+
+            try {
+                SharedPreferences preferencesFiltradoHistorial = getSharedPreferences("mi_prefHistorial", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorFiltradoHistorial = preferencesFiltradoHistorial.edit();
+
+                Gson gsonFiltradoHistorial = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd")
+                        .create();
+                String listaComoJsonFiltradosHistorial = gsonFiltradoHistorial.toJson(listadoHistorialesFiltrado);
+                editorFiltradoHistorial.putString("listadoHistorialesFiltrado", listaComoJsonFiltradosHistorial);
+                editorFiltradoHistorial.apply();
+
+
+                Intent intent = new Intent(Filtros_Pedidos.this, MiHistorial.class);
+                startActivity(intent);
+                finish();
+            } catch (Exception e) {
+                Log.d("Filtro.Historial", e.toString());
+            }
+
+        }
+    }
+
+    private class AplicarFiltrosPedidoTask extends AsyncTask<Object, Void, ArrayList<Pedido>> {
+        @Override
+        protected ArrayList<Pedido> doInBackground(Object... params) {
+            // Realizar la lógica de consulta a la base de datos para pedidos
+            // ...
+            return new ArrayList<>(); // Devuelve un ArrayList vacío como ejemplo
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Pedido> pedidos) {
+            Intent intent = new Intent(Filtros_Pedidos.this, Mis_Pedidos.class);
+            // ... Pasar los datos necesarios como extras si es necesario
+            startActivity(intent);
+        }
+    }
+
+
+
 
     public void AplicarFiltroPedido(View view) {
 
@@ -82,6 +247,8 @@ public class Filtros_Pedidos extends AppCompatActivity {
         startActivity(AplicarFiltroPedido);
 
     }
+
+
 
     // Función para validar el formato de fecha y hora
     private boolean isValidDateFormat(String value, String format) {
@@ -96,7 +263,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
     }
 }
 
-    /*SE APLICARA DEPENDIENDO SI ES UN PEDIDO O UN HISTORIAL*/
-    /*
+/*SE APLICARA DEPENDIENDO SI ES UN PEDIDO O UN HISTORIAL*/
+/*
 
  */

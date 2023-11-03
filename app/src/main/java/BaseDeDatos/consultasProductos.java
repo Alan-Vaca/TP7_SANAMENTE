@@ -1,5 +1,7 @@
 package BaseDeDatos;
 
+import static BaseDeDatos.Conexion.getConnection;
+
 import android.util.Log;
 
 import java.sql.Connection;
@@ -12,6 +14,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import Entidad.Comercio;
+import Entidad.Etiquetado;
 import Entidad.Producto;
 import Entidad.Usuario;
 
@@ -159,6 +162,23 @@ public class consultasProductos {
         listadoFiltrado = filtrarPorNombre(listadoFiltrado, nombre);
         listadoFiltrado = filtrarPorContiene(listadoFiltrado, contiene);
         listadoFiltrado = filtrarPorNoContiene(listadoFiltrado, noContiene);
+
+
+
+        if (celiaco) {
+            listadoFiltrado = contieneIngrediente(listadoFiltrado, "Harina");
+        }
+
+        if (diabetico) {
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en azucares");
+        }
+
+        if (hipertenso) {
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en sodio");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "contiene cafeina");
+        }
+
+
         ordenarListado(listadoFiltrado, ordenarPor);
 
         return listadoFiltrado;
@@ -229,4 +249,45 @@ public class consultasProductos {
         }
     }
 
+
+    private ArrayList<Producto> contieneIngrediente(ArrayList<Producto> lista, String ingrediente) {
+        ArrayList<Producto> listaFiltrada = new ArrayList<>();
+
+        for (Producto producto : lista) {
+            if (!producto.getIngredientes().toLowerCase().contains(ingrediente.toLowerCase())) {
+                listaFiltrada.add(producto);
+            }
+        }
+
+        return listaFiltrada;
+    }
+
+
+    private ArrayList<Producto> filtrarPorEtiquetado(ArrayList<Producto> lista, String etiqueta) {
+        ArrayList<Producto> listaFiltrada = new ArrayList<>();
+
+        for (Producto producto : lista) {
+            if (!tieneEtiqueta(producto, etiqueta)) {
+                listaFiltrada.add(producto);
+            }
+        }
+
+        return listaFiltrada;
+    }
+
+    private boolean tieneEtiqueta(Producto producto, String etiqueta) {
+        Conexion consultaEtiquetados = new Conexion();
+        ArrayList<Etiquetado> etiquetasProducto = consultaEtiquetados.obtenerListadoEtiquetadoXproducto(producto);
+
+        for (Etiquetado etiquetado : etiquetasProducto) {
+            if (etiquetado.getDescripcion().equalsIgnoreCase(etiqueta)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 }
+

@@ -1,3 +1,4 @@
+
 package BaseDeDatos;
 
 import android.util.Log;
@@ -6,12 +7,18 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 import Entidad.Cliente;
 import Entidad.Comercio;
 import Entidad.Historial;
 import Entidad.Pedido;
+import Entidad.Producto;
 import Entidad.Usuario;
 
 public class consultasHistoriales {
@@ -22,17 +29,17 @@ public class consultasHistoriales {
             String query = "select h.idHistorial as HidHistorial, h.idPedido as HidPedido, h.idCliente as HidCliente, h.fecha as Hfecha, h.estado as Hestado "
                     + "from historial h ";
 
-                    if(user.isCliente()) {
-                        query += "INNER JOIN ( SELECT idPedido, MAX(idHistorial) AS MaxIdHistorial FROM historial ";
-                        query += "GROUP BY idPedido) latest_h ON h.idPedido = latest_h.idPedido AND h.idHistorial = latest_h.MaxIdHistorial ";
-                        query += "INNER JOIN clientes c ON c.idCliente = h.idCliente ";
-                        query += "where c.idUsuario = " + user.getIdUsuario();
-                        query += " ORDER BY Hfecha DESC";
-                    }else{
-                        query += "inner join pedidos p on p.idPedido = h.idPedido ";
-                        query += "inner join clientes c on c.idCliente = h.idCliente ";
-                        query += "inner join comercios cc on cc.idComercio = p.idComercio where cc.idUsuario = " + user.getIdUsuario() + " order by h.estado";
-                    }
+            if(user.isCliente()) {
+                query += "INNER JOIN ( SELECT idPedido, MAX(idHistorial) AS MaxIdHistorial FROM historial ";
+                query += "GROUP BY idPedido) latest_h ON h.idPedido = latest_h.idPedido AND h.idHistorial = latest_h.MaxIdHistorial ";
+                query += "INNER JOIN clientes c ON c.idCliente = h.idCliente ";
+                query += "where c.idUsuario = " + user.getIdUsuario();
+                query += " ORDER BY Hfecha DESC";
+            }else{
+                query += "inner join pedidos p on p.idPedido = h.idPedido ";
+                query += "inner join clientes c on c.idCliente = h.idCliente ";
+                query += "inner join comercios cc on cc.idComercio = p.idComercio where cc.idUsuario = " + user.getIdUsuario() + " order by h.estado";
+            }
 
             if (conn != null) {
                 try {
@@ -120,8 +127,106 @@ public class consultasHistoriales {
         } catch (Exception e) {
             Log.d("ERROR-DB", e.toString());
         }
-
         return listadoPedido;
     }
+
+
+    public ArrayList<Historial> obtenerListadoHistorialesFiltrado (
+            ArrayList<Historial> listadoHistorial, String fechaDesde, String fechaHasta,
+            boolean confirmado, boolean cancelado, boolean pendiente, String orden){
+
+        ArrayList<Historial> listadoFiltrado = listadoHistorial;
+
+        listadoFiltrado = filtrarRangoFechas (listadoFiltrado, fechaDesde, fechaHasta);
+        listadoFiltrado = filtrarXEstado (listadoFiltrado, confirmado, cancelado, pendiente);
+        ordenarListado(listadoFiltrado, orden);
+
+
+        return listadoFiltrado;
+    }
+
+    private ArrayList<Historial> filtrarRangoFechas(ArrayList<Historial> lista, String fechaDesde, String fechaHasta) {
+        ArrayList<Historial> listaFiltrada = new ArrayList<>();
+
+        try {
+            SimpleDateFormat formatoEntrada = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatoBBDD = new SimpleDateFormat("yyyy-MM-dd");
+
+            if (!fechaDesde.isEmpty() && !fechaHasta.isEmpty()) {       // con los dos limites
+                Date fechaDesdeDate = formatoEntrada.parse(fechaDesde);
+                Date fechaHastaDate = formatoEntrada.parse(fechaHasta);
+
+                for (Historial historial : lista) {
+                    Date fechaHistorial = historial.getFecha();
+                    String fechaHistorialDate = formatoBBDD.format(fechaHistorial);
+
+                    if ((fechaHistorialDate.equals(formatoBBDD.format(fechaDesdeDate)) || fechaHistorial.after(fechaDesdeDate)) &&
+                            (fechaHistorialDate.equals(formatoBBDD.format(fechaHastaDate)) || fechaHistorial.before(fechaHastaDate))) {
+                        listaFiltrada.add(historial);
+                    }
+                }
+            } else if (!fechaDesde.isEmpty()) {         //caso solo fechaDesde
+                Date fechaDesdeDate = formatoEntrada.parse(fechaDesde);
+
+                for (Historial historial : lista) {
+                    Date fechaHistorial = historial.getFecha();
+                    if (fechaHistorial.equals(fechaDesdeDate) || fechaHistorial.after(fechaDesdeDate)) {
+                        listaFiltrada.add(historial);
+                    }
+                }
+            } else if (!fechaHasta.isEmpty()) {             //caso solo fechaHasta
+                Date fechaHastaDate = formatoEntrada.parse(fechaHasta);
+
+                for (Historial historial : lista) {
+                    Date fechaHistorial = historial.getFecha();
+                    if (fechaHistorial.equals(fechaHastaDate) || fechaHistorial.before(fechaHastaDate)) {
+                        listaFiltrada.add(historial);
+                    }
+                }
+            } else {                        // caso los dos vacios, no hace nada
+                listaFiltrada = lista;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return listaFiltrada;
+    }
+
+    private ArrayList<Historial> filtrarXEstado(ArrayList<Historial> lista, boolean confirmado, boolean cancelado, boolean pendiente) {
+        ArrayList<Historial> listaFiltrada = new ArrayList<>();
+
+        if (!confirmado && !pendiente && !cancelado) {
+            return lista;
+        }else {
+
+            for (Historial historial : lista) {
+                if (
+                        (confirmado && historial.getEstado() == 3) ||              //confirmado
+                                (pendiente && historial.getEstado() == 1) ||               //pendiente
+                                (cancelado && historial.getEstado() == 4)                  //cancelado
+                ) {
+                    listaFiltrada.add(historial);
+                }
+            }
+        }
+        return listaFiltrada;
+    }
+
+    private void ordenarListado(ArrayList<Historial> lista, String orden) {
+        Log.d("listadoHistorial.orden", String.valueOf(orden));
+        switch (orden) {
+            case "en espera":
+                Collections.sort(lista, Comparator.comparingInt(Historial::getEstado));
+                break;
+            case "recientes":
+                Collections.sort(lista, Comparator.comparingInt(Historial::getIdHistorial).reversed());
+                break;
+            default:
+                break;
+        }
+    }
+
+
 
 }
