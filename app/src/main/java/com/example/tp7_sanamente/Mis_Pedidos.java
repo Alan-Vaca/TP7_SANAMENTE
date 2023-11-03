@@ -1,5 +1,6 @@
 package com.example.tp7_sanamente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -8,9 +9,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -136,12 +139,34 @@ public class Mis_Pedidos extends AppCompatActivity {
     }
 
     public void CancelarPedido(View view) {
-        pedidoSeleccionado.setEstado(4);
-        new Mis_Pedidos.cambiarEstadoPedido().execute(pedidoSeleccionado.getEstado());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_motivo, null);
+        builder.setView(dialogView);
 
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+        final EditText textMotivo = dialogView.findViewById(R.id.editTextMotivo);
+        Button btnGuardarMotivo = dialogView.findViewById(R.id.btnGuardarMotivo);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnGuardarMotivo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String motivoCancelacion = textMotivo.getText().toString();
+
+                pedidoSeleccionado.setMotivoCancelacion(motivoCancelacion);
+
+                dialog.dismiss();
+
+                pedidoSeleccionado.setEstado(4);
+                new Mis_Pedidos.cambiarEstadoPedido().execute(pedidoSeleccionado.getEstado());
+
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void ConfirmarPedido(View view) {
