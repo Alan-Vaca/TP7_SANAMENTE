@@ -198,6 +198,17 @@ public class consultasPedidos {
                 pstmt.setInt(4, estado);
                 pstmt.executeUpdate();
 
+                String insertQueryM = "INSERT INTO motivos(" +
+                        "fecha,idPedido,motivo" +
+                        ") VALUES (?,?,?)";
+
+                pstmt = conn.prepareStatement(insertQueryM);
+                Date fechaCancelacion = new Date(Calendar.getInstance().getTime().getTime());
+                pstmt.setDate(1, (Date) fechaCancelacion);
+                pstmt.setInt(2, pedido.getIdPedido());
+                pstmt.setString(3, pedido.getMotivoCancelacion());
+                pstmt.executeUpdate();
+
                 exito = true;
             }
         } catch (SQLException e) {

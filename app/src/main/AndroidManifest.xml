@@ -16,6 +16,9 @@
         android:theme="@style/Theme.TP7_SANAMENTE"
         tools:targetApi="31">
         <activity
+            android:name=".dialog_motivo"
+            android:exported="false" />
+        <activity
             android:name=".MenuAdmin"
             android:exported="false" />
         <activity

@@ -14,6 +14,8 @@ public class Pedido implements Parcelable{
     Cliente cliente;
     Comercio comercio;
 
+    String motivoCancelacion;
+
     public Pedido() {
         idPedido = 0; // Inicializa idPedido con un valor adecuado
         monto = 0.0f; // Inicializa monto con un valor adecuado
@@ -22,6 +24,7 @@ public class Pedido implements Parcelable{
         medioPago = 0; // Inicializa medioPago con un valor adecuado
         cliente = new Cliente(); // Inicializa cliente con un objeto Cliente adecuado
         comercio = new Comercio(); // Inicializa comercio con un objeto Comercio adecuado
+        motivoCancelacion = ""; // Inicializa el posible motivo de cancelacion
     }
 
     public int getIdPedido() {
@@ -80,6 +83,14 @@ public class Pedido implements Parcelable{
         this.comercio = comercio;
     }
 
+    public String getMotivoCancelacion() {
+        return motivoCancelacion;
+    }
+
+    public void setMotivoCancelacion(String motivoCancelacion) {
+        this.motivoCancelacion = motivoCancelacion;
+    }
+
     public String getEstadoString(){
         if(this.estado == 1){
             return "PENDIENTE";
@@ -107,7 +118,7 @@ public class Pedido implements Parcelable{
         medioPago = in.readInt();
         cliente = in.readParcelable(Cliente.class.getClassLoader()); // Lee un objeto Cliente
         comercio = in.readParcelable(Comercio.class.getClassLoader()); // Lee un objeto Comercio
-
+        motivoCancelacion = in.readString();
     }
 
     public static final Parcelable.Creator<Pedido> CREATOR = new Parcelable.Creator<Pedido>() {
@@ -136,5 +147,7 @@ public class Pedido implements Parcelable{
         dest.writeInt(medioPago);
         dest.writeParcelable(cliente, flags); // Escribe el objeto Cliente
         dest.writeParcelable(comercio, flags);
+        dest.writeString(motivoCancelacion);
     }
+
 }
