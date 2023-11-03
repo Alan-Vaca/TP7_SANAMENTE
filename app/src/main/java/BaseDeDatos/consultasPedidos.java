@@ -8,11 +8,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 import Entidad.Cliente;
 import Entidad.Comercio;
+import Entidad.Historial;
 import Entidad.Pedido;
 import Entidad.Producto;
 import Entidad.Usuario;
@@ -249,6 +254,107 @@ public class consultasPedidos {
         }
 
         return pedido;
+    }
+
+
+
+    ///////////////////////////////////////
+
+
+    public ArrayList<Pedido> obtenerListadoPedidosFiltrado (
+            ArrayList<Pedido> listadoPedido, String fechaDesde, String fechaHasta,
+            boolean confirmado, boolean cancelado, boolean pendiente, String orden){
+
+        ArrayList<Pedido> listadoFiltrado = listadoPedido;
+
+        listadoFiltrado = filtrarRangoFechas (listadoFiltrado, fechaDesde, fechaHasta);
+        listadoFiltrado = filtrarXEstado (listadoFiltrado, confirmado, cancelado, pendiente);
+        ordenarListado(listadoFiltrado, orden);
+
+
+        return listadoFiltrado;
+    }
+
+    private ArrayList<Pedido> filtrarRangoFechas(ArrayList<Pedido> lista, String fechaDesde, String fechaHasta) {
+        ArrayList<Pedido> listaFiltrada = new ArrayList<>();
+
+        try {
+            SimpleDateFormat formatoEntrada = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatoBBDD = new SimpleDateFormat("yyyy-MM-dd");
+
+            if (!fechaDesde.isEmpty() && !fechaHasta.isEmpty()) {       // con los dos limites
+                java.util.Date fechaDesdeDate = formatoEntrada.parse(fechaDesde);
+                java.util.Date fechaHastaDate = formatoEntrada.parse(fechaHasta);
+
+                for (Pedido pedido : lista) {
+                    java.util.Date fechaHistorial = pedido.getFecha();
+                    String fechaHistorialDate = formatoBBDD.format(fechaHistorial);
+
+                    if ((fechaHistorialDate.equals(formatoBBDD.format(fechaDesdeDate)) || fechaHistorial.after(fechaDesdeDate)) &&
+                            (fechaHistorialDate.equals(formatoBBDD.format(fechaHastaDate)) || fechaHistorial.before(fechaHastaDate))) {
+                        listaFiltrada.add(pedido);
+                    }
+                }
+            } else if (!fechaDesde.isEmpty()) {         //caso solo fechaDesde
+                java.util.Date fechaDesdeDate = formatoEntrada.parse(fechaDesde);
+
+                for (Pedido pedido : lista) {
+                    java.util.Date fechaHistorial = pedido.getFecha();
+                    if (fechaHistorial.equals(fechaDesdeDate) || fechaHistorial.after(fechaDesdeDate)) {
+                        listaFiltrada.add(pedido);
+                    }
+                }
+            } else if (!fechaHasta.isEmpty()) {             //caso solo fechaHasta
+                java.util.Date fechaHastaDate = formatoEntrada.parse(fechaHasta);
+
+                for (Pedido pedido : lista) {
+                    java.util.Date fechaHistorial = pedido.getFecha();
+                    if (fechaHistorial.equals(fechaHastaDate) || fechaHistorial.before(fechaHastaDate)) {
+                        listaFiltrada.add(pedido);
+                    }
+                }
+            } else {                        // caso los dos vacios, no hace nada
+                listaFiltrada = lista;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return listaFiltrada;
+    }
+
+    private ArrayList<Pedido> filtrarXEstado(ArrayList<Pedido> lista, boolean confirmado, boolean cancelado, boolean pendiente) {
+        ArrayList<Pedido> listaFiltrada = new ArrayList<>();
+
+        if (!confirmado && !pendiente && !cancelado) {
+            return lista;
+        }else {
+
+            for (Pedido pedido : lista) {
+                if (
+                        (confirmado && pedido.getEstado() == 3) ||              //confirmado
+                                (pendiente && pedido.getEstado() == 1) ||               //pendiente
+                                (cancelado && pedido.getEstado() == 4)                  //cancelado
+                ) {
+                    listaFiltrada.add(pedido);
+                }
+            }
+        }
+        return listaFiltrada;
+    }
+
+    private void ordenarListado(ArrayList<Pedido> lista, String orden) {
+
+        switch (orden) {
+            case "en espera":
+                Collections.sort(lista, Comparator.comparingInt(Pedido::getEstado));
+                break;
+            case "recientes":
+                Collections.sort(lista, Comparator.comparingInt(Pedido::getIdPedido).reversed());
+                break;
+            default:
+                break;
+        }
     }
 
 

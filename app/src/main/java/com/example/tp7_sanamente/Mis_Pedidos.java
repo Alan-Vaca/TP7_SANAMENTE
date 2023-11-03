@@ -1,9 +1,11 @@
 package com.example.tp7_sanamente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,10 +16,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
+import Entidad.Historial;
 import Entidad.Pedido;
 import Entidad.Usuario;
 
@@ -28,6 +34,7 @@ public class Mis_Pedidos extends AppCompatActivity {
     Pedido pedidoSeleccionado;
     Usuario user;
     Button cancelar, confirmar;
+    boolean listaPedidoConFiltro;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +46,51 @@ public class Mis_Pedidos extends AppCompatActivity {
         cancelar = (Button)findViewById(R.id.btnCancelar);
         confirmar = (Button)findViewById(R.id.btnConfirmar);
         listadoPedidos = new ArrayList<Pedido>();
+        listaPedidoConFiltro = false;
+
+
+        try {
+            SharedPreferences preferencesFiltradoPedido = getSharedPreferences("mi_prefPedido", Context.MODE_PRIVATE);
+            Gson gsonFiltradoPedido = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd")
+                    .create();
+
+            String listaComoJsonFiltradosPedido = preferencesFiltradoPedido.getString("listadoPedidosFiltrado", "");
+            Type typeFiltradoPedido = new TypeToken<ArrayList<Pedido>>() {}.getType();
+            listadoPedidos = gsonFiltradoPedido.fromJson(listaComoJsonFiltradosPedido, typeFiltradoPedido);
+
+
+        }   catch (Exception e) {
+            Log.e("Error FiltroHistorial", "Error en la conversión de JSON a lista de Historial", e);
+        }
+
+
+        if (listadoPedidos != null && !listadoPedidos.isEmpty()) {
+            listaPedidoConFiltro = true;
+        }
+
+
+
 
         user = new Usuario();
         if (!usuarioJson.isEmpty()) {
             Gson gson = new Gson();
             user = gson.fromJson(usuarioJson, Usuario.class);
+           // new Mis_Pedidos.obtenerListadoPedidos().execute(user);
 
-            new Mis_Pedidos.obtenerListadoPedidos().execute(user);
+            if (!listaPedidoConFiltro ) {
+                new Mis_Pedidos.obtenerListadoPedidos().execute(user);
+            }else{
+                if (listadoPedidos.size() > 0) {
+
+                    ArrayAdapter<Pedido> adapter = new ArrayAdapter<>(Mis_Pedidos.this, android.R.layout.simple_spinner_dropdown_item, listadoPedidos);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    lv_pedidos.setAdapter(adapter);
+                } else {
+                    Toast.makeText(Mis_Pedidos.this, "HUBO UN ERROR AL CONSULTAR LOS HISTORIALES", Toast.LENGTH_LONG).show();
+                }
+            }
+
         }else{
             Toast.makeText(Mis_Pedidos.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }

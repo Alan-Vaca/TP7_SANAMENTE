@@ -44,10 +44,10 @@ public class Filtros_Pedidos extends AppCompatActivity {
     CheckBox cbConfirmado, cbCancelado, cbPendiente;
     RadioButton rbEnEspera, rbRecientes;
     Usuario user;
-    ArrayList<Historial> listadoHistorialesFiltrado, listadoHistorialesObtenido;
-    ArrayList<Historial> listadoHistorial;
-    ArrayList<Pedido> listadoPedidos;
+    ArrayList<Historial> listadoHistorialesFiltrado, listadoHistorialesObtenido, listadoHistorial;
+     ArrayList<Pedido> listadoPedidos, listadoPedidosObtenido, listadPedidosFiltrado;
     consultasHistoriales consultasHistoriales;
+    consultasPedidos consultasPedidos;
 
 
     boolean isHistorial;
@@ -69,6 +69,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
         rbRecientes = findViewById(R.id.fp_rb_recientes);
 
         consultasHistoriales = new consultasHistoriales();
+        consultasPedidos = new consultasPedidos();
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
@@ -153,8 +154,8 @@ public class Filtros_Pedidos extends AppCompatActivity {
                         horaHastaStr, confirmado, cancelado, pendiente, orden);
             }
             else if (!isHistorial) {
-                new AplicarFiltrosPedidoTask().execute(fechaDesdeStr, fechaHastaStr, horaDesdeStr,
-                        horaHastaStr, confirmado, cancelado, pendiente, orden);
+                new AplicarFiltrosPedidoTask().execute(fechaDesdeStr, fechaHastaStr, confirmado,
+                        cancelado, pendiente, orden);
             }
         }else {
             Toast.makeText(Filtros_Pedidos.this, "Por favor, ingresa fechas y horas en el formato correcto", Toast.LENGTH_SHORT).show();
@@ -225,16 +226,54 @@ public class Filtros_Pedidos extends AppCompatActivity {
     private class AplicarFiltrosPedidoTask extends AsyncTask<Object, Void, ArrayList<Pedido>> {
         @Override
         protected ArrayList<Pedido> doInBackground(Object... params) {
-            // Realizar la lógica de consulta a la base de datos para pedidos
-            // ...
-            return new ArrayList<>(); // Devuelve un ArrayList vacío como ejemplo
+
+            String fechaDesde = (String) params[0];
+            String fechaHasta = (String) params[1];
+            boolean confirmado = (boolean) params[2];
+            boolean cancelado = (boolean) params[3];
+            boolean pendiente = (boolean) params[4];
+            String orden = (String) params[5];
+
+            Conexion con = new Conexion();
+            try {
+                listadoPedidos = con.obtenerListadoPedidos(user);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            listadoPedidosObtenido = consultasPedidos.obtenerListadoPedidosFiltrado(listadoPedidos, fechaDesde, fechaHasta,
+                    confirmado, cancelado, pendiente, orden);
+
+            return listadoPedidosObtenido;
+
         }
 
         @Override
         protected void onPostExecute(ArrayList<Pedido> pedidos) {
-            Intent intent = new Intent(Filtros_Pedidos.this, Mis_Pedidos.class);
-            // ... Pasar los datos necesarios como extras si es necesario
-            startActivity(intent);
+            listadPedidosFiltrado = listadoPedidosObtenido;
+
+            try {
+                SharedPreferences preferencesFiltradoPedido = getSharedPreferences("mi_prefPedido", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorFiltradoPedido = preferencesFiltradoPedido.edit();
+
+                Gson gsonFiltradoPedido = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd")
+                        .create();
+                String listaComoJsonFiltradosPedido = gsonFiltradoPedido.toJson(listadPedidosFiltrado);
+                editorFiltradoPedido.putString("listadoPedidosFiltrado", listaComoJsonFiltradosPedido);
+                editorFiltradoPedido.apply();
+
+
+                Intent intent = new Intent(Filtros_Pedidos.this, Mis_Pedidos.class);
+                startActivity(intent);
+                finish();
+            } catch (Exception e) {
+                Log.d("Filtro.Pedido", e.toString());
+            }
+
+
+
         }
     }
 
