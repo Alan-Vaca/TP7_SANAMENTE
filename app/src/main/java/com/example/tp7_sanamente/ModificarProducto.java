@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -240,7 +242,38 @@ public class ModificarProducto extends AppCompatActivity {
 
         if(!user.isCliente()){
             if(validarProductoXmodificar(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
-                new ModificarProducto.modificarProducto().execute(producto);
+
+                //INICIO DEL BLOQUE PARA MOSTRAR UN MENSAJE DE CONFIRMACION PERSONALIZADO
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+                builder.setView(dialogView);
+                final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+                Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+                Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+                mensajeConfirm.setText("¿ESTAS SEGURO QUE QUIERES MODIFICARLO?");
+
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+
+                btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                Producto Producto = producto;
+                btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new ModificarProducto.modificarProducto().execute(Producto);
+                        dialog.dismiss();
+                    }
+                });
+
+
+                
             }
         }else{
             if(validarProductoXagregarCarrito(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
