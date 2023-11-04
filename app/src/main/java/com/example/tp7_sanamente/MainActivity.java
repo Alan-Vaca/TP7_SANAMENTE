@@ -8,10 +8,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void Ingresar(View view) {
 
+
         String user;
         String pass;
         user = usuario.getText().toString();
@@ -60,7 +63,47 @@ public class MainActivity extends AppCompatActivity {
         usuario.setNombreUsuario(user);
         usuario.setContraseña(pass);
 
-        new obtenerUsuarioXloginTask().execute(usuario);
+
+
+        //INICIO DEL BLOQUE PARA MOSTRAR UN MENSAJE DE CONFIRMACION PERSONALIZADO
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+        builder.setView(dialogView);
+
+        final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+        Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+        Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+        //SETEO EL MENSAJE QUE QUIERO PREGUNTAR
+        mensajeConfirm.setText("¿ESTAS SEGURO QUE TE QUIERES LOGUEAR? SOY UN MENSAJE DE PRUEBA LUEGO ELIMINAME");
+        //ABRO EL POPUP
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        //QUE HAGO EN CASO DE CANCELAR
+        btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //EN ESTE CASO NO HAGO NADA
+                Toast.makeText(MainActivity.this, "ELEGISTE" + "\n" + "CANCELAR", Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+
+        //QUE HAGO EN CASO DE CONFIRMAR
+        btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //EN ESTE CASO ME LOGUEO COMO EJEMPLO DE UNA ACCION
+                new obtenerUsuarioXloginTask().execute(usuario);
+                dialog.dismiss();
+            }
+        });
+
+
+
+        //new obtenerUsuarioXloginTask().execute(usuario);
+
     }
 
     private class cerrarConexion extends AsyncTask<Boolean, Void, Boolean> {
