@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(ingresarcomercio);
                 }
             } else {
-                Toast.makeText(MainActivity.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES " + "\n" + "O ASEGURECE DE NO ESTAR DADO DE BAJA", Toast.LENGTH_LONG).show();
             }
         }
 

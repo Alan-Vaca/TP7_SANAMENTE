@@ -140,6 +140,16 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return exito;
     }
 
+    public boolean BajaUsuario(Usuario usuario) {
+        Boolean exito = false;
+        try {
+            exito = consultasUsuario.BajaUsuario(getConnection(), usuario);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return exito;
+    }
+
     //--------------------------------------------------------------------------------------
     //NOTIFICACIONES
     //--------------------------------------------------------------------------------------
@@ -469,6 +479,8 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return listaPedido;
     }
+
+
 
 
 

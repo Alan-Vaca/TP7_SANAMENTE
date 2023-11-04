@@ -12,6 +12,7 @@ import java.util.Calendar;
 
 import Entidad.Cliente;
 import Entidad.Comercio;
+import Entidad.Pedido;
 import Entidad.Restriccion;
 import Entidad.Usuario;
 
@@ -25,7 +26,8 @@ public class consultasUsuario {
         try {
             String query = "SELECT idUsuario,apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario,"
             + "esCliente"
-            + " from usuarios u where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'";
+            + " from usuarios u where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'"
+            + " and estado = 1";
 
             if (conn != null) {
                 try {
@@ -320,5 +322,39 @@ public class consultasUsuario {
         }
 
         return comercio;
+    }
+
+    public Boolean BajaUsuario(Connection conn, Usuario usuario) throws SQLException {
+        Boolean exito = false;
+        PreparedStatement pstmt = null;
+
+        try {
+            if (conn != null) {
+
+                String updateQuery = "UPDATE usuarios SET " +
+                        "estado = 0 " +
+                        "WHERE idUsuario = ?";
+
+                pstmt = conn.prepareStatement(updateQuery);
+                pstmt.setInt(1, usuario.getIdUsuario());
+
+                pstmt.executeUpdate();
+
+
+                exito = true;
+            }
+        } catch (SQLException e) {
+            exito = false;
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
+
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+        return exito;
     }
 }
