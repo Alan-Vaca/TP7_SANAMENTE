@@ -24,11 +24,13 @@ import java.util.ArrayList;
 import BaseDeDatos.Conexion;
 import Entidad.Etiquetado;
 import Entidad.Producto;
+import Entidad.Restriccion;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
 
 public class ModificarProducto extends AppCompatActivity {
 
+    Restriccion restriccion;
     Spinner etiquetado_1, etiquetado_2,etiquetado_3;
     ArrayList<Etiquetado> listaEtiquetados;
     TextView nombreProducto, ingredienteProducto, precioProducto, stockProducto, detalleStock, TxtEstadoTitulo,TxtEstado;
@@ -100,6 +102,8 @@ public class ModificarProducto extends AppCompatActivity {
 
                 btnModificarAgregarCarrito.setText("AGREGAR AL CARRITO");
                 detalleStock.setText("CANTIDAD A COMPRAR:");
+                new ModificarProducto.cargarRestricciones().execute(user);
+
             }else{
                 detalleStock.setText("STOCK:");
                 btnModificarAgregarCarrito.setText("MODIFICAR PRODUCTO");
@@ -198,7 +202,7 @@ public class ModificarProducto extends AppCompatActivity {
                     if (listadoEtiquetado.size() > 1)
                         etiquetado_2.setSelection(listadoEtiquetado.get(1).getIdEtiquetado());
                     if (listadoEtiquetado.size() > 2)
-                        etiquetado_2.setSelection(listadoEtiquetado.get(2).getIdEtiquetado());
+                        etiquetado_3.setSelection(listadoEtiquetado.get(2).getIdEtiquetado());
                 } else {
                     Toast.makeText(ModificarProducto.this, "HUBO UN ERROR AL CONSULTAR LOS ETIQUETADOS", Toast.LENGTH_LONG).show();
                 }
@@ -232,7 +236,8 @@ public class ModificarProducto extends AppCompatActivity {
         if(!user.isCliente()) {
             producto.setStock(Integer.parseInt(stockProducto.getText().toString()));
         }
-        producto.setPrecio(Float.parseFloat(precioProducto.getText().toString()));
+        if (!precioProducto.getText().toString().isEmpty()) {  producto.setPrecio(Float.parseFloat(precioProducto.getText().toString()));  }
+
 
         idEtiquetado1 = etiquetado_1.getSelectedItemPosition();
         idEtiquetado2 = etiquetado_2.getSelectedItemPosition();
@@ -300,12 +305,109 @@ public class ModificarProducto extends AppCompatActivity {
     }
 
     public boolean validarProductoXmodificar(Producto producto, int id1, int id2, int id3){
+        boolean isValid = true;
+        StringBuilder errorMessage = new StringBuilder("Complete o corrija los siguientes campos:\n");
+
         //DEBE VALIDAR TODOS LOS DATOS INGRESADOS A MODIFICAR
-        return true;
+        if (producto == null ) {
+            isValid = false;
+            errorMessage.append("- NO SE SELECCIONÓ UN PRODUCTO\n");
+
+        }
+
+        if (producto.getNombre() == null || producto.getNombre().isEmpty()) {
+            isValid = false;
+            errorMessage.append("- NOMBRE\n");
+
+        }
+
+        if(producto.getIngredientes() == null && producto.getIngredientes().isEmpty()){
+            isValid = false;
+            errorMessage.append("- INGREDIENTES\n");
+
+        }
+        else if(producto.getIngredientes().replaceAll("[^a-zA-Z]", "").length() < 3){
+            isValid = false;
+            errorMessage.append("- INGREDIENTES debe contener al menos 3 caracteres\n");
+        }
+
+        if(producto.getPrecio() <= 0){
+            isValid = false;
+            errorMessage.append("- Precio\n");
+
+        }
+
+        if(producto.getStock() <= 0){
+            isValid = false;
+            errorMessage.append("- Stock\n");
+
+        }
+
+
+        if (!isValid) {
+            Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG).show();
+        }
+        return isValid;
+
     }
 
     public boolean validarProductoXagregarCarrito(Producto producto, int id1, int id2, int id3){
         //DEBE VALIDAR LA CANTIDAD SOLICITA Y QUE EL CLIENTE SEA APTO PARA COMPRAR DEPENDIENDO SUS RESTRICCIONES
+
+
+        if((id1 == 1 || id2 == 1 || id3 == 1) && restriccion.isCeliaco()){
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en azúcares. No es apto para celíacos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if((id1 == 2 || id2 == 2 || id3 == 2) && restriccion.isCeliaco()){
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas totales. No es apto para celíacos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if((id1 == 3 || id2 == 3 || id3 == 3) && restriccion.isCeliaco()){
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas saturadas. No es apto para celíacos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if((id1 == 4 || id2 == 4 || id3 == 4) && restriccion.isCeliaco() || restriccion.isDiabetico()){
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en sodio. No es apto para celíacos o diabéticos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if((id1 == 5 || id2 == 5 || id3 == 5) && restriccion.isCeliaco()){
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en calorías. No es apto para celíacos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if((id1 == 6 || id2 == 6 || id3 == 6) && restriccion.isCeliaco()){
+            Toast.makeText(ModificarProducto.this, "El producto contiene edulcorante. No es apto para celíacos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if((id1 == 7 || id2 == 7 || id3 == 74) && restriccion.isCeliaco()){
+            Toast.makeText(ModificarProducto.this, "El producto contiene cafeína. No es apto para celíacos", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if((id1 == 6 || id2 == 6 || id3 == 6) && restriccion.isDiabetico() || restriccion.isHipertenso()){
+            Toast.makeText(ModificarProducto.this, "Este producto contiene edulcorante. Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+        }
+
+        if((id1 == 7 || id2 == 7 || id3 == 7) && restriccion.isDiabetico() || restriccion.isHipertenso()){
+            Toast.makeText(ModificarProducto.this, "Este producto contiene cafeína. Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+        }
+
+        if(producto.getIngredientes().toUpperCase().contains(restriccion.getAlergico().toUpperCase())){
+            Toast.makeText(ModificarProducto.this, "No es posible comprar por su seguridad ya que es alérgico a uno de sus ingredientes.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (producto.getStock() <= 0) {
+            Toast.makeText(ModificarProducto.this, "Ingrese la cantidad a comprar para agregar al carrito.", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
         return true;
     }
 
@@ -330,6 +432,31 @@ public class ModificarProducto extends AppCompatActivity {
                 Toast.makeText(ModificarProducto.this, "PRODUCTO MODIFICADO CON EXITO", Toast.LENGTH_LONG).show();
                 Intent volverAlCatalogo = new Intent(ModificarProducto.this, Mis_Productos.class);
                 startActivity(volverAlCatalogo);
+            } else {
+                Toast.makeText(ModificarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private class cargarRestricciones extends AsyncTask<Usuario, Void, Restriccion> {
+        @Override
+        protected Restriccion doInBackground(Usuario... user) {
+            Conexion con = new Conexion();
+            Restriccion res = new Restriccion();
+            try {
+                res = con.obtenerRestriccion(user[0].getIdUsuario());
+                return res;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return res;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Restriccion res) {
+            if (res.getIdRestriccion() > 0) {
+                restriccion = new Restriccion();
+                restriccion = res;
             } else {
                 Toast.makeText(ModificarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }

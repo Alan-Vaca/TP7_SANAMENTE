@@ -67,7 +67,7 @@ public class Registrar_Cliente extends AppCompatActivity {
 
 
         if(validarCliente(restriccion)) {
-            //new registrarCliente().execute(restriccion);
+            new registrarCliente().execute(restriccion);
         }
     }
 

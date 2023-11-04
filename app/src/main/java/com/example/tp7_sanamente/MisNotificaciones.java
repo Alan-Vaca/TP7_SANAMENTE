@@ -88,8 +88,19 @@ public class MisNotificaciones extends AppCompatActivity {
     }
 
     public void MenuCliente(View view) {
-        Intent menuCliente = new Intent(this, Menu_Cliente.class);
-        startActivity(menuCliente);
+        // Recuperar el booleano isAdmin de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent menuCliente = new Intent(this, MenuAdmin.class);
+            startActivity(menuCliente);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            Intent menuCliente = new Intent(this, Menu_Cliente.class);
+            startActivity(menuCliente);
+        }
     }
 
     private class NotificacionesGrabar extends AsyncTask<Notificacion, Void, Boolean> {
@@ -108,8 +119,19 @@ public class MisNotificaciones extends AppCompatActivity {
         protected void onPostExecute(Boolean bool) {
             if (bool){
                 Toast.makeText(MisNotificaciones.this, "NOTIFICACIONES GRABADAS CON EXITO", Toast.LENGTH_LONG).show();
-                Intent menu = new Intent(MisNotificaciones.this, Menu_Cliente.class);
-                startActivity(menu);
+                // Recuperar el booleano isAdmin de SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+                if(isAdmin) {
+                    // El usuario es un administrador, realiza las acciones correspondientes
+                    Intent menuCliente = new Intent(MisNotificaciones.this, MenuAdmin.class);
+                    startActivity(menuCliente);
+                } else {
+                    // El usuario no es un administrador, realiza las acciones correspondientes
+                    Intent menuCliente = new Intent(MisNotificaciones.this, Menu_Cliente.class);
+                    startActivity(menuCliente);
+                }
             } else {
                 Toast.makeText(MisNotificaciones.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }

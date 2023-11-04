@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -174,12 +176,34 @@ public class Mis_Pedidos extends AppCompatActivity {
     }
 
     public void CancelarPedido(View view) {
-        pedidoSeleccionado.setEstado(4);
-        new Mis_Pedidos.cambiarEstadoPedido().execute(pedidoSeleccionado.getEstado());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_motivo, null);
+        builder.setView(dialogView);
 
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+        final EditText textMotivo = dialogView.findViewById(R.id.editTextMotivo);
+        Button btnGuardarMotivo = dialogView.findViewById(R.id.btnGuardarMotivo);
+
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnGuardarMotivo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String motivoCancelacion = textMotivo.getText().toString();
+
+                pedidoSeleccionado.setMotivoCancelacion(motivoCancelacion);
+
+                dialog.dismiss();
+
+                pedidoSeleccionado.setEstado(4);
+                new Mis_Pedidos.cambiarEstadoPedido().execute(pedidoSeleccionado.getEstado());
+
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void ConfirmarPedido(View view) {
@@ -192,8 +216,19 @@ public class Mis_Pedidos extends AppCompatActivity {
     }
 
     public void MenuComercio(View view) {
-        Intent MenuComercio = new Intent(this, MenuComercio.class);
-        startActivity(MenuComercio);
+        // Recuperar el booleano isAdmin de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent MenuComercio = new Intent(this, MenuAdmin.class);
+            startActivity(MenuComercio);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            Intent MenuComercio = new Intent(this, MenuComercio.class);
+            startActivity(MenuComercio);
+        }
     }
 
     private class cambiarEstadoPedido extends AsyncTask<Integer, Void, Boolean> {

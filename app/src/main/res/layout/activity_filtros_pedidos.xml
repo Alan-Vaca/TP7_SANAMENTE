@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Filtros_Pedidos">
+    tools:context=".Filtros_Pedidos"
+    >
 
     <EditText
         android:id="@+id/fp_et_fechaDesde"
@@ -51,7 +52,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Filtrar Pedidos" />
+        app:title="FILTROS"
+        app:titleTextColor="#FFFFFF"
+        />
 
     <TextView
         android:id="@+id/fp_tv_titulo"

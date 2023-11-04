@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -30,7 +30,7 @@ import Entidad.pedidoXproducto;
 
 public class MainActivity extends AppCompatActivity {
 
-    Switch esComerciante;
+    boolean isAdmin;
     EditText contraseña;
     EditText usuario;
 
@@ -38,13 +38,72 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        isAdmin = false;
 
-        esComerciante = (Switch)findViewById(R.id.sw_comerciante);
         contraseña = (EditText)findViewById(R.id.ContraseñaLogin);
         usuario = (EditText)findViewById(R.id.UsuarioLogin);
 
         //En caso de haber tenido un error anteriormente
         new cerrarConexion().execute(true);
+
+
+        usuario.addTextChangedListener(new TextWatcher() {
+            // ...
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                validarUsuarioYContraseña();
+            }
+        });
+
+        contraseña.addTextChangedListener(new TextWatcher() {
+            // ...
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                validarUsuarioYContraseña();
+            }
+        });
+
+        Button btnExit = findViewById(R.id.btnExit);
+
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish(); // Cierra la actividad actual
+            }
+        });
+    }
+
+    private void validarUsuarioYContraseña() {
+        String user = usuario.getText().toString();
+        String pass = contraseña.getText().toString();
+
+        if (user.equals("admin") && pass.equals("admin")) {
+            isAdmin = true;
+        } else {
+            isAdmin = false;
+        }
     }
 
 
@@ -97,16 +156,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //EN ESTE CASO ME LOGUEO COMO EJEMPLO DE UNA ACCION
-                new obtenerUsuarioXloginTask().execute(usuario);
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isAdmin", isAdmin);
+                editor.apply();
+                if(!isAdmin){
+                    new obtenerUsuarioXloginTask().execute(usuario);
+                }
+                else{
+
+                    Intent ingresarAdmin = new Intent(MainActivity.this, MenuAdmin.class);
+                    startActivity(ingresarAdmin);
+                }
                 dialog.dismiss();
             }
         });
 
 
-
-        //new obtenerUsuarioXloginTask().execute(usuario);
-
     }
+
+
 
     private class cerrarConexion extends AsyncTask<Boolean, Void, Boolean> {
         @Override
@@ -207,20 +276,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else {
                 Toast.makeText(MainActivity.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
-
-
-                /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (INICIO)*/
-                boolean comerciante = esComerciante.isChecked();
-
-
-                if (!comerciante) {
-                    Intent ingresarcliente = new Intent(MainActivity.this, Menu_Cliente.class);
-                    startActivity(ingresarcliente);
-                } else {
-                    Intent ingresarcomercio = new Intent(MainActivity.this, MenuComercio.class);
-                    startActivity(ingresarcomercio);
-                }
-                /*LUEGO ESTE BLOQUE SE DEBE ELIMINAR (FINAL)*/
             }
         }
 

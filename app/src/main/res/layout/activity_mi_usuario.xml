@@ -60,7 +60,8 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:title="Mi usuario" />
+        app:titleTextColor="#FFFFFF"
+        app:title="MI USUARIO" />
 
     <ImageView
         android:id="@+id/imageView"

@@ -46,7 +46,10 @@ public class Registrar_Comercio extends AppCompatActivity {
 
         Comercio comercio = new Comercio();
         //Tengo que validar antes sino la app rompe
-        if (!cuitStr.isEmpty()) {   comercio.setCuit(Integer.parseInt(cuit.getText().toString().trim()));  }
+        if (!cuitStr.isEmpty()) {
+            int test = Integer.parseInt(cuitStr);
+            comercio.setCuit(test);
+        }
         comercio.setNombreComercio(nombre.getText().toString());
         String horarios = (apertura.getText().toString()) + "-:-" + (cierre.getText().toString());
         comercio.setHorarios(horarios);
@@ -58,7 +61,7 @@ public class Registrar_Comercio extends AppCompatActivity {
 
         comercio.setUsuarioAsociado(user);
         if(validarComercio(comercio)) {
-            //new registrarComercio().execute(comercio);
+            new registrarComercio().execute(comercio);
         }
     }
 
@@ -70,13 +73,13 @@ public class Registrar_Comercio extends AppCompatActivity {
             errorMessage.append("- DNI\n");
             isValid = false;
         }
-        /* Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
+        // Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
         else if(comercio.getUsuarioAsociado().getDNI() < 99999 ||
                 comercio.getUsuarioAsociado().getDNI() > 1000000000)
         {
             errorMessage.append("- DNI inválido\n");
             isValid = false;
-        }*/
+        }
 
         if (comercio.getUsuarioAsociado().getNombre().isEmpty()) {
             errorMessage.append("- Nombre\n");
@@ -105,27 +108,48 @@ public class Registrar_Comercio extends AppCompatActivity {
             isValid = false;
         }
 
+        // Verificar que el horario sea válido (apertura menor que cierre)
+        String[] horarios = comercio.getHorarios().split("-:-");
 
-        String[] horarios = comercio.getHorarios().split(":");
-        //Apertura
-        if (horarios[0].trim().equals("-")) {
-            errorMessage.append("- Apertura\n");
-            isValid = false;
+
+        if(horarios.length > 1) {
+            if (horarios[0].isEmpty() || horarios[1].isEmpty()) {
+                errorMessage.append("- Horarios\n");
+                isValid = false;
+            }
+            if (!horarios[0].isEmpty() && !validarFormatoHorario(horarios[0])) {
+                errorMessage.append("- Apertura inválida\n");
+                isValid = false;
+            }
+
+            if (!horarios[1].isEmpty() && !validarFormatoHorario(horarios[1])) {
+                errorMessage.append("- Cierre inválido\n");
+                isValid = false;
+            }
+
+            String[] aperturaParts = horarios[0].split(":");
+            String[] cierreParts = horarios[1].split(":");
+
+            if (aperturaParts.length > 1 && cierreParts.length > 1) {
+                int aperturaHoras = Integer.parseInt(aperturaParts[0]);
+                int aperturaMinutos = Integer.parseInt(aperturaParts[1]);
+
+                int cierreHoras = Integer.parseInt(cierreParts[0]);
+                int cierreMinutos = Integer.parseInt(cierreParts[1]);
+
+
+                if (aperturaHoras > cierreHoras || (aperturaHoras == cierreHoras && aperturaMinutos > cierreMinutos)) {
+                    errorMessage.append("- Horarios incoherentes\n");
+                    isValid = false;
+                }
+            }
         }
-        else if(horarios[0].length() != 2 || !validarFormatoHorario(horarios[0]) ){
-            errorMessage.append("- Apertura inválida\n");
+        else {
+            errorMessage.append("- Horarios\n");
             isValid = false;
         }
 
-        //Cierre
-        if (horarios[1].trim().equals("-")) {
-            errorMessage.append("- Cierre\n");
-            isValid = false;
-        }
-        else if(horarios[1].length() != 2 || !validarFormatoHorario(horarios[1])){
-            errorMessage.append("- Cierre inválido\n");
-            isValid = false;
-        }
+
 
         if (comercio.getUsuarioAsociado().getDireccion().isEmpty()) {
             errorMessage.append("- Direccion\n");

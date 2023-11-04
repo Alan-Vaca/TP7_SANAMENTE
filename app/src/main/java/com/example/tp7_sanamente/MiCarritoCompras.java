@@ -31,6 +31,7 @@ public class MiCarritoCompras extends AppCompatActivity {
     ListView lv_pedidosxProducto;
     Float montoTotal;
 
+    Button btn_pagar;
     pedidoXproducto itemSeleccionado;
 
     @Override
@@ -41,6 +42,7 @@ public class MiCarritoCompras extends AppCompatActivity {
         lv_pedidosxProducto = (ListView)findViewById(R.id.lv_pedidosxProducto);
         misProductosPedido = new ArrayList<pedidoXproducto>();
         montoTotalTxt = (TextView)findViewById(R.id.txtMontoTotal);
+        btn_pagar = (Button) findViewById(R.id.MiCC_btn_pagar);
 
         SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
         Gson gson = new Gson();
@@ -58,9 +60,13 @@ public class MiCarritoCompras extends AppCompatActivity {
 
         montoTotal = (float) 0;
         if(misProductosPedido.size() > 0){
+            btn_pagar.setEnabled(true);
             for (pedidoXproducto item : misProductosPedido) {
                 montoTotal += (item.getProducto().getPrecio() * item.getCantidad());
             }
+        }
+        else{
+            btn_pagar.setEnabled(false);
         }
         montoTotalTxt.setText(montoTotal.toString());
 
@@ -161,7 +167,18 @@ public class MiCarritoCompras extends AppCompatActivity {
     }
 
     public void MenuCliente(View view) {
-        Intent MenuCliente = new Intent(this, Menu_Cliente.class);
-        startActivity(MenuCliente);
+        // Recuperar el booleano isAdmin de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent MenuCliente = new Intent(this, MenuAdmin.class);
+            startActivity(MenuCliente);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            Intent MenuCliente = new Intent(this, Menu_Cliente.class);
+            startActivity(MenuCliente);
+        }
     }
 }

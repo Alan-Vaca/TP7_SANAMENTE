@@ -10,13 +10,17 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="SANAMENTE"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TP7_SANAMENTE"
         tools:targetApi="31">
         <activity
             android:name=".dialog_confirm"
+            android:name=".dialog_motivo"
+            android:exported="false" />
+        <activity
+            android:name=".MenuAdmin"
             android:exported="false" />
         <activity
             android:name=".list_item_selected"

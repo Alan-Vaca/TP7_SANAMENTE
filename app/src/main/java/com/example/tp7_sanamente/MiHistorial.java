@@ -191,13 +191,36 @@ public class MiHistorial extends AppCompatActivity {
     }
 
     public void MenuCliente(View view) {
-        Intent MenuCliente = new Intent(this, Menu_Cliente.class);
-        startActivity(MenuCliente);
+        // Recuperar el booleano isAdmin de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent MenuCliente = new Intent(this, MenuAdmin.class);
+            startActivity(MenuCliente);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            Intent MenuCliente = new Intent(this, Menu_Cliente.class);
+            startActivity(MenuCliente);
+        }
     }
 
     public void MenuComercio(View view) {
-        Intent MenuComercio = new Intent(this, MenuComercio.class);
-        startActivity(MenuComercio);
+        // Recuperar el booleano isAdmin de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+        if(isAdmin) {
+            // El usuario es un administrador, realiza las acciones correspondientes
+            Intent MenuComercio = new Intent(this, MenuAdmin.class);
+            startActivity(MenuComercio);
+        } else {
+            // El usuario no es un administrador, realiza las acciones correspondientes
+            Intent MenuComercio = new Intent(this, MenuComercio.class);
+            startActivity(MenuComercio);
+        }
     }
 
 
@@ -242,9 +265,8 @@ public class MiHistorial extends AppCompatActivity {
         pedidoSeleccionado.setCliente(cliente);
         new MiHistorial.cambiarEstadoPedido().execute(pedidoSeleccionado.getEstado());
 
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
+        Intent DetalleHistorial = new Intent(this, Detalle_Pedido.class);
+        startActivity(DetalleHistorial);
     }
 
     private class cambiarEstadoPedido extends AsyncTask<Integer, Void, Boolean> {

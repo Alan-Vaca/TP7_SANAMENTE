@@ -303,13 +303,13 @@ public class Conexion extends AsyncTask<String,Void, String> {
                 consultasEtiquetados.eliminarProductoXetiquetado(getConnection(),producto.getIdProducto());
 
                 if(idEtiquetado1 > 0){
-                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado1);
+                    consultasEtiquetados.agregarProductoXetiquetadoXID(getConnection(),idEtiquetado1, producto.getIdProducto());
                 }
                 if(idEtiquetado2 > 0){
-                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado2);
+                    consultasEtiquetados.agregarProductoXetiquetadoXID(getConnection(),idEtiquetado2, producto.getIdProducto());
                 }
                 if(idEtiquetado3 > 0){
-                    consultasEtiquetados.agregarProductoXetiquetado(getConnection(),idEtiquetado3);
+                    consultasEtiquetados.agregarProductoXetiquetadoXID(getConnection(),idEtiquetado3, producto.getIdProducto());
                 }
             }
         } catch (Exception e) {

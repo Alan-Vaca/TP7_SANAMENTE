@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Mi Carrito de compras" />
+        app:titleTextColor="#FFFFFF"
+        app:title="MI CARRITO DE COMPRAS" />
 
     <ListView
         android:id="@+id/lv_pedidosxProducto"
@@ -41,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/button9" />
 
     <Button
-        android:id="@+id/button57"
+        android:id="@+id/MiCC_btn_pagar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

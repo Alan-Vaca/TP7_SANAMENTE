@@ -120,7 +120,6 @@
     <string name="tv_usuario">"USUARIO"</string>
 
 
-
     <!-- _________________  AGREGAR_PRODUCTO  _________________ -->
 
     <string name="tv_AP_titulo">"INGRESA LOS DATOS EN EL FORMULARIO"</string>
@@ -239,5 +238,11 @@
     <string name="button_continuar">CONTINUAR</string>
     <string name="switch_cuentaComerciante">CUENTA COMERCIANTE</string>
     <string name="tv_ru_tipoDeCuenta">TIPO DE CUENTA</string>
+
+    <!-- _________________  MODIFICAR USUARIO  _________________ -->
+    <string name="tv_Cliente">CLIENTE</string>
+    <string name="tv_Comercio">COMERCIO</string>
+    <string name="toolbar_admin">MENU ADMIN</string>
+
 
 </resources>
