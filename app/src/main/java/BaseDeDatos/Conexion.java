@@ -83,6 +83,16 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return user;
     }
 
+    public Boolean ExisteUsuario(String nombreUsuario) {
+        try {
+            Connection con = getConnection();
+            return consultasUsuario.ExisteUsuario(con, nombreUsuario);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return false;
+    }
+
     public boolean RegistrarUsuarioCliente(Restriccion res) {
         Boolean exito = false;
         try {
@@ -479,10 +489,6 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return listaPedido;
     }
-
-
-
-
 
 
 

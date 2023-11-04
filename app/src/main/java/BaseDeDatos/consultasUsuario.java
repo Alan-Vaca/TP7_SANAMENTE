@@ -59,6 +59,39 @@ public class consultasUsuario {
         return user;
     }
 
+    public boolean ExisteUsuario(Connection conn, String nombreUsuario) {
+        boolean existe = false;
+        String query = "SELECT COUNT(idUsuario) as cantidadUsuarios FROM usuarios WHERE nombreUsuario = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nombreUsuario);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int cantidadUsuarios = rs.getInt("cantidadUsuarios");
+                if (cantidadUsuarios > 0) {
+                    existe = true;
+                }
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Aquí puedes manejar la excepción de manera adecuada, como lanzar una excepción personalizada o registrar el error
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return existe;
+    }
+
     //--------------------------------------------------------------------------------------
     //CONSULTA DE TIPO INSERT
     //--------------------------------------------------------------------------------------
@@ -357,4 +390,6 @@ public class consultasUsuario {
         }
         return exito;
     }
+
+
 }
