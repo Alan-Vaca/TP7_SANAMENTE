@@ -124,7 +124,7 @@ public class Metodo_De_Pago extends AppCompatActivity {
     public Boolean validarMetodoPago(){
         boolean isValid = true;
 
-        if(numeroTarjeta.getText().toString().length() != 16) {
+        if(numeroTarjeta.getText().toString().trim().length() != 16) {
             numeroTarjeta.setError("El número de tarjeta debe contener 16 dígitos");
             isValid = false;
         } else {
