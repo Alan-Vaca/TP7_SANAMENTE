@@ -3,7 +3,9 @@ package Entidad;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Pedido implements Parcelable{
     int idPedido;
@@ -94,7 +96,9 @@ public class Pedido implements Parcelable{
 
     @Override
     public String toString() {
-        return "N°" + idPedido + " - " + getEstadoString() + " - " + "$" + monto + " - FECHA: " + fecha.toString();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String fechaFormateada = formatoFecha.format(fecha);
+        return "N°" + idPedido + " - " + getEstadoString() + " - " + "$" + monto + " - FECHA: " + fechaFormateada;
     }
 
 

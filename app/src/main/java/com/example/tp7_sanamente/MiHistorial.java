@@ -160,7 +160,6 @@ public class MiHistorial extends AppCompatActivity {
                 listadoHistorial = listaHistorial;
                 ArrayAdapter<Historial> adapter = new ArrayAdapter<>(MiHistorial.this, android.R.layout.simple_spinner_dropdown_item, listadoHistorial);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
                 lv_historial.setAdapter(adapter);
 
             } else {

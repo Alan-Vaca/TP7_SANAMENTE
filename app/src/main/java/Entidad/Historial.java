@@ -1,6 +1,8 @@
 package Entidad;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Historial {
     int idHistorial;
@@ -66,6 +68,8 @@ public class Historial {
 
     @Override
     public String toString() {
-        return "Pedido N°" + getPedidoRealizado().getIdPedido() + " - " + getFecha().toString() + " - " + getEstadoString();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String fechaFormateada = formatoFecha.format(fecha);
+        return "Pedido N°" + getPedidoRealizado().getIdPedido() + " - " + fechaFormateada + " - " + getEstadoString();
     }
 }

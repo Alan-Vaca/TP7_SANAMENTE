@@ -48,7 +48,6 @@ public class Mis_Pedidos extends AppCompatActivity {
         listadoPedidos = new ArrayList<Pedido>();
         listaPedidoConFiltro = false;
 
-
         try {
             SharedPreferences preferencesFiltradoPedido = getSharedPreferences("mi_prefPedido", Context.MODE_PRIVATE);
             Gson gsonFiltradoPedido = new GsonBuilder()
@@ -59,11 +58,9 @@ public class Mis_Pedidos extends AppCompatActivity {
             Type typeFiltradoPedido = new TypeToken<ArrayList<Pedido>>() {}.getType();
             listadoPedidos = gsonFiltradoPedido.fromJson(listaComoJsonFiltradosPedido, typeFiltradoPedido);
 
-
         }   catch (Exception e) {
-            Log.e("Error FiltroHistorial", "Error en la conversión de JSON a lista de Historial", e);
+            Log.e("Error FiltroPedido", String.valueOf(e));
         }
-
 
         if (listadoPedidos != null && !listadoPedidos.isEmpty()) {
             listaPedidoConFiltro = true;
@@ -82,7 +79,6 @@ public class Mis_Pedidos extends AppCompatActivity {
                 new Mis_Pedidos.obtenerListadoPedidos().execute(user);
             }else{
                 if (listadoPedidos.size() > 0) {
-
                     ArrayAdapter<Pedido> adapter = new ArrayAdapter<>(Mis_Pedidos.this, android.R.layout.simple_spinner_dropdown_item, listadoPedidos);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     lv_pedidos.setAdapter(adapter);
@@ -140,11 +136,9 @@ public class Mis_Pedidos extends AppCompatActivity {
     private class obtenerListadoPedidos extends AsyncTask<Usuario, Void, ArrayList<Pedido>> {
         @Override
         protected ArrayList<Pedido> doInBackground(Usuario... usuario) {
-
             Conexion con = new Conexion();
             try {
                 listadoPedidos = con.obtenerListadoPedidos(usuario[0]);
-
                 return listadoPedidos;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -154,7 +148,6 @@ public class Mis_Pedidos extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Pedido> listaPedido) {
             //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
-
             if (listaPedido.size() > 0) {
 
                 listadoPedidos = listaPedido;

@@ -17,11 +17,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
 import Entidad.Historial;
+import Entidad.Pedido;
 import Entidad.Producto;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
@@ -166,10 +168,25 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Historial> listadoHistorialesFiltrado = new ArrayList<Historial>();
                 SharedPreferences preferencesFiltradoHistorial = getSharedPreferences("mi_prefHistorial", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editorFiltradoHistorial = preferencesFiltradoHistorial.edit();
-                Gson gsonFiltradoHistorial = new Gson();
+                Gson gsonFiltradoHistorial = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd")
+                        .create();
                 String listaComoJsonFiltradosHistorial = gsonFiltradoHistorial.toJson(listadoHistorialesFiltrado);
                 editorFiltradoHistorial.putString("listadoHistorialesFiltrado", listaComoJsonFiltradosHistorial);
                 editorFiltradoHistorial.apply();
+
+
+                ArrayList<Pedido> listadPedidosFiltrado = new ArrayList<Pedido>();
+                SharedPreferences preferencesFiltradoPedido = getSharedPreferences("mi_prefPedido", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorFiltradoPedido = preferencesFiltradoPedido.edit();
+
+                Gson gsonFiltradoPedido = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd")
+                        .create();
+                String listaComoJsonFiltradosPedido = gsonFiltradoPedido.toJson(listadPedidosFiltrado);
+                editorFiltradoPedido.putString("listadoPedidosFiltrado", listaComoJsonFiltradosPedido);
+                editorFiltradoPedido.apply();
+
 
 
 
