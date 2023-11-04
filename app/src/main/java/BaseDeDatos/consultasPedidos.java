@@ -94,6 +94,13 @@ public class consultasPedidos {
                     pstmt.setInt(2, idPedido);
                     pstmt.setInt(3, item.getCantidad());
                     pstmt.executeUpdate();
+
+                    String queryRestarStock = "UPDATE productos SET stock = ? WHERE idProducto = " + item.getProducto().getIdProducto();
+                    pstmt = conn.prepareStatement(queryRestarStock);
+                    int nuevoStock = 0;
+                    nuevoStock = item.getProducto().getStock() - item.getCantidad();
+                    pstmt.setInt(1, nuevoStock);
+                    pstmt.executeUpdate();
                 }
 
                 String insertQueryH = "INSERT INTO historial(" +
