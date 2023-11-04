@@ -50,7 +50,6 @@ public class Filtros_Pedidos extends AppCompatActivity {
     consultasHistoriales consultasHistoriales;
     consultasPedidos consultasPedidos;
 
-
     boolean isHistorial;
 
 
