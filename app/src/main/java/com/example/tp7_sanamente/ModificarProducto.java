@@ -271,7 +271,7 @@ public class ModificarProducto extends AppCompatActivity {
         if(!user.isCliente()){
             if(validarProductoXmodificar(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
 
-                //INICIO DEL BLOQUE PARA MOSTRAR UN MENSAJE DE CONFIRMACION PERSONALIZADO
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
                 builder.setView(dialogView);

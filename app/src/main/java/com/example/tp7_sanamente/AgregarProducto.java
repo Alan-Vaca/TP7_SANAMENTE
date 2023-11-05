@@ -156,8 +156,8 @@ public class AgregarProducto extends AppCompatActivity {
                 btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
                         new AgregarProducto.agregarProducto().execute(producto);
+                        dialog.dismiss();
                     }
                 });
             }

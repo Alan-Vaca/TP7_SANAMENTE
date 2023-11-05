@@ -5,10 +5,13 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -17,6 +20,7 @@ import com.google.gson.JsonSyntaxException;
 import BaseDeDatos.Conexion;
 import Entidad.Cliente;
 import Entidad.Notificacion;
+import Entidad.Producto;
 import Entidad.Restriccion;
 import Entidad.Usuario;
 
@@ -99,12 +103,41 @@ Usuario user;
 
                 //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
                 if (validarCliente(user)) {
-                    //Cliente cliente = new Cliente();
-                    //restriccion.setClienteAsociado(cliente);
-                    //restriccion.getClienteAsociado().setUsuarioAsociado(user);
-                    //new Modificar_Usuario.modificarCliente().execute(restriccion);
-                    //MenuirMiUsuario(view);
-                    Toast.makeText(Modificar_Usuario.this, "Usuario validado correctamente", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+                    builder.setView(dialogView);
+                    final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+                    Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+                    Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+                    mensajeConfirm.setText("¿ESTAS SEGURO QUE QUIERES MODIFICAR EL USUARIO?");
+
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                    btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+
+                    btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                           //Cliente cliente = new Cliente();
+                            //restriccion.setClienteAsociado(cliente);
+                            //restriccion.getClienteAsociado().setUsuarioAsociado(user);
+                            //new Modificar_Usuario.modificarCliente().execute(restriccion);
+                            //MenuirMiUsuario(view);
+                            Toast.makeText(Modificar_Usuario.this, "Usuario validado correctamente", Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                        }
+                    });
+
+
+
                 }
             }
             else{

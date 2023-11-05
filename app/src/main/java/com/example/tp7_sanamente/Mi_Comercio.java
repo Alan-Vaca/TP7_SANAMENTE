@@ -99,35 +99,27 @@ public class Mi_Comercio extends AppCompatActivity {
             Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
             Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
 
-            //SETEO EL MENSAJE QUE QUIERO PREGUNTAR
             mensajeConfirm.setText("¿ESTÁS SEGURO QUE QUIERES MODIFICAR EL COMERCIO?");
-
-            //ABRO EL POPUP
             final AlertDialog dialog = builder.create();
             dialog.show();
 
-            //QUE HAGO EN CASO DE CANCELAR
             btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //EN ESTE CASO NO HAGO NADA
                     Toast.makeText(Mi_Comercio.this, "ELEGISTE" + "\n" + "CANCELAR", Toast.LENGTH_LONG).show();
                     dialog.dismiss();
                 }
             });
 
-            //QUE HAGO EN CASO DE CONFIRMAR
             btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     comercio.setNombreComercio(NombreComercio);
                     comercio.setHorarios(HorarioApertura + "-:-" + HorarioCierre);
-
                     comercio.getUsuarioAsociado().setNombreUsuario(NombreUsuario);
                     comercio.getUsuarioAsociado().setDireccion(DireccionComercio);
                     comercio.getUsuarioAsociado().setContraseña(ContraseñaNueva1);
 
-                    //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
                     if (validarComercio(comercio)) {
                         //new Mi_Comercio.modificarComercio().execute(comercio);
                         //MenuMiUsuarioComercio(view);
@@ -136,7 +128,6 @@ public class Mi_Comercio extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-            // FIN DEL BLOQUE DE MOSTRAR UN MENSAJE DE CONFIRMACIÓN PERSONALIZADO
         } else {
             contraseñaActual.setError("La contraseña actual es incorrecta");
         }
