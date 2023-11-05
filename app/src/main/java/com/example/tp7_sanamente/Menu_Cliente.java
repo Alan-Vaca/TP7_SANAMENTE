@@ -79,7 +79,7 @@ public class Menu_Cliente extends AppCompatActivity {
         Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
         Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
 
-        mensajeConfirm.setText("¿DESEA SALIR?");
+        mensajeConfirm.setText("¿ESTAS SEGURO DE SALIR?");
         final AlertDialog dialog = builder.create();
         dialog.show();
 
