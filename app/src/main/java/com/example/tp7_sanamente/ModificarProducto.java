@@ -214,10 +214,38 @@ public class ModificarProducto extends AppCompatActivity {
 
     public void ModificarProductoESTADO(View view) {
         Producto producto = new Producto();
-
         producto = productoSeleccionado;
-        producto.setEstado(!producto.isEstado());
-        new ModificarProducto.modificarProducto().execute(producto);
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+        builder.setView(dialogView);
+
+        final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+        Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+        Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+        mensajeConfirm.setText("¿ESTAS SEGURO EN DAR DE BAJA ESTE PRODUCTO?");
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Producto Producto = producto;
+        btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Producto.setEstado(!Producto.isEstado());
+                new ModificarProducto.modificarProducto().execute(Producto);
+                dialog.dismiss();
+            }
+        });
+
+
     }
 
     public void ModificarProductoCancelar(View view) {
@@ -273,7 +301,7 @@ public class ModificarProducto extends AppCompatActivity {
                 });
 
 
-                
+
             }
         }else{
             if(validarProductoXagregarCarrito(producto,idEtiquetado1,idEtiquetado2,idEtiquetado3)){
