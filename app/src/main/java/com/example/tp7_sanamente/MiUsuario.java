@@ -6,15 +6,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import BaseDeDatos.Conexion;
+import Entidad.Cliente;
 import Entidad.Producto;
 import Entidad.Usuario;
 
@@ -81,10 +84,37 @@ public class MiUsuario extends AppCompatActivity {
     public void DarDeBaja(View view){
         if(user.getNombreUsuario().equals("admin") && (user.getContraseña().equals("123") || user.getContraseña().equals("321"))){
             Toast.makeText(MiUsuario.this, "NO ES POSIBLE DAR DE BAJA UN USUARIO ADMIN", Toast.LENGTH_LONG).show();
-
         }
         else{
-            new MiUsuario.BajaUsuario().execute(user);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+            builder.setView(dialogView);
+            final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+            Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+            Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+            mensajeConfirm.setText("¿ESTAS SEGURO QUE QUIERES DAR DE BAJA EL USUARIO CLIENTE?");
+
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+
+            btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+
+            btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Cliente cliente = new Cliente();
+                    new MiUsuario.BajaUsuario().execute(user);
+                    dialog.dismiss();
+                }
+            });
         }
     }
 

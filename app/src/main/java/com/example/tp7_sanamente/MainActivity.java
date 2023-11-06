@@ -131,7 +131,17 @@ public class MainActivity extends AppCompatActivity {
         usuario.setNombreUsuario(user);
         usuario.setContraseña(pass);
 
-        new obtenerUsuarioXloginTask().execute(usuario);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isAdmin", isAdmin);
+        editor.apply();
+        if(!isAdmin){
+            new obtenerUsuarioXloginTask().execute(usuario);
+        }
+        else{
+            Intent ingresarAdmin = new Intent(MainActivity.this, MenuAdmin.class);
+            startActivity(ingresarAdmin);
+        }
 
     }
 
