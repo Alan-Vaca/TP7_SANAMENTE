@@ -133,31 +133,40 @@ public class Filtros extends AppCompatActivity {
             listaProductosObtenido = consultaProductos.obtenerListadoProductosFiltrados(listaProductos,
                     filtroNombre, contiene, noContiene, ordenarPor, hipertenso, diabetico, celiaco);
 
+            Log.d("Filtros.Productos", String.valueOf(listaProductosObtenido));
+
             return listaProductosObtenido;
 
         }
 
         @Override
         protected void onPostExecute(ArrayList<Producto> listaProductosObtenido) {
-            listaFiltrada = listaProductosObtenido;
 
-            try {
-                SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                Gson gson = new Gson();
-                String listaComoJson = gson.toJson(listaFiltrada);
-                editor.putString("listadoProductosFiltrados", listaComoJson);
-                editor.apply();
+                listaFiltrada = listaProductosObtenido;
 
-            }
-            catch (Exception e) {
-                Log.d("Filtro.enviar", e.toString());
-            }
+                try {
+                    SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    Gson gson = new Gson();
+                    String listaComoJson = gson.toJson(listaFiltrada);
+                    editor.putString("listadoProductosFiltrados", listaComoJson);
+                    editor.apply();
 
-            ArrayAdapter<Producto> adapter = new ArrayAdapter<>(Filtros.this, android.R.layout.simple_spinner_dropdown_item, listaFiltrada);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            lvFiltros.setAdapter(adapter);
+                }
+                catch (Exception e) {
+                    Log.d("Filtro.enviar", e.toString());
+                }
 
+
+                Intent intent = new Intent(Filtros.this, Mis_Productos.class);
+                startActivity(intent);
+                finish();
+                /*
+                ArrayAdapter<Producto> adapter = new ArrayAdapter<>(Filtros.this, android.R.layout.simple_spinner_dropdown_item, listaFiltrada);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                lvFiltros.setAdapter(adapter);
+
+                 */
 
         }
 

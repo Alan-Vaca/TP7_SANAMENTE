@@ -4,7 +4,9 @@ package com.example.tp7_sanamente;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -42,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
         contraseña = (EditText)findViewById(R.id.ContraseñaLogin);
         usuario = (EditText)findViewById(R.id.UsuarioLogin);
+
+
+
+
+
 
         //En caso de haber tenido un error anteriormente
         new cerrarConexion().execute(true);
@@ -124,54 +131,7 @@ public class MainActivity extends AppCompatActivity {
         usuario.setNombreUsuario(user);
         usuario.setContraseña(pass);
 
-
-
-        //INICIO DEL BLOQUE PARA MOSTRAR UN MENSAJE DE CONFIRMACION PERSONALIZADO
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
-        builder.setView(dialogView);
-
-        final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
-        Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
-        Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
-
-        //SETEO EL MENSAJE QUE QUIERO PREGUNTAR
-        mensajeConfirm.setText("¿ESTAS SEGURO QUE TE QUIERES LOGUEAR? SOY UN MENSAJE DE PRUEBA LUEGO ELIMINAME");
-        //ABRO EL POPUP
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-        //QUE HAGO EN CASO DE CANCELAR
-        btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //EN ESTE CASO NO HAGO NADA
-                Toast.makeText(MainActivity.this, "ELEGISTE" + "\n" + "CANCELAR", Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
-        });
-
-        //QUE HAGO EN CASO DE CONFIRMAR
-        btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //EN ESTE CASO ME LOGUEO COMO EJEMPLO DE UNA ACCION
-                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("isAdmin", isAdmin);
-                editor.apply();
-                if(!isAdmin){
-                    new obtenerUsuarioXloginTask().execute(usuario);
-                }
-                else{
-
-                    Intent ingresarAdmin = new Intent(MainActivity.this, MenuAdmin.class);
-                    startActivity(ingresarAdmin);
-                }
-                dialog.dismiss();
-            }
-        });
-
+        new obtenerUsuarioXloginTask().execute(usuario);
 
     }
 

@@ -13,15 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 import Entidad.Usuario;
 
 public class MenuComercio extends AppCompatActivity {
 
     Usuario user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_comercio);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
@@ -38,7 +42,25 @@ public class MenuComercio extends AppCompatActivity {
 
 
     public void MenuGenerarReporte(View view) {
-        Toast.makeText(MenuComercio.this, "SE GENERO EL SIGUIENTE REPORTE:" + '\n' + "ITEM 1", Toast.LENGTH_LONG).show();
+
+        ArrayList<String> datosInforme = new ArrayList<>();
+
+        datosInforme.add("REPORTE MI COMERCIAL");
+        datosInforme.add("Detalles del informe:");
+        datosInforme.add(" - ITEM 1: Detalle de ITEM 1");
+
+
+        boolean exito = ExportarTxt.generarTxt(MenuComercio.this, datosInforme, "InformeComercio");
+
+
+        if (exito) {
+            Toast.makeText(MenuComercio.this, "PDF generado con éxito", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(MenuComercio.this, "Error al generar el PDF", Toast.LENGTH_LONG).show();
+        }
+
+
+       // Toast.makeText(MenuComercio.this, "SE GENERO EL SIGUIENTE REPORTE:" + '\n' + "ITEM 1", Toast.LENGTH_LONG).show();
     }
 
 
