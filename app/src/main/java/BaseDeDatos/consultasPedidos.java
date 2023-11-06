@@ -274,12 +274,12 @@ public class consultasPedidos {
 
     public ArrayList<Pedido> obtenerListadoPedidosFiltrado (
             ArrayList<Pedido> listadoPedido, String fechaDesde, String fechaHasta,
-            boolean confirmado, boolean cancelado, boolean pendiente, String orden){
+            boolean entregado, boolean cancelado, boolean pendiente, String orden){
 
         ArrayList<Pedido> listadoFiltrado = listadoPedido;
 
         listadoFiltrado = filtrarRangoFechas (listadoFiltrado, fechaDesde, fechaHasta);
-        listadoFiltrado = filtrarXEstado (listadoFiltrado, confirmado, cancelado, pendiente);
+        listadoFiltrado = filtrarXEstado (listadoFiltrado, entregado, cancelado, pendiente);
         ordenarListado(listadoFiltrado, orden);
 
 
@@ -334,20 +334,21 @@ public class consultasPedidos {
         return listaFiltrada;
     }
 
-    private ArrayList<Pedido> filtrarXEstado(ArrayList<Pedido> lista, boolean confirmado, boolean cancelado, boolean pendiente) {
+    private ArrayList<Pedido> filtrarXEstado(ArrayList<Pedido> lista, boolean entregado, boolean cancelado, boolean pendiente) {
         ArrayList<Pedido> listaFiltrada = new ArrayList<>();
 
-        if (!confirmado && !pendiente && !cancelado) {
+        if (!entregado && !pendiente && !cancelado) {
             return lista;
         }else {
 
             for (Pedido pedido : lista) {
                 if (
-                        (confirmado && pedido.getEstado() == 3) ||              //confirmado
+                        (entregado && pedido.getEstado() == 2) ||              //entregado
                                 (pendiente && pedido.getEstado() == 1) ||               //pendiente
                                 (cancelado && pedido.getEstado() == 4)                  //cancelado
                 ) {
                     listaFiltrada.add(pedido);
+                    Log.d("Filtro", pedido.getEstadoString());
                 }
             }
         }

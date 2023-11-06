@@ -148,7 +148,7 @@
 
     <!-- _________________  FILTROS PEDIDOS _________________ -->
     <string name="checkbox_cancelados">Cancelados</string>
-    <string name="checkbox_confirmados">Confirmados</string>
+    <string name="checkbox_entregados">Entregados</string>
     <string name="checkbox_pendientes">Pendientes</string>
     <string name="tv_enEspera">EN ESPERA</string>
     <string name="tv_fechaDesde">FECHA DESDE</string>

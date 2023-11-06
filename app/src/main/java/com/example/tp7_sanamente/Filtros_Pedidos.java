@@ -4,6 +4,7 @@
 
 package com.example.tp7_sanamente;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,7 +42,7 @@ import Entidad.Usuario;
 public class Filtros_Pedidos extends AppCompatActivity {
 
     EditText fechaDesde, horaDesde, fechaHasta, horaHasta;
-    CheckBox cbConfirmado, cbCancelado, cbPendiente;
+    CheckBox cbEntregado, cbCancelado, cbPendiente;
     RadioButton rbEnEspera, rbRecientes;
     Usuario user;
     ArrayList<Historial> listadoHistorialesFiltrado, listadoHistorialesObtenido, listadoHistorial;
@@ -49,10 +50,10 @@ public class Filtros_Pedidos extends AppCompatActivity {
     consultasHistoriales consultasHistoriales;
     consultasPedidos consultasPedidos;
 
-
     boolean isHistorial;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +63,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
         horaDesde = (EditText)findViewById(R.id.fp_et_horaDesde);
         fechaHasta = (EditText)findViewById(R.id.fp_et_fechaHasta);
         horaHasta = (EditText)findViewById(R.id.fp_et_horaHasta);
-        cbConfirmado = findViewById(R.id.fp_cb_confirmado);
+        cbEntregado = findViewById(R.id.fp_cb_entregado);
         cbCancelado = findViewById(R.id.fp_cb_cancelado);
         cbPendiente = findViewById(R.id.fp_cb_pendiente);
         rbEnEspera = findViewById(R.id.fp_rb_enEspera);
@@ -139,7 +140,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
 
         ///////////// VALIDACIONES FECHAS  //////////////////////
 
-        boolean confirmado = cbConfirmado.isChecked();
+        boolean entregado = cbEntregado.isChecked();
         boolean cancelado = cbCancelado.isChecked();
         boolean pendiente = cbPendiente.isChecked();
         String orden;
@@ -151,10 +152,10 @@ public class Filtros_Pedidos extends AppCompatActivity {
         if(isValid) { //
             if (isHistorial) {
                 new AplicarFiltrosHistorialTask().execute(fechaDesdeStr, fechaHastaStr, horaDesdeStr,
-                        horaHastaStr, confirmado, cancelado, pendiente, orden);
+                        horaHastaStr, entregado, cancelado, pendiente, orden);
             }
             else if (!isHistorial) {
-                new AplicarFiltrosPedidoTask().execute(fechaDesdeStr, fechaHastaStr, confirmado,
+                new AplicarFiltrosPedidoTask().execute(fechaDesdeStr, fechaHastaStr, entregado,
                         cancelado, pendiente, orden);
             }
         }else {
@@ -171,7 +172,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
             String fechaHasta = (String) params[1];
             String horaDesde = (String) params[2];
             String horaHasta = (String) params[3];
-            boolean confirmado = (boolean) params[4];
+            boolean entregado = (boolean) params[4];
             boolean cancelado = (boolean) params[5];
             boolean pendiente = (boolean) params[6];
             String orden = (String) params[7];
@@ -185,7 +186,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
 
 
             listadoHistorialesObtenido = consultasHistoriales.obtenerListadoHistorialesFiltrado(listadoHistorial, fechaDesde, fechaHasta,
-                    confirmado, cancelado, pendiente, orden);
+                    entregado, cancelado, pendiente, orden);
 
             return listadoHistorialesObtenido;
 
@@ -193,10 +194,6 @@ public class Filtros_Pedidos extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<Historial> historiales) {
-/*
-            Intent filtroHistorial = new Intent(Filtros_Pedidos.this, MiHistorial.class);
-            startActivity(filtroHistorial);
-            */
 
             listadoHistorialesFiltrado = listadoHistorialesObtenido;
 
@@ -229,7 +226,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
 
             String fechaDesde = (String) params[0];
             String fechaHasta = (String) params[1];
-            boolean confirmado = (boolean) params[2];
+            boolean entregado = (boolean) params[2];
             boolean cancelado = (boolean) params[3];
             boolean pendiente = (boolean) params[4];
             String orden = (String) params[5];
@@ -243,7 +240,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
 
 
             listadoPedidosObtenido = consultasPedidos.obtenerListadoPedidosFiltrado(listadoPedidos, fechaDesde, fechaHasta,
-                    confirmado, cancelado, pendiente, orden);
+                    entregado, cancelado, pendiente, orden);
 
             return listadoPedidosObtenido;
 

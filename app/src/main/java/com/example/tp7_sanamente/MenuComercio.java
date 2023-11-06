@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -65,7 +68,33 @@ public class MenuComercio extends AppCompatActivity {
     }
 
     public void MenuPrincipal(View view) {
-        Intent menuPrincipal = new Intent(this, MainActivity.class);
-        startActivity(menuPrincipal);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+        builder.setView(dialogView);
+
+        final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+        Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+        Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+        mensajeConfirm.setText("¿ESTAS SEGURO DE SALIR?");
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent menuPrincipal = new Intent(MenuComercio.this, MainActivity.class);
+                startActivity(menuPrincipal);
+                dialog.dismiss();
+            }
+        });
+
     }
 }

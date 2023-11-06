@@ -133,12 +133,12 @@ public class consultasHistoriales {
 
     public ArrayList<Historial> obtenerListadoHistorialesFiltrado (
             ArrayList<Historial> listadoHistorial, String fechaDesde, String fechaHasta,
-            boolean confirmado, boolean cancelado, boolean pendiente, String orden){
+            boolean entregado, boolean cancelado, boolean pendiente, String orden){
 
         ArrayList<Historial> listadoFiltrado = listadoHistorial;
 
         listadoFiltrado = filtrarRangoFechas (listadoFiltrado, fechaDesde, fechaHasta);
-        listadoFiltrado = filtrarXEstado (listadoFiltrado, confirmado, cancelado, pendiente);
+        listadoFiltrado = filtrarXEstado (listadoFiltrado, entregado, cancelado, pendiente);
         ordenarListado(listadoFiltrado, orden);
 
 
@@ -193,19 +193,20 @@ public class consultasHistoriales {
         return listaFiltrada;
     }
 
-    private ArrayList<Historial> filtrarXEstado(ArrayList<Historial> lista, boolean confirmado, boolean cancelado, boolean pendiente) {
+    private ArrayList<Historial> filtrarXEstado(ArrayList<Historial> lista, boolean entregado, boolean cancelado, boolean pendiente) {
         ArrayList<Historial> listaFiltrada = new ArrayList<>();
 
-        if (!confirmado && !pendiente && !cancelado) {
+        if (!entregado && !pendiente && !cancelado) {
             return lista;
         }else {
 
             for (Historial historial : lista) {
                 if (
-                        (confirmado && historial.getEstado() == 3) ||              //confirmado
+                        (entregado && historial.getEstado() == 2) ||              //entregado
                                 (pendiente && historial.getEstado() == 1) ||               //pendiente
                                 (cancelado && historial.getEstado() == 4)                  //cancelado
                 ) {
+                    Log.d("Filtro", historial.getEstadoString());
                     listaFiltrada.add(historial);
                 }
             }

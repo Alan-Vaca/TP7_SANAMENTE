@@ -5,9 +5,12 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -22,19 +25,20 @@ public class Mi_Comercio extends AppCompatActivity {
     Comercio comercio;
     Usuario user;
     TextView nombreComercio, direccionComercio, horarioApertura, horarioCierre, nombreUsuario, contraseñaActual, contraseñaNueva1, contraseñaNueva2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mi_comercio);
 
-        nombreComercio = (TextView)findViewById(R.id.mod_c_comercio);
-        direccionComercio = (TextView)findViewById(R.id.mod_c_direccion);
-        horarioApertura = (TextView)findViewById(R.id.mod_c_apertura);
-        horarioCierre = (TextView)findViewById(R.id.mod_c_cierre);
-        nombreUsuario = (TextView)findViewById(R.id.mod_c_usuario);
-        contraseñaActual = (TextView)findViewById(R.id.mod_c_actual);
-        contraseñaNueva1 = (TextView)findViewById(R.id.mod_c_pass);
-        contraseñaNueva2 = (TextView)findViewById(R.id.mod_c_repetir);
+        nombreComercio = (TextView) findViewById(R.id.mod_c_comercio);
+        direccionComercio = (TextView) findViewById(R.id.mod_c_direccion);
+        horarioApertura = (TextView) findViewById(R.id.mod_c_apertura);
+        horarioCierre = (TextView) findViewById(R.id.mod_c_cierre);
+        nombreUsuario = (TextView) findViewById(R.id.mod_c_usuario);
+        contraseñaActual = (TextView) findViewById(R.id.mod_c_actual);
+        contraseñaNueva1 = (TextView) findViewById(R.id.mod_c_pass);
+        contraseñaNueva2 = (TextView) findViewById(R.id.mod_c_repetir);
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -45,7 +49,7 @@ public class Mi_Comercio extends AppCompatActivity {
 
         if (!usuarioJson.isEmpty()) {
             Gson gson = new Gson();
-            try{
+            try {
                 user = gson.fromJson(usuarioJson, Usuario.class);
                 direccionComercio.setText(user.getDireccion());
                 nombreUsuario.setText(user.getNombreUsuario());
@@ -56,7 +60,7 @@ public class Mi_Comercio extends AppCompatActivity {
                 e.printStackTrace();
                 Toast.makeText(Mi_Comercio.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG).show();
             }
-        }else{
+        } else {
             Toast.makeText(Mi_Comercio.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }
     }
@@ -94,37 +98,52 @@ public class Mi_Comercio extends AppCompatActivity {
         String ContraseñaNueva1 = contraseñaNueva1.getText().toString();
         String ContraseñaNueva2 = contraseñaNueva2.getText().toString();
 
-        //IF -- LAS CONTRASEÑA ACTUAL DEBE SER IGUAL A LA DE comercio.user.getContraseña
-        if(ContraseñaActual.equals(comercio.getUsuarioAsociado().getContraseña()) ){
+        //IF -- LA CONTRASEÑA ACTUAL DEBE SER IGUAL A LA DE comercio.user.getContraseña
+        if (ContraseñaActual.equals(comercio.getUsuarioAsociado().getContraseña())) {
 
-            //SI ES VALIDO EL CONDICIONAL ANTERIOR LA NUEVA 1 Y NUEVA 2 DEBEN SER IGUALES
-            if(ContraseñaNueva1.equals(ContraseñaNueva2)){
-                comercio.setNombreComercio(NombreComercio);
-                comercio.setHorarios(HorarioApertura + "-:-" + HorarioCierre);
+            //INICIO DEL BLOQUE PARA MOSTRAR UN MENSAJE DE CONFIRMACIÓN PERSONALIZADO
+            AlertDialog.Builder builder = new AlertDialog.Builder(Mi_Comercio.this);
+            View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+            builder.setView(dialogView);
 
-                comercio.getUsuarioAsociado().setNombreUsuario(NombreUsuario);
-                comercio.getUsuarioAsociado().setDireccion(DireccionComercio);
-                comercio.getUsuarioAsociado().setContraseña(ContraseñaNueva1);
+            final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+            Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+            Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
 
-                //SI CUMPLE CON TODAS LAS CONDICIONES PROSIGUE
-                if(validarComercio(comercio)) {
+
+            mensajeConfirm.setText("¿ESTÁS SEGURO QUE QUIERES MODIFICAR EL COMERCIO?");
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+
+            btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(Mi_Comercio.this, "ELEGISTE" + "\n" + "CANCELAR", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
+
+                }
+            });
+
+            btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    comercio.setNombreComercio(NombreComercio);
+                    comercio.setHorarios(HorarioApertura + "-:-" + HorarioCierre);
+                    comercio.getUsuarioAsociado().setNombreUsuario(NombreUsuario);
+                    comercio.getUsuarioAsociado().setDireccion(DireccionComercio);
+                    comercio.getUsuarioAsociado().setContraseña(ContraseñaNueva1);
+
+                    if (validarComercio(comercio)) {
                     new Mi_Comercio.modificarComercio().execute(comercio);
                     MenuMiUsuarioComercio(view);
                     Toast.makeText(Mi_Comercio.this, "Exito", Toast.LENGTH_LONG).show();
+                    }
+                    dialog.dismiss();
                 }
-            }
-            else{
-                Toast.makeText(Mi_Comercio.this, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show();
-            }
-        }
-        else{
+            });
+        } else {
             contraseñaActual.setError("La contraseña actual es incorrecta");
         }
-
-
-
-
-
 
     }
 

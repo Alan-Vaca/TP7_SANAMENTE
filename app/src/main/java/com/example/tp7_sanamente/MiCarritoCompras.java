@@ -88,36 +88,89 @@ public class MiCarritoCompras extends AppCompatActivity {
     }
     public void MiCarritoDeComprasCancelar(View view) {
         if (misProductosPedido != null && !misProductosPedido.isEmpty()) {
-            misProductosPedido.clear();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+            builder.setView(dialogView);
+
+            final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+            Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+            Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+            mensajeConfirm.setText("¿QUIERES ELIMINAR EL CARRITO?");
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+
+            btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    misProductosPedido.clear();
+                    SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    Gson gson = new Gson();
+                    String listaComoJson = gson.toJson(misProductosPedido);
+                    editor.putString("listadoCarrito", listaComoJson);
+                    editor.apply();
+
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                    dialog.dismiss();
+                }
+            });
+
+
         }
 
-        SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        Gson gson = new Gson();
-        String listaComoJson = gson.toJson(misProductosPedido);
-        editor.putString("listadoCarrito", listaComoJson);
-        editor.apply();
-
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
     }
 
     public void MiCarritoDeComprasEliminarItem(View view) {
         if (itemSeleccionado != null) {
-            misProductosPedido.remove(itemSeleccionado);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+            builder.setView(dialogView);
 
-            SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            Gson gson = new Gson();
-            String listaComoJson = gson.toJson(misProductosPedido);
-            editor.putString("listadoCarrito", listaComoJson);
-            editor.apply();
+            final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+            Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+            Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
 
-            /* refresca la página */
-            Intent intent = getIntent();
-            finish();
-            startActivity(intent);
+            mensajeConfirm.setText("¿ESTAS SEGURO DE ELIMINAR EL PRODUCTO?");
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+
+            btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    misProductosPedido.remove(itemSeleccionado);
+
+                    SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    Gson gson = new Gson();
+                    String listaComoJson = gson.toJson(misProductosPedido);
+                    editor.putString("listadoCarrito", listaComoJson);
+                    editor.apply();
+
+                    /* refresca la página */
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                    dialog.dismiss();
+                }
+            });
+
         } else {
             Toast.makeText(this, "DEBES SELECCIONAR UN PRODUCTO DE TU CARRITO", Toast.LENGTH_LONG).show();
         }

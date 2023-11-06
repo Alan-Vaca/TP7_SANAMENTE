@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -89,7 +92,33 @@ public class Metodo_De_Pago extends AppCompatActivity {
             }
             pedidoGeneral.setMonto(monto);
 
-            new Metodo_De_Pago.agregarPedido().execute(pedidoGeneral);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+            builder.setView(dialogView);
+
+            final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+            Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+            Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+            mensajeConfirm.setText("¿CONFIRMA COMPRA?");
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+
+            btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Metodo_De_Pago.agregarPedido().execute(pedidoGeneral);
+                    dialog.dismiss();
+                }
+            });
+
         }
     }
 
@@ -167,7 +196,33 @@ public class Metodo_De_Pago extends AppCompatActivity {
     }
 
     public void MetodoDePagoCancelarCompra(View view) {
-        Intent metodoDePagoCancelarCompra = new Intent(this, MiCarritoCompras.class);
-        startActivity(metodoDePagoCancelarCompra);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+        builder.setView(dialogView);
+
+        final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+        Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+        Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+        mensajeConfirm.setText("¿SALIR DE COMPRA?");
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent metodoDePagoCancelarCompra = new Intent(Metodo_De_Pago.this, MiCarritoCompras.class);
+                startActivity(metodoDePagoCancelarCompra);
+                dialog.dismiss();
+            }
+        });
+
     }
 }

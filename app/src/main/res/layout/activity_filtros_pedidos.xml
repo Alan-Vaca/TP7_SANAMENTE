@@ -92,11 +92,11 @@
         app:layout_constraintTop_toBottomOf="@+id/fp_et_filtroNombre" />
 
     <CheckBox
-        android:id="@+id/fp_cb_confirmado"
+        android:id="@+id/fp_cb_entregado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/checkbox_confirmados"
+        android:text="@string/checkbox_entregados"
         app:layout_constraintEnd_toStartOf="@+id/fp_cb_cancelado"
         app:layout_constraintHorizontal_bias="0.805"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,7 +133,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.087"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fp_cb_confirmado" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_cb_entregado" />
 
     <TextView
         android:id="@+id/fp_tv_fechaHasta"
