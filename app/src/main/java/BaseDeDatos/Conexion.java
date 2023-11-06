@@ -314,6 +314,16 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return exito;
     }
 
+    public Boolean ExisteProducto(String nombreProducto, Comercio comercio) {
+        try {
+            Connection con = getConnection();
+            return consultasProductos.ExisteProducto(con, nombreProducto, comercio);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return false;
+    }
+
     public boolean modificarProducto(Producto producto, int idEtiquetado1, int idEtiquetado2, int idEtiquetado3) {
         Boolean exito = false;
         try {

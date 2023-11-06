@@ -34,6 +34,10 @@ public class AgregarProducto extends AppCompatActivity {
     Usuario user;
     Comercio comercio;
 
+    Producto producto;
+
+    boolean Existe;
+
     int idEtiquetado1,idEtiquetado2,idEtiquetado3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,10 @@ public class AgregarProducto extends AppCompatActivity {
         idEtiquetado1 = 0;
         idEtiquetado2 = 0;
         idEtiquetado3 = 0;
+
+        Existe = false;
+
+        producto = new Producto();
 
         listaEtiquetados = new ArrayList<Etiquetado>();
 
@@ -119,64 +127,31 @@ public class AgregarProducto extends AppCompatActivity {
     }
 
     public void AgregarProductoAgregar(View view) {
+        // Código para manejar la lógica de agregar producto...
+        producto = new Producto();
+        producto.setNombre(nombreProducto.getText().toString());
+        producto.setIngredientes(ingredientes.getText().toString());
+        producto.setStock(Integer.parseInt(inventario.getText().toString()));
+        producto.setPrecio(Float.parseFloat(precio.getText().toString()));
 
-        //if(confirmar("DESEA AGREGAR UN NUEVO PRODUCTO?")) {
+        idEtiquetado1 = etiquetado1.getSelectedItemPosition();
+        idEtiquetado2 = etiquetado2.getSelectedItemPosition();
+        idEtiquetado3 = etiquetado3.getSelectedItemPosition();
 
-            Producto producto = new Producto();
+        if (producto.getNombre().isEmpty()) {
+            Toast.makeText(AgregarProducto.this, "Por favor, ingrese el nombre del producto.", Toast.LENGTH_LONG).show();
+        } else {
+            new ExisteProducto().execute(producto.getNombre());
+        }
 
-            producto.setNombre(nombreProducto.getText().toString());
-            producto.setIngredientes(ingredientes.getText().toString());
-            producto.setStock(Integer.parseInt(inventario.getText().toString()));
-            producto.setPrecio(Float.parseFloat(precio.getText().toString()));
-
-            idEtiquetado1 = etiquetado1.getSelectedItemPosition();
-            idEtiquetado2 = etiquetado2.getSelectedItemPosition();
-            idEtiquetado3 = etiquetado3.getSelectedItemPosition();
-
-            if (validarProducto(producto, idEtiquetado1, idEtiquetado2, idEtiquetado3)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
-                builder.setView(dialogView);
-
-                final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
-                Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
-                Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
-
-                mensajeConfirm.setText("¿ESTAS SEGURO DE AGREGAR EL ARTICULO?");
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-
-                btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        new AgregarProducto.agregarProducto().execute(producto);
-                        dialog.dismiss();
-                    }
-                });
-            }
-        //}
     }
 
     public boolean validarProducto(Producto producto, int id1, int id2, int id3){
         boolean isValid = true;
-        String productNameTxt = nombreProducto.getText().toString();
         String ingredientsTxt = ingredientes.getText().toString();
         int price = 0;
         int stock = 0;
 
-
-        // Validar nombre de producto
-        if (productNameTxt.isEmpty()) {
-            isValid = false;
-            Toast.makeText(AgregarProducto.this, "Por favor, ingrese el nombre del producto.", Toast.LENGTH_LONG).show();
-        }
 
         // Validar que contenga al menos un ingrediente
         if (ingredientsTxt.isEmpty()) {
@@ -238,13 +213,62 @@ public class AgregarProducto extends AppCompatActivity {
     }
 
 
-    private class agregarProducto extends AsyncTask<Producto, Void, Boolean> {
+    private class ExisteProducto extends AsyncTask<String, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(String... nombreProducto) {
+            Conexion con = new Conexion();
+            try {
+                return con.ExisteProducto(nombreProducto[0], comercio);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean existe) {
+            if (existe) {
+                Toast.makeText(AgregarProducto.this, "EL PRODUCTO YA EXISTE, POR FAVOR ELIJA OTRO NOMBRE.", Toast.LENGTH_LONG).show();
+            } else {
+                if (validarProducto(producto, idEtiquetado1, idEtiquetado2, idEtiquetado3)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AgregarProducto.this);
+                    View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+                    builder.setView(dialogView);
+
+                    final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+                    Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+                    Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+                    mensajeConfirm.setText("¿ESTÁS SEGURO DE AGREGAR EL ARTÍCULO?");
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                    btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new AgregarProducto.AgregarProductoTask().execute(producto);
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    private class AgregarProductoTask extends AsyncTask<Producto, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Producto... producto) {
             Conexion con = new Conexion();
             boolean exito = false;
             try {
-                exito = con.altaProducto(producto[0],comercio,idEtiquetado1,idEtiquetado2,idEtiquetado3);
+                exito = con.altaProducto(producto[0], comercio, idEtiquetado1, idEtiquetado2, idEtiquetado3);
             } catch (Exception e) {
                 e.printStackTrace();
                 return exito;
@@ -277,23 +301,4 @@ public class AgregarProducto extends AppCompatActivity {
     }
 
 
-    public Boolean confirmar(String mensaje){
-        final boolean[] resultado = {false}; // Utilizamos un array para poder modificar el valor desde el diálogo
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(mensaje)
-                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        resultado[0] = true;
-                    }
-                })
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        resultado[0] = false;
-                    }
-                });
-        builder.create().show();
-
-        return resultado[0];
-    }
 }
