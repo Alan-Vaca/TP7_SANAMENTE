@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +35,7 @@ public class Metodo_De_Pago extends AppCompatActivity {
     EditText numeroTarjeta, nombreTarjeta, fecha, codSeguridad;
     Spinner tipoPago;
     Usuario user;
-    String[] mediosPago = {"Seleccione", "Tarjeta de debito", "Tarjeta de credito"};
+    String[] mediosPago = {"Seleccione", "Efectivo", "Tarjeta de debito", "Tarjeta de credito"};
 
     ArrayList<pedidoXproducto> misProductosPedido;
 
@@ -71,6 +72,35 @@ public class Metodo_De_Pago extends AppCompatActivity {
         }else{
             Toast.makeText(Metodo_De_Pago.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }
+
+        tipoPago.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+               int posicionTipoPago = tipoPago.getSelectedItemPosition();
+
+               if(posicionTipoPago <= 1){
+                   numeroTarjeta.setEnabled(false);
+                   numeroTarjeta.setText("");
+                   nombreTarjeta.setEnabled(false);
+                   nombreTarjeta.setText("");
+                   fecha.setEnabled(false);
+                   fecha.setText("");
+                   codSeguridad.setEnabled(false);
+                   codSeguridad.setText("");
+               }
+               else{
+                   numeroTarjeta.setEnabled(true);
+                   nombreTarjeta.setEnabled(true);
+                   fecha.setEnabled(true);
+                   codSeguridad.setEnabled(true);
+               }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // No hagas nada aquí si no deseas realizar alguna acción cuando no se selecciona ningún elemento
+            }
+        });
     }
 
 
@@ -153,44 +183,53 @@ public class Metodo_De_Pago extends AppCompatActivity {
     public Boolean validarMetodoPago(){
         boolean isValid = true;
 
-        if(numeroTarjeta.getText().toString().length() != 16) {
-            numeroTarjeta.setError("El número de tarjeta debe contener 16 dígitos");
+        if(tipoPago.getSelectedItemPosition() == 0){
+            Toast.makeText(Metodo_De_Pago.this, "SELECCIONE UN TIPO DE PAGO", Toast.LENGTH_LONG).show();
             isValid = false;
-        } else {
-            numeroTarjeta.setError(null);
         }
-        if(nombreTarjeta.getText().toString().length() > 24) {
-            nombreTarjeta.setError("El nombre de tarjeta no puede exceder los 24 caracteres");
-            isValid = false;
-        } else {
-            nombreTarjeta.setError(null);
-        }
-        String[] fechaArray = fecha.getText().toString().split("/");
-        if(fechaArray.length != 2) {
-            fecha.setError("El formato de fecha debe ser mm/aa");
-            isValid = false;
-        } else {
-            int mes = Integer.parseInt(fechaArray[0]);
-            int ano = Integer.parseInt(fechaArray[1]);
-            if(mes < 1 || mes > 12 || ano < 21) {
-                fecha.setError("Fecha de expiración inválida");
+
+        if(tipoPago.getSelectedItemPosition() > 1 ){
+            if(numeroTarjeta.getText().toString().length() != 16) {
+                numeroTarjeta.setError("El número de tarjeta debe contener 16 dígitos");
                 isValid = false;
             } else {
-                fecha.setError(null);
+                numeroTarjeta.setError(null);
             }
+            if(nombreTarjeta.getText().toString().length() > 24 || nombreTarjeta.getText().toString().length() <= 0) {
+                nombreTarjeta.setError("El nombre de tarjeta no puede exceder los 24 caracteres o nombre de tarjeta vacio");
+                isValid = false;
+            } else {
+                nombreTarjeta.setError(null);
+            }
+            String[] fechaArray = fecha.getText().toString().split("/");
+            if(fechaArray.length != 2) {
+                fecha.setError("El formato de fecha debe ser mm/aa");
+                isValid = false;
+            } else {
+                int mes = Integer.parseInt(fechaArray[0]);
+                int ano = Integer.parseInt(fechaArray[1]);
+                if(mes < 1 || mes > 12 || ano < 21) {
+                    fecha.setError("Fecha de expiración inválida");
+                    isValid = false;
+                } else {
+                    fecha.setError(null);
+                }
+            }
+
+            if(codSeguridad.getText().toString().length() != 3) {
+                codSeguridad.setError("El código de seguridad debe contener 3 dígitos");
+                isValid = false;
+            } else {
+                codSeguridad.setError(null);
+            }
+
+            //if(isValid) {
+            //    Intent metodoDePagoFinalizarCompra = new Intent(this, MiHistorial.class);
+            //    startActivity(metodoDePagoFinalizarCompra);
+            //}
         }
 
-        if(codSeguridad.getText().toString().length() != 3) {
-            codSeguridad.setError("El código de seguridad debe contener 3 dígitos");
-            isValid = false;
-        } else {
-            codSeguridad.setError(null);
-        }
 
-        //if(isValid) {
-        //    Intent metodoDePagoFinalizarCompra = new Intent(this, MiHistorial.class);
-        //    startActivity(metodoDePagoFinalizarCompra);
-        //}
 
         return isValid;
     }

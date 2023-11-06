@@ -2,8 +2,10 @@ package com.example.tp7_sanamente;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,11 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import BaseDeDatos.Conexion;
+import Entidad.Producto;
 import Entidad.Usuario;
 
 public class MiUsuario extends AppCompatActivity {
 
     TextView usuario,nombre,apellido,dni;
+    Button MiUsuarioDarDeBaja;
+    Usuario user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +32,13 @@ public class MiUsuario extends AppCompatActivity {
         nombre = findViewById(R.id.miNombre);
         apellido = findViewById(R.id.fc_tv_noContiene);
         dni = findViewById(R.id.miDni);
+        //MiUsuarioDarDeBaja = (Button)findViewById(R.id.Mi);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
 
-        Usuario user = new Usuario();
+         user = new Usuario();
 
         if (!usuarioJson.isEmpty()) {
             Gson gson = new Gson();
@@ -67,6 +75,42 @@ public class MiUsuario extends AppCompatActivity {
             // El usuario no es un administrador, realiza las acciones correspondientes
             Intent menuCliente = new Intent(this, Menu_Cliente.class);
             startActivity(menuCliente);
+        }
+    }
+
+    public void DarDeBaja(View view){
+        if(user.getNombreUsuario().equals("admin") && (user.getContraseña().equals("123") || user.getContraseña().equals("321"))){
+            Toast.makeText(MiUsuario.this, "NO ES POSIBLE DAR DE BAJA UN USUARIO ADMIN", Toast.LENGTH_LONG).show();
+
+        }
+        else{
+            new MiUsuario.BajaUsuario().execute(user);
+        }
+    }
+
+    private class BajaUsuario extends AsyncTask<Usuario, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Usuario... usuario) {
+            Conexion con = new Conexion();
+            boolean exito = false;
+            try {
+                exito = con.BajaUsuario(usuario[0]);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return exito;
+            }
+            return exito;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            if (bool) {
+                Toast.makeText(MiUsuario.this, "USUARIO DADO DE BAJA CON EXITO", Toast.LENGTH_LONG).show();
+                Intent volverAlLogin = new Intent(MiUsuario.this, MainActivity.class);
+                startActivity(volverAlLogin);
+            } else {
+                Toast.makeText(MiUsuario.this, "ERROR AL DAR DE BAJA", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

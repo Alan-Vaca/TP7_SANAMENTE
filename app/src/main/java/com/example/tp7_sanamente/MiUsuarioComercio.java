@@ -112,4 +112,40 @@ public class MiUsuarioComercio extends AppCompatActivity {
         }
     }
 
+    public void DarDeBaja(View view){
+        if(user.getNombreUsuario().equals("admin") && (user.getContraseña().equals("123") || user.getContraseña().equals("321"))){
+            Toast.makeText(MiUsuarioComercio.this, "NO ES POSIBLE DAR DE BAJA UN USUARIO ADMIN", Toast.LENGTH_LONG).show();
+
+        }
+        else{
+            new MiUsuarioComercio.BajaUsuarioComercio().execute(user);
+        }
+    }
+
+    private class BajaUsuarioComercio extends AsyncTask<Usuario, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Usuario... usuario) {
+            Conexion con = new Conexion();
+            boolean exito = false;
+            try {
+                exito = con.BajaUsuario(usuario[0]);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return exito;
+            }
+            return exito;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            if (bool) {
+                Toast.makeText(MiUsuarioComercio.this, "COMERCIO DADO DE BAJA CON EXITO", Toast.LENGTH_LONG).show();
+                Intent volverAlLogin = new Intent(MiUsuarioComercio.this, MainActivity.class);
+                startActivity(volverAlLogin);
+            } else {
+                Toast.makeText(MiUsuarioComercio.this, "ERROR AL DAR DE BAJA", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 }

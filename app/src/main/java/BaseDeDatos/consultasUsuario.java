@@ -12,6 +12,7 @@ import java.util.Calendar;
 
 import Entidad.Cliente;
 import Entidad.Comercio;
+import Entidad.Pedido;
 import Entidad.Restriccion;
 import Entidad.Usuario;
 
@@ -25,7 +26,8 @@ public class consultasUsuario {
         try {
             String query = "SELECT idUsuario,apellido,contraseña,direccion,dni,estado,nombre,nombreUsuario,"
             + "esCliente"
-            + " from usuarios u where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'";
+            + " from usuarios u where contraseña = '" + user.getContraseña() + "' and nombreUsuario = '" + user.getNombreUsuario() + "'"
+            + " and estado = 1";
 
             if (conn != null) {
                 try {
@@ -55,6 +57,39 @@ public class consultasUsuario {
         }
 
         return user;
+    }
+
+    public boolean ExisteUsuario(Connection conn, String nombreUsuario) {
+        boolean existe = false;
+        String query = "SELECT COUNT(idUsuario) as cantidadUsuarios FROM usuarios WHERE nombreUsuario = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nombreUsuario);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int cantidadUsuarios = rs.getInt("cantidadUsuarios");
+                if (cantidadUsuarios > 0) {
+                    existe = true;
+                }
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Aquí puedes manejar la excepción de manera adecuada, como lanzar una excepción personalizada o registrar el error
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return existe;
     }
 
     //--------------------------------------------------------------------------------------
@@ -321,4 +356,40 @@ public class consultasUsuario {
 
         return comercio;
     }
+
+    public Boolean BajaUsuario(Connection conn, Usuario usuario) throws SQLException {
+        Boolean exito = false;
+        PreparedStatement pstmt = null;
+
+        try {
+            if (conn != null) {
+
+                String updateQuery = "UPDATE usuarios SET " +
+                        "estado = 0 " +
+                        "WHERE idUsuario = ?";
+
+                pstmt = conn.prepareStatement(updateQuery);
+                pstmt.setInt(1, usuario.getIdUsuario());
+
+                pstmt.executeUpdate();
+
+
+                exito = true;
+            }
+        } catch (SQLException e) {
+            exito = false;
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
+
+        if (pstmt != null) {
+            pstmt.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+        return exito;
+    }
+
+
 }

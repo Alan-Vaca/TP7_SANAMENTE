@@ -210,7 +210,7 @@ public class ModificarProducto extends AppCompatActivity {
                 }
 
             } else {
-                Toast.makeText(ModificarProducto.this, "HUBO UN ERROR AL CONSULTAR LOS ETIQUETADOS", Toast.LENGTH_LONG).show();
+                //Toast.makeText(ModificarProducto.this, "HUBO UN ERROR AL CONSULTAR LOS ETIQUETADOS", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -318,6 +318,11 @@ public class ModificarProducto extends AppCompatActivity {
                     pedidoXproducto ProductoCarrito = new pedidoXproducto();
                     ProductoCarrito.setProducto(productoSeleccionado);
                     ProductoCarrito.setCantidad(cantidadSolicitada);
+
+                    if(ProductoCarrito.getCantidad() > productoSeleccionado.getStock()){
+                        Toast.makeText(ModificarProducto.this, "LA CANTIDAD EXCEDE EL STOCK", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     if (listaCargada) {
                         int index = -1;
