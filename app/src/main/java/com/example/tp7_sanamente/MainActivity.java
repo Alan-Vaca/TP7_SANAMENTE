@@ -4,7 +4,9 @@ package com.example.tp7_sanamente;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
         contraseña = (EditText)findViewById(R.id.ContraseñaLogin);
         usuario = (EditText)findViewById(R.id.UsuarioLogin);
 
+
+
+
+
+
         //En caso de haber tenido un error anteriormente
         new cerrarConexion().execute(true);
     }
@@ -66,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         usuario.setContraseña(pass);
 
 
-
+/*
         //INICIO DEL BLOQUE PARA MOSTRAR UN MENSAJE DE CONFIRMACION PERSONALIZADO
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
@@ -102,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+*/
 
-
-        //new obtenerUsuarioXloginTask().execute(usuario);
+        new obtenerUsuarioXloginTask().execute(usuario);
 
     }
 
