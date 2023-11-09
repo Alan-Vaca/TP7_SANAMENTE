@@ -289,5 +289,39 @@ public class consultasProductos {
     }
 
 
+    public Boolean ExisteProducto(Connection conn, String nombreProducto, Comercio comercio) {
+        boolean existe = false;
+        String query = "SELECT COUNT(idProducto) as cantidadProductos FROM productos WHERE nombreProducto = ?";
+        query += " AND idComercio = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nombreProducto);
+            stmt.setInt(2, comercio.getIdComercio());
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int cantidadProductos = rs.getInt("cantidadProductos");
+                if (cantidadProductos > 0) {
+                    existe = true;
+                }
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Aquí puedes manejar la excepción de manera adecuada, como lanzar una excepción personalizada o registrar el error
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return existe;
+    }
 }
 
