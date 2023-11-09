@@ -1,9 +1,15 @@
 package com.example.tp7_sanamente;
 
+import static BaseDeDatos.consultasReportes.reporteSemanal;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,16 +21,27 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import BaseDeDatos.Conexion;
+import BaseDeDatos.consultasReportes;
+import Entidad.Comercio;
+import Entidad.Pedido;
+import Entidad.Reporte;
 import Entidad.Usuario;
+import Entidad.pedidoXproducto;
 
 public class MenuComercio extends AppCompatActivity {
 
     Usuario user;
+    Reporte reporte;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_comercio);
+
+
+
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -38,26 +55,77 @@ public class MenuComercio extends AppCompatActivity {
         }else{
             Toast.makeText(MenuComercio.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }
+
+
+        //new MenuComercio.obtenerinforme().execute(user);
     }
+
+
+    private class obtenerinforme extends AsyncTask<Usuario, Void, Reporte> {
+        @Override
+        protected Reporte doInBackground(Usuario... usuario) {
+            reporte = new Reporte();
+            consultasReportes consulta = new consultasReportes();
+
+            try {
+                reporte = consulta.reporteSemanal(user.getIdUsuario());
+                return reporte;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return reporte;
+            }
+        }
+        @Override
+        protected void onPostExecute(Reporte informe) {
+            reporte = informe;
+            Toast.makeText(MenuComercio.this, "Generando Reporte", Toast.LENGTH_LONG).show();
+
+            ArrayList<String> datosInforme = new ArrayList<>();
+
+            datosInforme.add("REPORTE SANAMENTE");
+            datosInforme.add("Detalle del Informe");
+            datosInforme.add("-----------------------");
+            datosInforme.add("-----------------------");
+
+
+
+            datosInforme.add("Ventas Totales: ");
+            datosInforme.add("Facturación total: $ " + reporte.getMontoTotal());
+
+            datosInforme.add("Producto mas vendido: " + reporte.getnombreProducto());
+            datosInforme.add("Cantidad de ventas: " + reporte.getCantidadProducto());
+
+            datosInforme.add("Cliente mas frecuente: " + reporte.getUsuario().getNombre() +
+                    " " + reporte.getUsuario().getApellido() +
+                    ", " + reporte.getUsuario().getDireccion());
+            datosInforme.add("Cantidad de pedidos: " + reporte.getCantidadUsuario());
+
+            datosInforme.add("Medio de pago mas usado: " + reporte.getDescripcionPago());
+
+
+            boolean exito = ExportarPdf.exportarAPdf(MenuComercio.this, datosInforme, "InformeComercio");
+
+
+            if (exito) {
+                Toast.makeText(MenuComercio.this, "PDF generado con éxito", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(MenuComercio.this, "Error al generar el PDF", Toast.LENGTH_LONG).show();
+            }
+
+
+
+
+
+        }
+
+    }
+
 
 
     public void MenuGenerarReporte(View view) {
 
-        ArrayList<String> datosInforme = new ArrayList<>();
+        new MenuComercio.obtenerinforme().execute(user);
 
-        datosInforme.add("REPORTE MI COMERCIAL");
-        datosInforme.add("Detalles del informe:");
-        datosInforme.add(" - ITEM 1: Detalle de ITEM 1");
-
-
-        boolean exito = ExportarTxt.generarTxt(MenuComercio.this, datosInforme, "InformeComercio");
-
-
-        if (exito) {
-            Toast.makeText(MenuComercio.this, "PDF generado con éxito", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(MenuComercio.this, "Error al generar el PDF", Toast.LENGTH_LONG).show();
-        }
 
 
        // Toast.makeText(MenuComercio.this, "SE GENERO EL SIGUIENTE REPORTE:" + '\n' + "ITEM 1", Toast.LENGTH_LONG).show();

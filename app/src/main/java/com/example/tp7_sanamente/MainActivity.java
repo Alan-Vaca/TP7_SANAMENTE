@@ -1,22 +1,34 @@
 
 package com.example.tp7_sanamente;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     boolean isAdmin;
     EditText contraseña;
     EditText usuario;
+    private int REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +55,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         isAdmin = false;
 
-        contraseña = (EditText)findViewById(R.id.ContraseñaLogin);
-        usuario = (EditText)findViewById(R.id.UsuarioLogin);
-
-
-
-
+        contraseña = (EditText) findViewById(R.id.ContraseñaLogin);
+        usuario = (EditText) findViewById(R.id.UsuarioLogin);
 
 
         //En caso de haber tenido un error anteriormente
@@ -100,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 finish(); // Cierra la actividad actual
             }
         });
+
     }
 
     private void validarUsuarioYContraseña() {
@@ -114,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void Registrarse(View view){
+    public void Registrarse(View view) {
         Intent registrarse = new Intent(this, Registrar_Usuario.class);
         startActivity(registrarse);
     }
@@ -135,16 +145,14 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isAdmin", isAdmin);
         editor.apply();
-        if(!isAdmin){
+        if (!isAdmin) {
             new obtenerUsuarioXloginTask().execute(usuario);
-        }
-        else{
+        } else {
             Intent ingresarAdmin = new Intent(MainActivity.this, MenuAdmin.class);
             startActivity(ingresarAdmin);
         }
 
     }
-
 
 
     private class cerrarConexion extends AsyncTask<Boolean, Void, Boolean> {

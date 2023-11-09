@@ -17,6 +17,7 @@ import Entidad.Historial;
 import Entidad.Notificacion;
 import Entidad.Pedido;
 import Entidad.Producto;
+import Entidad.Reporte;
 import Entidad.Restriccion;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
@@ -489,6 +490,65 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return listaPedido;
     }
+
+
+    public Reporte obtenerVentasTotales(int id) {
+        Reporte reporte = new Reporte();
+        try {
+            Connection con = getConnection();
+            reporte = consultasPedidos.obtenerVentasTotales(getConnection(),id);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return reporte;
+    }
+
+
+    public Reporte obtenerProductoMasVendido(int id) {
+        Reporte reporte = new Reporte();
+        try {
+            Connection con = getConnection();
+            reporte = consultasPedidos.obtenerProductoMasVendido(getConnection(),id);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return reporte;
+    }
+
+    public Reporte obtenerProductoFacturacion(int id) {
+        Reporte reporte = new Reporte();
+        try {
+            Connection con = getConnection();
+            reporte = consultasPedidos.obtenerProductoFacturacion(getConnection(),id);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return reporte;
+    }
+
+    public Reporte obtenerClienteUsual(int id) {
+        Reporte reporte = new Reporte();
+        try {
+            Connection con = getConnection();
+            reporte = consultasPedidos.obtenerClienteUsual(getConnection(),id);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return reporte;
+    }
+
+    public Reporte obtenerMedioPagoMasUsado(int id) {
+        Reporte reporte = new Reporte();
+        try {
+            Connection con = getConnection();
+            reporte = consultasPedidos.obtenerMedioPagoMasUsado(getConnection(),id);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return reporte;
+    }
+
+
 
 
 

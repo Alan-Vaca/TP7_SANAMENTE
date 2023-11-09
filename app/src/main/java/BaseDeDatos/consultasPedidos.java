@@ -20,6 +20,7 @@ import Entidad.Comercio;
 import Entidad.Historial;
 import Entidad.Pedido;
 import Entidad.Producto;
+import Entidad.Reporte;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
 
@@ -180,6 +181,199 @@ public class consultasPedidos {
             return listadoPedido;
 
     }
+
+
+    public Reporte obtenerVentasTotales(Connection conn, int idUsuario ) {
+        Reporte reporte = null;
+        try {
+            String query = "SELECT COUNT(p.idPedido) Pedidos " +
+                    "FROM pedidos p " +
+                    "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                    "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                    "WHERE u1.idUsuario = " + idUsuario +
+                    ") " +
+                    "GROUP BY p.idComercio" ;
+
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        reporte = new Reporte();
+                        reporte.setCantidadPedidos(rs.getInt("Pedidos"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return reporte;
+
+    }
+
+
+    public Reporte obtenerProductoMasVendido(Connection conn, int idUsuario ) {
+        Reporte reporte = null;
+        try {
+            String query = "SELECT pr.nombreProducto Nombre, SUM(pp.cantidad) cantidadPP " +
+                    "FROM pedidoXproducto pp " +
+                    "INNER JOIN pedidos p ON p.idPedido = pp.idPedido " +
+                    "INNER JOIN productos pr ON pr.idProducto = pp.idProducto " +
+                    "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                                            "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                                            "WHERE u1.idUsuario = " + idUsuario +
+                                            ") " +
+                    "GROUP BY Nombre " +
+                    "ORDER BY cantidadPP DESC " +
+                    "LIMIT 1";
+
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        reporte = new Reporte();
+                        reporte.setnombreProducto(rs.getString("Nombre"));
+                        reporte.setCantidadProducto(rs.getInt("cantidadPP"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return reporte;
+
+    }
+
+    public Reporte obtenerProductoFacturacion(Connection conn, int idUsuario ) {
+        Reporte reporte = null;
+        try {
+            String query = "SELECT SUM(P.monto) MontoTotal from pedidos P " +
+                           "where idComercio = (SELECT idComercio from usuarios u1 " +
+                                                "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                                                "WHERE u1.idUsuario = " + idUsuario +
+                                                ") " +
+                           "group by idComercio";
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        reporte = new Reporte();
+                        reporte.setMontoTotal(rs.getInt("MontoTotal"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return reporte;
+
+    }
+
+
+    public Reporte obtenerClienteUsual(Connection conn, int idUsuario ) {
+        Reporte reporte = null;
+        Usuario usuario = null;
+        try {
+            String query = "SELECT count(p.idCliente) ClienteCantidad, u.nombre, u.apellido, u.direccion " +
+                            "from pedidos p " +
+                            "inner join clientes c on p.idCliente = c.idCliente " +
+                            "inner join usuarios u on u.idUsuario = c.idUsuario " +
+                            "where p.idComercio = (SELECT idComercio from usuarios u1 " +
+                                                    "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                                                    "WHERE u1.idUsuario = " + idUsuario +
+                                                    ") " +
+                            "group by p.idCliente";
+
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        usuario = new Usuario();
+                        reporte = new Reporte();
+
+                        usuario.setNombre(rs.getString("u.nombre"));
+                        usuario.setApellido(rs.getString("u.apellido"));
+                        usuario.setDireccion(rs.getString("u.direccion"));
+                        reporte.setUsuario(usuario);
+                        reporte.setCantidadUsuario(rs.getInt("ClienteCantidad"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return reporte;
+
+    }
+
+
+    public Reporte obtenerMedioPagoMasUsado(Connection conn, int idUsuario ) {
+        Reporte reporte = null;
+
+        try {
+            String query =  "select medioPago MedioPago, COUNT(medioPago) cantidadMedioPago from pedidos " +
+                            "where idComercio = (SELECT idComercio from usuarios u1 " +
+                                                "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                                                "WHERE u1.idUsuario = " + idUsuario +
+                                                ") " +
+                            "group by medioPago " +
+                            "order by cantidadMedioPago desc " +
+                            "LIMIT 1";
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        reporte = new Reporte();
+                        reporte.setCantidadMedioPago(rs.getInt("cantidadMedioPago"));
+                        reporte.setMedioPago(rs.getInt("MedioPago"));
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return reporte;
+
+    }
+
 
     public Boolean cambiarEstadoPedido(Connection conn, Pedido pedido, Integer estado) throws SQLException {
         Boolean exito = false;

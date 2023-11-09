@@ -6,12 +6,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ExportarTxt {
     public static boolean generarTxt(Context context, ArrayList<String> data, String nombreArchivo) {
         try {
-            File file = new File(context.getExternalFilesDir(null), nombreArchivo + ".txt");
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            String fechaHoraActual = formatoFecha.format(new Date());
+            File file = new File(context.getExternalFilesDir(null), nombreArchivo + "_" + fechaHoraActual + ".txt");
             FileOutputStream fos = new FileOutputStream(file);
             PrintWriter writer = new PrintWriter(fos);
 
