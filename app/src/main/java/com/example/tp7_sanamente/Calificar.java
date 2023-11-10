@@ -229,9 +229,18 @@ public class Calificar extends AppCompatActivity {
         protected void onPostExecute(Boolean exito) {
 
             if(exito) {
-                Toast.makeText(Calificar.this, "EL PEDIDO YA FUE CALIFICADO CON EXITO", Toast.LENGTH_LONG).show();
-                Intent IngresarCliente = new Intent(Calificar.this, MainActivity.class);
-                startActivity(IngresarCliente);
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
+
+                if(isAdmin) {
+                    Toast.makeText(Calificar.this, "EL PEDIDO YA FUE CALIFICADO CON EXITO", Toast.LENGTH_LONG).show();
+                    Intent MenuAdmin = new Intent(Calificar.this, MenuAdmin.class);
+                    startActivity(MenuAdmin);
+                }else {
+                    Toast.makeText(Calificar.this, "EL PEDIDO YA FUE CALIFICADO CON EXITO", Toast.LENGTH_LONG).show();
+                    Intent MenuCliente = new Intent(Calificar.this, Menu_Cliente.class);
+                    startActivity(MenuCliente);
+                }
             }else{
                 Toast.makeText(Calificar.this, "HUBO UN ERROR", Toast.LENGTH_LONG).show();
             }

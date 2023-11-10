@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // Cierra la actividad actual
+                finishAffinity();; // Cierra la actividad actual
             }
         });
 

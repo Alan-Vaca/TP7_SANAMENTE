@@ -195,6 +195,12 @@ public class MiCarritoCompras extends AppCompatActivity {
             btnGuardarCantidad.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    if(editTextCantidad.getText().toString().isEmpty()){
+                        editTextCantidad.setError("INGRESA UNA NUEVA CANTIDAD");
+                        return;
+                    }
+
                     int nuevaCantidad = Integer.parseInt(editTextCantidad.getText().toString());
 
                     if(nuevaCantidad <= 0){

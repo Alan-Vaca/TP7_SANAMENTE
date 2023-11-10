@@ -132,7 +132,11 @@ public class Mis_Productos extends AppCompatActivity {
                 productoSeleccionado = listaProductos.get(position);
 
                 detalle.setText(productoSeleccionado.getIdProducto() + " - " + productoSeleccionado.getNombre() + " - $" + productoSeleccionado.getPrecio());
-                puntaje.setText("POSEE " + productoSeleccionado.getPuntaje() + " ESTRELLAS DE 5");
+                if(productoSeleccionado.getPuntaje() > 0) {
+                    puntaje.setText("POSEE " + productoSeleccionado.getPuntaje() + " ESTRELLAS DE 5");
+                }else{
+                    puntaje.setText("AUN NO POSEE UNA CALIFICACION DE ESTRELLAS");
+                }
                 if(user.isCliente()){
                     cantidadTxt.setText("0");
                 }else{
@@ -210,7 +214,7 @@ public class Mis_Productos extends AppCompatActivity {
                 ProductoCarrito.setProducto(productoSeleccionado);
                 ProductoCarrito.setCantidad(cantidadSolicitada);
 
-                if(ProductoCarrito.getCantidad() <= 0){
+                if(ProductoCarrito.getCantidad() <= 0 ){
                     Toast.makeText(Mis_Productos.this, "SE DEBE INGRESAR UNA CANTIDAD MAYOR A 0", Toast.LENGTH_LONG).show();
                     return;
                 }

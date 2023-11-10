@@ -1,18 +1,22 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#CCCCCC"
     android:orientation="vertical">
 
     <EditText
         android:id="@+id/editTextMotivo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:gravity="center|center_horizontal|center_vertical"
         android:hint="Motivo de la cancelacion" />
 
     <Button
         android:id="@+id/btnGuardarMotivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:gravity="center|center_horizontal|center_vertical"
         android:text="@string/button_guardar" />
 </LinearLayout>
