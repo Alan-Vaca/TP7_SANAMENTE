@@ -5,11 +5,13 @@ import static BaseDeDatos.Conexion.getConnection;
 import android.util.Log;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -28,7 +30,7 @@ public class consultasProductos {
         ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
 
         try {
-            String query = "select p.idProducto productoID, nombreProducto, ingredientes, precio, stock, p.estado, p.idComercio, "
+            String query = "select p.idProducto productoID, nombreProducto, ingredientes, precio, stock, p.estado, p.idComercio, p.fechaAlta as fechaAltaProducto,"
             +"(select avg(calificacion) as puntaje from calificaciones where idProducto = p.idProducto) as puntaje from productos p ";
 
             if(user.isCliente()){
@@ -54,6 +56,11 @@ public class consultasProductos {
                         producto.setEstado(rs.getBoolean("estado"));
                         producto.setIdComercio(rs.getInt("idComercio"));
                         producto.setPuntaje(rs.getFloat("puntaje"));
+
+                        Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+                        java.sql.Date fechaAlta = rs.getDate("fechaAltaProducto");
+                        producto.setFecha(fechaAlta != null ? fechaAlta : fechaActual);
+
                         listadoProducto.add(producto);
                     }
                     rs.close();
@@ -79,8 +86,8 @@ public class consultasProductos {
         try {
             if (conn != null) {
                 String insertQuery = "INSERT INTO productos(" +
-                        "nombreProducto, ingredientes, precio, stock, estado, idComercio" +
-                        ") VALUES (?,?,?,?,?,?)";
+                        "nombreProducto, ingredientes, precio, stock, estado, idComercio, fechaAlta" +
+                        ") VALUES (?,?,?,?,?,?,?)";
 
                 pstmt = conn.prepareStatement(insertQuery);
                 pstmt.setString(1, producto.getNombre());
@@ -89,6 +96,8 @@ public class consultasProductos {
                 pstmt.setInt(4,producto.getStock());
                 pstmt.setBoolean(5,true);
                 pstmt.setInt(6,comercio.getIdComercio());
+                Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+                pstmt.setDate(7, (Date) fechaActual);
                 pstmt.executeUpdate();
 
                 exito = true;

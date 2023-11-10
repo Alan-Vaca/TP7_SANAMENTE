@@ -3,6 +3,8 @@ package Entidad;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 public class Producto implements Parcelable{
     int idProducto;
     String ingredientes;
@@ -10,7 +12,7 @@ public class Producto implements Parcelable{
     float precio;
     String nombre;
     int idComercio;
-
+    Date fecha;
     boolean estado;
 
     float puntaje;
@@ -80,6 +82,14 @@ public class Producto implements Parcelable{
 
     public void setPuntaje(float puntaje) {
         this.puntaje = puntaje;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     @Override
