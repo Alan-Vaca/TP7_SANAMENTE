@@ -200,14 +200,23 @@ public class ModificarProducto extends AppCompatActivity {
 
 
                 if (listadoEtiquetado.size() > 0) {
-                    if(!(user.isCliente() && listadoEtiquetado.get(0).getIdEtiquetado() == 0))
-                    etiquetado_1.setSelection(listadoEtiquetado.get(0).getIdEtiquetado());
+                    if(user.isCliente() && listadoEtiquetado.get(0).getIdEtiquetado() == 0){
+                        etiquetado_1.setVisibility(View.INVISIBLE);
+                    }else{
+                        etiquetado_1.setSelection(listadoEtiquetado.get(0).getIdEtiquetado());
+                    }
                     if (listadoEtiquetado.size() > 1)
-                        if(!(user.isCliente() && listadoEtiquetado.get(0).getIdEtiquetado() == 0))
-                        etiquetado_2.setSelection(listadoEtiquetado.get(1).getIdEtiquetado());
+                        if(user.isCliente() && listadoEtiquetado.get(1).getIdEtiquetado() == 0){
+                            etiquetado_2.setVisibility(View.INVISIBLE);
+                        }else{
+                            etiquetado_2.setSelection(listadoEtiquetado.get(1).getIdEtiquetado());
+                        }
                     if (listadoEtiquetado.size() > 2)
-                        if(!(user.isCliente() && listadoEtiquetado.get(0).getIdEtiquetado() == 0))
-                        etiquetado_3.setSelection(listadoEtiquetado.get(2).getIdEtiquetado());
+                        if(user.isCliente() && listadoEtiquetado.get(2).getIdEtiquetado() == 0){
+                            etiquetado_3.setVisibility(View.INVISIBLE);
+                        }else{
+                            etiquetado_3.setSelection(listadoEtiquetado.get(2).getIdEtiquetado());
+                        }
                 } else {
                     Toast.makeText(ModificarProducto.this, "HUBO UN ERROR AL CONSULTAR LOS ETIQUETADOS", Toast.LENGTH_LONG).show();
                 }
@@ -425,38 +434,31 @@ public class ModificarProducto extends AppCompatActivity {
 
 
         if((id1 == 1 || id2 == 1 || id3 == 1) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en azúcares. No es apto para celíacos", Toast.LENGTH_LONG).show();
-            return false;
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en azúcares. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
         }
 
         if((id1 == 2 || id2 == 2 || id3 == 2) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas totales. No es apto para celíacos", Toast.LENGTH_LONG).show();
-            return false;
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas totales. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
         }
 
         if((id1 == 3 || id2 == 3 || id3 == 3) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas saturadas. No es apto para celíacos", Toast.LENGTH_LONG).show();
-            return false;
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas saturadas. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
         }
 
         if((id1 == 4 || id2 == 4 || id3 == 4) && restriccion.isCeliaco() || restriccion.isDiabetico()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en sodio. No es apto para celíacos o diabéticos", Toast.LENGTH_LONG).show();
-            return false;
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en sodio. No es apto para celíacos o diabéticos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
         }
 
         if((id1 == 5 || id2 == 5 || id3 == 5) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en calorías. No es apto para celíacos", Toast.LENGTH_LONG).show();
-            return false;
+            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en calorías. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
         }
 
         if((id1 == 6 || id2 == 6 || id3 == 6) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene edulcorante. No es apto para celíacos", Toast.LENGTH_LONG).show();
-            return false;
+            Toast.makeText(ModificarProducto.this, "El producto contiene edulcorante. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
         }
 
         if((id1 == 7 || id2 == 7 || id3 == 74) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene cafeína. No es apto para celíacos", Toast.LENGTH_LONG).show();
-            return false;
+            Toast.makeText(ModificarProducto.this, "El producto contiene cafeína. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
         }
 
         if((id1 == 6 || id2 == 6 || id3 == 6) && restriccion.isDiabetico() || restriccion.isHipertenso()){
@@ -467,7 +469,8 @@ public class ModificarProducto extends AppCompatActivity {
             Toast.makeText(ModificarProducto.this, "Este producto contiene cafeína. Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
         }
 
-        if(producto.getIngredientes().toUpperCase().contains(restriccion.getAlergico().toUpperCase())){
+        if(!restriccion.getAlergico().trim().isEmpty())
+        if(producto.getIngredientes().toUpperCase().trim().contains(restriccion.getAlergico().trim().toUpperCase())){
             Toast.makeText(ModificarProducto.this, "No es posible comprar por su seguridad ya que es alérgico a uno de sus ingredientes.", Toast.LENGTH_LONG).show();
             return false;
         }

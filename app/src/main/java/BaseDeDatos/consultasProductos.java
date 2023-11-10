@@ -33,7 +33,7 @@ public class consultasProductos {
 
             if(user.isCliente()){
                 //Si es para el cliente mostrara todos los productos con estado activo
-                query += "where estado = 1";
+                query += "where estado = 1 and stock > 0";
             }else {
                 //si es para el comerciante mostrara todos los productos que cargo sin importar el estado
                 query += "inner join comercios c on c.IdComercio = p.idComercio where c.idUsuario = " + user.getIdUsuario() ;

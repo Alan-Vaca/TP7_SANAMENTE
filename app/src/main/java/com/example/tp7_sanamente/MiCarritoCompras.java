@@ -3,6 +3,7 @@ package com.example.tp7_sanamente;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import BaseDeDatos.Conexion;
+import Entidad.Etiquetado;
+import Entidad.Producto;
 import Entidad.pedidoXproducto;
 
 public class MiCarritoCompras extends AppCompatActivity {
@@ -30,7 +34,6 @@ public class MiCarritoCompras extends AppCompatActivity {
     TextView montoTotalTxt;
     ListView lv_pedidosxProducto;
     Float montoTotal;
-
     Button btn_pagar;
     pedidoXproducto itemSeleccionado;
 
@@ -76,6 +79,7 @@ public class MiCarritoCompras extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 itemSeleccionado = new pedidoXproducto();
                 itemSeleccionado = misProductosPedido.get(position);
+
 
             }
         });
@@ -244,4 +248,6 @@ public class MiCarritoCompras extends AppCompatActivity {
             startActivity(MenuCliente);
         }
     }
+
+
 }

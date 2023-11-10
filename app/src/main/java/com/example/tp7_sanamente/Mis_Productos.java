@@ -23,7 +23,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
+import Entidad.Etiquetado;
 import Entidad.Producto;
+import Entidad.Restriccion;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
 public class Mis_Productos extends AppCompatActivity {
@@ -33,10 +35,11 @@ public class Mis_Productos extends AppCompatActivity {
     ListView lv_Catalogo;
     Button btnAdd;
     ArrayList<Producto> listaProductos;
-
+    Restriccion restriccion;
     ArrayList<pedidoXproducto> listadoCarrito;
     Producto productoSeleccionado;
 
+    ArrayList<Etiquetado> listaEtiquetados;
     boolean listaCargada;
     boolean listaProductosConFiltro;
 
@@ -52,6 +55,7 @@ public class Mis_Productos extends AppCompatActivity {
         puntaje = (TextView)findViewById(R.id.txtPuntajeCatalogo);
         listaCargada = false;
 
+        listaEtiquetados = new ArrayList<Etiquetado>();
 
 
         SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
@@ -94,6 +98,8 @@ public class Mis_Productos extends AppCompatActivity {
                 btnAdd.setText("AGREGAR PRODUCTO AL CARRITO");
                 txt_StockCantidad.setText("CANTIDAD A LLEVAR:");
                 cantidadTxt.setText("0");
+
+                new Mis_Productos.cargarRestricciones().execute(user);
             }else{
                 btnAdd.setText("AGREGAR UN NUEVO PRODUCTO");
                 txt_StockCantidad.setText("STOCK REGISTRADO:");
@@ -141,6 +147,11 @@ public class Mis_Productos extends AppCompatActivity {
                 String productoJson = gson.toJson(productoSeleccionado);
                 editor.putString("productoSeleccionado", productoJson);
                 editor.apply();
+
+                if(user.isCliente()) {
+                    new Mis_Productos.obtenerEtiquetadosXproducto().execute(productoSeleccionado);
+                }
+
             }
         });
     }
@@ -209,6 +220,11 @@ public class Mis_Productos extends AppCompatActivity {
                     return;
                 }
 
+                if(!restriccion.getAlergico().trim().isEmpty())
+                if(productoSeleccionado.getIngredientes().toUpperCase().trim().contains(restriccion.getAlergico().trim().toUpperCase())){
+                    Toast.makeText(Mis_Productos.this, "No es posible comprar por su seguridad ya que es alérgico a uno de sus ingredientes.", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 if (listaCargada) {
                     int index = -1;
@@ -257,6 +273,32 @@ public class Mis_Productos extends AppCompatActivity {
 
     }
 
+
+    private class cargarRestricciones extends AsyncTask<Usuario, Void, Restriccion> {
+        @Override
+        protected Restriccion doInBackground(Usuario... user) {
+            Conexion con = new Conexion();
+            Restriccion res = new Restriccion();
+            try {
+                res = con.obtenerRestriccion(user[0].getIdUsuario());
+                return res;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return res;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Restriccion res) {
+            if (res.getIdRestriccion() > 0) {
+                restriccion = new Restriccion();
+                restriccion = res;
+            } else {
+                Toast.makeText(Mis_Productos.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     public void VolverMenu(View view) {
         // Recuperar el booleano isAdmin de SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -277,4 +319,69 @@ public class Mis_Productos extends AppCompatActivity {
             }
         }
     }
-}
+
+    private class obtenerEtiquetadosXproducto extends AsyncTask<Producto, Void, ArrayList<Etiquetado>> {
+        @Override
+        protected ArrayList<Etiquetado> doInBackground(Producto... producto) {
+
+            Conexion con = new Conexion();
+            try {
+                listaEtiquetados = con.obtenerListadoEtiquetadoXproducto(producto[0]);
+
+                return listaEtiquetados;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return listaEtiquetados;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Etiquetado> listadoEtiquetado) {
+            //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
+
+
+
+                if (listadoEtiquetado.size() > 0) {
+
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 1 || listadoEtiquetado.get(1).getIdEtiquetado() == 1 || listadoEtiquetado.get(2).getIdEtiquetado() == 1) && restriccion.isCeliaco()){
+                        Toast.makeText(Mis_Productos.this, "El producto contiene exceso en azúcares. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+                    }
+
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 2 || listadoEtiquetado.get(1).getIdEtiquetado() == 2 || listadoEtiquetado.get(2).getIdEtiquetado() == 2) && restriccion.isCeliaco()){
+                        Toast.makeText(Mis_Productos.this, "El producto contiene exceso en grasas totales. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+                    }
+
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 3 || listadoEtiquetado.get(1).getIdEtiquetado() == 3 || listadoEtiquetado.get(2).getIdEtiquetado() == 3) && restriccion.isCeliaco()){
+                        Toast.makeText(Mis_Productos.this, "El producto contiene exceso en grasas saturadas. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+                    }
+
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 4 || listadoEtiquetado.get(1).getIdEtiquetado() == 4 || listadoEtiquetado.get(2).getIdEtiquetado() == 4) && restriccion.isCeliaco() || restriccion.isDiabetico()){
+                        Toast.makeText(Mis_Productos.this, "El producto contiene exceso en sodio. No es apto para celíacos o diabéticos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+                    }
+
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 5 || listadoEtiquetado.get(1).getIdEtiquetado() == 5 || listadoEtiquetado.get(2).getIdEtiquetado() == 5) && restriccion.isCeliaco()){
+                        Toast.makeText(Mis_Productos.this, "El producto contiene exceso en calorías. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+                    }
+
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 6 || listadoEtiquetado.get(1).getIdEtiquetado() == 6 || listadoEtiquetado.get(2).getIdEtiquetado() == 6) && restriccion.isCeliaco()){
+                        Toast.makeText(Mis_Productos.this, "El producto contiene edulcorante. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+                    }
+
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 7 || listadoEtiquetado.get(1).getIdEtiquetado() == 7 || listadoEtiquetado.get(2).getIdEtiquetado() == 74) && restriccion.isCeliaco()){
+                        Toast.makeText(Mis_Productos.this, "El producto contiene cafeína. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+                    }
+
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 6 || listadoEtiquetado.get(1).getIdEtiquetado() == 6 || listadoEtiquetado.get(2).getIdEtiquetado() == 6) && restriccion.isDiabetico() || restriccion.isHipertenso()){
+                        Toast.makeText(Mis_Productos.this, "Este producto contiene edulcorante. Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+                    }
+
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 7 || listadoEtiquetado.get(1).getIdEtiquetado() == 7 || listadoEtiquetado.get(2).getIdEtiquetado() == 7) && restriccion.isDiabetico() || restriccion.isHipertenso()){
+                        Toast.makeText(Mis_Productos.this, "Este producto contiene cafeína. Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+                    }
+
+
+                }
+
+            }
+        }
+    }
