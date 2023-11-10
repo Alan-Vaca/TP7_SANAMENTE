@@ -251,7 +251,7 @@ Usuario user;
                 editor.putString("usuarioLogueado", usuarioJson);
                 editor.apply();
 
-                Toast.makeText(Modificar_Usuario.this, "EL COMERCIO HA SIDO MODIFICADO CON EXITO", Toast.LENGTH_LONG).show();
+                Toast.makeText(Modificar_Usuario.this, "EL CLIENTE HA SIDO MODIFICADO CON EXITO", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(Modificar_Usuario.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }
