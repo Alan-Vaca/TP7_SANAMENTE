@@ -8,7 +8,7 @@ android {
     compileSdk = 34
     defaultConfig {
         applicationId = "com.example.tp7_sanamente"
-        minSdk = 28
+        minSdk = 25
         /*        //noinspection ExpiredTargetSdkVersion
 */
         //noinspection ExpiredTargetSdkVersion
