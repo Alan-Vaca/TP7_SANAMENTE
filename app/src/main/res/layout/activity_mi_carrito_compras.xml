@@ -22,7 +22,7 @@
     <ListView
         android:id="@+id/lv_pedidosxProducto"
         android:layout_width="376dp"
-        android:layout_height="512dp"
+        android:layout_height="470dp"
         android:layout_marginTop="72dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -33,11 +33,11 @@
         android:id="@+id/button56"
         android:layout_width="382dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="540dp"
+        android:layout_marginTop="500dp"
         android:onClick="MiCarritoDeComprasSeguirComprando"
         android:text="@string/button_agregarMasProductos"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button9" />
 

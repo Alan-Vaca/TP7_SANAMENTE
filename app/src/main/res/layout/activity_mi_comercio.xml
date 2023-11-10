@@ -70,7 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="@string/tv_nombreComercio"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:hint="@string/hint_ejemplo_nombreDeComercio"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.786"
@@ -83,6 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:gravity="center|center_horizontal|center_vertical"
         android:hint="@string/hint_ejemplo_direccion"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +98,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="@string/tv_nombreUsuario"
+        android:gravity="center|center_vertical"
+        android:hint="@string/hint_ejemplo_usuario"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -107,39 +110,39 @@
         android:id="@+id/mod_c_actual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
-        android:hint="@string/hint_ejemplo_contraseña"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:hint="@string/hint_ejemplo_contraseñaActual"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <EditText
         android:id="@+id/mod_c_repetir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
-        android:hint="@string/tv_repetirContraseña"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:hint="@string/hint_ejemplo_repetirContraseña"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mod_c_pass" />
 
     <EditText
         android:id="@+id/mod_c_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
+        android:gravity="center|center_horizontal|center_vertical"
         android:hint="@string/hint_ejemplo_nuevaContraseña"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mod_c_actual" />
 
     <EditText
@@ -149,6 +152,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:gravity="center|center_horizontal|center_vertical"
         android:hint="@string/hint_ejemplo_apertura"
         android:inputType="time"
         app:layout_constraintStart_toStartOf="parent"
@@ -161,6 +165,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
         android:ems="10"
+        android:gravity="center|center_horizontal|center_vertical"
         android:hint="@string/hint_ejemplo_cierre"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
@@ -181,9 +186,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/hint_ejemplo_contraseña"
+        android:text="@string/tv_Contraseña"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mod_c_usuario" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/hint_ejemplo_contraseñaActual"
+        app:layout_constraintEnd_toStartOf="@+id/mod_c_actual"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="42dp"
+        android:text="@string/hint_ejemplo_nuevaContraseña"
+        app:layout_constraintEnd_toStartOf="@+id/mod_c_pass"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="42dp"
+        android:text="@string/hint_ejemplo_repetirContraseña"
+        app:layout_constraintEnd_toStartOf="@+id/mod_c_repetir"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 </androidx.constraintlayout.widget.ConstraintLayout>
