@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-
-
 
     <application
         android:allowBackup="true"
@@ -17,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TP7_SANAMENTE"
         tools:targetApi="31">
-
+        <activity
+            android:name=".dialog_notificaciones"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -26,12 +26,12 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
-        android:name=".dialog_confirm"
-        android:exported="false" />
+            android:name=".dialog_confirm"
+            android:exported="false" />
         <activity
             android:name=".dialog_motivo"
             android:exported="false" />
@@ -158,8 +158,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>
