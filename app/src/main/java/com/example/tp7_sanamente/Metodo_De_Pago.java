@@ -171,6 +171,15 @@ public class Metodo_De_Pago extends AppCompatActivity {
         protected void onPostExecute(Boolean bool) {
             if (bool) {
                 Toast.makeText(Metodo_De_Pago.this, "EL PEDIDO YA FUE SOLICITADO, REVISA TU HISTORIAL", Toast.LENGTH_LONG).show();
+
+                misProductosPedido.clear();
+                SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                Gson gson = new Gson();
+                String listaComoJson = gson.toJson(misProductosPedido);
+                editor.putString("listadoCarrito", listaComoJson);
+                editor.apply();
+
                 Intent historial = new Intent(Metodo_De_Pago.this, MiHistorial.class);
                 startActivity(historial);
             } else {

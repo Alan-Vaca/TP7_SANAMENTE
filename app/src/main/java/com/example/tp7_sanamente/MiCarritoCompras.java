@@ -193,6 +193,16 @@ public class MiCarritoCompras extends AppCompatActivity {
                 public void onClick(View v) {
                     int nuevaCantidad = Integer.parseInt(editTextCantidad.getText().toString());
 
+                    if(nuevaCantidad <= 0){
+                        editTextCantidad.setError("LA CANTIDAD DEBE SER MAYOR A 0");
+                        return;
+                    }
+
+                    if(nuevaCantidad > itemSeleccionado.getProducto().getStock()){
+                        editTextCantidad.setError("LA CANTIDAD EXCEDE EL STOCK");
+                        return;
+                    }
+
                     itemSeleccionado.setCantidad(nuevaCantidad);
 
                     SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);

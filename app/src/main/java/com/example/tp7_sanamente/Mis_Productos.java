@@ -199,10 +199,17 @@ public class Mis_Productos extends AppCompatActivity {
                 ProductoCarrito.setProducto(productoSeleccionado);
                 ProductoCarrito.setCantidad(cantidadSolicitada);
 
+                if(ProductoCarrito.getCantidad() <= 0){
+                    Toast.makeText(Mis_Productos.this, "SE DEBE INGRESAR UNA CANTIDAD MAYOR A 0", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if(ProductoCarrito.getCantidad() > productoSeleccionado.getStock()){
                     Toast.makeText(Mis_Productos.this, "LA CANTIDAD EXCEDE EL STOCK", Toast.LENGTH_LONG).show();
                     return;
                 }
+
+
                 if (listaCargada) {
                     int index = -1;
                     for (int i = 0; i < listadoCarrito.size(); i++) {

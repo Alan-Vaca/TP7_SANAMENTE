@@ -200,10 +200,13 @@ public class ModificarProducto extends AppCompatActivity {
 
 
                 if (listadoEtiquetado.size() > 0) {
+                    if(!(user.isCliente() && listadoEtiquetado.get(0).getIdEtiquetado() == 0))
                     etiquetado_1.setSelection(listadoEtiquetado.get(0).getIdEtiquetado());
                     if (listadoEtiquetado.size() > 1)
+                        if(!(user.isCliente() && listadoEtiquetado.get(0).getIdEtiquetado() == 0))
                         etiquetado_2.setSelection(listadoEtiquetado.get(1).getIdEtiquetado());
                     if (listadoEtiquetado.size() > 2)
+                        if(!(user.isCliente() && listadoEtiquetado.get(0).getIdEtiquetado() == 0))
                         etiquetado_3.setSelection(listadoEtiquetado.get(2).getIdEtiquetado());
                 } else {
                     Toast.makeText(ModificarProducto.this, "HUBO UN ERROR AL CONSULTAR LOS ETIQUETADOS", Toast.LENGTH_LONG).show();
