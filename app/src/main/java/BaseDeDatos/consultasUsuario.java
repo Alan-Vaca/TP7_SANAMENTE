@@ -392,4 +392,85 @@ public class consultasUsuario {
     }
 
 
+    public String obtenerMSJNotificaciones(Connection conn, Usuario usuario) {
+        String cadena = "";
+        try {
+            String query = "SELECT c.idCliente, c.idUsuario,noti.ofertas,noti.pedidos,noti.productos," +
+                    "(select count(p.idPedido) from pedidos p where p.idCliente = c.idCliente and p.estado = 3) as pedidosNOT," +
+                    "(select count(prod.idProducto) from productos prod where prod.estado = 1 and DATE(prod.fechaAlta) = CURDATE()) as productosNOT, " +
+                    "(select count(of.idProducto) from productos of where of.estado = 1 and " +
+                    "(select avg(calificacion) as puntaje from calificaciones cal where of.idProducto = cal.idProducto) > 4) as ofertasNOT " +
+                    "from clientes c inner join notificaciones noti on noti.idUsuario = " + usuario.getIdUsuario() +
+                    " where c.idUsuario = " + usuario.getIdUsuario();
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next()) {
+                        if(rs.getBoolean("pedidos"))
+                        if(rs.getInt("pedidosNOT") > 0){
+                            cadena += (
+                                    "PEDIDOS:" + '\n' + "TIENES " + rs.getInt("pedidosNOT") + " PEDIDOS CONFIRMADOS"
+                                    + '\n' +  "MANTENTE AL TANTO PARA" + '\n' + "CONFIRMAR LA ENTREGA." + '\n' + '\n');
+                        }
+
+                        if(rs.getBoolean("productos"))
+                        if(rs.getInt("productosNOT") > 0){
+                            cadena += (
+                                    "PRODUCTOS:" + '\n' + "HAY " + rs.getInt("productosNOT")
+                                    + '\n' +  "NUEVOS PRODUCTOS EN EL CATALOGO." + '\n' + '\n');
+                        }
+
+                        if(rs.getBoolean("ofertas"))
+                        if(rs.getInt("ofertasNOT") > 0){
+                            cadena += (
+                                 "OFERTAS:" + '\n' + "MIRA LAS OFERTAS HAY " + rs.getInt("ofertasNOT")
+                                    + '\n' +  "NUEVOS PRODUCTOS CALIFICADOS POR LOS USUARIOS." + '\n' + '\n');
+                        }
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return cadena;
+    }
+
+    public String obtenerMSJNotificacionesCOMERCIO(Connection conn, Usuario usuario) {
+        String cadena = "";
+        try {
+            String query = "SELECT c.idComercio, c.idUsuario, (select count(pp.idPedido) from pedidos pp where pp.idComercio = c.idComercio and pp.estado = 1) as cantPedidos from comercios c" +
+                    " where c.idUsuario = " + usuario.getIdUsuario();
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next()) {
+                            if(rs.getInt("cantPedidos") > 0){
+                                cadena += (
+                                        "PEDIDOS:" + '\n' + "HAY " + rs.getInt("cantPedidos") + " PEDIDOS PENDIENTES"
+                                                + '\n' +  "REVISA LA SECCION 'MIS PEDIDOS'." + '\n' + '\n');
+                            }
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return cadena;
+    }
 }

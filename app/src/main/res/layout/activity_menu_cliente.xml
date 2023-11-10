@@ -35,7 +35,7 @@
         android:id="@+id/mcli_bn_catalogo"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="36dp"
         android:onClick="MenuCatalogo"
         android:text="@string/button_catalogo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
         android:id="@+id/mcli_bn_miCarrito"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="44dp"
         android:onClick="MenuMiCarrito"
         android:text="@string/button_miCarrito"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,8 +66,8 @@
 
     <Button
         android:id="@+id/mcli_bn_historial"
-        android:layout_width="126dp"
-        android:layout_height="41dp"
+        android:layout_width="231dp"
+        android:layout_height="57dp"
         android:layout_marginTop="8dp"
         android:onClick="MenuHistorial"
         android:text="@string/button_historial"
@@ -77,9 +77,9 @@
 
     <Button
         android:id="@+id/mcli_bn_notificaciones"
-        android:layout_width="209dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="231dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="48dp"
         android:onClick="Notificaciones"
         android:text="@string/button_notificaciones"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,5 +97,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_ofertas"
         app:layout_constraintVertical_bias="0.19" />
+
+    <ImageView
+        android:id="@+id/image_not_no"
+        android:layout_width="41dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="NotificacionesNO"
+        app:layout_constraintBottom_toTopOf="@+id/mcli_bn_miUsuario"
+        app:layout_constraintStart_toEndOf="@+id/mcli_bn_notificaciones"
+        app:srcCompat="@drawable/baseline_notifications_none_24" />
+
+    <ImageView
+        android:id="@+id/image_not_si"
+        android:layout_width="41dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="NotificacionesSI"
+        app:layout_constraintBottom_toTopOf="@+id/mcli_bn_miUsuario"
+        app:layout_constraintStart_toEndOf="@+id/mcli_bn_notificaciones"
+        app:srcCompat="@drawable/baseline_notifications_active_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

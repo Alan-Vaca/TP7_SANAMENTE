@@ -1,17 +1,13 @@
 package com.example.tp7_sanamente;
 
-import static BaseDeDatos.consultasReportes.reporteSemanal;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -23,26 +19,24 @@ import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
 import BaseDeDatos.consultasReportes;
-import Entidad.Comercio;
-import Entidad.Pedido;
 import Entidad.Reporte;
 import Entidad.Usuario;
-import Entidad.pedidoXproducto;
 
 public class MenuComercio extends AppCompatActivity {
 
     Usuario user;
     Reporte reporte;
+    ImageView VERnotificacionSI, VERnotificacionNO;
 
+    String noti_msj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_comercio);
 
-
-
-
+        VERnotificacionNO = findViewById(R.id.img_not_NO);
+        VERnotificacionSI = findViewById(R.id.img_not_SI);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
@@ -51,7 +45,7 @@ public class MenuComercio extends AppCompatActivity {
         if (!usuarioJson.isEmpty()) {
             Gson gson = new Gson();
             user = gson.fromJson(usuarioJson, Usuario.class);
-            //Toast.makeText(Menu_Cliente.this, "USUARIO INGRESADO: " + user.getIdUsuario() + "-" + user.getNombreUsuario(), Toast.LENGTH_LONG).show();
+            new MenuComercio.obtenerMSJComercio().execute(user);
         }else{
             Toast.makeText(MenuComercio.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
         }
@@ -96,8 +90,8 @@ public class MenuComercio extends AppCompatActivity {
             datosInforme.add("Cantidad de ventas: " + reporte.getCantidadProducto());
 
             datosInforme.add("Cliente mas frecuente: " + reporte.getUsuario().getNombre() +
-                    " " + reporte.getUsuario().getApellido() +
-                    ", " + reporte.getUsuario().getDireccion());
+                    " " + reporte.getUsuario().getApellido().toUpperCase() +
+                    ", " + reporte.getUsuario().getDireccion().toUpperCase() + " [ " + reporte.getUsuario().getNombreUsuario().toUpperCase() + " ]");
             datosInforme.add("Cantidad de pedidos: " + reporte.getCantidadUsuario());
 
             datosInforme.add("Medio de pago mas usado: " + reporte.getDescripcionPago());
@@ -186,5 +180,78 @@ public class MenuComercio extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void VERNotificacionesSI(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_notificaciones, null);
+        builder.setView(dialogView);
+
+        final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
+        Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
+
+        notificacionesMSJ.setText(noti_msj);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnAceptarNotificaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }
+
+    public void VERNotificacionesNO(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_notificaciones, null);
+        builder.setView(dialogView);
+
+        final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
+        Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
+
+        notificacionesMSJ.setText(
+                "NO HAY NOTIFICACIONES PEDIDOS NUEVOS."
+        );
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnAceptarNotificaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }
+
+
+    private class obtenerMSJComercio extends AsyncTask<Usuario, Void, String> {
+        @Override
+        protected String doInBackground(Usuario... user) {
+            Conexion con = new Conexion();
+            try {
+                return con.obtenerMSJNotificacionesCOMERCIO(user[0]);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String msj) {
+
+            if (!msj.isEmpty()) {
+                noti_msj = msj;
+                VERnotificacionSI.setVisibility(View.VISIBLE);
+                VERnotificacionNO.setVisibility(View.INVISIBLE);
+            } else {
+                VERnotificacionNO.setVisibility(View.VISIBLE);
+                VERnotificacionSI.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 }

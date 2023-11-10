@@ -21,6 +21,7 @@ import Entidad.Reporte;
 import Entidad.Restriccion;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
+import kotlin.contracts.Returns;
 
 
 public class Conexion extends AsyncTask<String,Void, String> {
@@ -82,6 +83,26 @@ public class Conexion extends AsyncTask<String,Void, String> {
             Log.d("BD-ERROR", e.toString());
         }
         return user;
+    }
+
+    public String obtenerMSJNotificaciones(Usuario usuario) {
+        try {
+            Connection con = getConnection();
+            return consultasUsuario.obtenerMSJNotificaciones(con,usuario);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+            return "";
+        }
+    }
+
+    public String obtenerMSJNotificacionesCOMERCIO(Usuario usuario) {
+        try {
+            Connection con = getConnection();
+            return consultasUsuario.obtenerMSJNotificacionesCOMERCIO(con,usuario);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+            return "";
+        }
     }
 
     public Boolean ExisteUsuario(String nombreUsuario) {
@@ -557,8 +578,6 @@ public class Conexion extends AsyncTask<String,Void, String> {
         }
         return reporte;
     }
-
-
 
 
 

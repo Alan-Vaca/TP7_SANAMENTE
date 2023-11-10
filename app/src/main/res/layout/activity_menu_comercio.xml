@@ -34,7 +34,7 @@
         android:id="@+id/mcli_bn_catalogo"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="104dp"
         android:onClick="MenuPedidos_Comerciante"
         android:text="@string/button_misPedidos"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
         android:id="@+id/mcli_bn_miCarrito"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="56dp"
         android:onClick="MenuMis_Productos"
         android:text="@string/button_miCatalogo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
 
     <Button
         android:id="@+id/mcli_bn_historial"
-        android:layout_width="126dp"
+        android:layout_width="231dp"
         android:layout_height="41dp"
         android:onClick="MenuHistorial"
         android:text="@string/button_historial"
@@ -75,7 +75,7 @@
 
     <Button
         android:id="@+id/mcli_bn_notificaciones"
-        android:layout_width="209dp"
+        android:layout_width="231dp"
         android:layout_height="41dp"
         android:layout_marginTop="28dp"
         android:onClick="MenuGenerarReporte"
@@ -94,4 +94,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_ofertas" />
+
+    <ImageView
+        android:id="@+id/img_not_NO"
+        android:layout_width="55dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="VERNotificacionesNO"
+        app:layout_constraintBottom_toTopOf="@+id/mcli_bn_catalogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_notifications_none_24" />
+
+    <ImageView
+        android:id="@+id/img_not_SI"
+        android:layout_width="55dp"
+        android:layout_height="52dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="VERNotificacionesSI"
+        app:layout_constraintBottom_toTopOf="@+id/mcli_bn_catalogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_notifications_active_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
