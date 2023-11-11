@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,7 +48,9 @@ public class Menu_Cliente extends AppCompatActivity {
             user = gson.fromJson(usuarioJson, Usuario.class);
             new Menu_Cliente.obtenerMSJNotificaciones().execute(user);
         }else{
-            Toast.makeText(Menu_Cliente.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(Menu_Cliente.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+            toast.show(); // Mostrar el Toast
         }
 
 
@@ -82,7 +85,9 @@ public class Menu_Cliente extends AppCompatActivity {
 
 
     public void MenuOfertas(View view) {
-        Toast.makeText(Menu_Cliente.this, "TUS OFERTAS:" + '\n' + "ITEM 1", Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(Menu_Cliente.this, "TUS OFERTAS:" + '\n' + "ITEM 1", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+        toast.show(); // Mostrar el Toast
 
     }
 

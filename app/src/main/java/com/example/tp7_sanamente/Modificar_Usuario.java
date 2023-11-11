@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -65,10 +66,16 @@ Usuario user;
                 new Modificar_Usuario.cargarRestricciones().execute(user);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
-                Toast.makeText(Modificar_Usuario.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Modificar_Usuario.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }else{
-            Toast.makeText(Modificar_Usuario.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Modificar_Usuario.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
     }
 
@@ -137,8 +144,11 @@ Usuario user;
                     restriccion.getClienteAsociado().setUsuarioAsociado(user);
                     new Modificar_Usuario.modificarCliente().execute(restriccion);
                     MenuirMiUsuario(view);
-                    Toast.makeText(Modificar_Usuario.this, "Usuario validado correctamente", Toast.LENGTH_LONG).show();
-                            dialog.dismiss();
+
+                        Toast toast = Toast.makeText(Modificar_Usuario.this, "Usuario validado correctamente", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 200);
+                        toast.show();
+                        dialog.dismiss();
                         }
                     });
 
@@ -165,25 +175,37 @@ Usuario user;
 
         //valida que Direccion no contenga al menos 3 caracteres, si tiene menos o está vacío marca un error en el campo informando.
         if(Direccion.isEmpty()){
-            Toast.makeText(Modificar_Usuario.this, "La direccion no puede estar vacía", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Modificar_Usuario.this, "La direccion no puede estar vacía", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
         else if(Direccion.length() <= 3){
-            Toast.makeText(Modificar_Usuario.this, "La dirección debe contener más caracteres", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Modificar_Usuario.this, "La dirección debe contener más caracteres", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
 
         //valida que pass1 o pass2 sea una sola palabra y no contenga caracteres especiales, si empieza con un "espacio" elimina el espacio en blanco
         // Verificar que los campos de contraseña no tengan espacios en blanco y no estén vacíos
         if (Pass1.trim().isEmpty() || Pass1.contains(" ")) {
-            Toast.makeText(Modificar_Usuario.this, "La nueva contraseña no puede contener espacios en blanco o estar vacía", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Modificar_Usuario.this, "La nueva contraseña no puede contener espacios en blanco o estar vacía", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
 
 
         // Verificar que la contraseña no contenga caracteres especiales (solo letras y números permitidos)
         if (!Pass1.matches("[a-zA-Z0-9]+")) {
-            Toast.makeText(Modificar_Usuario.this, "La nueva contraseña solo puede contener letras y números", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Modificar_Usuario.this, "La nueva contraseña solo puede contener letras y números", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
 
@@ -222,7 +244,10 @@ Usuario user;
                     restriccion = new Restriccion();
                     restriccion = res;
             } else {
-                Toast.makeText(Modificar_Usuario.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Modificar_Usuario.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }
@@ -251,9 +276,15 @@ Usuario user;
                 editor.putString("usuarioLogueado", usuarioJson);
                 editor.apply();
 
-                Toast.makeText(Modificar_Usuario.this, "EL CLIENTE HA SIDO MODIFICADO CON EXITO", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Modificar_Usuario.this, "EL CLIENTE HA SIDO MODIFICADO CON EXITO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             } else {
-                Toast.makeText(Modificar_Usuario.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Modificar_Usuario.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }

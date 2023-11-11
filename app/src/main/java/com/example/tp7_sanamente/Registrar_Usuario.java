@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -55,15 +56,20 @@ public class Registrar_Usuario extends AppCompatActivity {
         Usuario userNew = new Usuario();
 
         if(userTxt.isEmpty()){
-            Toast.makeText(Registrar_Usuario.this, "DEBE INGRESAR UN NOMBRE DE USUARIO", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Registrar_Usuario.this, "DEBE INGRESAR UN NOMBRE DE USUARIO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return;
         }
         else{
             new Registrar_Usuario.ExisteUsuario().execute(userTxt);
         }
         if(Existe){
-            Toast.makeText(Registrar_Usuario.this, "EL USUARIO YA EXISTE, POR FAVOR ELIJA OTRO", Toast.LENGTH_LONG).show();
 
+            Toast toast = Toast.makeText(Registrar_Usuario.this, "EL USUARIO YA EXISTE, POR FAVOR ELIJA OTRO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
     }
@@ -89,7 +95,6 @@ public class Registrar_Usuario extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean existe) {
-            //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
 
 
             if (existe) {
@@ -104,7 +109,10 @@ public class Registrar_Usuario extends AppCompatActivity {
                 Usuario userNew = new Usuario();
 
                 if(userTxt.equals(pass2Txt)){
-                    Toast.makeText(Registrar_Usuario.this, "El usuario y la contraseña no pueden ser iguales", Toast.LENGTH_LONG).show();
+
+                    Toast toast = Toast.makeText(Registrar_Usuario.this, "El usuario y la contraseña no pueden ser iguales", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 200);
+                    toast.show();
                     return;
                 }
                 if(passTxt.equals(pass2Txt)){
@@ -121,7 +129,10 @@ public class Registrar_Usuario extends AppCompatActivity {
                         startActivity(registrarCliente);
                     }
                 }else{
-                    Toast.makeText(Registrar_Usuario.this, "LAS CONTRASEÑAS DEBEN COINCIDIR", Toast.LENGTH_LONG).show();
+
+                    Toast toast = Toast.makeText(Registrar_Usuario.this, "LAS CONTRASEÑAS DEBEN COINCIDIR", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 200);
+                    toast.show();
                 }
             }
         }

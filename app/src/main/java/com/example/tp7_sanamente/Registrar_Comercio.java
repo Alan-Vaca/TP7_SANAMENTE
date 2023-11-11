@@ -3,6 +3,7 @@ package com.example.tp7_sanamente;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -157,7 +158,10 @@ public class Registrar_Comercio extends AppCompatActivity {
         }
 
         if (!isValid) {
-            Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
         return isValid;
     }
@@ -201,13 +205,19 @@ public class Registrar_Comercio extends AppCompatActivity {
         protected void onPostExecute(Boolean exito) {
 
             if(exito) {
-                Toast.makeText(Registrar_Comercio.this, "COMERCIO AGREGADO CON EXITO", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Registrar_Comercio.this, "COMERCIO AGREGADO CON EXITO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
 
                 Intent IngresarComercio = new Intent(Registrar_Comercio.this, MainActivity.class);
                 startActivity(IngresarComercio);
 
             }else {
-                Toast.makeText(Registrar_Comercio.this, "HUBO UN ERROR", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Registrar_Comercio.this, "HUBO UN ERROR", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }

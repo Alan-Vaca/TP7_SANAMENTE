@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,10 +59,15 @@ public class MiUsuarioComercio extends AppCompatActivity {
                 new MiUsuarioComercio.cargarComercio().execute(user);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
-                Toast.makeText(MiUsuarioComercio.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG).show();
-            }
+
+                Toast toast = Toast.makeText(MiUsuarioComercio.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();            }
         }else{
-            Toast.makeText(MiUsuarioComercio.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(MiUsuarioComercio.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
     }
 
@@ -110,15 +116,20 @@ public class MiUsuarioComercio extends AppCompatActivity {
                 nombreComercio.setText(comercio.getNombreComercio().toString());
 
             } else {
-                Toast.makeText(MiUsuarioComercio.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MiUsuarioComercio.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }
 
     public void DarDeBaja(View view){
         if(user.getNombreUsuario().equals("admin") && (user.getContraseña().equals("123") || user.getContraseña().equals("321"))){
-            Toast.makeText(MiUsuarioComercio.this, "NO ES POSIBLE DAR DE BAJA UN USUARIO ADMIN", Toast.LENGTH_LONG).show();
 
+            Toast toast = Toast.makeText(MiUsuarioComercio.this, "NO ES POSIBLE DAR DE BAJA UN USUARIO ADMIN", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
         else{
 
@@ -171,11 +182,17 @@ public class MiUsuarioComercio extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bool) {
             if (bool) {
-                Toast.makeText(MiUsuarioComercio.this, "COMERCIO DADO DE BAJA CON EXITO", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MiUsuarioComercio.this, "COMERCIO DADO DE BAJA CON EXITO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
                 Intent volverAlLogin = new Intent(MiUsuarioComercio.this, MainActivity.class);
                 startActivity(volverAlLogin);
             } else {
-                Toast.makeText(MiUsuarioComercio.this, "ERROR AL DAR DE BAJA", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MiUsuarioComercio.this, "ERROR AL DAR DE BAJA", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }

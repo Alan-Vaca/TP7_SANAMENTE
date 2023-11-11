@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,7 +60,9 @@ public class Calificar extends AppCompatActivity {
             Gson gson = new Gson();
             user = gson.fromJson(usuarioJson, Usuario.class);
         }else{
-            Toast.makeText(Calificar.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(Calificar.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+            toast.show(); // Mostrar el Toast
         }
 
         pedidoSeleccionado = new Pedido();
@@ -180,7 +183,9 @@ public class Calificar extends AppCompatActivity {
     public boolean ValidarCalificacion(CalificacionXcliente calificacion){
         //VALIDAR COMENTARIO
         if (calificacion.getComentario().trim().isEmpty()) {
-            Toast.makeText(Calificar.this, "Por favor, ingrese un comentario válido", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(Calificar.this, "Por favor, ingrese un comentario válido", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+            toast.show(); // Mostrar el Toast
             return false;
         }
         return true;
@@ -204,7 +209,9 @@ public class Calificar extends AppCompatActivity {
             if (com.getIdComercio() > 0) {
                 comercio.setText(com.getCuit() + " / " + com.getNombreComercio().toUpperCase());
             } else {
-                Toast.makeText(Calificar.this, "ERROR AL OBTENER COMERCIO", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(Calificar.this, "ERROR AL OBTENER COMERCIO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+                toast.show(); // Mostrar el Toast
             }
         }
     }
@@ -233,16 +240,22 @@ public class Calificar extends AppCompatActivity {
                 boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
 
                 if(isAdmin) {
-                    Toast.makeText(Calificar.this, "EL PEDIDO YA FUE CALIFICADO CON EXITO", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(Calificar.this, "EL PEDIDO YA FUE CALIFICADO CON EXITO", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+                    toast.show(); // Mostrar el Toast
                     Intent MenuAdmin = new Intent(Calificar.this, MenuAdmin.class);
                     startActivity(MenuAdmin);
                 }else {
-                    Toast.makeText(Calificar.this, "EL PEDIDO YA FUE CALIFICADO CON EXITO", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(Calificar.this, "EL PEDIDO YA FUE CALIFICADO CON EXITO", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+                    toast.show(); // Mostrar el Toast
                     Intent MenuCliente = new Intent(Calificar.this, Menu_Cliente.class);
                     startActivity(MenuCliente);
                 }
             }else{
-                Toast.makeText(Calificar.this, "HUBO UN ERROR", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(Calificar.this, "HUBO UN ERROR", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+                toast.show(); // Mostrar el Toast
             }
         }
     }

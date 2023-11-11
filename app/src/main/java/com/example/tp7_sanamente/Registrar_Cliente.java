@@ -3,6 +3,7 @@ package com.example.tp7_sanamente;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -116,7 +117,10 @@ public class Registrar_Cliente extends AppCompatActivity {
 
         // Mostrar mensaje de error si la validación falla.
         if (!isValid) {
-            Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         return isValid;
@@ -142,13 +146,19 @@ public class Registrar_Cliente extends AppCompatActivity {
         protected void onPostExecute(Boolean exito) {
 
             if(exito) {
-                Toast.makeText(Registrar_Cliente.this, "CLIENTE AGREGADO CON EXITO", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Registrar_Cliente.this, "CLIENTE AGREGADO CON EXITO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
 
                 Intent IngresarCliente = new Intent(Registrar_Cliente.this, MainActivity.class);
                 startActivity(IngresarCliente);
 
             }else {
-                Toast.makeText(Registrar_Cliente.this, "HUBO UN ERROR", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Registrar_Cliente.this, "HUBO UN ERROR", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }

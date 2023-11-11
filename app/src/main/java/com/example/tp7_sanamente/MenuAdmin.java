@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,7 +84,9 @@ public class MenuAdmin extends AppCompatActivity {
 
     public void ComercioMenuGenerarReporte(View view) {
         LoguearseComoComercio();
-        Toast.makeText(MenuAdmin.this, "SE GENERO EL SIGUIENTE REPORTE:" + '\n' + "ITEM 1", Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(MenuAdmin.this, "SE GENERO EL SIGUIENTE REPORTE:" + '\n' + "ITEM 1", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP, 0, 200);
+        toast.show();
     }
 
 
@@ -194,8 +197,6 @@ public class MenuAdmin extends AppCompatActivity {
                 editor.putString("usuarioLogueado", usuarioJson);
                 editor.apply();
 
-            } else {
-                Toast.makeText(MenuAdmin.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }
         }
 

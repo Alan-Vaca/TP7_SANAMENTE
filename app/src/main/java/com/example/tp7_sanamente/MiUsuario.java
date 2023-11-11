@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,10 +55,16 @@ public class MiUsuario extends AppCompatActivity {
                 dni.setText(dniTxt);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
-                Toast.makeText(MiUsuario.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MiUsuario.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }else{
-            Toast.makeText(MiUsuario.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(MiUsuario.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
     }
 
@@ -83,7 +90,10 @@ public class MiUsuario extends AppCompatActivity {
 
     public void DarDeBaja(View view){
         if(user.getNombreUsuario().equals("admin") && (user.getContraseña().equals("123") || user.getContraseña().equals("321"))){
-            Toast.makeText(MiUsuario.this, "NO ES POSIBLE DAR DE BAJA UN USUARIO ADMIN", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(MiUsuario.this, "NO ES POSIBLE DAR DE BAJA UN USUARIO ADMIN", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
         else{
 
@@ -135,11 +145,17 @@ public class MiUsuario extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bool) {
             if (bool) {
-                Toast.makeText(MiUsuario.this, "USUARIO DADO DE BAJA CON EXITO", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MiUsuario.this, "USUARIO DADO DE BAJA CON EXITO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
                 Intent volverAlLogin = new Intent(MiUsuario.this, MainActivity.class);
                 startActivity(volverAlLogin);
             } else {
-                Toast.makeText(MiUsuario.this, "ERROR AL DAR DE BAJA", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MiUsuario.this, "ERROR AL DAR DE BAJA", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }

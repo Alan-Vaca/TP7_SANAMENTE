@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,10 +59,14 @@ public class Mi_Comercio extends AppCompatActivity {
                 new Mi_Comercio.cargarComercio().execute(user);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
-                Toast.makeText(Mi_Comercio.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(Mi_Comercio.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         } else {
-            Toast.makeText(Mi_Comercio.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(Mi_Comercio.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
     }
 
@@ -118,7 +123,10 @@ public class Mi_Comercio extends AppCompatActivity {
             btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(Mi_Comercio.this, "ELEGISTE" + "\n" + "CANCELAR", Toast.LENGTH_LONG).show();
+
+                    Toast toast = Toast.makeText(Mi_Comercio.this, "ELEGISTE" + "\n" + "CANCELAR", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 200);
+                    toast.show();
                     dialog.dismiss();
 
                 }
@@ -136,7 +144,10 @@ public class Mi_Comercio extends AppCompatActivity {
                     if (validarComercio(comercio)) {
                     new Mi_Comercio.modificarComercio().execute(comercio);
                     MenuMiUsuarioComercio(view);
-                    Toast.makeText(Mi_Comercio.this, "Exito", Toast.LENGTH_LONG).show();
+
+                        Toast toast = Toast.makeText(Mi_Comercio.this, "Exito", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 200);
+                        toast.show();
                     }
                     dialog.dismiss();
                 }
@@ -152,20 +163,29 @@ public class Mi_Comercio extends AppCompatActivity {
         if (comercio.getNombreComercio().startsWith(" ") ||
                 comercio.getUsuarioAsociado().getNombreUsuario().startsWith(" ") ||
                 comercio.getUsuarioAsociado().getDireccion().startsWith(" ")) {
-            Toast.makeText(Mi_Comercio.this, "Ningún campo debe empezar con espacio en blanco", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Mi_Comercio.this, "Ningún campo debe empezar con espacio en blanco", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
 
         // Verificar que los campos de contraseña no tengan espacios en blanco y no estén vacíos
         String nuevaContraseña = comercio.getUsuarioAsociado().getContraseña();
         if (nuevaContraseña.trim().isEmpty() || nuevaContraseña.contains(" ")) {
-            Toast.makeText(Mi_Comercio.this, "La contraseña no puede contener espacios en blanco o estar vacía", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Mi_Comercio.this, "La contraseña no puede contener espacios en blanco o estar vacía", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
 
         // Verificar que la contraseña no contenga caracteres especiales (solo letras y números permitidos)
         if (!nuevaContraseña.matches("[a-zA-Z0-9]+")) {
-            Toast.makeText(Mi_Comercio.this, "La contraseña solo puede contener letras y números", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Mi_Comercio.this, "La contraseña solo puede contener letras y números", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
 
@@ -176,16 +196,25 @@ public class Mi_Comercio extends AppCompatActivity {
 
         if(horarios.length > 1) {
             if (horarios[0].isEmpty() || horarios[1].isEmpty()) {
-                Toast.makeText(Mi_Comercio.this, "Horarios vacios", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Mi_Comercio.this, "Horarios vacios", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
                 return false;
             }
             if (!horarios[0].isEmpty() && !validarFormatoHorario(horarios[0])) {
-                Toast.makeText(Mi_Comercio.this, "Formato de horarios inválidos", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Mi_Comercio.this, "Formato de horarios inválidos", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
                 return false;
             }
 
             if (!horarios[1].isEmpty() && !validarFormatoHorario(horarios[1])) {
-                Toast.makeText(Mi_Comercio.this, "Formato de horarios inválidos", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Mi_Comercio.this, "Formato de horarios inválidos", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
                 return false;
             }
 
@@ -201,13 +230,19 @@ public class Mi_Comercio extends AppCompatActivity {
 
 
                 if (aperturaHoras > cierreHoras || (aperturaHoras == cierreHoras && aperturaMinutos > cierreMinutos)) {
-                    Toast.makeText(Mi_Comercio.this, "Horarios incoherentes", Toast.LENGTH_LONG).show();
+
+                    Toast toast = Toast.makeText(Mi_Comercio.this, "Horarios incoherentes", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 200);
+                    toast.show();
                     return false;
                 }
             }
         }
         else {
-            Toast.makeText(Mi_Comercio.this, "Horario vacio", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(Mi_Comercio.this, "Horario vacio", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
 
@@ -255,7 +290,10 @@ public class Mi_Comercio extends AppCompatActivity {
 
                 comercio.setUsuarioAsociado(user);
             } else {
-                Toast.makeText(Mi_Comercio.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Mi_Comercio.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }
@@ -284,9 +322,14 @@ public class Mi_Comercio extends AppCompatActivity {
                 editor.putString("usuarioLogueado", usuarioJson);
                 editor.apply();
 
-                Toast.makeText(Mi_Comercio.this, "EL COMERCIO HA SIDO MODIFICADO CON EXITO", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Mi_Comercio.this, "EL COMERCIO HA SIDO MODIFICADO CON EXITO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             } else {
-                Toast.makeText(Mi_Comercio.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(Mi_Comercio.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }

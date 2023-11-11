@@ -95,6 +95,12 @@
     <string name="hint_ejemplo_nuevaContraseña">"Nueva contraseña"</string>
     <string name="hint_ejemplo_stock">"Stock"</string>
     <string name="hint_ejemplo_precio">"Precio"</string>
+    <string name="hint_ejemplo_usuario">"Usuario"</string>
+    <string name="hint_ejemplo_fechaTarjeta">"mm/aaaa"</string>
+    <string name="hint_ejemplo_nombreDeComercio">"Nombre de comercio"</string>
+    <string name="hint_ejemplo_repetirContraseña">"Repetir contraseña"</string>
+
+
 
 
     <string name="switch_ofertas">"OFERTAS"</string>
@@ -110,14 +116,19 @@
     <string name="tv_horarios">"HORARIOS"</string>
     <string name="tv_ingredientes">"INGREDIENTES"</string>
     <string name="tv_nombre">"NOMBRE"</string>
+    <string name="tv_apellido">"APELLIDO"</string>
     <string name="tv_nombreComercio">"NOMBRE DEL COMERCIO"</string>
     <string name="tv_nombreTarjeta">"NOMBRE DEL PROPIETARIO DE LA TARJETA"</string>
     <string name="tv_nombreUsuario">"NOMBRE DE USUARIO"</string>
     <string name="tv_ordernarPor">"ORDENAR POR:"</string>
     <string name="tv_precio">"PRECIO"</string>
     <string name="tv_recientes">"RECIENTES"</string>
-    <string name="tv_repetirContraseña">"REPETIR CONTRASEÑA"</string>
     <string name="tv_usuario">"USUARIO"</string>
+    <string name="tv_contraseñaActual">"Contraseña actual"</string>
+    <string name="tv_contraseñaNueva">"Contraseña nueva"</string>
+    <string name="tv_repetirContraseña">"Repetir contraseña"</string>
+    <string name="tv_Contraseña">"CONTRASEÑA"</string>
+
 
 
     <!-- _________________  AGREGAR_PRODUCTO  _________________ -->

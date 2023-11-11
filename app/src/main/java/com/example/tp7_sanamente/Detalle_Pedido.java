@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -59,7 +60,9 @@ public class Detalle_Pedido extends AppCompatActivity {
             Gson gson = new Gson();
             user = gson.fromJson(usuarioJson, Usuario.class);
         }else{
-            Toast.makeText(Detalle_Pedido.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(Detalle_Pedido.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+            toast.show(); // Mostrar el Toast
         }
 
         detallesDelPedido = new ArrayList<pedidoXproducto>();
@@ -129,7 +132,9 @@ public class Detalle_Pedido extends AppCompatActivity {
     }
 
     public void ImprimirPedido(View view) {
-        Toast.makeText(Detalle_Pedido.this, "SERA IMPRIMIDO", Toast.LENGTH_LONG).show();
+        Toast toast = Toast.makeText(Detalle_Pedido.this, "SERA IMPRIMIDO", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+        toast.show(); // Mostrar el Toast
     }
 
 
@@ -152,8 +157,6 @@ public class Detalle_Pedido extends AppCompatActivity {
         protected void onPostExecute(Cliente cli) {
             if (cli.getIdCliente() > 0) {
                 cliente.setText("CLIENTE: " + cli.getUsuarioAsociado().getDNI() + " - " + cli.getUsuarioAsociado().getNombre() + ", " + cli.getUsuarioAsociado().getApellido());
-            } else {
-                Toast.makeText(Detalle_Pedido.this, "ERROR AL OBTENER CLIENTE", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -175,8 +178,6 @@ public class Detalle_Pedido extends AppCompatActivity {
         protected void onPostExecute(Comercio com) {
             if (com.getIdComercio() > 0) {
                 comercio.setText(com.getCuit() + " / " + com.getNombreComercio());
-            } else {
-                Toast.makeText(Detalle_Pedido.this, "ERROR AL OBTENER COMERCIO", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -207,8 +208,6 @@ public class Detalle_Pedido extends AppCompatActivity {
 
                 cantidadProductos.setText("CANTIDAD DE PRODUCTOS " + detallesPedido.size());
 
-            } else {
-                Toast.makeText(Detalle_Pedido.this, "ERROR AL OBTENER LISTADO DE PEDIDOS", Toast.LENGTH_LONG).show();
             }
         }
     }
