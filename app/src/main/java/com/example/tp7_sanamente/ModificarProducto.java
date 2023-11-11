@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -112,7 +113,10 @@ public class ModificarProducto extends AppCompatActivity {
             }
 
         }else{
-            Toast.makeText(ModificarProducto.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
 
@@ -145,7 +149,10 @@ public class ModificarProducto extends AppCompatActivity {
             new ModificarProducto.obtenerEtiquetadosXproducto().execute(productoSeleccionado);
 
         }else{
-            Toast.makeText(ModificarProducto.this, "PRODUCTO NO SELECCIONADO", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "PRODUCTO NO SELECCIONADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
     }
 
@@ -165,7 +172,6 @@ public class ModificarProducto extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(ArrayList<Etiquetado> listadoEtiquetado) {
-            //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
             ArrayAdapter<Etiquetado> adapter = new ArrayAdapter<>(ModificarProducto.this, android.R.layout.simple_spinner_dropdown_item, listadoEtiquetado);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             etiquetado_1.setAdapter(adapter);
@@ -193,7 +199,6 @@ public class ModificarProducto extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(ArrayList<Etiquetado> listadoEtiquetado) {
-            //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
 
             if (listadoEtiquetado.size() > 0) {
 
@@ -217,12 +222,8 @@ public class ModificarProducto extends AppCompatActivity {
                         }else{
                             etiquetado_3.setSelection(listadoEtiquetado.get(2).getIdEtiquetado());
                         }
-                } else {
-                    Toast.makeText(ModificarProducto.this, "HUBO UN ERROR AL CONSULTAR LOS ETIQUETADOS", Toast.LENGTH_LONG).show();
                 }
 
-            } else {
-                //Toast.makeText(ModificarProducto.this, "HUBO UN ERROR AL CONSULTAR LOS ETIQUETADOS", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -332,7 +333,10 @@ public class ModificarProducto extends AppCompatActivity {
                     ProductoCarrito.setCantidad(cantidadSolicitada);
 
                     if(ProductoCarrito.getCantidad() > productoSeleccionado.getStock()){
-                        Toast.makeText(ModificarProducto.this, "LA CANTIDAD EXCEDE EL STOCK", Toast.LENGTH_LONG).show();
+
+                        Toast toast = Toast.makeText(ModificarProducto.this, "LA CANTIDAD EXCEDE EL STOCK", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 200);
+                        toast.show();
                         return;
                     }
 
@@ -375,7 +379,10 @@ public class ModificarProducto extends AppCompatActivity {
                     startActivity(agregarAlcarrito);
                 }
                 else {
-                    Toast.makeText(ModificarProducto.this, "SELECCIONE LA CANTIDAD A COMPRAR PARA AGREGAR AL CARRITO", Toast.LENGTH_LONG).show();
+
+                    Toast toast = Toast.makeText(ModificarProducto.this, "SELECCIONE LA CANTIDAD A COMPRAR PARA AGREGAR AL CARRITO", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 200);
+                    toast.show();
                 }
             }
         }
@@ -423,7 +430,10 @@ public class ModificarProducto extends AppCompatActivity {
 
 
         if (!isValid) {
-            Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
         return isValid;
 
@@ -434,49 +444,82 @@ public class ModificarProducto extends AppCompatActivity {
 
 
         if((id1 == 1 || id2 == 1 || id3 == 1) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en azúcares. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "El producto contiene exceso en azúcares. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         if((id1 == 2 || id2 == 2 || id3 == 2) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas totales. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas totales. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         if((id1 == 3 || id2 == 3 || id3 == 3) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas saturadas. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "El producto contiene exceso en grasas saturadas. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         if((id1 == 4 || id2 == 4 || id3 == 4) && restriccion.isCeliaco() || restriccion.isDiabetico()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en sodio. No es apto para celíacos o diabéticos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "El producto contiene exceso en sodio. No es apto para celíacos o diabéticos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         if((id1 == 5 || id2 == 5 || id3 == 5) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene exceso en calorías. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "El producto contiene exceso en calorías. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         if((id1 == 6 || id2 == 6 || id3 == 6) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene edulcorante. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "El producto contiene edulcorante. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         if((id1 == 7 || id2 == 7 || id3 == 74) && restriccion.isCeliaco()){
-            Toast.makeText(ModificarProducto.this, "El producto contiene cafeína. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "El producto contiene cafeína. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         if((id1 == 6 || id2 == 6 || id3 == 6) && restriccion.isDiabetico() || restriccion.isHipertenso()){
-            Toast.makeText(ModificarProducto.this, "Este producto contiene edulcorante. Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "Este producto contiene edulcorante. Consuma bajo responsabilidad", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         if((id1 == 7 || id2 == 7 || id3 == 7) && restriccion.isDiabetico() || restriccion.isHipertenso()){
-            Toast.makeText(ModificarProducto.this, "Este producto contiene cafeína. Consuma bajo responsabilidad", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "Este producto contiene cafeína. Consuma bajo responsabilidad", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         if(!restriccion.getAlergico().trim().isEmpty())
         if(producto.getIngredientes().toUpperCase().trim().contains(restriccion.getAlergico().trim().toUpperCase())){
-            Toast.makeText(ModificarProducto.this, "No es posible comprar por su seguridad ya que es alérgico a uno de sus ingredientes.", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "No es posible comprar por su seguridad ya que es alérgico a uno de sus ingredientes.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
 
         if (producto.getStock() <= 0) {
-            Toast.makeText(ModificarProducto.this, "Ingrese la cantidad a comprar para agregar al carrito.", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(ModificarProducto.this, "Ingrese la cantidad a comprar para agregar al carrito.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             return false;
         }
 
@@ -501,11 +544,17 @@ public class ModificarProducto extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bool) {
             if (bool) {
-                Toast.makeText(ModificarProducto.this, "PRODUCTO MODIFICADO CON EXITO", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(ModificarProducto.this, "PRODUCTO MODIFICADO CON EXITO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
                 Intent volverAlCatalogo = new Intent(ModificarProducto.this, Mis_Productos.class);
                 startActivity(volverAlCatalogo);
             } else {
-                Toast.makeText(ModificarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(ModificarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }
@@ -530,7 +579,10 @@ public class ModificarProducto extends AppCompatActivity {
                 restriccion = new Restriccion();
                 restriccion = res;
             } else {
-                Toast.makeText(ModificarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(ModificarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }

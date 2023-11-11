@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -176,7 +177,10 @@ public class MiCarritoCompras extends AppCompatActivity {
             });
 
         } else {
-            Toast.makeText(this, "DEBES SELECCIONAR UN PRODUCTO DE TU CARRITO", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(this, "DEBES SELECCIONAR UN PRODUCTO DE TU CARRITO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
     }
 
@@ -230,7 +234,10 @@ public class MiCarritoCompras extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(this, "Selecciona un elemento para modificar", Toast.LENGTH_SHORT).show();
+
+            Toast toast = Toast.makeText(this, "Selecciona un elemento para modificar", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
     }
 

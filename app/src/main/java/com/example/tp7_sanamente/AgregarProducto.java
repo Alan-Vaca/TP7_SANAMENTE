@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -79,10 +80,15 @@ public class AgregarProducto extends AppCompatActivity {
                 new AgregarProducto.cargarComercio().execute(user);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
-                Toast.makeText(AgregarProducto.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(AgregarProducto.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+                toast.show(); // Mostrar el Toast
             }
         }else{
-            Toast.makeText(AgregarProducto.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(AgregarProducto.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+            toast.show(); // Mostrar el Toast
         }
     }
 
@@ -112,8 +118,6 @@ public class AgregarProducto extends AppCompatActivity {
                 etiquetado2.setAdapter(adapter);
                 etiquetado3.setAdapter(adapter);
 
-            } else {
-                Toast.makeText(AgregarProducto.this, "HUBO UN ERROR AL CONSULTAR LOS ETIQUETADOS", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -139,7 +143,9 @@ public class AgregarProducto extends AppCompatActivity {
         idEtiquetado3 = etiquetado3.getSelectedItemPosition();
 
         if (producto.getNombre().isEmpty()) {
-            Toast.makeText(AgregarProducto.this, "Por favor, ingrese el nombre del producto.", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(AgregarProducto.this, "Por favor, ingrese el nombre del producto.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+            toast.show(); // Mostrar el Toast
         } else {
             new ExisteProducto().execute(producto.getNombre());
         }
@@ -156,7 +162,9 @@ public class AgregarProducto extends AppCompatActivity {
         // Validar que contenga al menos un ingrediente
         if (ingredientsTxt.isEmpty()) {
             isValid = false;
-            Toast.makeText(AgregarProducto.this, "Por favor, ingrese al menos un ingrediente.", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(AgregarProducto.this, "Por favor, ingrese al menos un ingrediente.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+            toast.show(); // Mostrar el Toast
         }
 
         // Validar que el precio sea mayor a cero
@@ -164,11 +172,15 @@ public class AgregarProducto extends AppCompatActivity {
             price = Integer.parseInt(precio.getText().toString());
             if (price <= 0) {
                 isValid = false;
-                Toast.makeText(AgregarProducto.this, "El precio debe ser mayor a cero.", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(AgregarProducto.this, "El precio debe ser mayor a cero.", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+                toast.show(); // Mostrar el Toast
             }
         } catch (NumberFormatException e) {
             isValid = false;
-            Toast.makeText(AgregarProducto.this, "Por favor, ingrese un precio válido.", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(AgregarProducto.this, "Por favor, ingrese un precio válido.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+            toast.show(); // Mostrar el Toast
         }
 
         // Validar que el stock sea mayor o igual a cero
@@ -176,11 +188,15 @@ public class AgregarProducto extends AppCompatActivity {
             stock = Integer.parseInt(inventario.getText().toString());
             if (stock < 0) {
                 isValid = false;
-                Toast.makeText(AgregarProducto.this, "El stock no puede ser negativo.", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(AgregarProducto.this, "El stock no puede ser negativo.", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+                toast.show(); // Mostrar el Toast
             }
         } catch (NumberFormatException e) {
             isValid = false;
-            Toast.makeText(AgregarProducto.this, "Por favor, ingrese un valor de inventario válido.", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(AgregarProducto.this, "Por favor, ingrese un valor de inventario válido.", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+            toast.show(); // Mostrar el Toast
         }
 
 
@@ -206,8 +222,6 @@ public class AgregarProducto extends AppCompatActivity {
             if (comercioObtenido.getIdComercio() > 0) {
                 comercio = comercioObtenido;
                 comercio.setUsuarioAsociado(user);
-            } else {
-                Toast.makeText(AgregarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -228,7 +242,9 @@ public class AgregarProducto extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean existe) {
             if (existe) {
-                Toast.makeText(AgregarProducto.this, "EL PRODUCTO YA EXISTE, POR FAVOR ELIJA OTRO NOMBRE.", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(AgregarProducto.this, "EL PRODUCTO YA EXISTE, POR FAVOR ELIJA OTRO NOMBRE.", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             } else {
                 if (validarProducto(producto, idEtiquetado1, idEtiquetado2, idEtiquetado3)) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(AgregarProducto.this);
@@ -285,17 +301,24 @@ public class AgregarProducto extends AppCompatActivity {
 
                 if(isAdmin) {
                     // El usuario es un administrador, realiza las acciones correspondientes
-                    Toast.makeText(AgregarProducto.this, "PRODUCTO AGREGADO CON EXITO", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(AgregarProducto.this, "PRODUCTO AGREGADO CON EXITO", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 200);
+                    toast.show();
                     Intent volverAlmenu = new Intent(AgregarProducto.this, MenuAdmin.class);
                     startActivity(volverAlmenu);
                 } else {
                     // El usuario no es un administrador, realiza las acciones correspondientes
-                    Toast.makeText(AgregarProducto.this, "PRODUCTO AGREGADO CON EXITO", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(AgregarProducto.this, "PRODUCTO AGREGADO CON EXITO", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP, 0, 200);
+                    toast.show();
                     Intent volverAlmenu = new Intent(AgregarProducto.this, MenuComercio.class);
                     startActivity(volverAlmenu);
                 }
             } else {
-                Toast.makeText(AgregarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(AgregarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+                toast.show(); // Mostrar el Toast
             }
         }
     }

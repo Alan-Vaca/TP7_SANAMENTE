@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -70,7 +71,9 @@ public class Metodo_De_Pago extends AppCompatActivity {
             Gson gsonUser = new Gson();
             user = gsonUser.fromJson(usuarioJson, Usuario.class);
         }else{
-            Toast.makeText(Metodo_De_Pago.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(Metodo_De_Pago.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         tipoPago.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -170,7 +173,10 @@ public class Metodo_De_Pago extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bool) {
             if (bool) {
-                Toast.makeText(Metodo_De_Pago.this, "EL PEDIDO YA FUE SOLICITADO, REVISA TU HISTORIAL", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(Metodo_De_Pago.this, "EL PEDIDO YA FUE SOLICITADO, REVISA TU HISTORIAL", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
 
                 misProductosPedido.clear();
                 SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
@@ -183,7 +189,9 @@ public class Metodo_De_Pago extends AppCompatActivity {
                 Intent historial = new Intent(Metodo_De_Pago.this, MiHistorial.class);
                 startActivity(historial);
             } else {
-                Toast.makeText(Metodo_De_Pago.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(Metodo_De_Pago.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }
@@ -193,7 +201,9 @@ public class Metodo_De_Pago extends AppCompatActivity {
         boolean isValid = true;
 
         if(tipoPago.getSelectedItemPosition() == 0){
-            Toast.makeText(Metodo_De_Pago.this, "SELECCIONE UN TIPO DE PAGO", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(Metodo_De_Pago.this, "SELECCIONE UN TIPO DE PAGO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
             isValid = false;
         }
 

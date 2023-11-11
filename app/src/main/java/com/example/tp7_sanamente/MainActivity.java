@@ -19,6 +19,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -255,7 +256,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(ingresarcomercio);
                 }
             } else {
-                Toast.makeText(MainActivity.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES " + "\n" + "O ASEGURECE DE NO ESTAR DADO DE BAJA", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(MainActivity.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES " + "\n" + "O ASEGURECE DE NO ESTAR DADO DE BAJA", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
+                toast.show(); // Mostrar el Toast
             }
         }
 

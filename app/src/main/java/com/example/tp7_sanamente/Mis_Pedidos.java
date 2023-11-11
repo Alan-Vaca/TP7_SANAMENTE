@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -84,13 +85,13 @@ public class Mis_Pedidos extends AppCompatActivity {
                     ArrayAdapter<Pedido> adapter = new ArrayAdapter<>(Mis_Pedidos.this, android.R.layout.simple_spinner_dropdown_item, listadoPedidos);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     lv_pedidos.setAdapter(adapter);
-                } else {
-                    Toast.makeText(Mis_Pedidos.this, "HUBO UN ERROR AL CONSULTAR LOS HISTORIALES", Toast.LENGTH_LONG).show();
                 }
             }
 
         }else{
-            Toast.makeText(Mis_Pedidos.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+            Toast toast = Toast.makeText(Mis_Pedidos.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
         confirmar.setEnabled(false);
@@ -158,8 +159,6 @@ public class Mis_Pedidos extends AppCompatActivity {
 
                 lv_pedidos.setAdapter(adapter);
 
-            } else {
-                Toast.makeText(Mis_Pedidos.this, "HUBO UN ERROR AL CONSULTAR LOS HISTORIALES", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -246,9 +245,13 @@ public class Mis_Pedidos extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bol) {
             if (bol) {
-                Toast.makeText(Mis_Pedidos.this, "EL PEDIDO CAMBIO DE ESTADO EXITOSAMENTE", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(Mis_Pedidos.this, "EL PEDIDO CAMBIO DE ESTADO EXITOSAMENTE", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             } else {
-                Toast.makeText(Mis_Pedidos.this, "ERROR AL CAMBIAR EL ESTADO", Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(Mis_Pedidos.this, "ERROR AL CAMBIAR EL ESTADO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }

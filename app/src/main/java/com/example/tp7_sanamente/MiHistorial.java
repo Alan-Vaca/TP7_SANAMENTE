@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -100,8 +101,6 @@ public class MiHistorial extends AppCompatActivity {
 
                     lv_historial.setAdapter(adapter);
 
-                } else {
-                    Toast.makeText(MiHistorial.this, "HUBO UN ERROR AL CONSULTAR LOS HISTORIALES", Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -114,7 +113,10 @@ public class MiHistorial extends AppCompatActivity {
                 confirmarEntrega.setText("");
             }
         }else{
-            Toast.makeText(MiHistorial.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(MiHistorial.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
 
 
@@ -162,8 +164,6 @@ public class MiHistorial extends AppCompatActivity {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 lv_historial.setAdapter(adapter);
 
-            } else {
-                Toast.makeText(MiHistorial.this, "HUBO UN ERROR AL CONSULTAR LOS HISTORIALES", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -249,8 +249,6 @@ public class MiHistorial extends AppCompatActivity {
                 editor.putString("pedidoSeleccionado", pedidoJson);
                 editor.apply();
 
-            } else {
-                Toast.makeText(MiHistorial.this, "HUBO UN ERROR AL CONSULTAR EL PEDIDO", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -284,9 +282,15 @@ public class MiHistorial extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bol) {
             if (bol) {
-                Toast.makeText(MiHistorial.this, "EL PEDIDO CAMBIO DE ESTADO EXITOSAMENTE", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MiHistorial.this, "EL PEDIDO CAMBIO DE ESTADO EXITOSAMENTE", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             } else {
-                Toast.makeText(MiHistorial.this, "ERROR AL CAMBIAR EL ESTADO", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MiHistorial.this, "ERROR AL CAMBIAR EL ESTADO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -44,10 +45,16 @@ public class MisNotificaciones extends AppCompatActivity {
                 new MisNotificaciones.cargarNotificaciones().execute(user);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
-                Toast.makeText(MisNotificaciones.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MisNotificaciones.this, "Error al obtener los datos del usuario", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }else{
-            Toast.makeText(MisNotificaciones.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG).show();
+
+            Toast toast = Toast.makeText(MisNotificaciones.this, "NO ESTAS LOGUEADO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
         }
     }
 
@@ -72,7 +79,10 @@ public class MisNotificaciones extends AppCompatActivity {
                 ofertas.setChecked(notificacion.isOfertas());
                 productos.setChecked(notificacion.isProductos());
             } else {
-                Toast.makeText(MisNotificaciones.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MisNotificaciones.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }
@@ -118,7 +128,10 @@ public class MisNotificaciones extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bool) {
             if (bool){
-                Toast.makeText(MisNotificaciones.this, "NOTIFICACIONES GRABADAS CON EXITO", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MisNotificaciones.this, "NOTIFICACIONES GRABADAS CON EXITO", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
                 // Recuperar el booleano isAdmin de SharedPreferences
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                 boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
@@ -133,7 +146,10 @@ public class MisNotificaciones extends AppCompatActivity {
                     startActivity(menuCliente);
                 }
             } else {
-                Toast.makeText(MisNotificaciones.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG).show();
+
+                Toast toast = Toast.makeText(MisNotificaciones.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
             }
         }
     }
