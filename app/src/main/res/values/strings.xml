@@ -153,6 +153,7 @@
     <string name="tv_enEspera">EN ESPERA</string>
     <string name="tv_fechaDesde">FECHA DESDE</string>
     <string name="tv_fechaHasta">FECHA HASTA</string>
+    <string name="tv_sinOrdenar">SIN ORDENAR</string>
     <string name="tv_hs">HS.</string>
 
     <!-- _________________  MAIN _________________ -->

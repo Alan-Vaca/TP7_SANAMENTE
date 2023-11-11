@@ -105,6 +105,11 @@ public class Pedido implements Parcelable{
         }
     }
 
+    public String getFechaFormateada() {
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        return formatoFecha.format(fecha);
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());

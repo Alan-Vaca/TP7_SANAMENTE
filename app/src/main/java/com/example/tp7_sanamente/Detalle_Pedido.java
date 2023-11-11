@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
@@ -36,6 +37,7 @@ public class Detalle_Pedido extends AppCompatActivity {
     ListView lv_listado;
     ArrayList<pedidoXproducto> detallesDelPedido;
     Button calificar;
+    String strCliente, srtComercio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,9 +76,13 @@ public class Detalle_Pedido extends AppCompatActivity {
                         .create();
                 pedidoSeleccionado = gson.fromJson(pedidoJson, Pedido.class);
 
+               // SimpleDateFormat fechaFormateada = new SimpleDateFormat("dd/MM/yyyy");
+                //fecha.setText("FECHA DEL PEDIDO: " + fechaFormateada.format(pedidoSeleccionado.getFecha()));
+
+
                 numeroPedido.setText("PEDIDO N°" + pedidoSeleccionado.getIdPedido());
                 estado.setText("ESTADO: " + pedidoSeleccionado.getEstadoString());
-                fecha.setText(pedidoSeleccionado.getFecha().toString());
+                fecha.setText(pedidoSeleccionado.getFechaFormateada());
                 montoTotal.setText("MONTO TOTAL: $" + pedidoSeleccionado.getMonto().toString());
 
                 if(user.isCliente()){
@@ -129,7 +135,40 @@ public class Detalle_Pedido extends AppCompatActivity {
     }
 
     public void ImprimirPedido(View view) {
-        Toast.makeText(Detalle_Pedido.this, "SERA IMPRIMIDO", Toast.LENGTH_LONG).show();
+
+
+        ArrayList<String> datosPedido = new ArrayList<>();
+        Toast.makeText(Detalle_Pedido.this, "Generando Reporte...", Toast.LENGTH_LONG).show();
+
+        datosPedido.add("REPORTE SANAMENTE");
+        datosPedido.add("-----------------------");
+        datosPedido.add("Detalle del Pedido Nro " + pedidoSeleccionado.getIdPedido());
+        datosPedido.add("ESTADO: " + pedidoSeleccionado.getEstadoString());
+        datosPedido.add("CLIENTE: " + strCliente);
+        datosPedido.add("COMERCIO: " + srtComercio);
+        datosPedido.add("FECHA DEL PEDIDO: " + pedidoSeleccionado.getFechaFormateada());
+        datosPedido.add("");
+        datosPedido.add("");
+        datosPedido.add("DETALLE DEL PEDIDO");
+        datosPedido.add("");
+
+        for (pedidoXproducto detalle : detallesDelPedido) {
+            datosPedido.add(detalle.getProducto().getNombre() + " - $" + detalle.getProducto().getPrecio() + " - Cantidad: " + detalle.getCantidad());
+        }
+        datosPedido.add("");
+        datosPedido.add("");
+        datosPedido.add("CANTIDAD DE PRODUCTOS: " + detallesDelPedido.size());
+        datosPedido.add("MONTO TOTAL: $" + pedidoSeleccionado.getMonto());
+
+        boolean exito = ExportarPdf.exportarAPdf(Detalle_Pedido.this, datosPedido, "DetallePedido");
+
+        if (exito) {
+            Toast.makeText(Detalle_Pedido.this, "PDF generado con éxito", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(Detalle_Pedido.this, "Error al generar el PDF", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 
 
@@ -152,6 +191,7 @@ public class Detalle_Pedido extends AppCompatActivity {
         protected void onPostExecute(Cliente cli) {
             if (cli.getIdCliente() > 0) {
                 cliente.setText("CLIENTE: " + cli.getUsuarioAsociado().getDNI() + " - " + cli.getUsuarioAsociado().getNombre() + ", " + cli.getUsuarioAsociado().getApellido());
+                strCliente = (cli.getUsuarioAsociado().getDNI() + " - " + cli.getUsuarioAsociado().getNombre() + ", " + cli.getUsuarioAsociado().getApellido());
             } else {
                 Toast.makeText(Detalle_Pedido.this, "ERROR AL OBTENER CLIENTE", Toast.LENGTH_LONG).show();
             }
@@ -175,6 +215,7 @@ public class Detalle_Pedido extends AppCompatActivity {
         protected void onPostExecute(Comercio com) {
             if (com.getIdComercio() > 0) {
                 comercio.setText(com.getCuit() + " / " + com.getNombreComercio());
+                srtComercio = com.getCuit() + " / " + com.getNombreComercio();
             } else {
                 Toast.makeText(Detalle_Pedido.this, "ERROR AL OBTENER COMERCIO", Toast.LENGTH_LONG).show();
             }

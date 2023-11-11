@@ -202,11 +202,11 @@ public class consultasHistoriales {
 
             for (Historial historial : lista) {
                 if (
-                        (entregado && historial.getEstado() == 2) ||              //entregado
+                        (entregado && historial.getEstado() == 2) ||                        //entregado
                                 (pendiente && historial.getEstado() == 1) ||               //pendiente
                                 (cancelado && historial.getEstado() == 4)                  //cancelado
                 ) {
-                    Log.d("Filtro", historial.getEstadoString());
+
                     listaFiltrada.add(historial);
                 }
             }
@@ -215,7 +215,7 @@ public class consultasHistoriales {
     }
 
     private void ordenarListado(ArrayList<Historial> lista, String orden) {
-        Log.d("listadoHistorial.orden", String.valueOf(orden));
+
         switch (orden) {
             case "en espera":
                 Collections.sort(lista, Comparator.comparingInt(Historial::getEstado));

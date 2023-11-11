@@ -178,8 +178,7 @@ public class MiHistorial extends AppCompatActivity {
     public void DetalleHistorial(View view) {
         new MiHistorial.obtenerPedidoXid().execute(itemHistorialSeleccionado.getPedidoRealizado().getIdPedido());
 
-        Intent DetalleHistorial = new Intent(this, Detalle_Pedido.class);
-        startActivity(DetalleHistorial);
+
     }
 
     public void VolverAlMenu(View view) {
@@ -248,6 +247,9 @@ public class MiHistorial extends AppCompatActivity {
                 String pedidoJson = gson.toJson(pedido);
                 editor.putString("pedidoSeleccionado", pedidoJson);
                 editor.apply();
+
+                Intent DetalleHistorial = new Intent(MiHistorial.this, Detalle_Pedido.class);
+                startActivity(DetalleHistorial);
 
             } else {
                 Toast.makeText(MiHistorial.this, "HUBO UN ERROR AL CONSULTAR EL PEDIDO", Toast.LENGTH_LONG).show();
