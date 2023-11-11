@@ -236,10 +236,14 @@ public class Mis_Productos extends AppCompatActivity {
     }
 
     public void CatalogoFiltros(View view) {
-        Intent catalogoFiltros = new Intent(this, Filtros.class);
-        catalogoFiltros.putParcelableArrayListExtra("listaProductos", listaProductos);
-        startActivity(catalogoFiltros);
-
+        try {
+            Intent catalogoFiltros = new Intent(this, Filtros.class);
+            catalogoFiltros.putParcelableArrayListExtra("listaProductos", listaProductos);
+            startActivity(catalogoFiltros);
+        }catch (Exception e){
+            Intent catalogoFiltros = new Intent(this, Filtros.class);
+            startActivity(catalogoFiltros);
+        }
     }
 
     public void CatalogoAgregarNuevoProducto(View view) {
