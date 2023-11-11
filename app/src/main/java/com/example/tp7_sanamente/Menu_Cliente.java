@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,9 +23,11 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
+import BaseDeDatos.consultasReportes;
 import Entidad.Historial;
 import Entidad.Pedido;
 import Entidad.Producto;
+import Entidad.Reporte;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
 
@@ -31,6 +35,9 @@ public class Menu_Cliente extends AppCompatActivity {
     ImageView notificacionSI, notificacionNO;
     String noti_msj;
     Usuario user;
+    ArrayList<Producto> listaProductosOfertas;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,10 +92,13 @@ public class Menu_Cliente extends AppCompatActivity {
 
 
     public void MenuOfertas(View view) {
+        new Menu_Cliente.obtenerOfertas().execute(user);
+
+/*
         Toast toast = Toast.makeText(Menu_Cliente.this, "TUS OFERTAS:" + '\n' + "ITEM 1", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
         toast.show(); // Mostrar el Toast
-
+*/
     }
 
 
@@ -124,6 +134,45 @@ public class Menu_Cliente extends AppCompatActivity {
 
     }
 
+
+    private class obtenerOfertas extends AsyncTask<Usuario, Void, ArrayList<Producto>> {
+        @Override
+        protected ArrayList<Producto> doInBackground(Usuario... usuario) {
+            listaProductosOfertas = new ArrayList<>();
+
+            Conexion con = new Conexion();
+            try {
+                listaProductosOfertas = con.obtenerListadoProductosOfertas(usuario[0]);
+                Log.d("OFERTAS1", String.valueOf(listaProductosOfertas));
+
+                return listaProductosOfertas;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return listaProductosOfertas;
+            }
+        }
+        @Override
+        protected void onPostExecute(ArrayList<Producto> listaProductosOfertas) {
+
+            try {
+                SharedPreferences preferencesOfertas = getSharedPreferences("mi_prefer", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorOfertas = preferencesOfertas.edit();
+                Gson gsonOfertas = new Gson();
+                String listaComoJsonOfertas = gsonOfertas.toJson(listaProductosOfertas);
+                editorOfertas.putString("listaProductosOfertasObtenida", listaComoJsonOfertas);
+                editorOfertas.apply();
+
+            }
+            catch (Exception e) {
+                Log.d("Filtro.enviar", e.toString());
+            }
+
+            Intent intent = new Intent(Menu_Cliente.this, Mis_Productos.class);
+            startActivity(intent);
+            finish();
+        }
+
+    }
 
 
     public void NotificacionesSI(View view) {

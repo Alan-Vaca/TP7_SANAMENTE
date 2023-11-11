@@ -25,6 +25,53 @@ public class consultasProductos {
     //CONSULTAS DE TIPO SELECT
     //--------------------------------------------------------------------------------------
 
+    public ArrayList<Producto> obtenerListadoProductosOfertas(Connection conn, Usuario user) {
+        ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
+
+        try {
+            String query = "SELECT p.idProducto, p.nombreProducto, p.ingredientes, p.stock, p.estado, " +
+                    "p.precio, AVG(c.calificacion) prom " +
+                    "FROM productos p " +
+                    "INNER JOIN calificaciones c ON p.idProducto = c.idProducto " +
+                    "WHERE p.estado = 1 " +
+                    "GROUP BY p.idProducto, p.nombreProducto, p.ingredientes, p.stock, p.estado, p.precio " +
+                    "HAVING AVG(c.calificacion) >= 4 " +
+                    "ORDER BY p.precio, AVG(c.calificacion)";
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        Producto producto = new Producto();
+                        producto.setIdProducto(rs.getInt("p.idProducto"));
+                        producto.setNombre(rs.getString("p.nombreProducto"));
+                        producto.setIngredientes(rs.getString("p.ingredientes"));
+                        producto.setPrecio(rs.getFloat("p.precio"));
+                        producto.setStock(rs.getInt("p.stock"));
+                        producto.setEstado(rs.getBoolean("p.estado"));
+                        //producto.setIdComercio(rs.getInt("idComercio"));
+                        producto.setPuntaje(rs.getFloat("prom"));
+
+                        listadoProducto.add(producto);
+
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return listadoProducto;
+    }
+
+
+
     public ArrayList<Producto> obtenerListadoProductos(Connection conn, Usuario user) {
         ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
 
@@ -76,6 +123,11 @@ public class consultasProductos {
 
         return listadoProducto;
     }
+
+
+
+
+
     //--------------------------------------------------------------------------------------
     //CONSULTA DE TIPO INSERT
     //--------------------------------------------------------------------------------------

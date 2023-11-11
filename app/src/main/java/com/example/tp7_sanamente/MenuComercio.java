@@ -110,9 +110,6 @@ public class MenuComercio extends AppCompatActivity {
             }
 
 
-
-
-
         }
 
     }

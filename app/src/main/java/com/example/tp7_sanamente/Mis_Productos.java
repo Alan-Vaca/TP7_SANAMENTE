@@ -35,14 +35,14 @@ public class Mis_Productos extends AppCompatActivity {
     TextView txt_StockCantidad, cantidadTxt, detalle, puntaje;
     ListView lv_Catalogo;
     Button btnAdd;
-    ArrayList<Producto> listaProductos;
+    ArrayList<Producto> listaProductos, listaProductosOfertas;
     Restriccion restriccion;
     ArrayList<pedidoXproducto> listadoCarrito;
     Producto productoSeleccionado;
 
     ArrayList<Etiquetado> listaEtiquetados;
     boolean listaCargada;
-    boolean listaProductosConFiltro;
+    boolean listaProductosConFiltro, listaProductosConOfertas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +87,29 @@ public class Mis_Productos extends AppCompatActivity {
             listaProductosConFiltro = true;
         }
 
+        /* OBTENGO LAS OFERTAS */
+
+        try {
+            SharedPreferences preferencesOfertas = getSharedPreferences("mi_prefer", Context.MODE_PRIVATE);
+            Gson gsonOfertas = new Gson();
+            String listaComoJsonOfertas = preferencesOfertas.getString("listaProductosOfertasObtenida", "");
+            Type typeOfertas = new TypeToken<ArrayList<Producto>>() {
+            }.getType();
+
+            listaProductosOfertas = gsonOfertas.fromJson(listaComoJsonOfertas, typeOfertas);
+        }   catch (Exception e) {
+            Log.d("Filtro.obtener", e.toString());
+        }
+
+
+        if (listaProductosOfertas != null && !listaProductosOfertas.isEmpty()) {
+            listaProductosConOfertas = true;
+        }
+
+
+
+
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
@@ -107,7 +130,20 @@ public class Mis_Productos extends AppCompatActivity {
                 cantidadTxt.setText("0");
             }
 
-            if (!listaProductosConFiltro ) {
+
+
+
+            if(listaProductosConOfertas){
+                if (listaProductosOfertas.size() > 0) {
+                    listaProductos = listaProductosOfertas;
+
+                    ArrayAdapter<Producto> adapter = new ArrayAdapter<>(Mis_Productos.this, android.R.layout.simple_spinner_dropdown_item, listaProductos);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    lv_Catalogo.setAdapter(adapter);
+
+                }
+            }else if (!listaProductosConFiltro ) {
                 new Mis_Productos.obtenerListadoProducto().execute(user);
             }else{
                 if (listaProductos.size() > 0) {
@@ -125,6 +161,7 @@ public class Mis_Productos extends AppCompatActivity {
             toast.setGravity(Gravity.TOP, 0, 200);
             toast.show();
         }
+
 
         lv_Catalogo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -319,6 +356,23 @@ public class Mis_Productos extends AppCompatActivity {
     }
 
     public void VolverMenu(View view) {
+
+        listaProductosConFiltro = false;
+        listaProductosConOfertas = false;
+        listaProductosOfertas = null;
+
+        SharedPreferences preferencesOfertas = getSharedPreferences("mi_prefer", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editorOfertas = preferencesOfertas.edit();
+        editorOfertas.clear();
+        editorOfertas.apply();
+
+        SharedPreferences preferencesFiltrado = getSharedPreferences("mi_prefer", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editorFiltrado = preferencesFiltrado.edit();
+        editorFiltrado.clear();
+        editorFiltrado.apply();
+
+
+
         // Recuperar el booleano isAdmin de SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave

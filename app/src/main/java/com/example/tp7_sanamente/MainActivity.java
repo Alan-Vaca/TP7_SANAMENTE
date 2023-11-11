@@ -238,6 +238,16 @@ public class MainActivity extends AppCompatActivity {
                 editorFiltradoPedido.apply();
 
 
+                ArrayList<Producto> listaProductosOfertas = new ArrayList<Producto>();
+                SharedPreferences preferencesOfertas = getSharedPreferences("mi_prefer", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editorOfertas = preferencesOfertas.edit();
+                Gson gsonOfertas = new Gson();
+                String listaComoJsonOfertas = gsonOfertas.toJson(listaProductosOfertas);
+                editorOfertas.putString("listaProductosOfertasObtenida", listaComoJsonOfertas);
+                editorOfertas.apply();
+
+
+
 
 
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
