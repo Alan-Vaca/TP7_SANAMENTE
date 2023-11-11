@@ -75,7 +75,6 @@ public class MenuComercio extends AppCompatActivity {
         @Override
         protected void onPostExecute(Reporte informe) {
             reporte = informe;
-            Toast.makeText(MenuComercio.this, "Generando Reporte", Toast.LENGTH_LONG).show();
 
             ArrayList<String> datosInforme = new ArrayList<>();
 
@@ -93,8 +92,11 @@ public class MenuComercio extends AppCompatActivity {
             datosInforme.add("Cantidad de ventas: " + reporte.getCantidadProducto());
 
             datosInforme.add("Cliente mas frecuente: " + reporte.getUsuario().getNombre() +
-                    " " + reporte.getUsuario().getApellido().toUpperCase() +
-                    ", " + reporte.getUsuario().getDireccion().toUpperCase() + " [ " + reporte.getUsuario().getNombreUsuario().toUpperCase() + " ]");
+
+                    " " + reporte.getUsuario().getApellido() +
+                    " [usuario: " + reporte.getUsuario().getApellido() + "]" +
+                    ", " + reporte.getUsuario().getDireccion());
+
             datosInforme.add("Cantidad de pedidos: " + reporte.getCantidadUsuario());
 
             datosInforme.add("Medio de pago mas usado: " + reporte.getDescripcionPago());
@@ -117,6 +119,8 @@ public class MenuComercio extends AppCompatActivity {
 
 
     public void MenuGenerarReporte(View view) {
+
+        Toast.makeText(MenuComercio.this, "Generando Reporte... Por favor espere", Toast.LENGTH_LONG).show();
 
         new MenuComercio.obtenerinforme().execute(user);
 

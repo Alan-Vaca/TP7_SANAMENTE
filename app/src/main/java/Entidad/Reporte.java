@@ -100,6 +100,7 @@ public class Reporte {
                 ", cantidadProducto=" + cantidadProducto +
                 ", usuarioNombre=" + usuario.getNombre() +
                 ", usuarioApellido=" + usuario.getApellido() +
+                ", nombreUsuario=" + usuario.getNombreUsuario() +
                 ", usuarioDireccion=" + usuario.getDireccion() +
                 ", cantidadUsuario=" + cantidadUsuario +
                 ", montoTotal=" + montoTotal +

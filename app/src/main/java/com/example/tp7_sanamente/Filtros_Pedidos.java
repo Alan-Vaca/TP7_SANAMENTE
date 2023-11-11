@@ -43,7 +43,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
 
     EditText fechaDesde, horaDesde, fechaHasta, horaHasta;
     CheckBox cbEntregado, cbCancelado, cbPendiente;
-    RadioButton rbEnEspera, rbRecientes;
+    RadioButton rbEnEspera, rbRecientes, rbSinFiltro;
     Usuario user;
     ArrayList<Historial> listadoHistorialesFiltrado, listadoHistorialesObtenido, listadoHistorial;
      ArrayList<Pedido> listadoPedidos, listadoPedidosObtenido, listadPedidosFiltrado;
@@ -60,14 +60,15 @@ public class Filtros_Pedidos extends AppCompatActivity {
         setContentView(R.layout.activity_filtros_pedidos);
 
         fechaDesde = (EditText)findViewById(R.id.fp_et_fechaDesde);
-        horaDesde = (EditText)findViewById(R.id.fp_et_horaDesde);
+        //horaDesde = (EditText)findViewById(R.id.fp_et_horaDesde);
         fechaHasta = (EditText)findViewById(R.id.fp_et_fechaHasta);
-        horaHasta = (EditText)findViewById(R.id.fp_et_horaHasta);
+        //horaHasta = (EditText)findViewById(R.id.fp_et_horaHasta);
         cbEntregado = findViewById(R.id.fp_cb_entregado);
         cbCancelado = findViewById(R.id.fp_cb_cancelado);
         cbPendiente = findViewById(R.id.fp_cb_pendiente);
         rbEnEspera = findViewById(R.id.fp_rb_enEspera);
         rbRecientes = findViewById(R.id.fp_rb_recientes);
+        rbSinFiltro = findViewById(R.id.fp_rb_sinOrdenar);
 
         consultasHistoriales = new consultasHistoriales();
         consultasPedidos = new consultasPedidos();
@@ -146,13 +147,14 @@ public class Filtros_Pedidos extends AppCompatActivity {
         String orden;
         if(rbEnEspera.isChecked()){orden = "en espera";}
         else if (rbRecientes.isChecked()){ orden = "recientes"; }
+        else if (rbSinFiltro.isChecked()){orden = "";}
         else {orden = "";}
 
 
         if(isValid) { //
             if (isHistorial) {
-                new AplicarFiltrosHistorialTask().execute(fechaDesdeStr, fechaHastaStr, horaDesdeStr,
-                        horaHastaStr, entregado, cancelado, pendiente, orden);
+                new AplicarFiltrosHistorialTask().execute(fechaDesdeStr, fechaHastaStr,
+                        entregado, cancelado, pendiente, orden);
             }
             else if (!isHistorial) {
                 new AplicarFiltrosPedidoTask().execute(fechaDesdeStr, fechaHastaStr, entregado,
@@ -170,12 +172,10 @@ public class Filtros_Pedidos extends AppCompatActivity {
 
             String fechaDesde = (String) params[0];
             String fechaHasta = (String) params[1];
-            String horaDesde = (String) params[2];
-            String horaHasta = (String) params[3];
-            boolean entregado = (boolean) params[4];
-            boolean cancelado = (boolean) params[5];
-            boolean pendiente = (boolean) params[6];
-            String orden = (String) params[7];
+            boolean entregado = (boolean) params[2];
+            boolean cancelado = (boolean) params[3];
+            boolean pendiente = (boolean) params[4];
+            String orden = (String) params[5];
 
             Conexion con = new Conexion();
             try {
