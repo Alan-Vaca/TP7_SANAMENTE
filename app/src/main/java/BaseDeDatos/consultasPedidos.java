@@ -296,7 +296,7 @@ public class consultasPedidos {
         Reporte reporte = null;
         Usuario usuario = null;
         try {
-            String query = "SELECT count(p.idCliente) ClienteCantidad, u.nombre, u.apellido, u.direccion " +
+            String query = "SELECT count(p.idCliente) ClienteCantidad, u.nombre, u.apellido, u.nombreUsuario, u.direccion " +
                             "from pedidos p " +
                             "inner join clientes c on p.idCliente = c.idCliente " +
                             "inner join usuarios u on u.idUsuario = c.idUsuario " +
@@ -304,7 +304,9 @@ public class consultasPedidos {
                                                     "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
                                                     "WHERE u1.idUsuario = " + idUsuario +
                                                     ") " +
-                            "group by p.idCliente";
+                            "group by p.idCliente " +
+                            "order by ClienteCantidad desc " +
+                            "LIMIT 1";
 
 
             if (conn != null) {
@@ -317,9 +319,12 @@ public class consultasPedidos {
 
                         usuario.setNombre(rs.getString("u.nombre"));
                         usuario.setApellido(rs.getString("u.apellido"));
+                        usuario.setNombreUsuario(rs.getString("u.nombreUsuario"));
                         usuario.setDireccion(rs.getString("u.direccion"));
                         reporte.setUsuario(usuario);
                         reporte.setCantidadUsuario(rs.getInt("ClienteCantidad"));
+
+
                     }
                     rs.close();
                     stmt.close();
