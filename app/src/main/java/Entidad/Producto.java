@@ -3,9 +3,12 @@ package Entidad;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
-public class Producto implements Parcelable{
+public class Producto implements Parcelable {
     int idProducto;
     String ingredientes;
     int stock;
@@ -14,8 +17,10 @@ public class Producto implements Parcelable{
     int idComercio;
     Date fecha;
     boolean estado;
-
     float puntaje;
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
 
     public Producto() {
     }
@@ -84,12 +89,16 @@ public class Producto implements Parcelable{
         this.puntaje = puntaje;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public String getFechaString() {
+        return dateFormat.format(fecha);
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setFechaString(String fechaString) {
+        try {
+            fecha = dateFormat.parse(fechaString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -97,17 +106,13 @@ public class Producto implements Parcelable{
         return nombre.toUpperCase() + " - $" + precio + " - " + puntaje + " de 5";
     }
 
-
-    public String EstadoString(){
-        if(isEstado()){
+    public String EstadoString() {
+        if (isEstado()) {
             return "ACTIVO";
-        }else{
+        } else {
             return "INACTIVO";
         }
     }
-
-
-
 
     protected Producto(Parcel in) {
         idProducto = in.readInt();
@@ -117,7 +122,7 @@ public class Producto implements Parcelable{
         idComercio = in.readInt();
         estado = in.readByte() != 0;
         precio = in.readFloat();
-        puntaje = in.readFloat();
+        setFechaString(in.readString());
     }
 
     public static final Parcelable.Creator<Producto> CREATOR = new Parcelable.Creator<Producto>() {
@@ -146,8 +151,9 @@ public class Producto implements Parcelable{
         dest.writeFloat(puntaje);
         dest.writeInt(stock);
         dest.writeInt(idComercio);
-        dest.writeByte((byte) (estado ? 1 : 0));
+        dest.writeString(getFechaString());
+
     }
 
-}
 
+}

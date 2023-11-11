@@ -1,7 +1,5 @@
 package BaseDeDatos;
 
-import static BaseDeDatos.Conexion.getConnection;
-
 import android.util.Log;
 
 import java.sql.Connection;
@@ -10,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -57,9 +56,10 @@ public class consultasProductos {
                         producto.setIdComercio(rs.getInt("idComercio"));
                         producto.setPuntaje(rs.getFloat("puntaje"));
 
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
                         Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
                         java.sql.Date fechaAlta = rs.getDate("fechaAltaProducto");
-                        producto.setFecha(fechaAlta != null ? fechaAlta : fechaActual);
 
                         listadoProducto.add(producto);
                     }

@@ -41,6 +41,19 @@ public class consultasEtiquetados {
 
                         listadoEtiquetado.add(etiquetado);
                     }
+                    Etiquetado etiquetado = new Etiquetado();
+                    if(listadoEtiquetado.size() == 0){
+                        listadoEtiquetado.add(etiquetado);
+                        listadoEtiquetado.add(etiquetado);
+                        listadoEtiquetado.add(etiquetado);
+                    } else if (listadoEtiquetado.size() == 1) {
+                        listadoEtiquetado.add(etiquetado);
+                        listadoEtiquetado.add(etiquetado);
+                    }
+                    else if (listadoEtiquetado.size() == 1) {
+                        listadoEtiquetado.add(etiquetado);
+                    }
+
                     rs.close();
                     stmt.close();
                     conn.close();
