@@ -108,39 +108,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fp_et_fechaHasta" />
 
-    <RadioButton
-        android:id="@+id/fp_rb_enEspera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="@string/tv_enEspera"
-        app:layout_constraintEnd_toStartOf="@+id/fp_rb_recientes"
-        app:layout_constraintHorizontal_bias="0.289"
+    <RadioGroup
+        android:id="@+id/fc_radio_group2"
+        android:layout_width="278dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor"
+        tools:ignore="UnknownId">
 
-    <RadioButton
-        android:id="@+id/fp_rb_recientes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="160dp"
-        android:text="@string/tv_recientes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor" />
+        <RadioButton
+            android:id="@+id/fp_rb_enEspera"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/tv_enEspera"
+            app:layout_constraintEnd_toStartOf="@+id/fp_rb_recientes"
+            app:layout_constraintHorizontal_bias="0.289"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor" />
 
-    <RadioButton
-        android:id="@+id/fp_rb_sinOrdenar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/tv_sinOrdenar"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:checked="true"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/fp_rb_recientes"
-        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor" />
+        <RadioButton
+            android:id="@+id/fp_rb_recientes"
+            android:layout_width="147dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="160dp"
+            android:text="@string/tv_recientes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor" />
+
+        <RadioButton
+            android:id="@+id/fp_rb_sinOrdenar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="28dp"
+            android:checked="true"
+            android:text="@string/tv_sinOrdenar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/fp_rb_recientes"
+            app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor" />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/fp_bn_aplicarFiltros"
@@ -151,8 +165,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor"
-        app:layout_constraintVertical_bias="0.778" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_radio_group2"
+        app:layout_constraintVertical_bias="0.425" />
 
     <EditText
         android:id="@+id/fp_et_fechaHasta"

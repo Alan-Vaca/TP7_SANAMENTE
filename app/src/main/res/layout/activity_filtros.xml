@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="@string/tv_ordernarPor"
+        android:text="BUSCAR POR NOMBRE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -146,38 +146,54 @@
         app:layout_constraintStart_toEndOf="@+id/r_cb_diabetico"
         app:layout_constraintTop_toBottomOf="@+id/fc_tv_tituloCheckbox" />
 
-    <RadioButton
-        android:id="@+id/fc_rb_reciente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/tv_recientes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.424"
-        app:layout_constraintStart_toEndOf="@+id/fc_rb_precio"
-        app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor" />
 
-    <RadioButton
-        android:id="@+id/fc_rb_precio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/tv_precio"
+    <RadioGroup
+        android:id="@+id/fc_radio_group"
+        android:layout_width="335dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor"
+        tools:ignore="MissingConstraints,UnknownId">
+        >
 
-    <RadioButton
-        android:id="@+id/fc_rb_calificaciones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/rb_califiaciones"
-        app:layout_constraintEnd_toStartOf="@+id/fc_rb_precio"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor" />
+
+        <RadioButton
+            android:id="@+id/fc_rb_reciente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/tv_recientes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.424"
+            app:layout_constraintStart_toEndOf="@+id/fc_rb_precio"
+            app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor" />
+
+        <RadioButton
+            android:id="@+id/fc_rb_precio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/tv_precio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor" />
+
+        <RadioButton
+            android:id="@+id/fc_rb_calificaciones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/rb_califiaciones"
+            app:layout_constraintEnd_toStartOf="@+id/fc_rb_precio"
+            app:layout_constraintHorizontal_bias="0.466"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fc_tv_ordernarPor" />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/fc_bn_aplicarFiltros"
@@ -187,6 +203,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fc_rb_precio" />
+        app:layout_constraintTop_toBottomOf="@+id/fc_radio_group"
+        app:layout_constraintVertical_bias="0.392" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
