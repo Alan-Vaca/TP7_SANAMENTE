@@ -3,13 +3,16 @@ package com.example.tp7_sanamente;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import BaseDeDatos.Conexion;
@@ -60,6 +63,7 @@ public class Registrar_Cliente extends AppCompatActivity {
         Cliente cliente = new Cliente();
         user.setNombre(nombre.getText().toString());
         user.setApellido(apellido.getText().toString());
+
         //Tengo que validar antes sino la app rompe
         if (!dniStr.isEmpty()) {   user.setDNI(Integer.parseInt(dni.getText().toString().trim()));  }
         user.setDireccion(direccion.getText().toString());
@@ -68,13 +72,36 @@ public class Registrar_Cliente extends AppCompatActivity {
 
 
         if(validarCliente(restriccion)) {
-            new registrarCliente().execute(restriccion);
+           // new registrarCliente().execute(restriccion);
+            Toast toast = Toast.makeText(Registrar_Cliente.this, "CLIENTE AGREGADO CON EXITO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
+            Log.d("Ingresar", "Validado");
         }
     }
 
     public boolean validarCliente(Restriccion res) {
         boolean isValid = true;
-        StringBuilder errorMessage = new StringBuilder("Complete los siguientes campos:\n");
+        //StringBuilder errorMessage = new StringBuilder("Complete los siguientes campos con valores válidos:\n");
+
+        // Alert para las Validaciones
+        AlertDialog.Builder builder = new AlertDialog.Builder(Registrar_Cliente.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_validacion, null);
+        builder.setView(dialogView);
+
+        final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextValidacion);
+        Button btnOK= dialogView.findViewById(R.id.btnOK);
+
+        mensajeConfirm.setText("Complete los siguientes campos con valores válidos: ");
+        final AlertDialog dialog = builder.create();
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
 
         // Obtener el cliente asociado desde la restricción.
         Cliente clienteAsociado = res.getClienteAsociado();
@@ -88,39 +115,55 @@ public class Registrar_Cliente extends AppCompatActivity {
             if (usuarioAsociado != null) {
                 if (usuarioAsociado.getNombre() == null || usuarioAsociado.getNombre().isEmpty()) {
                     isValid = false;
-                    errorMessage.append("- Nombre\n");
+                    mensajeConfirm.append("\nNombre");
+                    //errorMessage.append("- Nombre\n");
                 }
 
                 if (usuarioAsociado.getApellido() == null || usuarioAsociado.getApellido().isEmpty()) {
                     isValid = false;
-                    errorMessage.append("- Apellido\n");
+                    mensajeConfirm.append("\nApellido");
+                    //errorMessage.append("- Apellido\n");
                 }
 
                 if (usuarioAsociado.getDNI() <= 0) {
                     isValid = false;
-                    errorMessage.append("- DNI\n");
+                    //errorMessage.append(" - DNI\n");
+                    mensajeConfirm.append("\nDNI");
+                }else if(usuarioAsociado.getDNI() < 5000000 ||
+                        usuarioAsociado.getDNI() > 70000000)
+                {
+                    mensajeConfirm.append("\nDNI inválido");
+                    isValid = false;
                 }
 
                 if (usuarioAsociado.getDireccion() == null || usuarioAsociado.getDireccion().isEmpty()) {
                     isValid = false;
-                    errorMessage.append("- Dirección\n");
+                    mensajeConfirm.append("\nDirección");
+                    //errorMessage.append("- Dirección\n");
                 }
             } else {
                 isValid = false;
-                errorMessage.append("- Usuario asociado es nulo\n");
+                mensajeConfirm.append("\nUsuario asociado es nulo");
+                //errorMessage.append("- Usuario asociado es nulo\n");
             }
         } else {
             // Si el cliente asociado es nulo, la restricción no es válida.
             isValid = false;
-            errorMessage.append("- Cliente asociado es nulo\n");
+            mensajeConfirm.append("\nCliente asociado es nulo");
         }
 
         // Mostrar mensaje de error si la validación falla.
         if (!isValid) {
 
+
+
+            dialog.show();
+            /*
             Toast toast = Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP, 0, 200);
             toast.show();
+
+             */
         }
 
         return isValid;

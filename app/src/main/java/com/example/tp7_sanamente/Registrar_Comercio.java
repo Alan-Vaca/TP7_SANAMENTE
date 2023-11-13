@@ -5,10 +5,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import BaseDeDatos.Conexion;
@@ -62,50 +64,74 @@ public class Registrar_Comercio extends AppCompatActivity {
 
         comercio.setUsuarioAsociado(user);
         if(validarComercio(comercio)) {
-            new registrarComercio().execute(comercio);
+            Toast toast = Toast.makeText(this, "CONSEGUIDO", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP, 0, 200);
+            toast.show();
+            //new registrarComercio().execute(comercio);
         }
     }
 
     public boolean validarComercio(Comercio comercio) {
         Boolean isValid = true;
-        StringBuilder errorMessage = new StringBuilder("Complete o corrija los siguientes campos:\n");
+        //StringBuilder errorMessage = new StringBuilder("Complete o corrija los siguientes campos:\n");
+
+        // Alert para las Validaciones
+        AlertDialog.Builder builder = new AlertDialog.Builder(Registrar_Comercio.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_validacion, null);
+        builder.setView(dialogView);
+
+        final EditText mensajeValidacion = dialogView.findViewById(R.id.editTextValidacion);
+        Button btnOK= dialogView.findViewById(R.id.btnOK);
+
+        mensajeValidacion.setText("Complete los siguientes campos con valores válidos: ");
+        final AlertDialog dialog = builder.create();
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+
 
         if (comercio.getUsuarioAsociado().getDNI() <= 0) {
-            errorMessage.append("- DNI\n");
+            mensajeValidacion.append("\nDNI");
+           // errorMessage.append("- DNI\n");
             isValid = false;
         }
         // Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
-        else if(comercio.getUsuarioAsociado().getDNI() < 99999 ||
-                comercio.getUsuarioAsociado().getDNI() > 1000000000)
+        else if(comercio.getUsuarioAsociado().getDNI() < 5000000 ||
+                comercio.getUsuarioAsociado().getDNI() > 70000000)
         {
-            errorMessage.append("- DNI inválido\n");
+            mensajeValidacion.append("\nDNI inválido");
             isValid = false;
         }
 
         if (comercio.getUsuarioAsociado().getNombre().isEmpty()) {
-            errorMessage.append("- Nombre\n");
+            mensajeValidacion.append("\nNombre");
             isValid = false;
         }
 
         if (comercio.getUsuarioAsociado().getApellido().isEmpty()) {
-            errorMessage.append("- Apellido\n");
+            mensajeValidacion.append("\nApellido");
             isValid = false;
         }
 
         if (comercio.getCuit() <= 0) {
-            errorMessage.append("- CUIT\n");
+            mensajeValidacion.append("\nCUIT");
             isValid = false;
         }
-        /* Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
-        else if(comercio.getCuit() < 999999 || comercio.getCuit() > 1000000000)
+       //  Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
+        else if(comercio.getCuit() < 2050000000)
         {
-            errorMessage.append("- CUIT inválido\n");
+            mensajeValidacion.append("\nCUIT inválido");
             isValid = false;
-        }*/
+        }
 
 
         if (comercio.getNombreComercio().isEmpty()) {
-            errorMessage.append("- Nombre comercio\n");
+            mensajeValidacion.append("\nNombre comercio");
             isValid = false;
         }
 
@@ -115,16 +141,16 @@ public class Registrar_Comercio extends AppCompatActivity {
 
         if(horarios.length > 1) {
             if (horarios[0].isEmpty() || horarios[1].isEmpty()) {
-                errorMessage.append("- Horarios\n");
+                mensajeValidacion.append("\nHorarios");
                 isValid = false;
             }
             if (!horarios[0].isEmpty() && !validarFormatoHorario(horarios[0])) {
-                errorMessage.append("- Apertura inválida\n");
+                mensajeValidacion.append("\nApertura inválida");
                 isValid = false;
             }
 
             if (!horarios[1].isEmpty() && !validarFormatoHorario(horarios[1])) {
-                errorMessage.append("- Cierre inválido\n");
+                mensajeValidacion.append("\nCierre inválido");
                 isValid = false;
             }
 
@@ -140,28 +166,30 @@ public class Registrar_Comercio extends AppCompatActivity {
 
 
                 if (aperturaHoras > cierreHoras || (aperturaHoras == cierreHoras && aperturaMinutos > cierreMinutos)) {
-                    errorMessage.append("- Horarios incoherentes\n");
+                    mensajeValidacion.append("\nHorarios incoherentes");
                     isValid = false;
                 }
             }
         }
         else {
-            errorMessage.append("- Horarios\n");
+            mensajeValidacion.append("\nHorarios");
             isValid = false;
         }
 
 
 
         if (comercio.getUsuarioAsociado().getDireccion().isEmpty()) {
-            errorMessage.append("- Direccion\n");
+            mensajeValidacion.append("- Direccion\n");
             isValid = false;
         }
 
         if (!isValid) {
 
-            Toast toast = Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.TOP, 0, 200);
-            toast.show();
+            dialog.show();
+
+            //Toast toast = Toast.makeText(this, errorMessage.toString(), Toast.LENGTH_LONG);
+            //toast.setGravity(Gravity.TOP, 0, 200);
+            //toast.show();
         }
         return isValid;
     }

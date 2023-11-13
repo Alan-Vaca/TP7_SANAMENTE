@@ -137,9 +137,10 @@ public class Filtros extends AppCompatActivity {
             String noContiene = (String) params[5];
             String ordenarPor = (String) params[6];
 
+
+
             listaProductosObtenido = consultaProductos.obtenerListadoProductosFiltrados(listaProductos,
                     filtroNombre, contiene, noContiene, ordenarPor, hipertenso, diabetico, celiaco);
-
 
 
             return listaProductosObtenido;

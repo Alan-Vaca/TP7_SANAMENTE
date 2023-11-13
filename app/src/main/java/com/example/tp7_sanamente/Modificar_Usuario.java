@@ -173,7 +173,7 @@ Usuario user;
         String Pass2 = pass2.getText().toString();
 
 
-        //valida que Direccion no contenga al menos 3 caracteres, si tiene menos o está vacío marca un error en el campo informando.
+        //valida que Direccion contenga al menos 3 caracteres, si tiene menos o está vacío marca un error en el campo informando.
         if(Direccion.isEmpty()){
 
             Toast toast = Toast.makeText(Modificar_Usuario.this, "La direccion no puede estar vacía", Toast.LENGTH_LONG);

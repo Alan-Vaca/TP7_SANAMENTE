@@ -73,6 +73,7 @@
     <string name="button_imprimir">"IMPRIMIR"</string>
     <string name="button_salir">"SALIR"</string>
     <string name="button_guardar">"GUARDAR"</string>
+    <string name="button_ok">"ENTENDIDO"</string>
     <string name="button_volver">"VOLVER"</string>
     <string name="button_volverMenuPrincipal">"VOLVER AL MENU PRINCIPAL"</string>
 

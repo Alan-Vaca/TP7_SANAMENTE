@@ -8,11 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
 import Entidad.Comercio;
 import Entidad.Etiquetado;
@@ -227,14 +229,17 @@ public class consultasProductos {
 
 
         if (celiaco) {
-            listadoFiltrado = contieneIngrediente(listadoFiltrado, "Harina");
+            Log.d("Filtro", "Estoy en celiaco");
+            listadoFiltrado = filtrarPorContiene(listadoFiltrado, "Harina");
         }
 
         if (diabetico) {
+            Log.d("Filtro", "Estoy en diabetico");
             listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en azucares");
         }
 
         if (hipertenso) {
+            Log.d("Filtro", "Estoy en hipertenso");
             listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en sodio");
             listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "contiene cafeina");
         }
@@ -249,12 +254,14 @@ public class consultasProductos {
         ArrayList<Producto> listaFiltrada = new ArrayList<>();
 
         if (!nombre.isEmpty()) {
+            String nombreBuscadoSinTilde = quitarTildes(nombre.toLowerCase());
             for (Producto producto : lista) {
-                if (producto.getNombre().toLowerCase().contains(nombre.toLowerCase())) {
+                String nombreSinTilde = quitarTildes(producto.getNombre().toLowerCase());
+                if (nombreSinTilde.contains(nombreBuscadoSinTilde)) {
                     listaFiltrada.add(producto);
                 }
             }
-        } else {
+            } else {
             // Si la cadena contiene está vacía, devuelve la lista original sin filtrar
             listaFiltrada.addAll(lista);
         }
@@ -265,8 +272,10 @@ public class consultasProductos {
         ArrayList<Producto> listaFiltrada = new ArrayList<>();
 
         if (!contiene.isEmpty()) {
+            String contieneSinTildes = quitarTildes(contiene.toLowerCase());
             for (Producto producto : lista) {
-                if (producto.getIngredientes().toLowerCase().contains(contiene.toLowerCase())) {
+                String ingredientesSinTildes = quitarTildes(producto.getIngredientes().toLowerCase());
+                if (ingredientesSinTildes.contains(contieneSinTildes)) {
                     listaFiltrada.add(producto);
                 }
             }
@@ -281,8 +290,10 @@ public class consultasProductos {
         ArrayList<Producto> listaFiltrada = new ArrayList<>();
 
         if (!noContiene.isEmpty()) {
+            String noContieneSinTildes = quitarTildes(noContiene.toLowerCase());
             for (Producto producto : lista) {
-                if (!producto.getIngredientes().toLowerCase().contains(noContiene.toLowerCase())) {
+                String ingredientesSinTildes = quitarTildes(producto.getIngredientes().toLowerCase());
+                if (!ingredientesSinTildes.contains(noContieneSinTildes)) {
                     listaFiltrada.add(producto);
                 }
             }
@@ -310,7 +321,7 @@ public class consultasProductos {
         }
     }
 
-
+/*
     private ArrayList<Producto> contieneIngrediente(ArrayList<Producto> lista, String ingrediente) {
         ArrayList<Producto> listaFiltrada = new ArrayList<>();
 
@@ -322,10 +333,11 @@ public class consultasProductos {
 
         return listaFiltrada;
     }
-
+*/
 
     private ArrayList<Producto> filtrarPorEtiquetado(ArrayList<Producto> lista, String etiqueta) {
         ArrayList<Producto> listaFiltrada = new ArrayList<>();
+        Log.d("Filtro", "Estoy en filtrarPorEtiquetado");
 
         for (Producto producto : lista) {
             if (!tieneEtiqueta(producto, etiqueta)) {
@@ -334,9 +346,12 @@ public class consultasProductos {
         }
 
         return listaFiltrada;
+
+
     }
 
     private boolean tieneEtiqueta(Producto producto, String etiqueta) {
+        Log.d("Filtro", "Estoy en tieneEtiqueta");
         Conexion consultaEtiquetados = new Conexion();
         ArrayList<Etiquetado> etiquetasProducto = consultaEtiquetados.obtenerListadoEtiquetadoXproducto(producto);
 
@@ -347,6 +362,12 @@ public class consultasProductos {
         }
 
         return false;
+    }
+
+    private String quitarTildes(String palabra) {
+        String normalized = Normalizer.normalize(palabra, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(normalized).replaceAll("");
     }
 
 
