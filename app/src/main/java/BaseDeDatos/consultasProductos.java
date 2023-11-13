@@ -229,17 +229,14 @@ public class consultasProductos {
 
 
         if (celiaco) {
-            Log.d("Filtro", "Estoy en celiaco");
-            listadoFiltrado = filtrarPorContiene(listadoFiltrado, "Harina");
+            listadoFiltrado = filtrarPorNoContiene(listadoFiltrado, "Harina");
         }
 
         if (diabetico) {
-            Log.d("Filtro", "Estoy en diabetico");
             listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en azucares");
         }
 
         if (hipertenso) {
-            Log.d("Filtro", "Estoy en hipertenso");
             listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en sodio");
             listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "contiene cafeina");
         }
