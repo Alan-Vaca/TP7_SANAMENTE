@@ -77,7 +77,10 @@ public class Mis_Productos extends AppCompatActivity {
             Type typeFiltrado = new TypeToken<ArrayList<Producto>>() {
             }.getType();
 
+
             listaProductos = gsonFiltrado.fromJson(listaComoJsonFiltrados, typeFiltrado);
+
+
         }   catch (Exception e) {
             Log.d("Filtro.obtener", e.toString());
         }
@@ -361,19 +364,24 @@ public class Mis_Productos extends AppCompatActivity {
 
     public void VolverMenu(View view) {
 
+
         listaProductosConFiltro = false;
         listaProductosConOfertas = false;
         listaProductosOfertas = null;
+        listaProductos = null;
+
 
         SharedPreferences preferencesOfertas = getSharedPreferences("mi_prefer", Context.MODE_PRIVATE);
         SharedPreferences.Editor editorOfertas = preferencesOfertas.edit();
         editorOfertas.clear();
         editorOfertas.apply();
 
-        SharedPreferences preferencesFiltrado = getSharedPreferences("mi_prefer", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editorFiltrado = preferencesFiltrado.edit();
-        editorFiltrado.clear();
-        editorFiltrado.apply();
+
+        SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+
 
 
 

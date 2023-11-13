@@ -563,16 +563,13 @@ public class consultasPedidos {
 
     private void ordenarListado(ArrayList<Pedido> lista, String orden) {
 
-        switch (orden) {
-            case "en espera":
-                Collections.sort(lista, Comparator.comparingInt(Pedido::getEstado));
-                break;
-            case "recientes":
-                Collections.sort(lista, Comparator.comparingInt(Pedido::getIdPedido).reversed());
-                break;
-            default:
-                break;
-        }
+        if ("en espera".equals(orden)) {
+            Collections.sort(lista, Comparator.comparingInt(Pedido::getEstado));
+        } else if ("recientes".equals(orden)) {
+            Collections.sort(lista, Comparator.comparingInt(Pedido::getIdPedido).reversed());
+        } else {      }
+
+
     }
 
 

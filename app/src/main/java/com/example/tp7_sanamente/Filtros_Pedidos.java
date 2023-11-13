@@ -110,7 +110,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
         } else {
             fechaDesde.setError(null);
         }
-
+/*
         // Validar que horaDesde pertenezca a un formato 00:00. Si no, mostrar mensaje de error
         String horaDesdeStr = horaDesde.getText().toString();
         if (!horaDesdeStr.isEmpty() && !isValidDateFormat(horaDesdeStr, "HH:mm")) {
@@ -119,7 +119,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
         } else {
             horaDesde.setError(null);
         }
-
+*/
         // Validar que fechaHasta pertenezca a un formato dd/mm/aaaa. Si no, mostrar mensaje de error
         String fechaHastaStr = fechaHasta.getText().toString();
         if (!fechaHastaStr.isEmpty() && !isValidDateFormat(fechaHastaStr, "dd/MM/yyyy")) {
@@ -128,7 +128,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
         } else {
             fechaHasta.setError(null);
         }
-
+/*
         // Validar que horaHasta pertenezca a un formato 00:00. Si no, mostrar mensaje de error
         String horaHastaStr = horaHasta.getText().toString();
         if (!horaHastaStr.isEmpty() && !isValidDateFormat(horaHastaStr, "HH:mm")) {
@@ -137,18 +137,20 @@ public class Filtros_Pedidos extends AppCompatActivity {
         } else {
             horaHasta.setError(null);
         }
-
+*/
 
         ///////////// VALIDACIONES FECHAS  //////////////////////
 
         boolean entregado = cbEntregado.isChecked();
         boolean cancelado = cbCancelado.isChecked();
         boolean pendiente = cbPendiente.isChecked();
-        String orden;
+        String orden = "";
+
+
         if(rbEnEspera.isChecked()){orden = "en espera";}
         else if (rbRecientes.isChecked()){ orden = "recientes"; }
-        else if (rbSinFiltro.isChecked()){orden = "";}
         else {orden = "";}
+
 
 
         if(isValid) { //
@@ -231,6 +233,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
             boolean pendiente = (boolean) params[4];
             String orden = (String) params[5];
 
+
             Conexion con = new Conexion();
             try {
                 listadoPedidos = con.obtenerListadoPedidos(user);
@@ -275,12 +278,17 @@ public class Filtros_Pedidos extends AppCompatActivity {
     }
 
 
-
-
     public void AplicarFiltroPedido(View view) {
 
         Intent AplicarFiltroPedido = new Intent(this, Mis_Pedidos.class);
         startActivity(AplicarFiltroPedido);
+
+    }
+
+    public void VolverAPedidos(View view) {
+
+        Intent VolverAPedidos = new Intent(this, Mis_Pedidos.class);
+        startActivity(VolverAPedidos);
 
     }
 

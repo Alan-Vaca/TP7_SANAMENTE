@@ -182,6 +182,18 @@ public class MiHistorial extends AppCompatActivity {
     }
 
     public void VolverAlMenu(View view) {
+
+        // Borro la lista de filtros al salir
+
+        listaHistorialConFiltro = false;
+        listadoHistorial = null;
+
+        SharedPreferences preferencesFiltradoHistorial = getSharedPreferences("mi_prefHistorial", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editorFiltradoHistorial = preferencesFiltradoHistorial.edit();
+        editorFiltradoHistorial.clear();
+        editorFiltradoHistorial.apply();
+
+
         if(user.isCliente()){
             MenuCliente(view);
         }else{

@@ -219,6 +219,16 @@ public class Mis_Pedidos extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         boolean isAdmin = sharedPreferences.getBoolean("isAdmin", false); // El segundo parámetro es el valor predeterminado si no se encuentra la clave
 
+        // Borro la lista de filtros al salir
+        listaPedidoConFiltro = false;
+        listadoPedidos = null;
+
+        SharedPreferences preferencesFiltradoPedido = getSharedPreferences("mi_prefPedido", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editorFiltradoPedido = preferencesFiltradoPedido.edit();
+        editorFiltradoPedido.clear();
+        editorFiltradoPedido.apply();
+
+
         if(isAdmin) {
             // El usuario es un administrador, realiza las acciones correspondientes
             Intent MenuComercio = new Intent(this, MenuAdmin.class);

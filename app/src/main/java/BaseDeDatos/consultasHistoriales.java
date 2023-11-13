@@ -134,13 +134,14 @@ public class consultasHistoriales {
     public ArrayList<Historial> obtenerListadoHistorialesFiltrado (
             ArrayList<Historial> listadoHistorial, String fechaDesde, String fechaHasta,
             boolean entregado, boolean cancelado, boolean pendiente, String orden){
-
+        Log.d("ORDENAR", "ESTOY: 1");
         ArrayList<Historial> listadoFiltrado = listadoHistorial;
 
         listadoFiltrado = filtrarRangoFechas (listadoFiltrado, fechaDesde, fechaHasta);
         listadoFiltrado = filtrarXEstado (listadoFiltrado, entregado, cancelado, pendiente);
+        Log.d("ORDENAR", "ESTOY: 2");
         ordenarListado(listadoFiltrado, orden);
-
+        Log.d("ORDENAR", "ESTOY: 3");
 
         return listadoFiltrado;
     }
@@ -216,18 +217,16 @@ public class consultasHistoriales {
 
     private void ordenarListado(ArrayList<Historial> lista, String orden) {
 
-        switch (orden) {
-            case "en espera":
-                Collections.sort(lista, Comparator.comparingInt(Historial::getEstado));
-                break;
-            case "recientes":
-                Collections.sort(lista, Comparator.comparingInt(Historial::getIdHistorial).reversed());
-                break;
-            default:
-                break;
+
+        if ("en espera".equals(orden)) {
+            Collections.sort(lista, Comparator.comparingInt(Historial::getEstado));
+        } else if ("recientes".equals(orden)) {
+            Collections.sort(lista, Comparator.comparingInt(Historial::getIdHistorial).reversed());
+        } else { }
+
+
         }
     }
 
 
 
-}

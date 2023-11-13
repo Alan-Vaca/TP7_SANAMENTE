@@ -93,6 +93,13 @@ public class Filtros extends AppCompatActivity {
 
     }
 
+    public void VolverAProductos(View view) {
+
+        Intent VolverAProductos = new Intent(this, Mis_Productos.class);
+        startActivity(VolverAProductos);
+
+    }
+
     public void aplicarFiltros(View view) {
 
         String nombre = filtroNombre.getText().toString().trim();
@@ -133,7 +140,7 @@ public class Filtros extends AppCompatActivity {
             listaProductosObtenido = consultaProductos.obtenerListadoProductosFiltrados(listaProductos,
                     filtroNombre, contiene, noContiene, ordenarPor, hipertenso, diabetico, celiaco);
 
-            Log.d("Filtros.Productos", String.valueOf(listaProductosObtenido));
+
 
             return listaProductosObtenido;
 
@@ -143,6 +150,7 @@ public class Filtros extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Producto> listaProductosObtenido) {
 
                 listaFiltrada = listaProductosObtenido;
+                
 
                 try {
                     SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
@@ -157,7 +165,6 @@ public class Filtros extends AppCompatActivity {
                     Log.d("Filtro.enviar", e.toString());
                 }
 
-
                 Intent intent = new Intent(Filtros.this, Mis_Productos.class);
                 startActivity(intent);
                 finish();
@@ -165,7 +172,6 @@ public class Filtros extends AppCompatActivity {
                 ArrayAdapter<Producto> adapter = new ArrayAdapter<>(Filtros.this, android.R.layout.simple_spinner_dropdown_item, listaFiltrada);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 lvFiltros.setAdapter(adapter);
-
                  */
 
         }
@@ -194,6 +200,11 @@ public class Filtros extends AppCompatActivity {
             }
         }
     }
+
+
+
+
+
 }
 
 /*
