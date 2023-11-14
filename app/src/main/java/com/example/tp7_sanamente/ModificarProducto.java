@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -43,6 +44,7 @@ public class ModificarProducto extends AppCompatActivity {
     Producto productoSeleccionado;
     Toolbar toolbarModificar;
     ArrayList<pedidoXproducto> listadoCarrito;
+    Switch sw_hipertenso, sw_celiaco, sw_diabetico;
     boolean listaCargada;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,9 @@ public class ModificarProducto extends AppCompatActivity {
         TxtEstado = (TextView)findViewById(R.id.txtEstadoE);
         btnEstado = (Button)findViewById(R.id.btnEstadoB);
 
+        sw_hipertenso = (Switch)findViewById(R.id.sw_hipertenso);
+        sw_celiaco = (Switch)findViewById(R.id.sw_celiaco);
+        sw_diabetico = (Switch)findViewById(R.id.sw_diabetico);
         //toolbarModificar = (Toolbar)findViewById(R.id.toolbarMod);
 
         listaCargada = false;
@@ -200,32 +205,56 @@ public class ModificarProducto extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Etiquetado> listadoEtiquetado) {
 
-            if (listadoEtiquetado.size() > 0) {
-
-
+                Boolean aptoHipertenso = true;
+                Boolean aptoCeliaco = true;
+                Boolean aptoDiabetico = true;
+                int idEtiquetado = 0;
 
                 if (listadoEtiquetado.size() > 0) {
                     if(user.isCliente() && listadoEtiquetado.get(0).getIdEtiquetado() == 0){
                         etiquetado_1.setVisibility(View.INVISIBLE);
                     }else{
                         etiquetado_1.setSelection(listadoEtiquetado.get(0).getIdEtiquetado());
+                        idEtiquetado = listadoEtiquetado.get(0).getIdEtiquetado();
+                        if(idEtiquetado <= 5 && idEtiquetado > 0) aptoCeliaco = false;
+                        if(idEtiquetado >= 6) aptoHipertenso = false;
+                        if(idEtiquetado >= 6 && idEtiquetado == 4) aptoDiabetico = false;
                     }
                     if (listadoEtiquetado.size() > 1)
                         if(user.isCliente() && listadoEtiquetado.get(1).getIdEtiquetado() == 0){
                             etiquetado_2.setVisibility(View.INVISIBLE);
                         }else{
                             etiquetado_2.setSelection(listadoEtiquetado.get(1).getIdEtiquetado());
+                            idEtiquetado = listadoEtiquetado.get(1).getIdEtiquetado();
+                            if(idEtiquetado <= 5 && idEtiquetado > 0) aptoCeliaco = false;
+                            if(idEtiquetado >= 6) aptoHipertenso = false;
+                            if(idEtiquetado >= 6 && idEtiquetado == 4) aptoDiabetico = false;
                         }
                     if (listadoEtiquetado.size() > 2)
                         if(user.isCliente() && listadoEtiquetado.get(2).getIdEtiquetado() == 0){
                             etiquetado_3.setVisibility(View.INVISIBLE);
                         }else{
                             etiquetado_3.setSelection(listadoEtiquetado.get(2).getIdEtiquetado());
+                            idEtiquetado = listadoEtiquetado.get(2).getIdEtiquetado();
+                            if(idEtiquetado <= 5 && idEtiquetado > 0) aptoCeliaco = false;
+                            if(idEtiquetado >= 6) aptoHipertenso = false;
+                            if(idEtiquetado >= 6 && idEtiquetado == 4) aptoDiabetico = false;
                         }
                 }
 
+            sw_hipertenso.setChecked(aptoHipertenso);
+
+                if(productoSeleccionado != null){
+                    if(productoSeleccionado.getIngredientes().contains("harina")){
+                        aptoCeliaco = false;
+                    }
+                }
+
+            sw_celiaco.setChecked(aptoCeliaco);
+            sw_diabetico.setChecked(aptoDiabetico);
+
             }
-        }
+
 
     }
 
@@ -268,6 +297,33 @@ public class ModificarProducto extends AppCompatActivity {
     public void ModificarProductoCancelar(View view) {
         Intent modificarProductoCancelar = new Intent(this, Mis_Productos.class);
         startActivity(modificarProductoCancelar);
+    }
+
+    public void ConsultaEtiquetado(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(ModificarProducto.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_notificaciones, null);
+        builder.setView(dialogView);
+
+        final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
+        Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
+
+        String consulta = "ETIQUETADO FRONTAL" + '\n' + '\n' + "El etiquetado frontal de un producto determina si es apto o no para un cliente con alguna restriccion." + '\n' + '\n';
+        consulta += "ETIQUETADOS:" + '\n' + '\n';
+        consulta += "NO APTO PARA CELIACOS" + '\n' + '\n';
+        consulta += "-Exceso en azucares." + '\n' + "-Exceso en grasas totales." + '\n' + "-Exceso en grasas saturadas." + '\n' + "-Exceso en calorias." + '\n' + "-El producto contiene exceso en sodio." + '\n';
+        consulta += '\n' + "NO APTO PARA DIABETICOS" + '\n' + '\n' + "-El producto contiene exceso en sodio." + '\n' + "-Este producto contiene edulcorante." + '\n' + "-Este producto contiene cafeína." + '\n';
+        consulta += '\n' + "NO APTO PARA HIPERTENSOS" + '\n' + '\n' + "-Este producto contiene edulcorante." + '\n' + "-Este producto contiene cafeína." + '\n';
+
+        notificacionesMSJ.setText(consulta);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnAceptarNotificaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     public void ModificarProductoModificar(View view) {
@@ -490,24 +546,6 @@ public class ModificarProducto extends AppCompatActivity {
                 msjAdvertencias += "El producto contiene exceso en calorías." + '\n';
                 NoAptoCeliaco = true;
                 //Toast toast = Toast.makeText(Mis_Productos.this, "El producto contiene exceso en calorías. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
-                //toast.setGravity(Gravity.TOP, 0, 200);
-                //toast.show();
-            }
-
-            if((id1 == 6 || id2 == 6 || id3 == 6) && restriccion.isCeliaco()){
-
-                msjAdvertencias +=  "El producto contiene edulcorante." + '\n';
-                NoAptoCeliaco = true;
-                //Toast toast = Toast.makeText(Mis_Productos.this, "El producto contiene edulcorante. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
-                //toast.setGravity(Gravity.TOP, 0, 200);
-                //toast.show();
-            }
-
-            if((id1 == 7 || id2 == 7 || id3 == 74) && restriccion.isCeliaco()){
-
-                msjAdvertencias += "El producto contiene cafeína." + '\n';
-                NoAptoCeliaco = true;
-                //Toast toast = Toast.makeText(Mis_Productos.this, "El producto contiene cafeína. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
                 //toast.setGravity(Gravity.TOP, 0, 200);
                 //toast.show();
             }

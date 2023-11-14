@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class Modificar_Usuario extends AppCompatActivity {
 
     TextView nombreApellido,dni,usuario,alergia,direccion,pass0,pass1,pass2;
     CheckBox hipertenso,celiaco,diabetico;
+
 Usuario user;
     Restriccion restriccion;
     @Override

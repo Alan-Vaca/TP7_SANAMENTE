@@ -264,6 +264,7 @@
         android:layout_height="45dp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="8dp"
+        android:onClick="ConsultaEtiquetado"
         app:layout_constraintBottom_toTopOf="@+id/ap_sp_item1"
         app:layout_constraintStart_toEndOf="@+id/ap_tv_etiquetadoFrontal"
         app:srcCompat="@drawable/baseline_question_mark_24" />

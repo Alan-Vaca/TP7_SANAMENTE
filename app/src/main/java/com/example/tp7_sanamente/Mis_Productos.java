@@ -483,24 +483,6 @@ public class Mis_Productos extends AppCompatActivity {
                         //toast.show();
                     }
 
-                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 6 || listadoEtiquetado.get(1).getIdEtiquetado() == 6 || listadoEtiquetado.get(2).getIdEtiquetado() == 6) && restriccion.isCeliaco()){
-
-                        msjAdvertencias +=  "El producto contiene edulcorante." + '\n';
-                        NoAptoCeliaco = true;
-                        //Toast toast = Toast.makeText(Mis_Productos.this, "El producto contiene edulcorante. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
-                        //toast.setGravity(Gravity.TOP, 0, 200);
-                        //toast.show();
-                    }
-
-                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 7 || listadoEtiquetado.get(1).getIdEtiquetado() == 7 || listadoEtiquetado.get(2).getIdEtiquetado() == 74) && restriccion.isCeliaco()){
-
-                        msjAdvertencias += "El producto contiene cafeína." + '\n';
-                        NoAptoCeliaco = true;
-                        //Toast toast = Toast.makeText(Mis_Productos.this, "El producto contiene cafeína. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
-                        //toast.setGravity(Gravity.TOP, 0, 200);
-                        //toast.show();
-                    }
-
                     if((listadoEtiquetado.get(0).getIdEtiquetado() == 6 || listadoEtiquetado.get(1).getIdEtiquetado() == 6 || listadoEtiquetado.get(2).getIdEtiquetado() == 6) && (restriccion.isDiabetico() || restriccion.isHipertenso())){
 
                         NoAptoDiabetico = true;

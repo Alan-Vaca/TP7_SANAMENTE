@@ -18,7 +18,6 @@
         android:layout_gravity="center|center_horizontal|center_vertical"
         android:layout_margin="25dp"
         android:editable="false"
-        android:enabled="false"
         android:gravity="center|center_horizontal|center_vertical"
         android:hint="Notificaciones" />
 

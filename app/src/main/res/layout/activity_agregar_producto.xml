@@ -53,11 +53,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/imageView9"
         android:layout_width="46dp"
         android:layout_height="45dp"
         android:layout_marginStart="28dp"
         android:layout_marginBottom="12dp"
+        android:onClick="ConsultaEtiquetado"
         app:layout_constraintBottom_toTopOf="@+id/ap_sp_item1"
         app:layout_constraintStart_toEndOf="@+id/ap_tv_etiquetadoFrontal"
         app:srcCompat="@drawable/baseline_question_mark_24" />

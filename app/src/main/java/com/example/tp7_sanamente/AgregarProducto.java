@@ -324,4 +324,32 @@ public class AgregarProducto extends AppCompatActivity {
     }
 
 
+    public void ConsultaEtiquetado(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(AgregarProducto.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_notificaciones, null);
+        builder.setView(dialogView);
+
+        final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
+        Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
+
+        String consulta = "ETIQUETADO FRONTAL" + '\n' + '\n' + "El etiquetado frontal de un producto determina si es apto o no para un cliente con alguna restriccion." + '\n' + '\n';
+        consulta += "ETIQUETADOS:" + '\n' + '\n';
+        consulta += "NO APTO PARA CELIACOS" + '\n' + '\n';
+        consulta += "-Exceso en azucares." + '\n' + "-Exceso en grasas totales." + '\n' + "-Exceso en grasas saturadas." + '\n' + "-Exceso en calorias." + '\n' + "-El producto contiene exceso en sodio." + '\n';
+        consulta += '\n' + "NO APTO PARA DIABETICOS" + '\n' + '\n' + "-El producto contiene exceso en sodio." + '\n' + "-Este producto contiene edulcorante." + '\n' + "-Este producto contiene cafeína." + '\n';
+        consulta += '\n' + "NO APTO PARA HIPERTENSOS" + '\n' + '\n' + "-Este producto contiene edulcorante." + '\n' + "-Este producto contiene cafeína." + '\n';
+
+        notificacionesMSJ.setText(consulta);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnAceptarNotificaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+
 }
