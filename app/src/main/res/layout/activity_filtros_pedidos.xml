@@ -160,28 +160,26 @@
         android:id="@+id/buttonFiltrosPedidosVolver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="64dp"
         android:onClick="VolverAPedidos"
         android:text="@string/button_volver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fp_bn_aplicarFiltros"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fc_radio_group2"
-        app:layout_constraintVertical_bias="0.044" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor"
+        app:layout_constraintVertical_bias="0.758" />
 
     <Button
         android:id="@+id/fp_bn_aplicarFiltros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="68dp"
         android:onClick="AplicarFiltroHistorial"
         android:text="@string/button_aplicarFiltros"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.742"
-        app:layout_constraintStart_toEndOf="@+id/buttonFiltrosPedidosVolver"
-        app:layout_constraintTop_toBottomOf="@+id/fc_radio_group2"
-        app:layout_constraintVertical_bias="0.378" />
+        app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor"
+        app:layout_constraintVertical_bias="0.758" />
 
     <EditText
         android:id="@+id/fp_et_fechaHasta"

@@ -446,6 +446,12 @@ public class Conexion extends AsyncTask<String,Void, String> {
             for (ArrayList<pedidoXproducto> grupoProductos : productosAgrupados.values()) {
                 ArrayList<pedidoXproducto> misProductosPedidoxComercio = grupoProductos;
 
+                //Sumo el total por comercio recorriendo el arraylist Cantidad * Precio
+                float monto = 0;
+                for(pedidoXproducto  p : misProductosPedidoxComercio){
+                    monto += (p.getProducto().getPrecio() * p.getCantidad());
+                }
+                pedido.setMonto(monto);
                 exito = consultasPedidos.registrarPedidoXcomercio(getConnection(), misProductosPedidoxComercio, pedido, usuario);
             }
         } catch (Exception e) {
