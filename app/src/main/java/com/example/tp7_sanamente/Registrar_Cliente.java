@@ -72,7 +72,7 @@ public class Registrar_Cliente extends AppCompatActivity {
 
 
         if(validarCliente(restriccion)) {
-           // new registrarCliente().execute(restriccion);
+           new registrarCliente().execute(restriccion);
             Toast toast = Toast.makeText(Registrar_Cliente.this, "CLIENTE AGREGADO CON EXITO", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP, 0, 200);
             toast.show();

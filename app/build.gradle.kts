@@ -8,10 +8,9 @@ android {
     compileSdk = 34
     defaultConfig {
         applicationId = "com.example.tp7_sanamente"
-        minSdk = 25
-        /*        //noinspection ExpiredTargetSdkVersion
-*/
-        //noinspection ExpiredTargetSdkVersion
+
+        minSdk = 28
+
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -36,10 +35,9 @@ dependencies {
     /*
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2',{
-        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.supimplementation("mysql:mysql-connector-java:5.1.47")port', module: 'support-annotations'
     })
     */
-
     implementation("mysql:mysql-connector-java:5.1.47")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
