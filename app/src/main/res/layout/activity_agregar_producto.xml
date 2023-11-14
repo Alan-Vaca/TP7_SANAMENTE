@@ -40,7 +40,6 @@
         android:enabled="false"
         android:text="@string/checkbox_diabetico"
         app:layout_constraintEnd_toStartOf="@+id/sw_celiaco2"
-        app:layout_constraintStart_toEndOf="@+id/sw_celiaco"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <Switch

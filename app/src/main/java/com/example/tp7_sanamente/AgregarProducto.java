@@ -1,16 +1,19 @@
 package com.example.tp7_sanamente;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -34,7 +37,8 @@ public class AgregarProducto extends AppCompatActivity {
     ArrayList<Etiquetado> listaEtiquetados;
     Usuario user;
     Comercio comercio;
-
+    Switch sw_hipertenso2, sw_celiaco2, sw_diabetico2;
+    Boolean aptoHipertenso, aptoCeliaco,aptoDiabetico;
     Producto producto;
 
     boolean Existe;
@@ -57,6 +61,14 @@ public class AgregarProducto extends AppCompatActivity {
         idEtiquetado1 = 0;
         idEtiquetado2 = 0;
         idEtiquetado3 = 0;
+
+        aptoHipertenso = true;
+        aptoCeliaco = true;
+        aptoDiabetico = true;
+
+        sw_hipertenso2 = (Switch)findViewById(R.id.sw_hipertenso2);
+        sw_celiaco2 = (Switch)findViewById(R.id.sw_celiaco2);
+        sw_diabetico2 = (Switch)findViewById(R.id.sw_diabetico2);
 
         Existe = false;
 
@@ -90,7 +102,69 @@ public class AgregarProducto extends AppCompatActivity {
             toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
             toast.show(); // Mostrar el Toast
         }
+
+        etiquetado1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                validarRestricciones(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+
+        etiquetado2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                validarRestricciones(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+
+        etiquetado3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                validarRestricciones(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+
     }
+
+    private void validarRestricciones(int position) {
+
+        int idEtiquetado = 0;
+
+        aptoCeliaco = true;
+        aptoHipertenso = true;
+        aptoDiabetico = true;
+
+        idEtiquetado = etiquetado1.getSelectedItemPosition();
+        if(idEtiquetado <= 5 && idEtiquetado > 0) aptoCeliaco = false;
+        if(idEtiquetado >= 6) aptoHipertenso = false;
+        if(idEtiquetado >= 6 && idEtiquetado == 4) aptoDiabetico = false;
+
+        idEtiquetado = etiquetado2.getSelectedItemPosition();
+        if(idEtiquetado <= 5 && idEtiquetado > 0) aptoCeliaco = false;
+        if(idEtiquetado >= 6) aptoHipertenso = false;
+        if(idEtiquetado >= 6 && idEtiquetado == 4) aptoDiabetico = false;
+
+        idEtiquetado = etiquetado3.getSelectedItemPosition();
+        if(idEtiquetado <= 5 && idEtiquetado > 0) aptoCeliaco = false;
+        if(idEtiquetado >= 6) aptoHipertenso = false;
+        if(idEtiquetado >= 6 && idEtiquetado == 4) aptoDiabetico = false;
+
+        sw_hipertenso2.setChecked(aptoHipertenso);
+        sw_celiaco2.setChecked(aptoCeliaco);
+        sw_diabetico2.setChecked(aptoDiabetico);
+    }
+
+
+
 
     private class obtenerListadoEtiquetado extends AsyncTask<Producto, Void, ArrayList<Etiquetado>> {
         @Override
@@ -200,6 +274,7 @@ public class AgregarProducto extends AppCompatActivity {
         }
 
 
+
         return isValid;
     }
 
@@ -242,6 +317,7 @@ public class AgregarProducto extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean existe) {
             if (existe) {
+
                 Toast toast = Toast.makeText(AgregarProducto.this, "EL PRODUCTO YA EXISTE, POR FAVOR ELIJA OTRO NOMBRE.", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.TOP, 0, 200);
                 toast.show();
