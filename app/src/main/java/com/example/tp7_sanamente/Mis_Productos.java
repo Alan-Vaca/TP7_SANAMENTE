@@ -414,7 +414,6 @@ public class Mis_Productos extends AppCompatActivity {
             Conexion con = new Conexion();
             try {
                 listaEtiquetados = con.obtenerListadoEtiquetadoXproducto(producto[0]);
-
                 return listaEtiquetados;
             } catch (Exception e) {
                 e.printStackTrace();
