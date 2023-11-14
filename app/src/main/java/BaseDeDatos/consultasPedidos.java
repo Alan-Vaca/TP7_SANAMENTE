@@ -554,7 +554,6 @@ public class consultasPedidos {
                                 (cancelado && pedido.getEstado() == 4)                  //cancelado
                 ) {
                     listaFiltrada.add(pedido);
-                    Log.d("Filtro", pedido.getEstadoString());
                 }
             }
         }

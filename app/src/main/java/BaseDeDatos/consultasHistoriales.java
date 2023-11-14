@@ -134,14 +134,14 @@ public class consultasHistoriales {
     public ArrayList<Historial> obtenerListadoHistorialesFiltrado (
             ArrayList<Historial> listadoHistorial, String fechaDesde, String fechaHasta,
             boolean entregado, boolean cancelado, boolean pendiente, String orden){
-        Log.d("ORDENAR", "ESTOY: 1");
+
         ArrayList<Historial> listadoFiltrado = listadoHistorial;
 
         listadoFiltrado = filtrarRangoFechas (listadoFiltrado, fechaDesde, fechaHasta);
         listadoFiltrado = filtrarXEstado (listadoFiltrado, entregado, cancelado, pendiente);
-        Log.d("ORDENAR", "ESTOY: 2");
+
         ordenarListado(listadoFiltrado, orden);
-        Log.d("ORDENAR", "ESTOY: 3");
+
 
         return listadoFiltrado;
     }

@@ -7,7 +7,7 @@
     tools:context=".Mis_Productos">
 
     <Button
-        android:id="@+id/button64"
+        android:id="@+id/filtrosProductos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"

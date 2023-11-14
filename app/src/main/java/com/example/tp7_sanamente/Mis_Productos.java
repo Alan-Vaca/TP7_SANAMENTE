@@ -34,7 +34,7 @@ public class Mis_Productos extends AppCompatActivity {
     Usuario user;
     TextView txt_StockCantidad, cantidadTxt, detalle, puntaje;
     ListView lv_Catalogo;
-    Button btnAdd;
+    Button btnAdd, btnFiltros;
     ArrayList<Producto> listaProductos, listaProductosOfertas;
     Restriccion restriccion;
     ArrayList<pedidoXproducto> listadoCarrito;
@@ -54,6 +54,7 @@ public class Mis_Productos extends AppCompatActivity {
         cantidadTxt = (TextView)findViewById(R.id.catalogoCantidad);
         detalle = (TextView)findViewById(R.id.catalogoDetalle);
         puntaje = (TextView)findViewById(R.id.txtPuntajeCatalogo);
+        btnFiltros = (Button)findViewById(R.id.filtrosProductos);
         listaCargada = false;
 
         listaEtiquetados = new ArrayList<Etiquetado>();
@@ -107,10 +108,10 @@ public class Mis_Productos extends AppCompatActivity {
 
         if (listaProductosOfertas != null && !listaProductosOfertas.isEmpty()) {
             listaProductosConOfertas = true;
+            btnFiltros.setVisibility(View.INVISIBLE);
+        }else{
+            btnFiltros.setVisibility(View.VISIBLE);
         }
-
-
-
 
 
 
@@ -245,6 +246,7 @@ public class Mis_Productos extends AppCompatActivity {
             startActivity(catalogoFiltros);
         }catch (Exception e){
             Intent catalogoFiltros = new Intent(this, Filtros.class);
+
             startActivity(catalogoFiltros);
         }
     }
