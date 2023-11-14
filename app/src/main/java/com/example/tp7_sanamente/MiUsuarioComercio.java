@@ -26,7 +26,7 @@ public class MiUsuarioComercio extends AppCompatActivity {
     Usuario user;
     Comercio comercio;
 
-    TextView nombreComercio, cuit, direccion, dni, nombreApellido;
+    TextView nombreComercio, cuit, direccion, dni, nombreApellido, horarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class MiUsuarioComercio extends AppCompatActivity {
         nombreApellido = (TextView)findViewById(R.id.mi_nombreApellido);
         dni = (TextView)findViewById(R.id.mi_dni);
         direccion = (TextView)findViewById(R.id.mi_direccion);
-
+        horarios = (TextView)findViewById(R.id.mi_comercio_horas_);
         cuit = (TextView)findViewById(R.id.mi_cuit);
         nombreComercio = (TextView)findViewById(R.id.mi_nombreComercio);
 
@@ -51,10 +51,10 @@ public class MiUsuarioComercio extends AppCompatActivity {
             Gson gson = new Gson();
             try{
                 user = gson.fromJson(usuarioJson, Usuario.class);
-                nombreApellido.setText(user.getApellido() + ", " + user.getNombre());
+                nombreApellido.setText(user.getApellido().toUpperCase() + ", " + user.getNombre().toUpperCase());
                 String dniTxt = String.valueOf(user.getDNI());
-                dni.setText(dniTxt);
-                direccion.setText(user.getDireccion());
+                dni.setText("DNI" + '\n' + dniTxt);
+                direccion.setText("DIRECCION" + '\n' + user.getDireccion());
 
                 new MiUsuarioComercio.cargarComercio().execute(user);
             } catch (JsonSyntaxException e) {
@@ -112,9 +112,9 @@ public class MiUsuarioComercio extends AppCompatActivity {
         protected void onPostExecute(Comercio comercio) {
             if (comercio.getIdComercio() > 0) {
                 String cuits = String.valueOf(comercio.getCuit());
-                cuit.setText(cuits);
+                cuit.setText("CUIT:" + '\n' + cuits);
                 nombreComercio.setText(comercio.getNombreComercio().toString());
-
+                horarios.setText("HORARIOS: " + comercio.getHorarios().replace("-:-","Hs A ") + "Hs");
             } else {
 
                 Toast toast = Toast.makeText(MiUsuarioComercio.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);

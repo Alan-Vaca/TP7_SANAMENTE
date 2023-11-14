@@ -26,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="@string/tv_DP_titulo"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/tv_datosCliente"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/tv_DP_comercio"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/tv_DP_fecha"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dp_tv_nombreComercio" />
@@ -67,9 +72,12 @@
         android:id="@+id/dp_tv_cantitdadProductos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="20dp"
         android:text="@string/tv_DP_cantidadProductos"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dp_tv_fecha" />
 
@@ -79,6 +87,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="204dp"
         android:text="@string/tv_DP_montoTotal"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/tv_nombreComercio"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dp_tv_comercio" />
@@ -107,10 +118,11 @@
         android:id="@+id/dp_bn_volver"
         android:layout_width="107dp"
         android:layout_height="45dp"
+        android:layout_marginStart="10dp"
         android:onClick="VolverHistorial"
         android:text="@string/button_volver"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dp_bn_calificar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dp_tv_importeTotal" />
 
@@ -118,11 +130,12 @@
         android:id="@+id/dp_bn_imprimir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:onClick="ImprimirPedido"
         android:text="@string/button_imprimir"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dp_bn_calificar"
         app:layout_constraintTop_toBottomOf="@+id/dp_tv_importeTotal" />
 
     <Button
@@ -131,10 +144,13 @@
         android:layout_height="wrap_content"
         android:onClick="CalificarPedido"
         android:text="@string/button_calificar"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dp_tv_importeTotal" />
+        app:layout_constraintEnd_toStartOf="@+id/dp_bn_imprimir"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toEndOf="@+id/dp_bn_volver"
+        app:layout_constraintTop_toBottomOf="@+id/dp_tv_importeTotal"
+        app:layout_constraintVertical_bias="0.482" />
 
     <TextView
         android:id="@+id/txtEstado"
@@ -142,6 +158,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/tv_DP_estado"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

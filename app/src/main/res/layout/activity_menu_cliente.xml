@@ -27,6 +27,7 @@
         android:layout_marginTop="8dp"
         android:onClick="MenuMiUsuario"
         android:text="MI USUARIO"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_notificaciones" />
@@ -35,9 +36,10 @@
         android:id="@+id/mcli_bn_catalogo"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="44dp"
         android:onClick="MenuCatalogo"
         android:text="@string/button_catalogo"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_historial" />
@@ -46,9 +48,10 @@
         android:id="@+id/mcli_bn_miCarrito"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="8dp"
         android:onClick="MenuMiCarrito"
         android:text="@string/button_miCarrito"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_catalogo" />
@@ -57,9 +60,10 @@
         android:id="@+id/mcli_bn_ofertas"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="72dp"
         android:onClick="MenuOfertas"
         android:text="@string/switch_ofertas"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miCarrito" />
@@ -71,6 +75,7 @@
         android:layout_marginTop="8dp"
         android:onClick="MenuHistorial"
         android:text="@string/button_historial"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miUsuario" />
@@ -78,10 +83,11 @@
     <Button
         android:id="@+id/mcli_bn_notificaciones"
         android:layout_width="231dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="48dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="28dp"
         android:onClick="Notificaciones"
         android:text="@string/button_notificaciones"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_toolbar2" />
@@ -92,11 +98,12 @@
         android:layout_height="57dp"
         android:onClick="MenuPrincipal"
         android:text="@string/button_salir"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_ofertas"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintVertical_bias="0.518" />
 
     <ImageView
         android:id="@+id/image_not_no"

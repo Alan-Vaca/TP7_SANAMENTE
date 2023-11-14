@@ -48,10 +48,10 @@ public class MiUsuario extends AppCompatActivity {
             Gson gson = new Gson();
             try{
                 user = gson.fromJson(usuarioJson, Usuario.class);
-                usuario.setText(user.getNombreUsuario());
-                nombre.setText(user.getNombre());
-                apellido.setText(user.getApellido());
-                String dniTxt = String.valueOf(user.getDNI());
+                usuario.setText("USUARIO" + '\n' + user.getNombreUsuario());
+                nombre.setText("NOMBRE" + '\n' + user.getNombre());
+                apellido.setText("APELLIDO" + '\n' + user.getApellido());
+                String dniTxt = "DNI" + '\n' + String.valueOf(user.getDNI());
                 dni.setText(dniTxt);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();

@@ -36,6 +36,7 @@
         android:layout_marginTop="500dp"
         android:onClick="MiCarritoDeComprasSeguirComprando"
         android:text="@string/button_agregarMasProductos"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toStartOf="parent"

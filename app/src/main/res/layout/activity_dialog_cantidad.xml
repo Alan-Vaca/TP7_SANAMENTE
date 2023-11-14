@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:gravity="center|center_horizontal|center_vertical"
-        android:hint="Nueva Cantidad" />
+        android:hint="Nueva Cantidad"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +27,8 @@
             android:gravity="center|center_horizontal|center_vertical"
             android:text="@string/button_cancelar"
             android:textColorHighlight="#D11111"
-            android:textColorLink="#D11111" />
+            android:textColorLink="#D11111"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnGuardarCantidad"
@@ -34,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center|center_horizontal|center_vertical"
-            android:text="@string/button_guardar" />
+            android:text="@string/button_guardar"
+            android:textSize="20sp" />
     </LinearLayout>
 
 

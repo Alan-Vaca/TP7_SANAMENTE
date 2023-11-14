@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="@string/tv_estado"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/tv_fechaDesde"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/tv_fechaHasta"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,6 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="@string/tv_ordernarPor"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,8 +114,8 @@
 
     <RadioGroup
         android:id="@+id/fc_radio_group2"
-        android:layout_width="278dp"
-        android:layout_height="92dp"
+        android:layout_width="297dp"
+        android:layout_height="82dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -160,26 +164,27 @@
         android:id="@+id/buttonFiltrosPedidosVolver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="36dp"
         android:onClick="VolverAPedidos"
         android:text="@string/button_volver"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/fp_bn_aplicarFiltros"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintVertical_bias="0.761" />
 
     <Button
         android:id="@+id/fp_bn_aplicarFiltros"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
+        android:layout_marginEnd="36dp"
         android:onClick="AplicarFiltroHistorial"
         android:text="@string/button_aplicarFiltros"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fp_tv_ordenarPor"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintVertical_bias="0.761" />
 
     <EditText
         android:id="@+id/fp_et_fechaHasta"

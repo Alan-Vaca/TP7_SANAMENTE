@@ -11,18 +11,19 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
+        android:layout_marginStart="28dp"
         android:onClick="VolverRegistro"
         android:text="@string/button_cancelar"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r_com_direccion"
-        app:layout_constraintVertical_bias="0.404" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <EditText
         android:id="@+id/r_com_direccion"
-        android:layout_width="211dp"
-        android:layout_height="100dp"
+        android:layout_width="350dp"
+        android:layout_height="73dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:gravity="center|center_horizontal|center_vertical"
@@ -35,7 +36,7 @@
 
     <EditText
         android:id="@+id/r_com_nombre"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -63,7 +64,7 @@
 
     <EditText
         android:id="@+id/mod_c_usuario"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -79,14 +80,14 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
         android:onClick="IngresarComercio"
         android:text="@string/button_registrar"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.178"
-        app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintTop_toBottomOf="@+id/r_com_direccion"
-        app:layout_constraintVertical_bias="0.404" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <TextView
         android:id="@+id/textView26"
@@ -94,6 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/tv_horarios"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,33 +105,35 @@
         android:id="@+id/textView27"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/hint_ejemplo_apertura"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/r_com_apertura"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
     <TextView
         android:id="@+id/textView28"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="28dp"
         android:text="@string/hint_ejemplo_cierre"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/r_com_cierre"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
     <EditText
         android:id="@+id/r_com_apertura"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="@string/hint_ejemplo_horas"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.283"
-        app:layout_constraintStart_toEndOf="@+id/textView27"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView26" />
 
     <EditText
@@ -141,8 +145,7 @@
         android:hint="@string/hint_ejemplo_horas"
         android:inputType="time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.387"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r_com_apertura" />
 
     <TextView
@@ -151,13 +154,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/tv_rcom_titulo"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     <EditText
         android:id="@+id/r_com_dni"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -171,7 +176,7 @@
 
     <EditText
         android:id="@+id/r_com_nombre_user"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -185,7 +190,7 @@
 
     <EditText
         android:id="@+id/r_com_apellido"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
@@ -203,8 +208,31 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/tv_rcom_datosComercio"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r_com_apellido" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        android:text="HS"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/r_com_apertura"
+        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="HS"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/r_com_cierre"
+        app:layout_constraintTop_toBottomOf="@+id/r_com_apertura" />
 </androidx.constraintlayout.widget.ConstraintLayout>

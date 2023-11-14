@@ -19,7 +19,8 @@
         android:layout_margin="25dp"
         android:editable="false"
         android:gravity="center|center_horizontal|center_vertical"
-        android:hint="Notificaciones" />
+        android:hint="Notificaciones"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnAceptarNotificaciones"
@@ -27,5 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:gravity="center|center_horizontal|center_vertical"
-        android:text="ACEPTAR" />
+        android:text="ACEPTAR"
+        android:textSize="20sp" />
 </LinearLayout>

@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="PRODUCTO APTO PARA"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ap_sp_item3" />
@@ -56,8 +58,8 @@
         android:id="@+id/imageView9"
         android:layout_width="46dp"
         android:layout_height="45dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="20dp"
         android:onClick="ConsultaEtiquetado"
         app:layout_constraintBottom_toTopOf="@+id/ap_sp_item1"
         app:layout_constraintStart_toEndOf="@+id/ap_tv_etiquetadoFrontal"
@@ -85,6 +87,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="@string/tv_AP_titulo"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,6 +115,8 @@
         android:layout_marginTop="8dp"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="@string/tv_ingredientes"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ap_et_nombreDelProducto" />
@@ -145,10 +151,12 @@
         android:id="@+id/ap_tv_etiquetadoFrontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="76dp"
         android:text="@string/tv_etiquetadoFrontal"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ap_et_ingredientes" />
 
@@ -197,26 +205,26 @@
         android:id="@+id/button62"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="44dp"
         android:onClick="AgregarProductoCancelar"
         android:text="@string/button_cancelar"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ap_sp_item3"
-        app:layout_constraintVertical_bias="0.511" />
+        app:layout_constraintVertical_bias="0.657" />
 
     <Button
         android:id="@+id/btnModAddCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="76dp"
+        android:layout_marginEnd="36dp"
         android:onClick="AgregarProductoAgregar"
         android:text="@string/button_agregar"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.863"
-        app:layout_constraintStart_toEndOf="@+id/button62"
         app:layout_constraintTop_toBottomOf="@+id/ap_sp_item3"
-        app:layout_constraintVertical_bias="0.511" />
+        app:layout_constraintVertical_bias="0.657" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

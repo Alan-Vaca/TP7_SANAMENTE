@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/switch_cuentaComerciante"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +20,7 @@
 
     <EditText
         android:id="@+id/rgContraseña2"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:ems="10"
@@ -34,18 +35,18 @@
         android:id="@+id/button21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
         android:onClick="Continuar"
         android:text="@string/button_continuar"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toEndOf="@+id/btnCancelarRegistro"
         app:layout_constraintTop_toBottomOf="@+id/rgContraseña2"
-        app:layout_constraintVertical_bias="0.502" />
+        app:layout_constraintVertical_bias="0.507" />
 
     <EditText
         android:id="@+id/rgContraseña"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:ems="10"
@@ -76,6 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/tv_ru_tipoDeCuenta"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,13 +86,14 @@
 
     <EditText
         android:id="@+id/rgUsuario"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:ems="10"
         android:gravity="center|center_horizontal|center_vertical"
         android:hint="@string/hint_ejemplo_usuario"
         android:inputType="text"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,13 +103,14 @@
         android:id="@+id/btnCancelarRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="28dp"
         android:onClick="CancelarRegistro"
         android:text="@string/button_cancelar"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rgContraseña2"
-        app:layout_constraintVertical_bias="0.502" />
+        app:layout_constraintVertical_bias="0.507" />
 
     <ImageView
         android:id="@+id/imageView5"

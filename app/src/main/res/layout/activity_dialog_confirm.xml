@@ -13,7 +13,8 @@
         android:gravity="center_horizontal|center_vertical"
         android:hint="MENSAJE A MOSTRAR"
         android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF" />
+        android:textColorHint="#FFFFFF"
+        android:textSize="20sp" />
 
 
     <LinearLayout
@@ -29,7 +30,8 @@
             android:layout_margin="10dp"
             android:text="@string/button_cancelar"
             android:textColorHighlight="#D11111"
-            android:textColorLink="#D11111" />
+            android:textColorLink="#D11111"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnConfirmarMensaje"
@@ -38,6 +40,7 @@
             android:layout_margin="10dp"
             android:text="@string/button_confirmar"
             android:textColorHighlight="#18C11A"
-            android:textColorLink="#18C11A" />
+            android:textColorLink="#18C11A"
+            android:textSize="20sp" />
     </LinearLayout>
 </LinearLayout>

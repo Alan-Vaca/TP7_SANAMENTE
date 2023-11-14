@@ -26,6 +26,7 @@
         android:layout_height="57dp"
         android:onClick="MiUsuarioComercio"
         android:text="@string/button_miComercio"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_notificaciones" />
@@ -37,6 +38,7 @@
         android:layout_marginTop="104dp"
         android:onClick="MenuPedidos_Comerciante"
         android:text="@string/button_misPedidos"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_historial" />
@@ -45,9 +47,10 @@
         android:id="@+id/mcli_bn_miCarrito"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="40dp"
         android:onClick="MenuMis_Productos"
         android:text="@string/button_miCatalogo"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_catalogo" />
@@ -59,6 +62,7 @@
         android:layout_marginTop="8dp"
         android:onClick="MenuAgregarProducto"
         android:text="@string/button_nuevoProducto"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miCarrito" />
@@ -66,9 +70,10 @@
     <Button
         android:id="@+id/mcli_bn_historial"
         android:layout_width="231dp"
-        android:layout_height="41dp"
+        android:layout_height="57dp"
         android:onClick="MenuHistorial"
         android:text="@string/button_historial"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miUsuario" />
@@ -76,10 +81,11 @@
     <Button
         android:id="@+id/mcli_bn_notificaciones"
         android:layout_width="231dp"
-        android:layout_height="41dp"
+        android:layout_height="57dp"
         android:layout_marginTop="28dp"
         android:onClick="MenuGenerarReporte"
-        android:text="@string/button_generarReportes"
+        android:text="REPORTE"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_toolbar2" />
@@ -90,6 +96,7 @@
         android:layout_height="57dp"
         android:onClick="MenuPrincipal"
         android:text="@string/button_salir"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

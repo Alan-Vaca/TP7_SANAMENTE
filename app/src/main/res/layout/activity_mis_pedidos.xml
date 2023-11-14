@@ -31,28 +31,28 @@
 
     <Button
         android:id="@+id/button38"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="28dp"
         android:onClick="DetallePedidos"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:text="@string/button_ver"
-        android:textSize="12sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.021"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnCancelar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
         android:layout_marginBottom="28dp"
         android:onClick="CancelarPedido"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:text="@string/button_cancelarPedido"
-        android:textSize="12sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnConfirmar"
         app:layout_constraintStart_toEndOf="@+id/button38" />
@@ -63,21 +63,25 @@
         android:layout_height="47dp"
         android:layout_marginTop="12dp"
         android:onClick="FiltrosPedidos"
-        android:text="@string/button_añadirFiltros"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toStartOf="parent"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="@string/button_filtros"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/button8"
+        app:layout_constraintStart_toEndOf="@+id/button11"
         app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
 
     <Button
         android:id="@+id/button11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:onClick="MenuComercio"
-        android:text="@string/button_volverMenuPrincipal"
-        app:layout_constraintEnd_toStartOf="@+id/button46"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/button_volver"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
 
@@ -85,14 +89,25 @@
         android:id="@+id/btnConfirmar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="2dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="28dp"
         android:onClick="ConfirmarPedido"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:text="@string/button_confirmar"
-        android:textSize="12sp"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.938"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="QUITAR FILTROS"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="212dp"
+        tools:layout_editor_absoluteY="76dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
