@@ -41,7 +41,7 @@ public class ModificarProducto extends AppCompatActivity {
     int idEtiquetado1,idEtiquetado2,idEtiquetado3;
     Button btnModificarAgregarCarrito,btnEstado;
     Usuario user;
-    Producto productoSeleccionado;
+    Producto productoSeleccionado, productoValidado;
     Toolbar toolbarModificar;
     ArrayList<pedidoXproducto> listadoCarrito;
     Switch sw_hipertenso, sw_celiaco, sw_diabetico;
@@ -49,6 +49,9 @@ public class ModificarProducto extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        productoValidado = new Producto();
+
         setContentView(R.layout.activity_modificar_producto);
 
         etiquetado_1 = (Spinner)findViewById(R.id.ap_sp_item1);
@@ -262,34 +265,112 @@ public class ModificarProducto extends AppCompatActivity {
         Producto producto = new Producto();
         producto = productoSeleccionado;
 
+        productoValidado = producto;
+        new ModificarProducto.ValidarCambioEstado().execute(producto);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
-        builder.setView(dialogView);
 
-        final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
-        Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
-        Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+    }
 
-        mensajeConfirm.setText("¿ESTAS SEGURO EN DAR DE BAJA ESTE PRODUCTO?");
-        final AlertDialog dialog = builder.create();
-        dialog.show();
-
-        btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+    private class ValidarCambioEstado extends AsyncTask<Producto, Void, Integer> {
+        @Override
+        protected Integer doInBackground(Producto... producto) {
+            Conexion con = new Conexion();
+            try {
+                return con.PermisosBajaProducto(producto[0]);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0;
             }
-        });
-        Producto Producto = producto;
-        btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Producto.setEstado(!Producto.isEstado());
-                new ModificarProducto.modificarProducto().execute(Producto);
-                dialog.dismiss();
+        }
+
+        @Override
+        protected void onPostExecute(Integer productoEnUso) {
+
+            if(productoEnUso == 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ModificarProducto.this);
+                View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+                builder.setView(dialogView);
+
+                final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+                Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+                Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+                mensajeConfirm.setText("¿ESTAS SEGURO EN DAR DE BAJA ESTE PRODUCTO?");
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+
+                btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        productoValidado.setEstado(!productoValidado.isEstado());
+                        new ModificarProducto.modificarProducto().execute(productoValidado);
+                        dialog.dismiss();
+                    }
+                });
             }
-        });
+            else if(productoEnUso == 1){
+                AlertDialog.Builder builder = new AlertDialog.Builder(ModificarProducto.this);
+                View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+                builder.setView(dialogView);
+
+                final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+                Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+                Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+                mensajeConfirm.setText("NO SE PUEDE DAR DE BAJA HASTA CONCLUIR LOS PEDIDOS YA CONFIRMADOS");
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+
+                btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+            else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(ModificarProducto.this);
+                View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_confirm, null);
+                builder.setView(dialogView);
+
+                final EditText mensajeConfirm = dialogView.findViewById(R.id.editTextMensaje);
+                Button btnCancelarConfirm = dialogView.findViewById(R.id.btnCancelarMensaje);
+                Button btnConfirmarConfirm = dialogView.findViewById(R.id.btnConfirmarMensaje);
+
+                mensajeConfirm.setText("HAY PEDIDOS PENDIENTES, SI DAS DE BAJA ESTE PRODUCTO SE CANCELARAN LOS PEDIDOS AUN PENDIENTES." +
+                        '\n' + "¿DESEA REALIZAR ESTA OPERACION?");
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+
+                btnCancelarConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnConfirmarConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        productoValidado.setEstado(!productoValidado.isEstado());
+                        new ModificarProducto.modificarProducto().execute(productoValidado);
+                        dialog.dismiss();
+                    }
+                });
+
+            }
+        }
 
 
     }

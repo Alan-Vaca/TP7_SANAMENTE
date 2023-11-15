@@ -402,5 +402,46 @@ public class consultasProductos {
 
         return existe;
     }
+
+    public Integer PermisosBajaProducto(Connection conn, Producto producto) {
+        int productoEnUso = 0;
+        String query = "SELECT pp.idProducto," +
+                "COALESCE(COUNT(DISTINCT CASE WHEN p.estado = 3 THEN p.idPedido END), 0) AS pedidosConfirmados, " +
+                "  COALESCE(COUNT(DISTINCT CASE WHEN p.estado = 1 THEN p.idPedido END), 0) AS pedidosPendientes " +
+                "FROM pedidoXproducto pp LEFT JOIN pedidos p ON pp.idPedido = p.idPedido " +
+                "WHERE pp.idProducto = " + producto.getIdProducto() + " GROUP BY pp.idProducto";
+
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int contadorConfirmados = rs.getInt("pedidosConfirmados");
+                int contadorPendientes = rs.getInt("pedidosPendientes");
+
+                if (contadorConfirmados > 0) {
+                    productoEnUso = 1;
+                }
+                else if (contadorPendientes > 0) {
+                    productoEnUso = 2;
+                }
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Aquí puedes manejar la excepción de manera adecuada, como lanzar una excepción personalizada o registrar el error
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return productoEnUso;
+    }
 }
 

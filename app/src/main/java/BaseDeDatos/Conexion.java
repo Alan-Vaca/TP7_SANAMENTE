@@ -392,6 +392,15 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return listaProducto;
     }
 
+    public Integer PermisosBajaProducto(Producto producto) {
+        try {
+            Connection con = getConnection();
+            return consultasProductos.PermisosBajaProducto(con, producto);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return 0;
+    }
 
     //--------------------------------------------------------------------------------------
     //ETIQUETADO
