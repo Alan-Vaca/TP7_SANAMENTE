@@ -454,6 +454,17 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return listaAlergicos;
     }
 
+    public ArrayList<Alergia> obtenerListadoAlergiasXusuario(int idUsuario) {
+        ArrayList<Alergia> listaAlergicos = new ArrayList<Alergia>();
+        try {
+            Connection con = getConnection();
+            listaAlergicos = consultasEtiquetados.obtenerListadoAlergiasXusuario(getConnection(),idUsuario);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaAlergicos;
+    }
+
     public ArrayList<Etiquetado> obtenerListadoEtiquetadoXproducto(Producto producto) {
         ArrayList<Etiquetado> listaEtiquetado = new ArrayList<Etiquetado>();
         try {

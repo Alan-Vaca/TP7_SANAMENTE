@@ -36,7 +36,7 @@ public class Modificar_Usuario extends AppCompatActivity {
     TextView nombreApellido,dni,usuario,alergia,direccion,pass0,pass1,pass2;
     CheckBox hipertenso,celiaco,diabetico;
     Spinner Tipoalergias1,Tipoalergias2,Tipoalergias3;
-    ArrayList<Alergia> listaAlergias;
+    ArrayList<Alergia> listaAlergias,listaAlergiasUsuario;
 
     Usuario user;
     Restriccion restriccion;
@@ -62,6 +62,7 @@ public class Modificar_Usuario extends AppCompatActivity {
         Tipoalergias2 = (Spinner)findViewById(R.id.tipoAlergia2);
         Tipoalergias3 = (Spinner)findViewById(R.id.tipoAlergia3);
         listaAlergias = new ArrayList<Alergia>();
+        listaAlergiasUsuario = new ArrayList<Alergia>();
 
         new Modificar_Usuario.obtenerListadoAlergias().execute();
 
@@ -80,6 +81,7 @@ public class Modificar_Usuario extends AppCompatActivity {
                 dni.setText(dniTxt);
                 direccion.setText(user.getDireccion());
                 new Modificar_Usuario.cargarRestricciones().execute(user);
+                new Modificar_Usuario.cargarAlergias().execute(user);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
 
@@ -266,6 +268,9 @@ public class Modificar_Usuario extends AppCompatActivity {
                 toast.show();
             }
         }
+
+
+
     }
 
     private class modificarCliente extends AsyncTask<Restriccion, Void, Boolean> {
@@ -364,6 +369,32 @@ public class Modificar_Usuario extends AppCompatActivity {
             }
         }
 
+    }
+
+
+    private class cargarAlergias extends AsyncTask<Usuario, Void, ArrayList<Alergia>> {
+        @Override
+        protected ArrayList<Alergia> doInBackground(Usuario... user) {
+            Conexion con = new Conexion();
+            try {
+                listaAlergiasUsuario = con.obtenerListadoAlergiasXusuario(user[0].getIdUsuario());
+                return listaAlergiasUsuario;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return listaAlergiasUsuario;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Alergia> listaAlergiasUsuarios) {
+            listaAlergiasUsuario = listaAlergiasUsuarios;
+            if (listaAlergiasUsuario.size() > 0) {
+                Tipoalergias1.setSelection(listaAlergiasUsuario.get(0).getIdAlergia());
+                Tipoalergias2.setSelection(listaAlergiasUsuario.get(1).getIdAlergia());
+                Tipoalergias3.setSelection(listaAlergiasUsuario.get(2).getIdAlergia());
+
+            }
+        }
     }
 
 

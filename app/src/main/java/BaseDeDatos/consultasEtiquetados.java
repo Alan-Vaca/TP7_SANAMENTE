@@ -243,4 +243,52 @@ public class consultasEtiquetados {
             e.printStackTrace();
         }
     }
+
+
+    public ArrayList<Alergia> obtenerListadoAlergiasXusuario(Connection conn,int idUsuario) {
+        ArrayList<Alergia> listadoAlergias = new ArrayList<Alergia>();
+
+        try {
+            String query = "select a.idAlergia, a.descripcionAlergia,a.ingredientesAlergicos from alergias a " +
+            "inner join alergiasXcliente ac on ac.idAlergia = a.idAlergia " +
+            "inner join clientes c on c.idCliente = ac.idCliente where c.idUsuario = " + idUsuario ;
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        Alergia alergia = new Alergia();
+
+                        alergia.setIdAlergia(rs.getInt("idAlergia"));
+                        alergia.setDescripcionAlergia(rs.getString("descripcionAlergia"));
+                        alergia.setIngredientesAlergicos(rs.getString("ingredientesAlergicos"));
+
+                        listadoAlergias.add(alergia);
+                    }
+                    Alergia alergia = new Alergia();
+                    if(listadoAlergias.size() == 0){
+                        listadoAlergias.add(alergia);
+                        listadoAlergias.add(alergia);
+                        listadoAlergias.add(alergia);
+                    } else if (listadoAlergias.size() == 1) {
+                        listadoAlergias.add(alergia);
+                        listadoAlergias.add(alergia);
+                    }
+                    else if (listadoAlergias.size() == 2) {
+                        listadoAlergias.add(alergia);
+                    }
+
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return listadoAlergias;
+    }
 }
