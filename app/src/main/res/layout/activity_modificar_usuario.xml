@@ -33,7 +33,7 @@
         android:id="@+id/r_cb_diabetico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/checkbox_diabetico"
         android:textSize="18sp"
@@ -84,8 +84,8 @@
     <EditText
         android:id="@+id/r_cli_pass_actual"
         android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:gravity="center|center_horizontal|center_vertical"
@@ -103,28 +103,27 @@
         android:text="@string/checkbox_hipertenso"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion"
-        tools:layout_editor_absoluteX="144dp" />
+        tools:layout_editor_absoluteX="140dp" />
 
     <EditText
         android:id="@+id/txtComentarios"
         android:layout_width="250dp"
-        android:layout_height="92dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:autoText="false"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="@string/hint_ejemplo_ingredientes"
         android:inputType="textMultiLine"
         android:selectAllOnFocus="false"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico" />
+        app:layout_constraintTop_toBottomOf="@+id/tipoAlergia3" />
 
     <EditText
         android:id="@+id/r_cli_direc"
         android:layout_width="250dp"
-        android:layout_height="79dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:autoText="false"
@@ -142,19 +141,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="16dp"
         android:text="@string/tv_alergias"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="32dp"
         android:text="@string/tv_direccion"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="32dp"
+        android:text="OTRAS:"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fc_tv_contiene" />
@@ -164,7 +176,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:text="@string/tv_contraseñaActual"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -259,8 +271,45 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r_cli_direc" />
+
+    <Spinner
+        android:id="@+id/tipoAlergia1"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/r_cb_hipertenso" />
+
+    <Spinner
+        android:id="@+id/tipoAlergia2"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tipoAlergia1" />
+
+    <Spinner
+        android:id="@+id/tipoAlergia3"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tipoAlergia2" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="51dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico"
+        app:srcCompat="@drawable/baseline_question_mark_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
