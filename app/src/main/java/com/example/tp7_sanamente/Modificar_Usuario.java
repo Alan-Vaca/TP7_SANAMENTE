@@ -6,9 +6,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import java.util.ArrayList;
+
 import BaseDeDatos.Conexion;
+import Entidad.Alergia;
 import Entidad.Cliente;
 import Entidad.Notificacion;
 import Entidad.Producto;
@@ -30,8 +35,10 @@ public class Modificar_Usuario extends AppCompatActivity {
 
     TextView nombreApellido,dni,usuario,alergia,direccion,pass0,pass1,pass2;
     CheckBox hipertenso,celiaco,diabetico;
+    Spinner Tipoalergias1,Tipoalergias2,Tipoalergias3;
+    ArrayList<Alergia> listaAlergias;
 
-Usuario user;
+    Usuario user;
     Restriccion restriccion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,12 @@ Usuario user;
         hipertenso = (CheckBox)findViewById(R.id.r_cb_hipertenso);
         celiaco = (CheckBox)findViewById(R.id.r_cb_celiaco);
         diabetico = (CheckBox)findViewById(R.id.r_cb_diabetico);
+
+        Tipoalergias1 = (Spinner)findViewById(R.id.tipoAlergia1);
+        Tipoalergias2 = (Spinner)findViewById(R.id.tipoAlergia2);
+        Tipoalergias3 = (Spinner)findViewById(R.id.tipoAlergia3);
+        listaAlergias = new ArrayList<Alergia>();
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
@@ -318,6 +331,38 @@ Usuario user;
                 dialog.dismiss();
             }
         });
+    }
+
+
+    private class obtenerListadoAlergias extends AsyncTask<Producto, Void, ArrayList<Alergia>> {
+        @Override
+        protected ArrayList<Alergia> doInBackground(Producto... producto) {
+
+            Conexion con = new Conexion();
+            try {
+                listaAlergias = con.obtenerListadoAlergias();
+
+                return listaAlergias;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return listaAlergias;
+            }
+        }
+        @Override
+        protected void onPostExecute(ArrayList<Alergia> listadoAlergia) {
+            //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
+
+            if (listadoAlergia.size() > 0) {
+
+                ArrayAdapter<Alergia> adapter = new ArrayAdapter<>(Modificar_Usuario.this, android.R.layout.simple_spinner_dropdown_item, listadoAlergia);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                Tipoalergias1.setAdapter(adapter);
+                Tipoalergias2.setAdapter(adapter);
+                Tipoalergias3.setAdapter(adapter);
+
+            }
+        }
+
     }
 
 

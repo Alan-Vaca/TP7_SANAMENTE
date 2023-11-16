@@ -6,17 +6,24 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import BaseDeDatos.Conexion;
+import Entidad.Alergia;
 import Entidad.Cliente;
+import Entidad.Etiquetado;
+import Entidad.Producto;
 import Entidad.Restriccion;
 import Entidad.Usuario;
 
@@ -25,6 +32,9 @@ public class Registrar_Cliente extends AppCompatActivity {
 
     TextView nombre,apellido,dni,alergias, direccion;
     CheckBox hipertenso,diabetico,celiaco;
+    ArrayList<Alergia> listaAlergias;
+
+    Spinner alergiasTipo1,alergiasTipo2,alergiasTipo3;
 
     Usuario user;
 
@@ -44,6 +54,15 @@ public class Registrar_Cliente extends AppCompatActivity {
         hipertenso = (CheckBox)findViewById(R.id.r_cb_hipertenso);
         diabetico = (CheckBox)findViewById(R.id.r_cb_diabetico);
         celiaco = (CheckBox)findViewById(R.id.r_cb_celiaco);
+
+        alergiasTipo1 = (Spinner)findViewById(R.id.alergiasTipo1);
+        alergiasTipo2 = (Spinner)findViewById(R.id.alergiasTipo2);
+        alergiasTipo3 = (Spinner)findViewById(R.id.alergiasTipo3);
+
+        listaAlergias = new ArrayList<Alergia>();
+
+        new Registrar_Cliente.obtenerListadoAlergias().execute();
+
     }
 
     public void VolverRegistro(View view) {
@@ -235,5 +254,38 @@ public class Registrar_Cliente extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+
+
+    private class obtenerListadoAlergias extends AsyncTask<Producto, Void, ArrayList<Alergia>> {
+        @Override
+        protected ArrayList<Alergia> doInBackground(Producto... producto) {
+
+            Conexion con = new Conexion();
+            try {
+                listaAlergias = con.obtenerListadoAlergias();
+
+                return listaAlergias;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return listaAlergias;
+            }
+        }
+        @Override
+        protected void onPostExecute(ArrayList<Alergia> listadoAlergia) {
+            //Toast.makeText(MainActivity.this, user.toString(), Toast.LENGTH_LONG).show();
+
+            if (listadoAlergia.size() > 0) {
+
+                ArrayAdapter<Alergia> adapter = new ArrayAdapter<>(Registrar_Cliente.this, android.R.layout.simple_spinner_dropdown_item, listadoAlergia);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                alergiasTipo1.setAdapter(adapter);
+                alergiasTipo2.setAdapter(adapter);
+                alergiasTipo3.setAdapter(adapter);
+
+            }
+        }
+
     }
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import Entidad.Alergia;
 import Entidad.CalificacionXcliente;
 import Entidad.Cliente;
 import Entidad.Comercio;
@@ -417,6 +418,17 @@ public class Conexion extends AsyncTask<String,Void, String> {
             Log.d("BD-ERROR", e.toString());
         }
         return listaEtiquetado;
+    }
+
+    public ArrayList<Alergia> obtenerListadoAlergias() {
+        ArrayList<Alergia> listaAlergicos = new ArrayList<Alergia>();
+        try {
+            Connection con = getConnection();
+            listaAlergicos = consultasEtiquetados.obtenerListadoAlergias(getConnection());
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaAlergicos;
     }
 
     public ArrayList<Etiquetado> obtenerListadoEtiquetadoXproducto(Producto producto) {

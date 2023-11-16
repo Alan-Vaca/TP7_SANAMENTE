@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import Entidad.Alergia;
 import Entidad.Etiquetado;
 import Entidad.Producto;
 
@@ -173,6 +174,57 @@ public class consultasEtiquetados {
     //--------------------------------------------------------------------------------------
     //CONSULTA DE TIPO DELETE
     //--------------------------------------------------------------------------------------
+
+    public ArrayList<Alergia> obtenerListadoAlergias(Connection conn) {
+        ArrayList<Alergia> listadoAlergias = new ArrayList<Alergia>();
+
+        try {
+            String query = "select idAlergia, descripcionAlergia,ingredientesAlergicos from alergias";
+            Alergia alergiaInicial = new Alergia();
+            alergiaInicial.setDescripcionAlergia("Seleccione...");
+            alergiaInicial.setIdAlergia(0);
+            alergiaInicial.setIngredientesAlergicos("");
+            listadoAlergias.add(alergiaInicial);
+
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        Alergia alergia = new Alergia();
+
+                        alergia.setIdAlergia(rs.getInt("idAlergia"));
+                        alergia.setDescripcionAlergia(rs.getString("descripcionAlergia"));
+                        alergia.setIngredientesAlergicos(rs.getString("ingredientesAlergicos"));
+
+                        listadoAlergias.add(alergia);
+                    }
+                    Alergia alergia = new Alergia();
+                    if(listadoAlergias.size() == 0){
+                        listadoAlergias.add(alergia);
+                        listadoAlergias.add(alergia);
+                        listadoAlergias.add(alergia);
+                    } else if (listadoAlergias.size() == 1) {
+                        listadoAlergias.add(alergia);
+                        listadoAlergias.add(alergia);
+                    }
+                    else if (listadoAlergias.size() == 2) {
+                        listadoAlergias.add(alergia);
+                    }
+
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return listadoAlergias;
+    }
 
     public void eliminarProductoXetiquetado(Connection conn,int idProducto) {
         try {
