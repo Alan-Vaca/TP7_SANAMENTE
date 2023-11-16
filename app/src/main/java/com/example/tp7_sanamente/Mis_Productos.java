@@ -26,6 +26,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
+import Entidad.Alergia;
 import Entidad.Etiquetado;
 import Entidad.Producto;
 import Entidad.Restriccion;
@@ -46,6 +47,8 @@ public class Mis_Productos extends AppCompatActivity {
     boolean listaCargada;
     boolean listaProductosConFiltro, listaProductosConOfertas;
 
+    ArrayList<Alergia> listaAlergiasUsuario;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,7 @@ public class Mis_Productos extends AppCompatActivity {
         listaCargada = false;
 
         listaEtiquetados = new ArrayList<Etiquetado>();
+        listaAlergiasUsuario = new ArrayList<Alergia>();
 
 
         SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
@@ -130,6 +134,7 @@ public class Mis_Productos extends AppCompatActivity {
                 cantidadTxt.setText("0");
 
                 new Mis_Productos.cargarRestricciones().execute(user);
+                new Mis_Productos.cargarAlergias().execute(user);
             }else{
                 btnAdd.setText("AGREGAR UN NUEVO PRODUCTO");
                 txt_StockCantidad.setText("STOCK REGISTRADO:");
@@ -504,7 +509,23 @@ public class Mis_Productos extends AppCompatActivity {
 
                     }
 
-                    if(NoAptoDiabetico || NoAptoCeliaco || NoAptoHipertenso){
+                    boolean alergico = false;
+
+                    if (listaAlergiasUsuario.size() > 0) {
+                        for (Alergia alergia : listaAlergiasUsuario) {
+                            String[] arregloIngredientes = alergia.getIngredientesAlergicos().toUpperCase().trim().split(",");
+                            for (String ingrediente : arregloIngredientes) {
+                                if (productoSeleccionado.getIngredientes().toUpperCase().trim().contains(ingrediente)) {
+
+                                    msjAdvertencias += '\n' + " POR SU SEGURIDAD RECOMENDAMOS NO COMPRAR ESTE PRODUCTO YA QUE ES ALERGICO (" + alergia.getDescripcionAlergia() + ")"  + '\n';
+                                    alergico = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if(NoAptoDiabetico || NoAptoCeliaco || NoAptoHipertenso || alergico){
                         msjAdvertencias = "ADVERTENCIA" + '\n' + '\n' + msjAdvertencias + '\n';
                         if(NoAptoDiabetico){
                             msjAdvertencias += "NO APTO PARA DIABETICOS" + '\n';
@@ -515,6 +536,7 @@ public class Mis_Productos extends AppCompatActivity {
                         if(NoAptoHipertenso){
                             msjAdvertencias += "NO APTO PARA HIPERTENSOS" + '\n';
                         }
+
                         msjAdvertencias += '\n' + "CONSUMA BAJO SU RESPONSABILIDAD.";
 
 
@@ -546,4 +568,29 @@ public class Mis_Productos extends AppCompatActivity {
 
         }
         }
+
+    private class cargarAlergias extends AsyncTask<Usuario, Void, ArrayList<Alergia>> {
+        @Override
+        protected ArrayList<Alergia> doInBackground(Usuario... user) {
+            Conexion con = new Conexion();
+            try {
+                listaAlergiasUsuario = con.obtenerListadoAlergiasXusuario(user[0].getIdUsuario());
+                return listaAlergiasUsuario;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return listaAlergiasUsuario;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Alergia> listaAlergiasUsuarios) {
+            listaAlergiasUsuario = listaAlergiasUsuarios;
+            if (listaAlergiasUsuario.size() > 0) {
+                //Tipoalergias1.setSelection(listaAlergiasUsuario.get(0).getIdAlergia());
+                //Tipoalergias2.setSelection(listaAlergiasUsuario.get(1).getIdAlergia());
+                //Tipoalergias3.setSelection(listaAlergiasUsuario.get(2).getIdAlergia());
+
+            }
+        }
+    }
     }

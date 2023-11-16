@@ -26,6 +26,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
+import Entidad.Alergia;
 import Entidad.Etiquetado;
 import Entidad.Producto;
 import Entidad.Restriccion;
@@ -45,6 +46,8 @@ public class ModificarProducto extends AppCompatActivity {
     Toolbar toolbarModificar;
     ArrayList<pedidoXproducto> listadoCarrito;
     Switch sw_hipertenso, sw_celiaco, sw_diabetico;
+
+    ArrayList<Alergia> listaAlergiasUsuario;
     boolean listaCargada;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,8 @@ public class ModificarProducto extends AppCompatActivity {
         sw_celiaco = (Switch)findViewById(R.id.sw_celiaco);
         sw_diabetico = (Switch)findViewById(R.id.sw_diabetico);
         //toolbarModificar = (Toolbar)findViewById(R.id.toolbarMod);
+
+        listaAlergiasUsuario = new ArrayList<Alergia>();
 
         listaCargada = false;
         SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
@@ -144,6 +149,7 @@ public class ModificarProducto extends AppCompatActivity {
 
             if(user.isCliente()){
                 stockProducto.setText("0");
+                new ModificarProducto.cargarAlergias().execute(user);
             }else {
                 String stockdelProducto = String.valueOf(productoSeleccionado.getStock());
                 stockProducto.setText(stockdelProducto);
@@ -712,6 +718,32 @@ public class ModificarProducto extends AppCompatActivity {
                 });
             }
 
+        if (listaAlergiasUsuario.size() > 0) {
+            for (Alergia alergia : listaAlergiasUsuario) {
+                String[] arregloIngredientes = alergia.getIngredientesAlergicos().toUpperCase().trim().split(",");
+                for (String ingrediente : arregloIngredientes) {
+                    if (producto.getIngredientes().toUpperCase().trim().contains(ingrediente)) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ModificarProducto.this);
+                        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_notificaciones, null);
+                        builder.setView(dialogView);
+
+                        final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
+                        Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
+
+                        notificacionesMSJ.setText("Por su seguridad recomendamos no comprar este producto ya que es alérgico (" + alergia.getDescripcionAlergia() + ")");
+                        final AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                        btnAceptarNotificaciones.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                }
+            }
+        }
 
         if(!restriccion.getAlergico().trim().isEmpty())
         if(producto.getIngredientes().toUpperCase().trim().contains(restriccion.getAlergico().trim().toUpperCase())){
@@ -790,6 +822,32 @@ public class ModificarProducto extends AppCompatActivity {
                 Toast toast = Toast.makeText(ModificarProducto.this, "ERROR AL INGRESAR" + "\n" + "VERIFIQUE SUS CREDENCIALES", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.TOP, 0, 200);
                 toast.show();
+            }
+        }
+    }
+
+
+    private class cargarAlergias extends AsyncTask<Usuario, Void, ArrayList<Alergia>> {
+        @Override
+        protected ArrayList<Alergia> doInBackground(Usuario... user) {
+            Conexion con = new Conexion();
+            try {
+                listaAlergiasUsuario = con.obtenerListadoAlergiasXusuario(user[0].getIdUsuario());
+                return listaAlergiasUsuario;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return listaAlergiasUsuario;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Alergia> listaAlergiasUsuarios) {
+            listaAlergiasUsuario = listaAlergiasUsuarios;
+            if (listaAlergiasUsuario.size() > 0) {
+                //Tipoalergias1.setSelection(listaAlergiasUsuario.get(0).getIdAlergia());
+                //Tipoalergias2.setSelection(listaAlergiasUsuario.get(1).getIdAlergia());
+                //Tipoalergias3.setSelection(listaAlergiasUsuario.get(2).getIdAlergia());
+
             }
         }
     }
