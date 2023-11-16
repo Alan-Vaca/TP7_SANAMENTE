@@ -14,7 +14,7 @@
     <EditText
         android:id="@+id/editTextNotificaciones"
         android:layout_width="358dp"
-        android:layout_height="293dp"
+        android:layout_height="430dp"
         android:layout_gravity="center|center_horizontal|center_vertical"
         android:layout_margin="25dp"
         android:editable="false"

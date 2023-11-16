@@ -177,6 +177,7 @@
         android:layout_marginTop="12dp"
         android:text="@string/tv_alergias"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico" />
@@ -222,5 +223,16 @@
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/alergiasTipo2" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="42dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="ConsultaAlergias"
+        app:layout_constraintBottom_toTopOf="@+id/alergiasTipo1"
+        app:layout_constraintStart_toEndOf="@+id/fc_tv_contiene"
+        app:srcCompat="@drawable/baseline_question_mark_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
