@@ -193,6 +193,38 @@ public class consultasProductos {
                 pstmt.setInt(6, producto.getIdProducto());
 
                 int filas_modificadas= pstmt.executeUpdate();
+
+
+                if(!producto.isEstado()){
+                    updateQuery = "SELECT p.idProducto, COALESCE(SUM(pp.cantidad), 0) AS Nuevacantidad " +
+                            "FROM productos p " +
+                            "LEFT JOIN pedidoXproducto pp ON p.idProducto = pp.idProducto " +
+                            "LEFT JOIN pedidos pe ON pe.idPedido = pp.idPedido AND pe.estado = 3 " +
+                            "WHERE p.idProducto = " + producto.getIdProducto() +
+                            " GROUP BY p.idProducto";
+
+                    PreparedStatement selectcantidadNueva = conn.prepareStatement(updateQuery);
+                    ResultSet resultS = selectcantidadNueva.executeQuery();
+                    int cantidadNueva = 0;
+                    if (resultS.next()) {
+                        cantidadNueva = resultS.getInt(2);
+                    }
+
+                    if(cantidadNueva > 0){
+                        updateQuery = "UPDATE pedidos p " +
+                                " JOIN pedidoXproducto pp ON p.idPedido = pp.idPedido " +
+                                " SET p.estado = 4 WHERE pp.idProducto = " + producto.getIdProducto() +
+                                " AND p.estado != 0";
+                        pstmt = conn.prepareStatement(updateQuery);
+                        filas_modificadas= pstmt.executeUpdate();
+
+                        updateQuery = "UPDATE productos SET stock = " + (cantidadNueva + producto.getStock()) +
+                                " WHERE idProducto = " + producto.getIdProducto();
+                        pstmt = conn.prepareStatement(updateQuery);
+                        filas_modificadas= pstmt.executeUpdate();
+                    }
+                }
+
                 pstmt.close();
                 conn.close();
                 return filas_modificadas > 0;
