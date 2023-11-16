@@ -102,8 +102,9 @@
         android:layout_marginTop="8dp"
         android:text="@string/checkbox_hipertenso"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion"
-        tools:layout_editor_absoluteX="140dp" />
+        app:layout_constraintEnd_toStartOf="@+id/r_cb_celiaco"
+        app:layout_constraintStart_toEndOf="@+id/r_cb_diabetico"
+        app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion" />
 
     <EditText
         android:id="@+id/txtComentarios"

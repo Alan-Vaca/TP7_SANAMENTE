@@ -12,7 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 
+import Entidad.Notificacion;
 import Entidad.Restriccion;
+import Entidad.Usuario;
 
 public class consultasRestricciones {
 
@@ -141,6 +143,103 @@ public class consultasRestricciones {
             }
             else {
                 Log.d("ERROR-DB", "NO hay conexion");
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void altaAlergiaXcliente(Connection conn, int idAlergia1, int idAlergia2, int idAlergia3) {
+        try {
+            if (conn != null) {
+
+                String selectMaxIdQuery = "SELECT max(idCliente) FROM clientes";
+                PreparedStatement pstmt = conn.prepareStatement(selectMaxIdQuery);
+                ResultSet resultSet = pstmt.executeQuery();
+                int maxIdCliente = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+                if (resultSet.next()) {
+                    maxIdCliente = resultSet.getInt(1);
+                }
+                if(idAlergia1 > 0) {
+                    String insertQuery = "INSERT INTO alergiasXcliente(idCliente,idAlergia) VALUES (?,?)";
+                    pstmt = conn.prepareStatement(insertQuery);
+                    pstmt.setInt(1, maxIdCliente);
+                    pstmt.setInt(2, idAlergia1);
+                    pstmt.executeUpdate();
+
+                }
+                if(idAlergia2 > 0) {
+                    String insertQuery = "INSERT INTO alergiasXcliente(idCliente,idAlergia) VALUES (?,?)";
+                    pstmt = conn.prepareStatement(insertQuery);
+                    pstmt.setInt(1, maxIdCliente);
+                    pstmt.setInt(2, idAlergia2);
+                    pstmt.executeUpdate();
+                }
+                if(idAlergia3 > 0) {
+                    String insertQuery = "INSERT INTO alergiasXcliente(idCliente,idAlergia) VALUES (?,?)";
+                    pstmt = conn.prepareStatement(insertQuery);
+                    pstmt.setInt(1, maxIdCliente);
+                    pstmt.setInt(2, idAlergia3);
+                    pstmt.executeUpdate();
+                }
+
+                pstmt.close();
+                conn.close();
+
+
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void modificarAlergias(Connection conn, Usuario user, int idAlergia1, int idAlergia2, int idAlergia3) {
+        try {
+            if (conn != null) {
+
+                String selectMaxIdQuery = "SELECT idCliente FROM clientes where idUsuario = " + user.getIdUsuario();
+                PreparedStatement pstmt = conn.prepareStatement(selectMaxIdQuery);
+                ResultSet resultSet = pstmt.executeQuery();
+                int idCliente = 0; // Valor predeterminado en caso de que no se encuentre ningún resultado
+                if (resultSet.next()) {
+                    idCliente = resultSet.getInt(1);
+                }
+
+                String deleteQuery = "DELETE FROM alergiasXcliente WHERE idCliente = ?";
+
+                pstmt = conn.prepareStatement(deleteQuery);
+                pstmt.setInt(1, idCliente);
+                pstmt.executeUpdate();
+
+                if(idAlergia1 > 0) {
+                    String insertQuery = "INSERT INTO alergiasXcliente(idCliente,idAlergia) VALUES (?,?)";
+                    pstmt = conn.prepareStatement(insertQuery);
+                    pstmt.setInt(1, idCliente);
+                    pstmt.setInt(2, idAlergia1);
+                    pstmt.executeUpdate();
+
+                }
+                if(idAlergia2 > 0) {
+                    String insertQuery = "INSERT INTO alergiasXcliente(idCliente,idAlergia) VALUES (?,?)";
+                    pstmt = conn.prepareStatement(insertQuery);
+                    pstmt.setInt(1, idCliente);
+                    pstmt.setInt(2, idAlergia2);
+                    pstmt.executeUpdate();
+                }
+                if(idAlergia3 > 0) {
+                    String insertQuery = "INSERT INTO alergiasXcliente(idCliente,idAlergia) VALUES (?,?)";
+                    pstmt = conn.prepareStatement(insertQuery);
+                    pstmt.setInt(1, idCliente);
+                    pstmt.setInt(2, idAlergia3);
+                    pstmt.executeUpdate();
+                }
+
+                pstmt.close();
+                conn.close();
+
+
             }
         } catch (Exception e) {
             Log.d("ERROR-DB", e.toString());

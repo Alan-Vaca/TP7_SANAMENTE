@@ -63,6 +63,7 @@ public class Modificar_Usuario extends AppCompatActivity {
         Tipoalergias3 = (Spinner)findViewById(R.id.tipoAlergia3);
         listaAlergias = new ArrayList<Alergia>();
 
+        new Modificar_Usuario.obtenerListadoAlergias().execute();
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
@@ -273,7 +274,7 @@ public class Modificar_Usuario extends AppCompatActivity {
             Conexion con = new Conexion();
             try {
                 Notificacion notificacion = new Notificacion();
-                return con.ModificarUsuarioCliente(restriccion[0],notificacion);
+                return con.ModificarUsuarioCliente(restriccion[0],notificacion,Tipoalergias1.getSelectedItemPosition(),Tipoalergias2.getSelectedItemPosition(),Tipoalergias3.getSelectedItemPosition());
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;

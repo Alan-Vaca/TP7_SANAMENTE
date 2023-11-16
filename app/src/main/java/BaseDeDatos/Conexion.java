@@ -116,7 +116,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return false;
     }
 
-    public boolean RegistrarUsuarioCliente(Restriccion res) {
+    public boolean RegistrarUsuarioCliente(Restriccion res,int idAlergia1,int idAlergia2,int idAlergia3) {
         Boolean exito = false;
         try {
             res.getClienteAsociado().getUsuarioAsociado().setCliente(true);
@@ -125,6 +125,7 @@ public class Conexion extends AsyncTask<String,Void, String> {
                 altaNotificacion(res.getClienteAsociado().getUsuarioAsociado().getIdUsuario());
                 altaCliente(res.getClienteAsociado().getUsuarioAsociado());
                 altaRestricciones(res);
+                altaAlergias(idAlergia1,idAlergia2,idAlergia3);
             }
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
@@ -132,19 +133,25 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return exito;
     }
 
-    public boolean ModificarUsuarioCliente(Restriccion res, Notificacion not) {
+
+
+    public boolean ModificarUsuarioCliente(Restriccion res, Notificacion not,int idAlergia1,int idAlergia2,int idAlergia3) {
         Boolean exito = false;
         try {
             exito = consultasUsuario.modificarUsuario(getConnection(),res.getClienteAsociado().getUsuarioAsociado());
             if(exito) {
                 ModificarRestriccion(res);
                 ModificarNotificacion(not);
+                ModificarAlergias(res.getClienteAsociado().getUsuarioAsociado(),idAlergia1,idAlergia2,idAlergia3);
             }
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }
         return exito;
     }
+
+
+
 
     public boolean RegistrarUsuarioComercio(Comercio com) {
         Boolean exito = false;
@@ -242,6 +249,14 @@ public class Conexion extends AsyncTask<String,Void, String> {
     //RESTRICCIONES
     //--------------------------------------------------------------------------------------
 
+    private void altaAlergias(int idAlergia1, int idAlergia2, int idAlergia3) {
+        try {
+            consultasRestricciones.altaAlergiaXcliente(getConnection(),idAlergia1,idAlergia2,idAlergia3);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+    }
+
     public void altaRestricciones(Restriccion rest) {
         try {
             consultasRestricciones.altaRestriccion(getConnection(),rest);
@@ -263,6 +278,14 @@ public class Conexion extends AsyncTask<String,Void, String> {
     public void ModificarRestriccion(Restriccion rest) {
         try {
             consultasRestricciones.modificarRestriccion(getConnection(),rest);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+    }
+
+    private void ModificarAlergias(Usuario user,int idAlergia1,int idAlergia2,int idAlergia3) {
+        try {
+            consultasRestricciones.modificarAlergias(getConnection(),user,idAlergia1,idAlergia2,idAlergia3);
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }

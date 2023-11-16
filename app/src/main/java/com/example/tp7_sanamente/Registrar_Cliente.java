@@ -195,7 +195,7 @@ public class Registrar_Cliente extends AppCompatActivity {
             Conexion con = new Conexion();
             boolean exito = false;
             try {
-                exito = con.RegistrarUsuarioCliente(res[0]);
+                exito = con.RegistrarUsuarioCliente(res[0],alergiasTipo1.getSelectedItemPosition(),alergiasTipo2.getSelectedItemPosition(),alergiasTipo3.getSelectedItemPosition());
 
             } catch (Exception e) {
                 e.printStackTrace();
