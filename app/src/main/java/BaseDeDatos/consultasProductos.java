@@ -219,7 +219,7 @@ public class consultasProductos {
                                 while (idPedidosResult.next()) {
                                     int idPedido = idPedidosResult.getInt("idPedido");
 
-                                    String insertQueryH = "UPDATE historial SET fecha = ?, estado = 4 where idPedido = ?";
+                                    String insertQueryH = "UPDATE historial SET fecha = ?, estado = 4 where idPedido = ? and estado = 3";
 
                                     pstmt = conn.prepareStatement(insertQueryH);
                                     Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
@@ -234,7 +234,7 @@ public class consultasProductos {
                                         insertMotivoStmt.executeUpdate();
                                     }
 
-                                    String updatePedidoQuery = "UPDATE pedidos SET estado = 4 WHERE idPedido = ? AND estado != 0";
+                                    String updatePedidoQuery = "UPDATE pedidos SET estado = 4 WHERE idPedido = ? AND estado = 3";
                                     try (PreparedStatement updatePedidoStmt = conn.prepareStatement(updatePedidoQuery)) {
                                         updatePedidoStmt.setInt(1, idPedido);
                                         updatePedidoStmt.executeUpdate();
