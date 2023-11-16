@@ -211,12 +211,37 @@ public class consultasProductos {
                     }
 
                     if(cantidadNueva > 0){
-                        updateQuery = "UPDATE pedidos p " +
-                                " JOIN pedidoXproducto pp ON p.idPedido = pp.idPedido " +
-                                " SET p.estado = 4 WHERE pp.idProducto = " + producto.getIdProducto() +
-                                " AND p.estado != 0";
-                        pstmt = conn.prepareStatement(updateQuery);
-                        filas_modificadas= pstmt.executeUpdate();
+                        String selectIdPedidosQuery = "SELECT idPedido FROM pedidoXproducto WHERE idProducto = ?";
+                        try (PreparedStatement selectIdPedidosStmt = conn.prepareStatement(selectIdPedidosQuery)) {
+                            selectIdPedidosStmt.setInt(1, producto.getIdProducto());
+                            try (ResultSet idPedidosResult = selectIdPedidosStmt.executeQuery()) {
+                                // Iterar sobre los idPedido y realizar la inserción y la actualización
+                                while (idPedidosResult.next()) {
+                                    int idPedido = idPedidosResult.getInt("idPedido");
+
+                                    String insertQueryH = "UPDATE historial SET fecha = ?, estado = 4 where idPedido = ?";
+
+                                    pstmt = conn.prepareStatement(insertQueryH);
+                                    Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+                                    pstmt.setDate(1, (Date) fechaActual);
+                                    pstmt.setInt(2, idPedido);
+                                    pstmt.executeUpdate();
+
+
+                                    String insertMotivoQuery = "INSERT INTO motivos(fecha, idPedido, motivo) VALUES (CURRENT_DATE(), ?, 'Producto dado de baja')";
+                                    try (PreparedStatement insertMotivoStmt = conn.prepareStatement(insertMotivoQuery)) {
+                                        insertMotivoStmt.setInt(1, idPedido);
+                                        insertMotivoStmt.executeUpdate();
+                                    }
+
+                                    String updatePedidoQuery = "UPDATE pedidos SET estado = 4 WHERE idPedido = ? AND estado != 0";
+                                    try (PreparedStatement updatePedidoStmt = conn.prepareStatement(updatePedidoQuery)) {
+                                        updatePedidoStmt.setInt(1, idPedido);
+                                        updatePedidoStmt.executeUpdate();
+                                    }
+                                }
+                            }
+                        }
 
                         updateQuery = "UPDATE productos SET stock = " + (cantidadNueva + producto.getStock()) +
                                 " WHERE idProducto = " + producto.getIdProducto();

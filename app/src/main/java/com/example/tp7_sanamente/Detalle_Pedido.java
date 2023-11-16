@@ -19,20 +19,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import BaseDeDatos.Conexion;
 import Entidad.Cliente;
 import Entidad.Comercio;
 import Entidad.Pedido;
-import Entidad.Producto;
 import Entidad.Usuario;
 import Entidad.pedidoXproducto;
 
 public class Detalle_Pedido extends AppCompatActivity {
 
-    TextView numeroPedido, cliente, estado, comercio, fecha, cantidadProductos, montoTotal;
+    TextView numeroPedido, cliente, estado, comercio, fecha, cantidadProductos, montoTotal, detalleMotivo;
     Usuario user;
     Pedido pedidoSeleccionado;
     ListView lv_listado;
@@ -53,7 +51,7 @@ public class Detalle_Pedido extends AppCompatActivity {
         estado = (TextView)findViewById(R.id.txtEstado);
         lv_listado = (ListView)findViewById(R.id.lv_detallePedido);
         calificar = (Button)findViewById(R.id.dp_bn_calificar);
-
+        detalleMotivo = (TextView)findViewById(R.id.motivoDetalleS);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
 
@@ -87,6 +85,9 @@ public class Detalle_Pedido extends AppCompatActivity {
                 estado.setText("ESTADO: " + pedidoSeleccionado.getEstadoString());
                 fecha.setText(pedidoSeleccionado.getFechaFormateada());
                 montoTotal.setText("MONTO TOTAL: $" + pedidoSeleccionado.getMonto().toString());
+                String detalle = pedidoSeleccionado.getMotivoCancelacion().toString();
+                if(!detalle.isEmpty())
+                    detalleMotivo.setText("MOTIVO DE CANCELACION: " + pedidoSeleccionado.getMotivoCancelacion().toString());
 
                 if(user.isCliente()){
                     calificar.setText("CALIFICAR");

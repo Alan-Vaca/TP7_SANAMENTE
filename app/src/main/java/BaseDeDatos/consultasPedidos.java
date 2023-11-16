@@ -440,7 +440,8 @@ public class consultasPedidos {
     public Pedido obtenerPedidoXid(Connection conn, int idPedido) {
         Pedido pedido = new Pedido();
         try {
-            String query = "select idPedido,idCliente,idComercio,monto,fecha,estado,medioPago from pedidos where idPedido = " + idPedido;
+            String query = "select p.idPedido,p.idCliente,p.idComercio,p.monto,p.fecha,p.estado,p.medioPago,m.motivo from pedidos p " +
+                    " left join motivos m on m.idPedido = p.idPedido where p.idPedido = " + idPedido;
 
             if (conn != null) {
                 try {
@@ -458,6 +459,10 @@ public class consultasPedidos {
                         pedido.setFecha(rs.getDate("fecha"));
                         pedido.setEstado(rs.getInt("estado"));
                         pedido.setMedioPago(rs.getInt("medioPago"));
+
+                        if(rs.getString("motivo") != null){
+                            pedido.setMotivoCancelacion(rs.getString("motivo"));
+                        }
                     }
                     rs.close();
                     stmt.close();
