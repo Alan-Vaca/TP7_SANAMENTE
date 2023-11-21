@@ -84,6 +84,9 @@
             android:name=".Filtros_Pedidos"
             android:exported="false" />
         <activity
+            android:name=".Filtros_Reporte"
+            android:exported="false" />
+        <activity
             android:name=".Mis_Pedidos"
             android:exported="false" />
         <activity

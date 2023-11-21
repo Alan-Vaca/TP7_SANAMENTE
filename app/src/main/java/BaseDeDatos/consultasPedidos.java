@@ -183,17 +183,48 @@ public class consultasPedidos {
     }
 
 
-    public Reporte obtenerVentasTotales(Connection conn, int idUsuario ) {
+    public Reporte obtenerVentasTotales(Connection conn, int idUsuario, String fechaDesde, String fechaHasta ) throws ParseException {
         Reporte reporte = null;
-        try {
-            String query = "SELECT COUNT(p.idPedido) Pedidos " +
-                    "FROM pedidos p " +
-                    "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
-                    "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
-                    "WHERE u1.idUsuario = " + idUsuario +
-                    ") " +
-                    "GROUP BY p.idComercio" ;
+        String query;
 
+        try {
+
+            if ((fechaDesde == null || fechaDesde.isEmpty())&& (fechaHasta== null || fechaHasta.isEmpty())){
+                Log.d("Reporte.casos", "1");
+                 query = "SELECT COUNT(p.idPedido) Pedidos " +
+                        "FROM pedidos p " +
+                        "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") ";
+            }else if (fechaDesde == null || fechaDesde.isEmpty()){
+                Log.d("Reporte.casos", "2");
+                 query = "SELECT COUNT(p.idPedido) Pedidos " +
+                        "FROM pedidos p " +
+                        "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") AND p.fecha <= '" + fechaHasta +"'";
+            }else if (fechaHasta == null || fechaHasta.isEmpty()){
+                Log.d("Reporte.casos", "3");
+                 query = "SELECT COUNT(p.idPedido) Pedidos " +
+                        "FROM pedidos p " +
+                        "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") AND p.fecha >= '" + fechaDesde + "' " ;
+            }else{
+                Log.d("Reporte.casos", "4");
+                 query = "SELECT COUNT(p.idPedido) Pedidos " +
+                        "FROM pedidos p " +
+                        "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") AND p.fecha >= '" + fechaDesde + "' " +
+                        "AND p.fecha <= '" + fechaHasta + "'";
+            }
+
+            Log.d("reporte.query", query);
 
             if (conn != null) {
                 try {
@@ -219,20 +250,67 @@ public class consultasPedidos {
     }
 
 
-    public Reporte obtenerProductoMasVendido(Connection conn, int idUsuario ) {
+    public Reporte obtenerProductoMasVendido(Connection conn, int idUsuario, String fechaDesde, String fechaHasta ) {
         Reporte reporte = null;
+        String query;
+
         try {
-            String query = "SELECT pr.nombreProducto Nombre, SUM(pp.cantidad) cantidadPP " +
-                    "FROM pedidoXproducto pp " +
-                    "INNER JOIN pedidos p ON p.idPedido = pp.idPedido " +
-                    "INNER JOIN productos pr ON pr.idProducto = pp.idProducto " +
-                    "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
-                                            "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
-                                            "WHERE u1.idUsuario = " + idUsuario +
-                                            ") " +
-                    "GROUP BY Nombre " +
-                    "ORDER BY cantidadPP DESC " +
-                    "LIMIT 1";
+            if ((fechaDesde == null || fechaDesde.isEmpty())&& (fechaHasta== null || fechaHasta.isEmpty())){
+                Log.d("Reporte.casos", "1");
+                query = "SELECT pr.nombreProducto Nombre, SUM(pp.cantidad) cantidadPP " +
+                        "FROM pedidoXproducto pp " +
+                        "INNER JOIN pedidos p ON p.idPedido = pp.idPedido " +
+                        "INNER JOIN productos pr ON pr.idProducto = pp.idProducto " +
+                        "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "GROUP BY Nombre " +
+                        "ORDER BY cantidadPP DESC " +
+                        "LIMIT 1";
+            }else if (fechaDesde == null || fechaDesde.isEmpty()){
+                Log.d("Reporte.casos", "2");
+                query = "SELECT pr.nombreProducto Nombre, SUM(pp.cantidad) cantidadPP " +
+                        "FROM pedidoXproducto pp " +
+                        "INNER JOIN pedidos p ON p.idPedido = pp.idPedido " +
+                        "INNER JOIN productos pr ON pr.idProducto = pp.idProducto " +
+                        "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") AND p.fecha >= '" + fechaHasta + "' "+
+                        "GROUP BY Nombre " +
+                        "ORDER BY cantidadPP DESC " +
+                        "LIMIT 1";
+            }else if (fechaHasta == null || fechaHasta.isEmpty()){
+                Log.d("Reporte.casos", "3");
+                query = "SELECT pr.nombreProducto Nombre, SUM(pp.cantidad) cantidadPP " +
+                        "FROM pedidoXproducto pp " +
+                        "INNER JOIN pedidos p ON p.idPedido = pp.idPedido " +
+                        "INNER JOIN productos pr ON pr.idProducto = pp.idProducto " +
+                        "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") AND p.fecha >= '" + fechaDesde + "' " +
+                        "GROUP BY Nombre " +
+                        "ORDER BY cantidadPP DESC " +
+                        "LIMIT 1";
+            }else{
+                Log.d("Reporte.casos", "4");
+                query = "SELECT pr.nombreProducto Nombre, SUM(pp.cantidad) cantidadPP " +
+                        "FROM pedidoXproducto pp " +
+                        "INNER JOIN pedidos p ON p.idPedido = pp.idPedido " +
+                        "INNER JOIN productos pr ON pr.idProducto = pp.idProducto " +
+                        "WHERE p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") AND p.fecha >= '" + fechaDesde + "' " +
+                        "AND p.fecha <= '" + fechaHasta + "' "+
+                        "GROUP BY Nombre " +
+                        "ORDER BY cantidadPP DESC " +
+                        "LIMIT 1";
+            }
+
+            Log.d("reporte.query", query);
 
 
             if (conn != null) {
@@ -259,15 +337,53 @@ public class consultasPedidos {
 
     }
 
-    public Reporte obtenerProductoFacturacion(Connection conn, int idUsuario ) {
+    public Reporte obtenerProductoFacturacion(Connection conn, int idUsuario, String fechaDesde, String fechaHasta ) {
         Reporte reporte = null;
+        String query;
+
         try {
-            String query = "SELECT SUM(P.monto) MontoTotal from pedidos P " +
-                           "where idComercio = (SELECT idComercio from usuarios u1 " +
-                                                "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
-                                                "WHERE u1.idUsuario = " + idUsuario +
-                                                ") " +
-                           "group by idComercio";
+            if ((fechaDesde == null || fechaDesde.isEmpty())&& (fechaHasta== null || fechaHasta.isEmpty())){
+                Log.d("Reporte.casos", "1");
+                query = "SELECT SUM(p.monto) MontoTotal from pedidos p " +
+                        "where idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "group by idComercio";
+            }else if (fechaDesde == null || fechaDesde.isEmpty()){
+                Log.d("Reporte.casos", "2");
+                query = "SELECT SUM(p.monto) MontoTotal from pedidos p " +
+                        "where idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "AND p.fecha >= '" + fechaHasta + "' "+
+                        "group by idComercio";
+
+            }else if (fechaHasta == null || fechaHasta.isEmpty()){
+                Log.d("Reporte.casos", "3");
+                query = "SELECT SUM(p.monto) MontoTotal from pedidos p " +
+                        "where idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "AND p.fecha >= '" + fechaDesde + "' "+
+                        "group by idComercio";
+            }else{
+                Log.d("Reporte.casos", "4");
+                query = "SELECT SUM(p.monto) MontoTotal from pedidos p " +
+                        "where idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "AND p.fecha >= '" + fechaDesde + "' " +
+                        "AND p.fecha <= '" + fechaHasta + "' "+
+                        "group by idComercio";
+            }
+
+            Log.d("reporte.query", query);
+
+
             if (conn != null) {
                 try {
                     Statement stmt = conn.createStatement();
@@ -292,21 +408,70 @@ public class consultasPedidos {
     }
 
 
-    public Reporte obtenerClienteUsual(Connection conn, int idUsuario ) {
+    public Reporte obtenerClienteUsual(Connection conn, int idUsuario, String fechaDesde, String fechaHasta ) {
         Reporte reporte = null;
         Usuario usuario = null;
+        String query;
         try {
-            String query = "SELECT count(p.idCliente) ClienteCantidad, u.nombre, u.apellido, u.nombreUsuario, u.direccion " +
-                            "from pedidos p " +
-                            "inner join clientes c on p.idCliente = c.idCliente " +
-                            "inner join usuarios u on u.idUsuario = c.idUsuario " +
-                            "where p.idComercio = (SELECT idComercio from usuarios u1 " +
-                                                    "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
-                                                    "WHERE u1.idUsuario = " + idUsuario +
-                                                    ") " +
-                            "group by p.idCliente " +
-                            "order by ClienteCantidad desc " +
-                            "LIMIT 1";
+            if ((fechaDesde == null || fechaDesde.isEmpty())&& (fechaHasta== null || fechaHasta.isEmpty())){
+                Log.d("Reporte.casos", "1");
+                query = "SELECT count(p.idCliente) ClienteCantidad, u.nombre, u.apellido, u.nombreUsuario, u.direccion " +
+                        "from pedidos p " +
+                        "inner join clientes c on p.idCliente = c.idCliente " +
+                        "inner join usuarios u on u.idUsuario = c.idUsuario " +
+                        "where p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "group by p.idCliente " +
+                        "order by ClienteCantidad desc " +
+                        "LIMIT 1";
+            }else if (fechaDesde == null || fechaDesde.isEmpty()){
+                Log.d("Reporte.casos", "2");
+                query = "SELECT count(p.idCliente) ClienteCantidad, u.nombre, u.apellido, u.nombreUsuario, u.direccion " +
+                        "from pedidos p " +
+                        "inner join clientes c on p.idCliente = c.idCliente " +
+                        "inner join usuarios u on u.idUsuario = c.idUsuario " +
+                        "where p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "AND p.fecha >= '" + fechaHasta + "' "+
+                        "group by p.idCliente " +
+                        "order by ClienteCantidad desc " +
+                        "LIMIT 1";
+            }else if (fechaHasta == null || fechaHasta.isEmpty()){
+                Log.d("Reporte.casos", "3");
+                query = "SELECT count(p.idCliente) ClienteCantidad, u.nombre, u.apellido, u.nombreUsuario, u.direccion " +
+                        "from pedidos p " +
+                        "inner join clientes c on p.idCliente = c.idCliente " +
+                        "inner join usuarios u on u.idUsuario = c.idUsuario " +
+                        "where p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "AND p.fecha >= '" + fechaDesde + "' "+
+                        "group by p.idCliente " +
+                        "order by ClienteCantidad desc " +
+                        "LIMIT 1";
+            }else{
+                Log.d("Reporte.casos", "4");
+                query = "SELECT count(p.idCliente) ClienteCantidad, u.nombre, u.apellido, u.nombreUsuario, u.direccion " +
+                        "from pedidos p " +
+                        "inner join clientes c on p.idCliente = c.idCliente " +
+                        "inner join usuarios u on u.idUsuario = c.idUsuario " +
+                        "where p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "AND p.fecha >= '" + fechaDesde + "' " +
+                        "AND p.fecha <= '" + fechaHasta + "' "+
+                        "group by p.idCliente " +
+                        "order by ClienteCantidad desc " +
+                        "LIMIT 1";
+            }
+
+            Log.d("reporte.query", query);
 
 
             if (conn != null) {
@@ -342,18 +507,59 @@ public class consultasPedidos {
     }
 
 
-    public Reporte obtenerMedioPagoMasUsado(Connection conn, int idUsuario ) {
+    public Reporte obtenerMedioPagoMasUsado(Connection conn, int idUsuario, String fechaDesde, String fechaHasta ) {
         Reporte reporte = null;
+        String query;
 
         try {
-            String query =  "select medioPago MedioPago, COUNT(medioPago) cantidadMedioPago from pedidos " +
-                            "where idComercio = (SELECT idComercio from usuarios u1 " +
-                                                "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
-                                                "WHERE u1.idUsuario = " + idUsuario +
-                                                ") " +
-                            "group by medioPago " +
-                            "order by cantidadMedioPago desc " +
-                            "LIMIT 1";
+            if ((fechaDesde == null || fechaDesde.isEmpty())&& (fechaHasta== null || fechaHasta.isEmpty())){
+                Log.d("Reporte.casos", "1");
+                query = "select p.medioPago MedioPago, COUNT(p.medioPago) cantidadMedioPago from pedidos p " +
+                        "where p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "group by p.medioPago " +
+                        "order by cantidadMedioPago desc " +
+                        "LIMIT 1";
+            }else if (fechaDesde == null || fechaDesde.isEmpty()){
+                Log.d("Reporte.casos", "2");
+                query = "select p.medioPago MedioPago, COUNT(p.medioPago) cantidadMedioPago from pedidos p " +
+                        "where p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "AND p.fecha >= '" + fechaHasta + "' "+
+                        "group by p.medioPago " +
+                        "order by cantidadMedioPago desc " +
+                        "LIMIT 1";
+            }else if (fechaHasta == null || fechaHasta.isEmpty()){
+                Log.d("Reporte.casos", "3");
+                query = "select p.medioPago MedioPago, COUNT(p.medioPago) cantidadMedioPago from pedidos p " +
+                        "where p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "AND p.fecha >= '" + fechaDesde + "' "+
+                        "group by p.medioPago " +
+                        "order by cantidadMedioPago desc " +
+                        "LIMIT 1";
+            }else{
+                Log.d("Reporte.casos", "4");
+                query = "select p.medioPago MedioPago, COUNT(p.medioPago) cantidadMedioPago from pedidos p " +
+                        "where p.idComercio = (SELECT idComercio from usuarios u1 " +
+                        "INNER JOIN comercios c1 ON u1.idUsuario = c1.idUsuario " +
+                        "WHERE u1.idUsuario = " + idUsuario +
+                        ") " +
+                        "AND p.fecha >= '" + fechaDesde + "' " +
+                        "AND p.fecha <= '" + fechaHasta + "' "+
+                        "group by p.medioPago " +
+                        "order by cantidadMedioPago desc " +
+                        "LIMIT 1";
+            }
+
+            Log.d("reporte.query", query);
+
 
             if (conn != null) {
                 try {

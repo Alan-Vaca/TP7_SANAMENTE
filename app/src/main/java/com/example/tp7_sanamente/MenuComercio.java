@@ -57,7 +57,7 @@ public class MenuComercio extends AppCompatActivity {
         //new MenuComercio.obtenerinforme().execute(user);
     }
 
-
+/*
     private class obtenerinforme extends AsyncTask<Usuario, Void, Reporte> {
         @Override
         protected Reporte doInBackground(Usuario... usuario) {
@@ -116,13 +116,16 @@ public class MenuComercio extends AppCompatActivity {
 
     }
 
-
+*/
 
     public void MenuGenerarReporte(View view) {
 
-        Toast.makeText(MenuComercio.this, "Generando Reporte... Por favor espere", Toast.LENGTH_LONG).show();
+        //Toast.makeText(MenuComercio.this, "Generando Reporte... Por favor espere", Toast.LENGTH_LONG).show();
 
-        new MenuComercio.obtenerinforme().execute(user);
+       // new MenuComercio.obtenerinforme().execute(user);
+
+        Intent filtros_Reporte = new Intent(this, Filtros_Reporte.class);
+        startActivity(filtros_Reporte);
 
 
 

@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import Entidad.Comercio;
 import Entidad.Etiquetado;
@@ -37,7 +38,7 @@ public class consultasProductos {
                     "INNER JOIN calificaciones c ON p.idProducto = c.idProducto " +
                     "WHERE p.estado = 1 " +
                     "GROUP BY p.idProducto, p.nombreProducto, p.ingredientes, p.stock, p.estado, p.precio " +
-                    "HAVING AVG(c.calificacion) >= 2.5 " +
+                    "HAVING AVG(c.calificacion) >= 3.5 " +
                     "ORDER BY p.precio, AVG(c.calificacion)";
 
             if (conn != null) {
@@ -126,6 +127,81 @@ public class consultasProductos {
         return listadoProducto;
     }
 
+
+
+
+
+    public ArrayList<Producto> obtenerListadoProductosConRestricciones(Connection conn, boolean hipertenso, boolean diabetico, boolean celiaco) {
+        ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
+
+        try {
+            String query =
+
+                    "select p.idProducto productoID, nombreProducto, ingredientes, precio, stock, p.estado, p.idComercio, p.fechaAlta as fechaAltaProducto, " +
+                            "(select avg(calificacion) as puntaje from calificaciones where idProducto = p.idProducto) as puntaje "+
+                            "from productos p "+
+                            "join productoXetiquetado pxe on p.idProducto=pxe.idProducto " +
+                            "join etiquetados e on pxe.idEtiquetado = e.idEtiquetado where";
+
+            boolean flag = false;
+            if (hipertenso) {
+                query += " e.idEtiquetado != 4 or e.idEtiquetado != 6 or e.idEtiquetado != 7";
+                flag = true;
+            }
+            if (diabetico) {
+                if (flag){ query += " or";} else{flag = true;}
+                query += " e.idEtiquetado != 4 or e.idEtiquetado != 6 or e.idEtiquetado != 7 or e.idEtiquetado != 1";
+            }
+            if (celiaco) {
+                if (flag){ query += " or";}
+                query += " e.idEtiquetado != 1 or e.idEtiquetado != 2 or e.idEtiquetado != 3 " +
+                        "or e.idEtiquetado != 4 or e.idEtiquetado != 5 or e.idEtiquetado != 6 " +
+                        "or e.idEtiquetado != 7" ;
+            }
+
+            query += " group by p.nombreProducto";
+
+            Log.d("Filtro.Filtro", query);
+
+            int i = 0;
+            if (conn != null) {
+                try {
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    while (rs.next()) {
+                        i++;
+                        Producto producto = new Producto();
+                        producto.setIdProducto(rs.getInt("productoID"));
+                        producto.setNombre(rs.getString("nombreProducto"));
+                        producto.setIngredientes(rs.getString("ingredientes"));
+                        producto.setPrecio(rs.getFloat("precio"));
+                        producto.setStock(rs.getInt("stock"));
+                        producto.setEstado(rs.getBoolean("estado"));
+                        producto.setIdComercio(rs.getInt("idComercio"));
+                        producto.setPuntaje(rs.getFloat("puntaje"));
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                        Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+                        java.sql.Date fechaAlta = rs.getDate("fechaAltaProducto");
+
+                        listadoProducto.add(producto);
+
+                    }
+                    Log.d("Filtro.Filtro.cantidad'", String.valueOf(i));
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Log.d("ERROR-DB", e.toString());
+        }
+
+        return listadoProducto;
+    }
 
 
 
@@ -272,31 +348,47 @@ public class consultasProductos {
     public ArrayList<Producto> obtenerListadoProductosFiltrados(
             ArrayList<Producto> lista,
             String nombre, String contiene, String noContiene,
-            String ordenarPor, boolean hipertenso, boolean diabetico, boolean celiaco) {
+            String ordenarPor) {
 
 
         ArrayList<Producto> listadoFiltrado = lista;
-
+        
 
         // Filtros
         listadoFiltrado = filtrarPorNombre(listadoFiltrado, nombre);
         listadoFiltrado = filtrarPorContiene(listadoFiltrado, contiene);
         listadoFiltrado = filtrarPorNoContiene(listadoFiltrado, noContiene);
 
+        /*
+        if (hipertenso) {
+            Log.d("Filtro.Filtro", "Entre2");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en sodio");
+            Log.d("Filtro.Filtro", "Entre3");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Contiene edulcorante");
+            Log.d("Filtro.Filtro", "Entre4");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Contiene cafeina");
+            Log.d("Filtro.Filtro", "Entre5");
 
-
-        if (celiaco) {
-            listadoFiltrado = filtrarPorNoContiene(listadoFiltrado, "Harina");
         }
 
         if (diabetico) {
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en sodio");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Contiene edulcorante");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Contiene cafeina");
             listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en azucares");
         }
 
-        if (hipertenso) {
+        if (celiaco) {
+            //listadoFiltrado = filtrarPorNoContiene(listadoFiltrado, "Harina");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en azucares");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en grasas totales");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en grasas saturadas");
             listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en sodio");
-            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "contiene cafeina");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Exceso en calorias");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Contiene edulcorante");
+            listadoFiltrado = filtrarPorEtiquetado(listadoFiltrado, "Contiene cafeina");
         }
+*/
 
 
         ordenarListado(listadoFiltrado, ordenarPor);
@@ -388,10 +480,10 @@ public class consultasProductos {
         return listaFiltrada;
     }
 */
-
+/*
     private ArrayList<Producto> filtrarPorEtiquetado(ArrayList<Producto> lista, String etiqueta) {
         ArrayList<Producto> listaFiltrada = new ArrayList<>();
-        Log.d("Filtro", "Estoy en filtrarPorEtiquetado");
+
 
         for (Producto producto : lista) {
             if (!tieneEtiqueta(producto, etiqueta)) {
@@ -405,7 +497,6 @@ public class consultasProductos {
     }
 
     private boolean tieneEtiqueta(Producto producto, String etiqueta) {
-        Log.d("Filtro", "Estoy en tieneEtiqueta");
         Conexion consultaEtiquetados = new Conexion();
         ArrayList<Etiquetado> etiquetasProducto = consultaEtiquetados.obtenerListadoEtiquetadoXproducto(producto);
 
@@ -417,6 +508,43 @@ public class consultasProductos {
 
         return false;
     }
+    */
+
+/*
+    private ArrayList<Producto> filtrarPorEtiquetado(ArrayList<Producto> lista, String etiqueta) {
+        ArrayList<Producto> listaFiltrada = new ArrayList<>();
+        Conexion consultaEtiquetados = new Conexion();
+
+        try {
+            listaFiltrada = lista.stream()
+                    .filter(producto -> !tieneEtiqueta(producto, etiqueta, consultaEtiquetados))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            Log.d("Filtro.Filtro", String.valueOf(listaFiltrada));
+        } catch (Exception e) {
+            // Manejar la excepción adecuadamente
+            e.printStackTrace();
+        } finally {
+            try {
+                if (consultaEtiquetados != null) {
+                    consultaEtiquetados.cerrarConexion();
+                }
+            } catch (Exception e) {
+                // Manejar la excepción adecuadamente
+                e.printStackTrace();
+            }
+        }
+
+        return listaFiltrada;
+    }
+
+    private boolean tieneEtiqueta(Producto producto, String etiqueta, Conexion consultaEtiquetados) {
+        ArrayList<Etiquetado> etiquetasProducto = consultaEtiquetados.obtenerListadoEtiquetadoXproducto(producto);
+
+        return etiquetasProducto.stream()
+                .anyMatch(etiquetado -> etiquetado.getDescripcion().equalsIgnoreCase(etiqueta));
+    }
+    */
+
 
     private String quitarTildes(String palabra) {
         String normalized = Normalizer.normalize(palabra, Normalizer.Form.NFD);

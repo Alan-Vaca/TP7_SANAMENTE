@@ -416,6 +416,22 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return listaProducto;
     }
 
+    public ArrayList<Producto> obtenerListadoProductosConRestricciones(boolean hipertenso, boolean diabetico, boolean celiaco) {
+        ArrayList<Producto> listaProducto = new ArrayList<Producto>();
+        try {
+            Connection con = getConnection();
+            listaProducto = consultasProductos.obtenerListadoProductosConRestricciones(getConnection(), hipertenso, diabetico, celiaco);
+        } catch (Exception e) {
+            Log.d("BD-ERROR", e.toString());
+        }
+        return listaProducto;
+    }
+
+
+
+
+
+
     public Integer PermisosBajaProducto(Producto producto) {
         try {
             Connection con = getConnection();
@@ -596,11 +612,13 @@ public class Conexion extends AsyncTask<String,Void, String> {
     }
 
 
-    public Reporte obtenerVentasTotales(int id) {
+    ////REPORTE////
+
+    public Reporte obtenerVentasTotales(int id, String fechaDesde, String fechaHasta) {
         Reporte reporte = new Reporte();
         try {
             Connection con = getConnection();
-            reporte = consultasPedidos.obtenerVentasTotales(getConnection(),id);
+            reporte = consultasPedidos.obtenerVentasTotales(getConnection(),id, fechaDesde, fechaHasta);
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }
@@ -608,44 +626,44 @@ public class Conexion extends AsyncTask<String,Void, String> {
     }
 
 
-    public Reporte obtenerProductoMasVendido(int id) {
+    public Reporte obtenerProductoMasVendido(int id, String fechaDesde, String fechaHasta) {
         Reporte reporte = new Reporte();
         try {
             Connection con = getConnection();
-            reporte = consultasPedidos.obtenerProductoMasVendido(getConnection(),id);
+            reporte = consultasPedidos.obtenerProductoMasVendido(getConnection(),id, fechaDesde, fechaHasta);
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }
         return reporte;
     }
 
-    public Reporte obtenerProductoFacturacion(int id) {
+    public Reporte obtenerProductoFacturacion(int id, String fechaDesde, String fechaHasta) {
         Reporte reporte = new Reporte();
         try {
             Connection con = getConnection();
-            reporte = consultasPedidos.obtenerProductoFacturacion(getConnection(),id);
+            reporte = consultasPedidos.obtenerProductoFacturacion(getConnection(),id, fechaDesde, fechaHasta);
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }
         return reporte;
     }
 
-    public Reporte obtenerClienteUsual(int id) {
+    public Reporte obtenerClienteUsual(int id, String fechaDesde, String fechaHasta) {
         Reporte reporte = new Reporte();
         try {
             Connection con = getConnection();
-            reporte = consultasPedidos.obtenerClienteUsual(getConnection(),id);
+            reporte = consultasPedidos.obtenerClienteUsual(getConnection(),id, fechaDesde, fechaHasta);
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }
         return reporte;
     }
 
-    public Reporte obtenerMedioPagoMasUsado(int id) {
+    public Reporte obtenerMedioPagoMasUsado(int id, String fechaDesde, String fechaHasta) {
         Reporte reporte = new Reporte();
         try {
             Connection con = getConnection();
-            reporte = consultasPedidos.obtenerMedioPagoMasUsado(getConnection(),id);
+            reporte = consultasPedidos.obtenerMedioPagoMasUsado(getConnection(),id, fechaDesde, fechaHasta);
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }

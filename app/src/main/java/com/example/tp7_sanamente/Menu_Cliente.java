@@ -247,4 +247,28 @@ public class Menu_Cliente extends AppCompatActivity {
             }
         }
     }
+
+
+    public void ConsultaOfertas(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(Menu_Cliente.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_notificaciones, null);
+        builder.setView(dialogView);
+
+        final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
+        Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
+
+        String consulta = "OFERTAS!!" + '\n' + '\n';
+        consulta += "Hemos seleccionado los productos mejor calificados y con mejores precios para vos" + '\n' + '\n';
+
+        notificacionesMSJ.setText(consulta);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        btnAceptarNotificaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
 }

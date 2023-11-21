@@ -68,6 +68,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miCarrito" />
 
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="46dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="79dp"
+        android:onClick="ConsultaOfertas"
+        app:layout_constraintStart_toEndOf="@+id/mcli_bn_ofertas"
+        app:layout_constraintTop_toBottomOf="@+id/mcli_bn_miCarrito"
+        app:srcCompat="@drawable/baseline_question_mark_24" />
+
     <Button
         android:id="@+id/mcli_bn_historial"
         android:layout_width="231dp"

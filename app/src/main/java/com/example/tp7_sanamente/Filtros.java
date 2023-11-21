@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
@@ -40,10 +41,7 @@ public class Filtros extends AppCompatActivity {
     Usuario user;
     ArrayList<Producto> listaProductosObtenido;
     ArrayList<Producto> listaProductos;
-
     ArrayList<Producto> listaFiltrada;
-
-
     consultasProductos consultaProductos;
 
 
@@ -69,6 +67,7 @@ public class Filtros extends AppCompatActivity {
         consultaProductos = new consultasProductos();
         lvFiltros = findViewById(R.id.grd_catalogo);
         Button btnAplicarFiltros = findViewById(R.id.fc_bn_aplicarFiltros);
+
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
@@ -138,9 +137,18 @@ public class Filtros extends AppCompatActivity {
             String ordenarPor = (String) params[6];
 
 
+            if (hipertenso || diabetico || celiaco) {
+                Conexion con = new Conexion();
+                try {
+                    listaProductosObtenido = con.obtenerListadoProductosConRestricciones(hipertenso, diabetico, celiaco);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
 
-            listaProductosObtenido = consultaProductos.obtenerListadoProductosFiltrados(listaProductos,
-                    filtroNombre, contiene, noContiene, ordenarPor, hipertenso, diabetico, celiaco);
+
+            listaProductosObtenido = consultaProductos.obtenerListadoProductosFiltrados(listaProductosObtenido,
+                    filtroNombre, contiene, noContiene, ordenarPor);
 
 
             return listaProductosObtenido;
@@ -151,7 +159,6 @@ public class Filtros extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Producto> listaProductosObtenido) {
 
                 listaFiltrada = listaProductosObtenido;
-                
 
                 try {
                     SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
@@ -160,7 +167,6 @@ public class Filtros extends AppCompatActivity {
                     String listaComoJson = gson.toJson(listaFiltrada);
                     editor.putString("listadoProductosFiltrados", listaComoJson);
                     editor.apply();
-
                 }
                 catch (Exception e) {
                     Log.d("Filtro.enviar", e.toString());
@@ -174,9 +180,7 @@ public class Filtros extends AppCompatActivity {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 lvFiltros.setAdapter(adapter);
                  */
-
         }
-
     }
 
     private class obtenerListadoProducto extends AsyncTask<Usuario, Void, ArrayList<Producto>> {

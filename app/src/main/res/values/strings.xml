@@ -130,6 +130,15 @@
     <string name="tv_repetirContraseña">"Repetir contraseña"</string>
     <string name="tv_Contraseña">"CONTRASEÑA"</string>
 
+    <!-- _________________  REPORTE  _________________ -->
+
+    <string name="tv_informe">"INCLUYE DATOS DE: "</string>
+
+    <string name="checkbox_facturacion">"Facturacion"</string>
+    <string name="checkbox_clientes">"Clientes"</string>
+    <string name="checkbox_productos">"Productos"</string>
+    <string name="button_generarReporte">"GENERAR PDF"</string>
+
 
 
     <!-- _________________  AGREGAR_PRODUCTO  _________________ -->
