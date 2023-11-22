@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -255,9 +256,15 @@ public class Mis_Pedidos extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean bol) {
             if (bol) {
-                Toast toast = Toast.makeText(Mis_Pedidos.this, "EL PEDIDO CAMBIO DE ESTADO EXITOSAMENTE", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.TOP, 0, 200);
-                toast.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast toast = Toast.makeText(Mis_Pedidos.this, "EL PEDIDO CAMBIO DE ESTADO EXITOSAMENTE", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 200);
+                        toast.show();
+                    }
+                }, 2000);
+
             } else {
                 Toast toast = Toast.makeText(Mis_Pedidos.this, "ERROR AL CAMBIAR EL ESTADO", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.TOP, 0, 200);

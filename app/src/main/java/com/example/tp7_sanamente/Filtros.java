@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -62,13 +63,10 @@ public class Filtros extends AppCompatActivity {
         rbPrecio = findViewById(R.id.fc_rb_precio);
         rbReciente = findViewById(R.id.fc_rb_reciente);
 
-
         listaProductos = new ArrayList<Producto>();
         consultaProductos = new consultasProductos();
         lvFiltros = findViewById(R.id.grd_catalogo);
         Button btnAplicarFiltros = findViewById(R.id.fc_bn_aplicarFiltros);
-
-
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
@@ -90,6 +88,18 @@ public class Filtros extends AppCompatActivity {
             }
         });
 
+
+        SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
+        filtroNombre.setText(preferences.getString("filtroNombre", ""));
+        filtroContiene.setText(preferences.getString("comNombre", ""));
+        filtroNoContiene.setText(preferences.getString("comDireccion", ""));
+        cbHipertenso.setChecked(preferences.getBoolean("cbHipertenso", false));
+        cbDiabetico.setChecked(preferences.getBoolean("cbDiabetico", false));
+        cbCeliaco.setChecked(preferences.getBoolean("cbCeliaco", false));
+        rbCalificaciones.setChecked(preferences.getBoolean("rbCalificaciones", false));
+        rbPrecio.setChecked(preferences.getBoolean("rbPrecio", false));
+        rbReciente.setChecked(preferences.getBoolean("rbReciente", false));
+
     }
 
     public void VolverAProductos(View view) {
@@ -97,6 +107,25 @@ public class Filtros extends AppCompatActivity {
         Intent VolverAProductos = new Intent(this, Mis_Productos.class);
         startActivity(VolverAProductos);
 
+    }
+
+    public void QuitarFiltros(View view){
+        filtroNombre.setText("");
+        filtroContiene.setText("");
+        filtroNoContiene.setText("");
+        cbHipertenso.setChecked(false);
+        cbDiabetico.setChecked(false);
+        cbCeliaco.setChecked(false);
+        rbCalificaciones.setChecked(false);
+        rbPrecio.setChecked(false);
+        rbReciente.setChecked(false);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                aplicarFiltros(view);
+            }
+        }, 2000);
     }
 
     public void aplicarFiltros(View view) {
@@ -120,6 +149,19 @@ public class Filtros extends AppCompatActivity {
 
          new AplicarFiltrosTask().execute(nombre, hipertenso, diabetico, celiaco, contiene,
                noContiene, ordenarPor);
+
+        SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("filtroNombre", filtroNombre.getText().toString());
+        editor.putString("comNombre", filtroContiene.getText().toString());
+        editor.putString("comDireccion", filtroNoContiene.getText().toString());
+        editor.putBoolean("cbHipertenso", cbHipertenso.isChecked());
+        editor.putBoolean("cbDiabetico", cbDiabetico.isChecked());
+        editor.putBoolean("cbCeliaco", cbCeliaco.isChecked());
+        editor.putBoolean("rbCalificaciones", rbCalificaciones.isChecked());
+        editor.putBoolean("rbPrecio", rbPrecio.isChecked());
+        editor.putBoolean("rbReciente", rbReciente.isChecked());
+        editor.apply();
 
     }
 
@@ -149,6 +191,9 @@ public class Filtros extends AppCompatActivity {
 
             listaProductosObtenido = consultaProductos.obtenerListadoProductosFiltrados(listaProductosObtenido,
                     filtroNombre, contiene, noContiene, ordenarPor);
+
+
+
 
 
             return listaProductosObtenido;

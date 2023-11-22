@@ -11,10 +11,9 @@ import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -32,10 +31,8 @@ import java.util.Locale;
 import BaseDeDatos.Conexion;
 import BaseDeDatos.consultasHistoriales;
 import BaseDeDatos.consultasPedidos;
-import BaseDeDatos.consultasProductos;
 import Entidad.Historial;
 import Entidad.Pedido;
-import Entidad.Producto;
 import Entidad.Usuario;
 
 
@@ -87,13 +84,33 @@ public class Filtros_Pedidos extends AppCompatActivity {
         Intent intent = getIntent();
         isHistorial = intent.getBooleanExtra("isHistorial", false);
 
-
-        /////////
-        /*
-        CLIENTE TIENE SOLO HISTORIAL
-        COMERCIO TIENE LOS DOS
-        */
+        SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
+        fechaDesde.setText(preferences.getString("fechaDesdeStr", ""));
+        fechaHasta.setText(preferences.getString("fechaHastaStr", ""));
+        rbRecientes.setChecked(preferences.getBoolean("ordenreciente", false));
+        rbEnEspera.setChecked(preferences.getBoolean("ordenespera", false));
+        cbEntregado.setChecked(preferences.getBoolean("entregado", false));
+        cbCancelado.setChecked(preferences.getBoolean("cancelado", false));
+        cbPendiente.setChecked(preferences.getBoolean("pendiente", false));
     }
+
+    public void QuitarFiltro(View view){
+        fechaDesde.setText("");
+        fechaHasta.setText("");
+        rbRecientes.setChecked(false);
+        rbEnEspera.setChecked(false);
+        cbEntregado.setChecked(false);
+        cbCancelado.setChecked(false);
+        cbPendiente.setChecked(false);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AplicarFiltroHistorial(view);
+            }
+        }, 2000);
+    }
+
 
     public void AplicarFiltroHistorial(View view) {
         //AplicarFiltroPedido(view);
@@ -110,16 +127,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
         } else {
             fechaDesde.setError(null);
         }
-/*
-        // Validar que horaDesde pertenezca a un formato 00:00. Si no, mostrar mensaje de error
-        String horaDesdeStr = horaDesde.getText().toString();
-        if (!horaDesdeStr.isEmpty() && !isValidDateFormat(horaDesdeStr, "HH:mm")) {
-            horaDesde.setError("Formato de hora inválido");
-            isValid = false;
-        } else {
-            horaDesde.setError(null);
-        }
-*/
+
         // Validar que fechaHasta pertenezca a un formato dd/mm/aaaa. Si no, mostrar mensaje de error
         String fechaHastaStr = fechaHasta.getText().toString();
         if (!fechaHastaStr.isEmpty() && !isValidDateFormat(fechaHastaStr, "dd/MM/yyyy")) {
@@ -128,18 +136,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
         } else {
             fechaHasta.setError(null);
         }
-/*
-        // Validar que horaHasta pertenezca a un formato 00:00. Si no, mostrar mensaje de error
-        String horaHastaStr = horaHasta.getText().toString();
-        if (!horaHastaStr.isEmpty() && !isValidDateFormat(horaHastaStr, "HH:mm")) {
-            horaHasta.setError("Formato de hora inválido");
-            isValid = false;
-        } else {
-            horaHasta.setError(null);
-        }
-*/
 
-        ///////////// VALIDACIONES FECHAS  //////////////////////
 
         boolean entregado = cbEntregado.isChecked();
         boolean cancelado = cbCancelado.isChecked();
@@ -154,7 +151,20 @@ public class Filtros_Pedidos extends AppCompatActivity {
 
 
         if(isValid) { //
+
+            SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("fechaDesdeStr", fechaDesde.getText().toString());
+            editor.putString("fechaHastaStr", fechaHasta.getText().toString());
+            editor.putBoolean("ordenreciente", rbRecientes.isChecked());
+            editor.putBoolean("ordenespera", rbEnEspera.isChecked());
+            editor.putBoolean("entregado", cbEntregado.isChecked());
+            editor.putBoolean("cancelado", cbCancelado.isChecked());
+            editor.putBoolean("pendiente", cbPendiente.isChecked());
+            editor.apply();
             if (isHistorial) {
+
+
                 new AplicarFiltrosHistorialTask().execute(fechaDesdeStr, fechaHastaStr,
                         entregado, cancelado, pendiente, orden);
             }
