@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -26,6 +27,7 @@ public class MenuComercio extends AppCompatActivity {
     Usuario user;
     Reporte reporte;
     ImageView VERnotificacionSI, VERnotificacionNO;
+    TextView btnNotiPedido;
 
     String noti_msj;
 
@@ -33,6 +35,7 @@ public class MenuComercio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_comercio);
+        btnNotiPedido = (TextView)findViewById(R.id.txtPedidoNoti);
 
         VERnotificacionNO = findViewById(R.id.img_not_NO);
         VERnotificacionSI = findViewById(R.id.img_not_SI);
@@ -272,9 +275,11 @@ public class MenuComercio extends AppCompatActivity {
                 noti_msj = msj;
                 VERnotificacionSI.setVisibility(View.VISIBLE);
                 VERnotificacionNO.setVisibility(View.INVISIBLE);
+                btnNotiPedido.setText("HAY NUEVOS PEDIDOS!!!");
             } else {
                 VERnotificacionNO.setVisibility(View.VISIBLE);
                 VERnotificacionSI.setVisibility(View.INVISIBLE);
+                btnNotiPedido.setText("NO HAY NUEVOS PEDIDOS.");
             }
         }
     }

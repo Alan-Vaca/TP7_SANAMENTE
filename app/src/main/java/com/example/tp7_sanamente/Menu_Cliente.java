@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -36,7 +37,7 @@ public class Menu_Cliente extends AppCompatActivity {
     String noti_msj;
     Usuario user;
     ArrayList<Producto> listaProductosOfertas;
-
+TextView noti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class Menu_Cliente extends AppCompatActivity {
         noti_msj = "";
         notificacionNO = findViewById(R.id.image_not_no);
         notificacionSI = findViewById(R.id.image_not_si);
-
+        noti = (TextView)findViewById(R.id.txtAviso);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String usuarioJson = sharedPreferences.getString("usuarioLogueado", "");
 
@@ -262,9 +263,11 @@ public class Menu_Cliente extends AppCompatActivity {
                 noti_msj = msj;
                 notificacionSI.setVisibility(View.VISIBLE);
                 notificacionNO.setVisibility(View.INVISIBLE);
+                noti.setText("TIENES NOTIFICACIONES!!!");
             } else {
                 notificacionNO.setVisibility(View.VISIBLE);
                 notificacionSI.setVisibility(View.INVISIBLE);
+                noti.setText("NO HAY NOTIFICACIONES.");
             }
         }
     }

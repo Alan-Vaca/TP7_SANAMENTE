@@ -106,10 +106,10 @@
         android:id="@+id/img_not_NO"
         android:layout_width="55dp"
         android:layout_height="52dp"
+        android:layout_marginStart="95dp"
         android:layout_marginBottom="8dp"
         android:onClick="VERNotificacionesNO"
         app:layout_constraintBottom_toTopOf="@+id/mcli_bn_catalogo"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_notifications_none_24" />
 
@@ -117,10 +117,22 @@
         android:id="@+id/img_not_SI"
         android:layout_width="55dp"
         android:layout_height="52dp"
+        android:layout_marginStart="95dp"
         android:layout_marginBottom="8dp"
         android:onClick="VERNotificacionesSI"
         app:layout_constraintBottom_toTopOf="@+id/mcli_bn_catalogo"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_notifications_active_24" />
+
+    <TextView
+        android:id="@+id/txtPedidoNoti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="95dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="MenuPedidos_Comerciante"
+        android:text="HAY NUEVOS PEDIDOS!!!"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/mcli_bn_catalogo"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
