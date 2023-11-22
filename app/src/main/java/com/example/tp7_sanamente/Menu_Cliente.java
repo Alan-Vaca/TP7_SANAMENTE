@@ -61,6 +61,27 @@ public class Menu_Cliente extends AppCompatActivity {
         }
 
 
+        SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("fechaDesdeStr", "");
+        editor.putString("fechaHastaStr", "");
+        editor.putBoolean("ordenreciente", false);
+        editor.putBoolean("ordenespera", false);
+        editor.putBoolean("entregado", false);
+        editor.putBoolean("cancelado", false);
+        editor.putBoolean("pendiente", false);
+
+        editor.putString("filtroNombre", "");
+        editor.putString("comNombre", "");
+        editor.putString("comDireccion", "");
+        editor.putBoolean("cbHipertenso", false);
+        editor.putBoolean("cbDiabetico", false);
+        editor.putBoolean("cbCeliaco", false);
+        editor.putBoolean("rbCalificaciones", false);
+        editor.putBoolean("rbPrecio", false);
+        editor.putBoolean("rbReciente", false);
+        editor.apply();
+
 
     }
 

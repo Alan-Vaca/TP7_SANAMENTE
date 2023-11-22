@@ -1,5 +1,6 @@
 package com.example.tp7_sanamente;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -16,10 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-
 import BaseDeDatos.Conexion;
-import BaseDeDatos.consultasReportes;
 import Entidad.Reporte;
 import Entidad.Usuario;
 
@@ -53,7 +51,26 @@ public class MenuComercio extends AppCompatActivity {
             toast.show();
         }
 
+        SharedPreferences preferences = getSharedPreferences("mi_prefe", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("fechaDesdeStr", "");
+        editor.putString("fechaHastaStr", "");
+        editor.putBoolean("ordenreciente", false);
+        editor.putBoolean("ordenespera", false);
+        editor.putBoolean("entregado", false);
+        editor.putBoolean("cancelado", false);
+        editor.putBoolean("pendiente", false);
 
+        editor.putString("filtroNombre", "");
+        editor.putString("comNombre", "");
+        editor.putString("comDireccion", "");
+        editor.putBoolean("cbHipertenso", false);
+        editor.putBoolean("cbDiabetico", false);
+        editor.putBoolean("cbCeliaco", false);
+        editor.putBoolean("rbCalificaciones", false);
+        editor.putBoolean("rbPrecio", false);
+        editor.putBoolean("rbReciente", false);
+        editor.apply();
         //new MenuComercio.obtenerinforme().execute(user);
     }
 
