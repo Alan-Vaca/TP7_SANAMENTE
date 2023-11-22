@@ -24,6 +24,7 @@
         android:layout_width="376dp"
         android:layout_height="470dp"
         android:layout_marginTop="72dp"
+        android:listSelector="@drawable/list_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"

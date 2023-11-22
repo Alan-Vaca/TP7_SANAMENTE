@@ -36,6 +36,7 @@
         android:layout_width="375dp"
         android:layout_height="399dp"
         android:layout_marginTop="16dp"
+        android:listSelector="@drawable/list_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonVER_MODIFICAR" />
