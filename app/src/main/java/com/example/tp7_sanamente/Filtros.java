@@ -125,7 +125,7 @@ public class Filtros extends AppCompatActivity {
             public void run() {
                 aplicarFiltros(view);
             }
-        }, 2000);
+        }, 1000);
     }
 
     public void aplicarFiltros(View view) {

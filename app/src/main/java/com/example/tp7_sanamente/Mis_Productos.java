@@ -37,7 +37,7 @@ public class Mis_Productos extends AppCompatActivity {
     Usuario user;
     TextView txt_StockCantidad, cantidadTxt, detalle, puntaje;
     ListView lv_Catalogo;
-    Button btnAdd, btnFiltros;
+    Button btnAdd, btnFiltros,btnVERMOD;
     ArrayList<Producto> listaProductos, listaProductosOfertas;
     Restriccion restriccion;
     ArrayList<pedidoXproducto> listadoCarrito;
@@ -60,6 +60,7 @@ public class Mis_Productos extends AppCompatActivity {
         detalle = (TextView)findViewById(R.id.catalogoDetalle);
         puntaje = (TextView)findViewById(R.id.txtPuntajeCatalogo);
         btnFiltros = (Button)findViewById(R.id.filtrosProductos);
+        btnVERMOD = (Button)findViewById(R.id.buttonVER_MODIFICAR);
         listaCargada = false;
 
         listaEtiquetados = new ArrayList<Etiquetado>();
@@ -132,10 +133,11 @@ public class Mis_Productos extends AppCompatActivity {
                 btnAdd.setText("AGREGAR PRODUCTO AL CARRITO");
                 txt_StockCantidad.setText("CANTIDAD A LLEVAR:");
                 cantidadTxt.setText("0");
-
+                btnVERMOD.setText("VER");
                 new Mis_Productos.cargarRestricciones().execute(user);
                 new Mis_Productos.cargarAlergias().execute(user);
             }else{
+                btnVERMOD.setText("MODIFICAR");
                 btnAdd.setText("AGREGAR UN NUEVO PRODUCTO");
                 txt_StockCantidad.setText("STOCK REGISTRADO:");
                 cantidadTxt.setText("0");
@@ -592,5 +594,11 @@ public class Mis_Productos extends AppCompatActivity {
 
             }
         }
+    }
+
+
+    public void QuitarFiltrosRefrescar(View view) {
+        Filtros filtrosActivity = new Filtros();
+        filtrosActivity.QuitarFiltros(view);
     }
     }

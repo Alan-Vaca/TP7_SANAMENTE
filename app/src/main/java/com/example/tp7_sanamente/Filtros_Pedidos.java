@@ -108,7 +108,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
             public void run() {
                 AplicarFiltroHistorial(view);
             }
-        }, 2000);
+        }, 1000);
     }
 
 

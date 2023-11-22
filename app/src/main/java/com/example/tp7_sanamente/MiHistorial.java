@@ -312,4 +312,11 @@ public class MiHistorial extends AppCompatActivity {
             }
         }
     }
+
+
+    public void QuitarFiltrosRefrescar(View view) {
+
+       Filtros_Pedidos filtrosActivity = new Filtros_Pedidos();
+       filtrosActivity.QuitarFiltro(view);
+    }
 }

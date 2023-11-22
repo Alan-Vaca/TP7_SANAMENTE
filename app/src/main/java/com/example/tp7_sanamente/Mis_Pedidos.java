@@ -263,7 +263,7 @@ public class Mis_Pedidos extends AppCompatActivity {
                         toast.setGravity(Gravity.TOP, 0, 200);
                         toast.show();
                     }
-                }, 2000);
+                }, 1000);
 
             } else {
                 Toast toast = Toast.makeText(Mis_Pedidos.this, "ERROR AL CAMBIAR EL ESTADO", Toast.LENGTH_LONG);
@@ -271,5 +271,14 @@ public class Mis_Pedidos extends AppCompatActivity {
                 toast.show();
             }
         }
+
+
+
+    }
+
+
+    public void QuitarFiltrosRefrescar(View view) {
+        Filtros_Pedidos filtrosActivity = new Filtros_Pedidos();
+        filtrosActivity.QuitarFiltro(view);
     }
 }

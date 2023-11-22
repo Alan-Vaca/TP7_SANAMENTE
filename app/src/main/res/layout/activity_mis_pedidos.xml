@@ -61,13 +61,15 @@
         android:id="@+id/button46"
         android:layout_width="wrap_content"
         android:layout_height="47dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
         android:onClick="FiltrosPedidos"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="@string/button_filtros"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/button8"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="APLICAR FILTROS"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button11"
         app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
 
@@ -75,13 +77,13 @@
         android:id="@+id/button11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:onClick="MenuComercio"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="@string/button_volver"
-        android:textSize="20sp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/button_volverMenuPrincipal"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
 
@@ -98,22 +100,5 @@
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-<<<<<<< Updated upstream
-        android:layout_marginEnd="8dp"
-=======
-        android:layout_marginEnd="16dp"
->>>>>>> Stashed changes
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="QUITAR FILTROS"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
