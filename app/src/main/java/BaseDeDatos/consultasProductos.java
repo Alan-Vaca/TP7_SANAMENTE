@@ -155,8 +155,7 @@ public class consultasProductos {
             if (celiaco) {
                 if (flag){ query += " or";}
                 query += " e.idEtiquetado != 1 or e.idEtiquetado != 2 or e.idEtiquetado != 3 " +
-                        "or e.idEtiquetado != 4 or e.idEtiquetado != 5 or e.idEtiquetado != 6 " +
-                        "or e.idEtiquetado != 7" ;
+                        "or e.idEtiquetado != 4 or e.idEtiquetado != 5";
             }
 
             query += " group by p.nombreProducto";
@@ -352,7 +351,7 @@ public class consultasProductos {
 
 
         ArrayList<Producto> listadoFiltrado = lista;
-        
+
 
         // Filtros
         listadoFiltrado = filtrarPorNombre(listadoFiltrado, nombre);
@@ -399,6 +398,8 @@ public class consultasProductos {
     public ArrayList<Producto> filtrarPorNombre(ArrayList<Producto> lista, String nombre) {
         ArrayList<Producto> listaFiltrada = new ArrayList<>();
 
+
+
         if (!nombre.isEmpty()) {
             String nombreBuscadoSinTilde = quitarTildes(nombre.toLowerCase());
             for (Producto producto : lista) {
@@ -411,6 +412,7 @@ public class consultasProductos {
             // Si la cadena contiene está vacía, devuelve la lista original sin filtrar
             listaFiltrada.addAll(lista);
         }
+
         return listaFiltrada;
     }
 

@@ -444,9 +444,10 @@ public class Mis_Productos extends AppCompatActivity {
                     Boolean NoAptoHipertenso = false;
                     Boolean NoAptoDiabetico = false;
 
-                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 1 || listadoEtiquetado.get(1).getIdEtiquetado() == 1 || listadoEtiquetado.get(2).getIdEtiquetado() == 1) && restriccion.isCeliaco()){
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 1 || listadoEtiquetado.get(1).getIdEtiquetado() == 1 || listadoEtiquetado.get(2).getIdEtiquetado() == 1) && (restriccion.isCeliaco() || restriccion.isDiabetico())){
 
                         msjAdvertencias += "El producto contiene exceso en azucares." + '\n';
+                        NoAptoDiabetico = true;
                         NoAptoCeliaco = true;
                         //Toast toast = Toast.makeText(Mis_Productos.this, "El producto contiene exceso en azúcares. No es apto para celíacos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
                         //toast.setGravity(Gravity.TOP, 0, 200);
@@ -471,9 +472,10 @@ public class Mis_Productos extends AppCompatActivity {
                         //toast.show();
                     }
 
-                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 4 || listadoEtiquetado.get(1).getIdEtiquetado() == 4 || listadoEtiquetado.get(2).getIdEtiquetado() == 4) && (restriccion.isCeliaco() || restriccion.isDiabetico())){
+                    if((listadoEtiquetado.get(0).getIdEtiquetado() == 4 || listadoEtiquetado.get(1).getIdEtiquetado() == 4 || listadoEtiquetado.get(2).getIdEtiquetado() == 4) && (restriccion.isCeliaco() || restriccion.isDiabetico() || restriccion.isHipertenso())){
 
                         msjAdvertencias += "El producto contiene exceso en sodio." + '\n';
+                        NoAptoHipertenso = true;
                         NoAptoCeliaco = true;
                         NoAptoDiabetico = true;
                         //Toast toast = Toast.makeText(Mis_Productos.this, "El producto contiene exceso en sodio. No es apto para celíacos o diabéticos Consuma bajo responsabilidad", Toast.LENGTH_LONG);
