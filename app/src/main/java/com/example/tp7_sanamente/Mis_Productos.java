@@ -565,6 +565,12 @@ public class Mis_Productos extends AppCompatActivity {
                         }
                     }
 
+                    if(!restriccion.getAlergico().trim().isEmpty())
+                        if(productoSeleccionado.getIngredientes().toUpperCase().trim().contains(restriccion.getAlergico().trim().toUpperCase())){
+
+                            msjAdvertencias += '\n' + " POR SU SEGURIDAD RECOMENDAMOS NO COMPRAR ESTE PRODUCTO YA QUE ES ALERGICO. (" + restriccion.getAlergico().trim() + ")" + '\n';
+                        }
+
                     if(NoAptoDiabetico || NoAptoCeliaco || NoAptoHipertenso || alergico){
                         msjAdvertencias = "ADVERTENCIA" + '\n' + '\n' + msjAdvertencias + '\n';
                         if(NoAptoDiabetico){
@@ -586,24 +592,6 @@ public class Mis_Productos extends AppCompatActivity {
                         editorAdvertencias.putString("test", msjAdvertencias);
                         editorAdvertencias.apply();
 
-
-                        /*AlertDialog.Builder builder = new AlertDialog.Builder(Mis_Productos.this);
-                        View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_notificaciones, null);
-                        builder.setView(dialogView);
-
-                        final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
-                        Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
-
-                        notificacionesMSJ.setText(msjAdvertencias);
-                        final AlertDialog dialog = builder.create();
-                        dialog.show();
-
-                        btnAceptarNotificaciones.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });*/
                     }
                 }
 
@@ -631,12 +619,6 @@ public class Mis_Productos extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Alergia> listaAlergiasUsuarios) {
             listaAlergiasUsuario = listaAlergiasUsuarios;
-            if (listaAlergiasUsuario.size() > 0) {
-                //Tipoalergias1.setSelection(listaAlergiasUsuario.get(0).getIdAlergia());
-                //Tipoalergias2.setSelection(listaAlergiasUsuario.get(1).getIdAlergia());
-                //Tipoalergias3.setSelection(listaAlergiasUsuario.get(2).getIdAlergia());
-
-            }
         }
     }
 

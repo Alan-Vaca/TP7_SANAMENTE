@@ -281,8 +281,9 @@ TextView noti;
         final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
         Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
 
-        String consulta = "OFERTAS!!" + '\n' + '\n';
-        consulta += "Hemos seleccionado los productos mejor calificados y con mejores precios para vos" + '\n' + '\n';
+        String consulta = "ALIMENTOS DESTACADOS!!!" + '\n' + '\n';
+        consulta += "ESTOS SON LOS ALIMENTOS DESTACADOS POR LOS USUARIOS DEL DIA!" + '\n' + '\n';
+        consulta += "(Se considera como producto destacado a aquellos que contienen precios bajos y buenas calificaciones por los usuarios.)";
 
         notificacionesMSJ.setText(consulta);
         final AlertDialog dialog = builder.create();
