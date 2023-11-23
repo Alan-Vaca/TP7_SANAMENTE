@@ -285,14 +285,15 @@ public class Mis_Productos extends AppCompatActivity {
                     return;
                 }
 
-                if(!restriccion.getAlergico().trim().isEmpty())
+                /*if(!restriccion.getAlergico().trim().isEmpty())
+
                 if(productoSeleccionado.getIngredientes().toUpperCase().trim().contains(restriccion.getAlergico().trim().toUpperCase())){
 
-                    Toast toast = Toast.makeText(Mis_Productos.this, "No es posible comprar por su seguridad ya que es alérgico a uno de sus ingredientes.", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP, 0, 200);
-                    toast.show();
-                    return;
-                }
+                Toast toast = Toast.makeText(Mis_Productos.this, "No es posible comprar por su seguridad ya que es alérgico a uno de sus ingredientes.", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 200);
+                toast.show();
+                return;
+                }*/
 
                 SharedPreferences sharedPref = getSharedPreferences("test", Context.MODE_PRIVATE);
                 String mensajeAdvertencia = sharedPref.getString("test", null);
@@ -303,10 +304,20 @@ public class Mis_Productos extends AppCompatActivity {
 
                     final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
                     Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
+                    Button btnCancelarNotificaciones = dialogView.findViewById(R.id.btnCancelarNotificaciones);
+
+                    btnCancelarNotificaciones.setVisibility(View.VISIBLE);
 
                     notificacionesMSJ.setText(mensajeAdvertencia);
                     final AlertDialog dialog = builder.create();
                     dialog.show();
+
+                    btnCancelarNotificaciones.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
 
                     btnAceptarNotificaciones.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -539,15 +550,18 @@ public class Mis_Productos extends AppCompatActivity {
 
                     if (listaAlergiasUsuario.size() > 0) {
                         for (Alergia alergia : listaAlergiasUsuario) {
-                            String[] arregloIngredientes = alergia.getIngredientesAlergicos().toUpperCase().trim().split(",");
+                            String[] arregloIngredientes = alergia.getIngredientesAlergicos().toUpperCase().split(",");
                             for (String ingrediente : arregloIngredientes) {
-                                if (productoSeleccionado.getIngredientes().toUpperCase().trim().contains(ingrediente)) {
+                                if(!ingrediente.isEmpty())
+                                if (productoSeleccionado.getIngredientes().toUpperCase().contains(ingrediente)) {
 
                                     msjAdvertencias += '\n' + " POR SU SEGURIDAD RECOMENDAMOS NO COMPRAR ESTE PRODUCTO YA QUE ES ALERGICO (" + alergia.getDescripcionAlergia() + ")"  + '\n';
                                     alergico = true;
                                     break;
                                 }
+
                             }
+                            if(alergico){break;}
                         }
                     }
 
