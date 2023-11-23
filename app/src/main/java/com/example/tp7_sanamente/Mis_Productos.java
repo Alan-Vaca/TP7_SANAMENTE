@@ -294,42 +294,66 @@ public class Mis_Productos extends AppCompatActivity {
                     return;
                 }
 
-                if (listaCargada) {
-                    int index = -1;
-                    for (int i = 0; i < listadoCarrito.size(); i++) {
-                        if (listadoCarrito.get(i).getProducto().getIdProducto() == productoSeleccionado.getIdProducto()) {
-                            index = i;
-                            break;
-                        }
-                    }
+                SharedPreferences sharedPref = getSharedPreferences("test", Context.MODE_PRIVATE);
+                String mensajeAdvertencia = sharedPref.getString("test", null);
+                if (mensajeAdvertencia != null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Mis_Productos.this);
+                    View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_notificaciones, null);
+                    builder.setView(dialogView);
 
-                    if (index != -1) {
-                        pedidoXproducto productoExistente = listadoCarrito.get(index);
-                        int nuevaCantidad = productoExistente.getCantidad() + cantidadSolicitada;
-                        productoExistente.setCantidad(nuevaCantidad);
-                    } else {
-                        pedidoXproducto ProductoXCarrito = new pedidoXproducto();
-                        ProductoXCarrito.setProducto(productoSeleccionado);
-                        ProductoXCarrito.setCantidad(cantidadSolicitada);
-                        listadoCarrito.add(ProductoXCarrito);
-                    }
-                } else {
-                    // Si la lista no está cargada, simplemente agrega el nuevo producto
-                    pedidoXproducto ProductoXCarrito = new pedidoXproducto();
-                    ProductoXCarrito.setProducto(productoSeleccionado);
-                    ProductoXCarrito.setCantidad(cantidadSolicitada);
-                    listadoCarrito.add(ProductoXCarrito);
+                    final EditText notificacionesMSJ = dialogView.findViewById(R.id.editTextNotificaciones);
+                    Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
+
+                    notificacionesMSJ.setText(mensajeAdvertencia);
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                    btnAceptarNotificaciones.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (listaCargada) {
+                                int index = -1;
+                                for (int i = 0; i < listadoCarrito.size(); i++) {
+                                    if (listadoCarrito.get(i).getProducto().getIdProducto() == productoSeleccionado.getIdProducto()) {
+                                        index = i;
+                                        break;
+                                    }
+                                }
+
+                                if (index != -1) {
+                                    pedidoXproducto productoExistente = listadoCarrito.get(index);
+                                    int nuevaCantidad = productoExistente.getCantidad() + cantidadSolicitada;
+                                    productoExistente.setCantidad(nuevaCantidad);
+                                } else {
+                                    pedidoXproducto ProductoXCarrito = new pedidoXproducto();
+                                    ProductoXCarrito.setProducto(productoSeleccionado);
+                                    ProductoXCarrito.setCantidad(cantidadSolicitada);
+                                    listadoCarrito.add(ProductoXCarrito);
+                                }
+                            } else {
+                                // Si la lista no está cargada, simplemente agrega el nuevo producto
+                                pedidoXproducto ProductoXCarrito = new pedidoXproducto();
+                                ProductoXCarrito.setProducto(productoSeleccionado);
+                                ProductoXCarrito.setCantidad(cantidadSolicitada);
+                                listadoCarrito.add(ProductoXCarrito);
+                            }
+
+                            SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            Gson gson = new Gson();
+                            String listaComoJson = gson.toJson(listadoCarrito);
+                            editor.putString("listadoCarrito", listaComoJson);
+                            editor.apply();
+
+
+                            Intent agregarAlcarrito = new Intent(Mis_Productos.this, MiCarritoCompras.class);
+                            startActivity(agregarAlcarrito);
+                            dialog.dismiss();
+                        }
+                    });
                 }
 
-                SharedPreferences preferences = getSharedPreferences("mi_pref", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                Gson gson = new Gson();
-                String listaComoJson = gson.toJson(listadoCarrito);
-                editor.putString("listadoCarrito", listaComoJson);
-                editor.apply();
 
-                Intent agregarAlcarrito = new Intent(this, MiCarritoCompras.class);
-                startActivity(agregarAlcarrito);
             }
             else {
 
@@ -543,7 +567,13 @@ public class Mis_Productos extends AppCompatActivity {
 
 
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(Mis_Productos.this);
+                        SharedPreferences preferencesAdvertencias = getSharedPreferences("test", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editorAdvertencias = preferencesAdvertencias.edit();
+                        editorAdvertencias.putString("test", msjAdvertencias);
+                        editorAdvertencias.apply();
+
+
+                        /*AlertDialog.Builder builder = new AlertDialog.Builder(Mis_Productos.this);
                         View dialogView = getLayoutInflater().inflate(R.layout.activity_dialog_notificaciones, null);
                         builder.setView(dialogView);
 
@@ -559,7 +589,7 @@ public class Mis_Productos extends AppCompatActivity {
                             public void onClick(View v) {
                                 dialog.dismiss();
                             }
-                        });
+                        });*/
                     }
                 }
 

@@ -76,6 +76,7 @@
     <string name="button_ok">"ENTENDIDO"</string>
     <string name="button_volver">"VOLVER"</string>
     <string name="button_volverMenuPrincipal">"VOLVER AL MENU PRINCIPAL"</string>
+    <string name="button_destacados">"DESTACADOS"</string>
 
     <string name="checkbox_celiaco">"Celiaco"</string>
     <string name="checkbox_diabetico">"Diabetico"</string>
