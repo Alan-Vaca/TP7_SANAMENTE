@@ -145,18 +145,18 @@ public class AgregarProducto extends AppCompatActivity {
 
         idEtiquetado = etiquetado1.getSelectedItemPosition();
         if(idEtiquetado <= 5 && idEtiquetado > 0) aptoCeliaco = false;
-        if(idEtiquetado >= 6) aptoHipertenso = false;
-        if(idEtiquetado >= 6 && idEtiquetado == 4) aptoDiabetico = false;
+        if(idEtiquetado >= 6 || idEtiquetado == 4) aptoHipertenso = false;
+        if(idEtiquetado >= 6 || idEtiquetado == 4 || idEtiquetado == 1) aptoDiabetico = false;
 
         idEtiquetado = etiquetado2.getSelectedItemPosition();
         if(idEtiquetado <= 5 && idEtiquetado > 0) aptoCeliaco = false;
-        if(idEtiquetado >= 6) aptoHipertenso = false;
-        if(idEtiquetado >= 6 && idEtiquetado == 4) aptoDiabetico = false;
+        if(idEtiquetado >= 6 || idEtiquetado == 4) aptoHipertenso = false;
+        if(idEtiquetado >= 6 || idEtiquetado == 4 || idEtiquetado == 1) aptoDiabetico = false;
 
         idEtiquetado = etiquetado3.getSelectedItemPosition();
         if(idEtiquetado <= 5 && idEtiquetado > 0) aptoCeliaco = false;
-        if(idEtiquetado >= 6) aptoHipertenso = false;
-        if(idEtiquetado >= 6 && idEtiquetado == 4) aptoDiabetico = false;
+        if(idEtiquetado >= 6 || idEtiquetado == 4) aptoHipertenso = false;
+        if(idEtiquetado >= 6 || idEtiquetado == 4 || idEtiquetado == 1) aptoDiabetico = false;
 
         sw_hipertenso2.setChecked(aptoHipertenso);
         sw_celiaco2.setChecked(aptoCeliaco);
