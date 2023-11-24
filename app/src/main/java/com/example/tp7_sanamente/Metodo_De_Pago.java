@@ -208,13 +208,13 @@ public class Metodo_De_Pago extends AppCompatActivity {
         }
 
         if(tipoPago.getSelectedItemPosition() > 1 ){
-            if(numeroTarjeta.getText().toString().length() != 16) {
+            if(numeroTarjeta.getText().toString().trim().length() != 16) {
                 numeroTarjeta.setError("El número de tarjeta debe contener 16 dígitos");
                 isValid = false;
             } else {
                 numeroTarjeta.setError(null);
             }
-            if(nombreTarjeta.getText().toString().length() > 24 || nombreTarjeta.getText().toString().length() <= 0) {
+            if(nombreTarjeta.getText().toString().trim().length() > 24 || nombreTarjeta.getText().toString().length() <= 0) {
                 nombreTarjeta.setError("El nombre de tarjeta no puede exceder los 24 caracteres o nombre de tarjeta vacio");
                 isValid = false;
             } else {
@@ -235,7 +235,7 @@ public class Metodo_De_Pago extends AppCompatActivity {
                 }
             }
 
-            if(codSeguridad.getText().toString().length() != 3) {
+            if(codSeguridad.getText().toString().trim().length() != 3) {
                 codSeguridad.setError("El código de seguridad debe contener 3 dígitos");
                 isValid = false;
             } else {
