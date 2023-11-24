@@ -416,11 +416,11 @@ public class Conexion extends AsyncTask<String,Void, String> {
         return listaProducto;
     }
 
-    public ArrayList<Producto> obtenerListadoProductosConRestricciones(boolean hipertenso, boolean diabetico, boolean celiaco) {
+    public ArrayList<Producto> obtenerListadoProductosConRestricciones(Usuario user, boolean hipertenso, boolean diabetico, boolean celiaco) {
         ArrayList<Producto> listaProducto = new ArrayList<Producto>();
         try {
             Connection con = getConnection();
-            listaProducto = consultasProductos.obtenerListadoProductosConRestricciones(getConnection(), hipertenso, diabetico, celiaco);
+            listaProducto = consultasProductos.obtenerListadoProductosConRestricciones(getConnection(), user, hipertenso, diabetico, celiaco);
         } catch (Exception e) {
             Log.d("BD-ERROR", e.toString());
         }

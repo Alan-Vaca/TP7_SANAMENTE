@@ -182,7 +182,7 @@ public class Filtros extends AppCompatActivity {
             if (hipertenso || diabetico || celiaco) {
                 Conexion con = new Conexion();
                 try {
-                    listaProductosObtenido = con.obtenerListadoProductosConRestricciones(hipertenso, diabetico, celiaco);
+                    listaProductosObtenido = con.obtenerListadoProductosConRestricciones(user, hipertenso, diabetico, celiaco);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -190,12 +190,8 @@ public class Filtros extends AppCompatActivity {
                 listaProductosObtenido = listaProductos;
             }
 
-
             listaProductosObtenido = consultaProductos.obtenerListadoProductosFiltrados(listaProductosObtenido,
                     filtroNombre, contiene, noContiene, ordenarPor);
-
-
-
 
             return listaProductosObtenido;
 
@@ -241,6 +237,7 @@ public class Filtros extends AppCompatActivity {
                 e.printStackTrace();
                 return listaProductos;
             }
+
         }
         @Override
         protected void onPostExecute(ArrayList<Producto> listaProductosObtenido) {

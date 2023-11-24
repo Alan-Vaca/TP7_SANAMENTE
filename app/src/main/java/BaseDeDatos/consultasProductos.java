@@ -129,9 +129,7 @@ public class consultasProductos {
 
 
 
-
-
-    public ArrayList<Producto> obtenerListadoProductosConRestricciones(Connection conn, boolean hipertenso, boolean diabetico, boolean celiaco) {
+    public ArrayList<Producto> obtenerListadoProductosConRestricciones(Connection conn, Usuario user, boolean hipertenso, boolean diabetico, boolean celiaco) {
         ArrayList<Producto> listadoProducto = new ArrayList<Producto>();
 
         try {
@@ -140,25 +138,37 @@ public class consultasProductos {
                     "select p.idProducto productoID, nombreProducto, ingredientes, precio, stock, p.estado, p.idComercio, p.fechaAlta as fechaAltaProducto, " +
                             "(select avg(calificacion) as puntaje from calificaciones where idProducto = p.idProducto) as puntaje "+
                             "from productos p "+
-                            "join productoXetiquetado pxe on p.idProducto=pxe.idProducto " +
-                            "join etiquetados e on pxe.idEtiquetado = e.idEtiquetado where";
+                            "left join productoXetiquetado pxe on p.idProducto=pxe.idProducto " +
+                            "left join etiquetados e on pxe.idEtiquetado = e.idEtiquetado ";
+
+
+            if(user.isCliente()){
+                //Si es para el cliente mostrara todos los productos con estado activo
+                query += "where p.estado = 1 and stock > 0";
+            }else {
+                //si es para el comerciante mostrara todos los productos que cargo sin importar el estado
+                query += "left join comercios c on c.idComercio = p.idComercio where c.idUsuario = " + user.getIdUsuario() ;
+            }
+
+            query += " and (";
+
 
             boolean flag = false;
             if (hipertenso) {
-                query += " e.idEtiquetado != 4 or e.idEtiquetado != 6 or e.idEtiquetado != 7";
+                query += " e.idEtiquetado != 4 and e.idEtiquetado != 6 and e.idEtiquetado != 7 ";
                 flag = true;
             }
             if (diabetico) {
-                if (flag){ query += " or";} else{flag = true;}
-                query += " e.idEtiquetado != 4 or e.idEtiquetado != 6 or e.idEtiquetado != 7 or e.idEtiquetado != 1";
+                if (flag){ query += " and";} else{flag = true;}
+                query += " e.idEtiquetado != 4 and e.idEtiquetado != 6 and e.idEtiquetado != 7 and e.idEtiquetado != 1";
             }
             if (celiaco) {
-                if (flag){ query += " or";}
-                query += " e.idEtiquetado != 1 or e.idEtiquetado != 2 or e.idEtiquetado != 3 " +
-                        "or e.idEtiquetado != 4 or e.idEtiquetado != 5";
+                if (flag){ query += " and";}
+                query += " e.idEtiquetado != 1 and e.idEtiquetado != 2 and e.idEtiquetado != 3 " +
+                        "and e.idEtiquetado != 4 and e.idEtiquetado != 5";
             }
 
-            query += " group by p.nombreProducto";
+            query += " or e.idEtiquetado is Null) group by p.nombreProducto";
 
             Log.d("Filtro.Filtro", query);
 
