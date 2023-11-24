@@ -36,9 +36,9 @@ public class consultasProductos {
                     "p.precio, AVG(c.calificacion) prom " +
                     "FROM productos p " +
                     "INNER JOIN calificaciones c ON p.idProducto = c.idProducto " +
-                    "WHERE p.estado = 1 " +
+                    "WHERE p.estado = 1 AND p.stock > 0 " +
                     "GROUP BY p.idProducto, p.nombreProducto, p.ingredientes, p.stock, p.estado, p.precio " +
-                    "HAVING AVG(c.calificacion) >= 3.5 " +
+                    "HAVING AVG(c.calificacion) >= 2.5 " +
                     "ORDER BY p.precio, AVG(c.calificacion)";
 
             if (conn != null) {
