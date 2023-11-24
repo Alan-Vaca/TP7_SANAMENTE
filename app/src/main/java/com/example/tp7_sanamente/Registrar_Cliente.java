@@ -236,13 +236,7 @@ public class Registrar_Cliente extends AppCompatActivity {
         Button btnAceptarNotificaciones = dialogView.findViewById(R.id.btnAceptarNotificaciones);
 
         String consulta = "ALERGIAS" + '\n' + '\n' + "Las alergias determinan que productos alimenticios puede ingerir segun sus ingredientes, recomendamos seguirlas," +
-                " ante cualquier eleccion se le notificara al usuario sobre sus alergias en caso tal de elegir un producto No apto para su perfil." + '\n' + '\n' +
-                "ETIQUETADO FRONTAL" + '\n' + '\n' + "El etiquetado frontal de un producto determina si es apto o no para un cliente con alguna restriccion." + '\n' + '\n';
-        consulta += "ETIQUETADOS:" + '\n' + '\n';
-        consulta += "NO APTO PARA CELIACOS" + '\n' + '\n';
-        consulta += "-Exceso en azucares." + '\n' + "-Exceso en grasas totales." + '\n' + "-Exceso en grasas saturadas." + '\n' + "-Exceso en calorias." + '\n' + "-El producto contiene exceso en sodio." + '\n';
-        consulta += '\n' + "NO APTO PARA DIABETICOS" + '\n' + '\n' + "-El producto contiene exceso en sodio." + '\n' + "-Este producto contiene edulcorante." + '\n' + "-Este producto contiene cafeína." + '\n'+ "-Exceso en azucares." + '\n';
-        consulta += '\n' + "NO APTO PARA HIPERTENSOS" + '\n' + '\n' + "-Este producto contiene edulcorante." + '\n' + "-Este producto contiene cafeína." + "-El producto contiene exceso en sodio." + '\n';
+                " ante cualquier eleccion se le notificara al usuario sobre sus alergias en caso tal de elegir un producto No apto para su perfil." + '\n' + '\n';
 
         notificacionesMSJ.setText(consulta);
         final AlertDialog dialog = builder.create();
