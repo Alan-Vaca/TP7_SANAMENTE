@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -20,11 +19,11 @@ import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
-import BaseDeDatos.Conexion;
 import BaseDeDatos.consultasReportes;
-import Entidad.Historial;
 import Entidad.Reporte;
 import Entidad.Usuario;
 
@@ -80,30 +79,84 @@ public class Filtros_Reporte extends AppCompatActivity {
 
 
     public void generarReporte(View view) {
-
-
         boolean isValid = true;
 
         ///////////// VALIDACIONES FECHAS  //////////////////////
 
-        // Validar que fechaDesde pertenezca a un formato dd/mm/aaaa. Si no, mostrar mensaje de error
+        // Validar que fechaDesde pertenezca a un formato dd/MM/yyyy. Si no, mostrar mensaje de error
         String fechaDesdeStr = fechaDesde.getText().toString();
         if (!fechaDesdeStr.isEmpty() && !isValidDateFormat(fechaDesdeStr, "dd/MM/yyyy")) {
             fechaDesde.setError("Formato de fecha inválido");
             isValid = false;
         } else {
             fechaDesde.setError(null);
+
+            // Obtener la fecha actual
+            Calendar calendar = Calendar.getInstance();
+            Date fechaActual = calendar.getTime();
+
+            // Validar que fechaDesde no sea superior a la fecha actual
+            if (!fechaDesdeStr.isEmpty()) {
+                try {
+                    Date fechaDesdeDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(fechaDesdeStr);
+
+                    if (fechaDesdeDate.after(fechaActual)) {
+                        fechaDesde.setError("La fecha desde no puede ser superior a la fecha actual");
+                        isValid = false;
+                    } else {
+                        fechaDesde.setError(null);
+                    }
+                } catch (ParseException e) {
+                    // Manejar la excepción si ocurre un error al analizar la fecha
+                    e.printStackTrace();
+                    isValid = false;
+                }
+            }
         }
 
-        // Validar que fechaHasta pertenezca a un formato dd/mm/aaaa. Si no, mostrar mensaje de error
+        // Validar que fechaHasta pertenezca a un formato dd/MM/yyyy. Si no, mostrar mensaje de error
         String fechaHastaStr = fechaHasta.getText().toString();
         if (!fechaHastaStr.isEmpty() && !isValidDateFormat(fechaHastaStr, "dd/MM/yyyy")) {
             fechaHasta.setError("Formato de fecha inválido");
             isValid = false;
         } else {
             fechaHasta.setError(null);
-        }
 
+            // Obtener la fecha actual
+            Calendar calendar = Calendar.getInstance();
+            Date fechaActual = calendar.getTime();
+
+            // Validar que fechaHasta no sea mayor que la fecha actual ni menor que fechaDesde
+            if (!fechaHastaStr.isEmpty()) {
+                try {
+                    Date fechaHastaDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(fechaHastaStr);
+
+                    // Validar que fechaHasta no sea mayor que la fecha actual
+                    if (fechaHastaDate.after(fechaActual)) {
+                        fechaHasta.setError("La fecha hasta no puede ser superior a la fecha actual");
+                        isValid = false;
+                    } else {
+                        fechaHasta.setError(null);
+
+                        // Validar que fechaHasta no sea menor que fechaDesde
+                        if (!fechaDesdeStr.isEmpty()) {
+                            Date fechaDesdeDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(fechaDesdeStr);
+
+                            if (fechaHastaDate.before(fechaDesdeDate)) {
+                                fechaHasta.setError("La fecha hasta no puede ser menor que la fecha desde");
+                                isValid = false;
+                            } else {
+                                fechaHasta.setError(null);
+                            }
+                        }
+                    }
+                } catch (ParseException e) {
+                    // Manejar la excepción si ocurre un error al analizar la fecha
+                    e.printStackTrace();
+                    isValid = false;
+                }
+            }
+        }
 
         ///////////// VALIDACIONES FECHAS  //////////////////////
 
@@ -111,18 +164,16 @@ public class Filtros_Reporte extends AppCompatActivity {
         cliente = cbClientes.isChecked();
         producto = cbProductos.isChecked();
 
-
-        if(isValid) {
-            if(facturacion || cliente || producto){
+        if (isValid) {
+            if (facturacion || cliente || producto) {
                 Toast.makeText(Filtros_Reporte.this, "Generando Reporte... Por favor espere", Toast.LENGTH_LONG).show();
                 new Filtros_Reporte.obtenerReporteTask().execute(fechaDesdeStr, fechaHastaStr);
-            }else{Toast.makeText(Filtros_Reporte.this, "Por favor, seleccione al menos un dato de filtrado", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(Filtros_Reporte.this, "Por favor, seleccione al menos un dato de filtrado", Toast.LENGTH_SHORT).show();
             }
-        }else {
-            Toast.makeText(Filtros_Reporte.this, "Por favor, ingresa fechas y horas en el formato correcto", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(Filtros_Reporte.this, "Por favor, ingresa fechas en el formato correcto", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     private class obtenerReporteTask extends AsyncTask<Object, Void, Reporte> {
