@@ -192,9 +192,17 @@ public class MiCarritoCompras extends AppCompatActivity {
 
             final EditText editTextCantidad = dialogView.findViewById(R.id.editTextCantidad);
             Button btnGuardarCantidad = dialogView.findViewById(R.id.btnGuardarCantidad);
+            Button btnCancelarCantidad = dialogView.findViewById(R.id.btnCancelarCantidadMensaje);
 
             final AlertDialog dialog = builder.create();
             dialog.show();
+
+            btnGuardarCantidad.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                 }
+            });
 
             btnGuardarCantidad.setOnClickListener(new View.OnClickListener() {
                 @Override
