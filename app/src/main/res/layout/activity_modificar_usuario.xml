@@ -22,23 +22,21 @@
         android:id="@+id/r_cb_celiaco"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:text="@string/checkbox_celiaco"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion" />
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
     <CheckBox
         android:id="@+id/r_cb_diabetico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="20dp"
         android:text="@string/checkbox_diabetico"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion" />
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -99,12 +97,12 @@
         android:id="@+id/r_cb_hipertenso"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/checkbox_hipertenso"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/r_cb_celiaco"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toEndOf="@+id/r_cb_diabetico"
-        app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion" />
+        app:layout_constraintTop_toBottomOf="@+id/textView36" />
 
     <EditText
         android:id="@+id/txtComentarios"
@@ -142,12 +140,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/tv_alergias"
-        android:textSize="20sp"
+        android:layout_marginTop="8dp"
+        android:text="MIS ALERGIAS"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tipoAlergia2" />
+        app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico" />
 
     <TextView
         android:id="@+id/textView4"
@@ -155,7 +153,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="@string/tv_direccion"
+        android:text="MI DIRECCION:"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -167,8 +165,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="OTRAS:"
-        android:textSize="16sp"
+        android:text="OTRAS ALERGIAS:"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tipoAlergia3" />
 
@@ -220,7 +218,7 @@
     <ImageView
         android:id="@+id/estrella5"
         android:layout_width="105dp"
-        android:layout_height="104dp"
+        android:layout_height="73dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -234,7 +232,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/tv_MUC_apellidoYnombre"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -246,7 +244,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="@string/tv_dni"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/estrella5"
@@ -255,9 +253,9 @@
     <TextView
         android:id="@+id/mod_c_direccion"
         android:layout_width="198dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:text="@string/tv_usuario"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/estrella5"
@@ -268,7 +266,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Contraseñas:"
+        android:text="CONTRASEÑAS"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -311,7 +309,19 @@
         android:layout_marginTop="8dp"
         android:onClick="ConsultaAlergias"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/r_cb_diabetico"
+        app:layout_constraintTop_toBottomOf="@+id/fc_tv_contiene"
         app:srcCompat="@drawable/baseline_question_mark_24" />
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="MIS AFECCIONES"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mod_c_direccion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
