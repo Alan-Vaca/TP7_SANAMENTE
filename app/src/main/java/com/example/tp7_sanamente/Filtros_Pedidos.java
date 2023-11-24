@@ -251,7 +251,6 @@ public class Filtros_Pedidos extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
             listadoPedidosObtenido = consultasPedidos.obtenerListadoPedidosFiltrado(listadoPedidos, fechaDesde, fechaHasta,
                     entregado, cancelado, pendiente, orden);
 
@@ -281,6 +280,7 @@ public class Filtros_Pedidos extends AppCompatActivity {
             } catch (Exception e) {
                 Log.d("Filtro.Pedido", e.toString());
             }
+
 
 
 

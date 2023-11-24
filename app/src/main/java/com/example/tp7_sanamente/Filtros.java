@@ -186,12 +186,13 @@ public class Filtros extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }else{
+                listaProductosObtenido = listaProductos;
             }
 
 
             listaProductosObtenido = consultaProductos.obtenerListadoProductosFiltrados(listaProductosObtenido,
                     filtroNombre, contiene, noContiene, ordenarPor);
-
 
 
 
