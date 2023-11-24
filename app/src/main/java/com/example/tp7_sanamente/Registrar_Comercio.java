@@ -123,9 +123,9 @@ public class Registrar_Comercio extends AppCompatActivity {
             isValid = false;
         }
        //  Se puede descomentar una vez se finalicen las pruebas de la app, para evitar retrasos
-        else if(comercio.getCuit() < 2050000000)
+        else if(comercio.getCuit() < 2147483647)
         {
-            mensajeValidacion.append("\nCUIT inválido");
+            mensajeValidacion.append("\nCUIT inválido, max numero: 2.147.483.647");
             isValid = false;
         }
 

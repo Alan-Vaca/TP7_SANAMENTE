@@ -425,8 +425,8 @@ public class consultasUsuario {
                         if(rs.getBoolean("ofertas"))
                         if(rs.getInt("ofertasNOT") > 0){
                             cadena += (
-                                 "OFERTAS:" + '\n' + "MIRA LAS OFERTAS HAY " + rs.getInt("ofertasNOT")
-                                    + '\n' +  "NUEVOS PRODUCTOS CALIFICADOS POR LOS USUARIOS." + '\n' + '\n');
+                                 "DESTACADOS:" + '\n' + "MIRÁ LOS PRODUCTOS DESTACADOS, EXISTE/N " + rs.getInt("ofertasNOT")
+                                    + '\n' +  "NUEVO/S PRODUCTOS CALIFICADOS POR LOS USUARIOS." + '\n' + '\n');
                         }
                     }
                     rs.close();

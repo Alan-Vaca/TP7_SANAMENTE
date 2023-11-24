@@ -102,7 +102,7 @@ public class MenuAdmin extends AppCompatActivity {
 
     public void ClienteMenuOfertas(View view) {
         LoguearseComoCliente();
-        Toast.makeText(MenuAdmin.this, "TUS OFERTAS:" + '\n' + "ITEM 1", Toast.LENGTH_LONG).show();
+        Toast.makeText(MenuAdmin.this, "TUS DESTACADOS:" + '\n' + "ITEM 1", Toast.LENGTH_LONG).show();
     }
 
     public void ComercioMenuGenerarReporte(View view) {
