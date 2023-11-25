@@ -134,49 +134,59 @@ public class consultasProductos {
 
         try {
             String query =
+                    "SELECT p.idProducto productoID, p.nombreProducto, p.ingredientes, p.precio, p.stock, p.estado, p.idComercio, p.fechaAlta AS fechaAltaProducto, " +
+                            "AVG(c.calificacion) AS puntaje " +
+                            "FROM productos p " +
+                            "LEFT JOIN productoXetiquetado pxe ON p.idProducto = pxe.idProducto " +
+                            "LEFT JOIN etiquetados e ON pxe.idEtiquetado = e.idEtiquetado " +
+                            "LEFT JOIN calificaciones c ON p.idProducto = c.idProducto ";
 
-                    "select p.idProducto productoID, nombreProducto, ingredientes, precio, stock, p.estado, p.idComercio, p.fechaAlta as fechaAltaProducto, " +
-                            "(select avg(calificacion) as puntaje from calificaciones where idProducto = p.idProducto) as puntaje "+
-                            "from productos p "+
-                            "left join productoXetiquetado pxe on p.idProducto=pxe.idProducto " +
-                            "left join etiquetados e on pxe.idEtiquetado = e.idEtiquetado ";
-
-
-            if(user.isCliente()){
-                //Si es para el cliente mostrara todos los productos con estado activo
-                query += "where p.estado = 1 and stock > 0";
-            }else {
-                //si es para el comerciante mostrara todos los productos que cargo sin importar el estado
-                query += "left join comercios c on c.idComercio = p.idComercio where c.idUsuario = " + user.getIdUsuario() ;
+            if (user.isCliente()) {
+                // Si es para el cliente, mostrará todos los productos con estado activo
+                query += "WHERE p.estado = 1 AND p.stock > 0 ";
+            } else {
+                // Si es para el comerciante, mostrará todos los productos que cargó sin importar el estado
+                query += "LEFT JOIN comercios c ON c.idComercio = p.idComercio WHERE c.idUsuario = ? ";
             }
 
-            query += " and (";
+            query += "GROUP BY p.idProducto, p.nombreProducto, p.ingredientes, p.precio, p.stock, p.estado, p.idComercio, p.fechaAlta ";
 
+            if (hipertenso || diabetico || celiaco) {
+                query += "HAVING ";
+                boolean flag = false;
 
-            boolean flag = false;
-            if (hipertenso) {
-                query += " e.idEtiquetado != 4 and e.idEtiquetado != 6 and e.idEtiquetado != 7 ";
-                flag = true;
+                if (hipertenso) {
+                    query += "COUNT(e.idEtiquetado = 4) = 0 AND COUNT(e.idEtiquetado = 6) = 0 AND COUNT(e.idEtiquetado = 7) = 0 ";
+                    flag = true;
+                }
+                if (diabetico) {
+                    if (flag) {
+                        query += "AND COUNT(e.idEtiquetado = 1) = 0 ";
+                    } else {
+                        flag = true;
+                        query += "COUNT(e.idEtiquetado = 4) = 0 AND COUNT(e.idEtiquetado = 6) = 0 AND COUNT(e.idEtiquetado = 7) = 0 AND COUNT(e.idEtiquetado = 1) = 0 ";
+                    }
+                }
+                if (celiaco) {
+                    if (flag) {
+                        query += "AND COUNT(e.idEtiquetado = 1) = 0 AND COUNT(e.idEtiquetado = 2) = 0 AND COUNT(e.idEtiquetado = 3) = 0 AND COUNT(e.idEtiquetado = 5) = 0 ";
+                    } else {
+                        query += "COUNT(e.idEtiquetado = 1) = 0 AND COUNT(e.idEtiquetado = 2) = 0 AND COUNT(e.idEtiquetado = 3) = 0 AND COUNT(e.idEtiquetado = 4) = 0 AND COUNT(e.idEtiquetado = 5) = 0 ";
+                    }
+                }
             }
-            if (diabetico) {
-                if (flag){ query += " and";} else{flag = true;}
-                query += " e.idEtiquetado != 4 and e.idEtiquetado != 6 and e.idEtiquetado != 7 and e.idEtiquetado != 1";
-            }
-            if (celiaco) {
-                if (flag){ query += " and";}
-                query += " e.idEtiquetado != 1 and e.idEtiquetado != 2 and e.idEtiquetado != 3 " +
-                        "and e.idEtiquetado != 4 and e.idEtiquetado != 5";
-            }
-
-            query += " or e.idEtiquetado is Null) group by p.nombreProducto";
-
-            Log.d("Filtro.Filtro", query);
 
             int i = 0;
             if (conn != null) {
                 try {
-                    Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
+                    PreparedStatement pstmt = conn.prepareStatement(query);
+
+                    if (!user.isCliente()) {
+                        pstmt.setInt(1, user.getIdUsuario());
+                    }
+
+                    ResultSet rs = pstmt.executeQuery();
+
                     while (rs.next()) {
                         i++;
                         Producto producto = new Producto();
@@ -189,22 +199,19 @@ public class consultasProductos {
                         producto.setIdComercio(rs.getInt("idComercio"));
                         producto.setPuntaje(rs.getFloat("puntaje"));
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-                        Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
-                        java.sql.Date fechaAlta = rs.getDate("fechaAltaProducto");
-
                         listadoProducto.add(producto);
-
                     }
-                    Log.d("Filtro.Filtro.cantidad'", String.valueOf(i));
+
                     rs.close();
-                    stmt.close();
+                    pstmt.close();
                     conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
+
+            Log.d("Filtro.Filtro.cantidad'", String.valueOf(i));
+
         } catch (Exception e) {
             Log.d("ERROR-DB", e.toString());
         }
