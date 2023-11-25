@@ -161,6 +161,24 @@ public class AgregarProducto extends AppCompatActivity {
         sw_hipertenso2.setChecked(aptoHipertenso);
         sw_celiaco2.setChecked(aptoCeliaco);
         sw_diabetico2.setChecked(aptoDiabetico);
+
+
+
+            String ingredientess = ingredientes.getText().toString();
+
+            // Lista de ingredientes no aptos para celíacos
+            String[] ingredientesNoAptos = {"Harina","Trigo", "Cebada", "Centeno", "Avena", "Malta", "Extracto de Malta", "Harina de espelta", "Triticale", "Seitan", "Bulgur", "Graham", "Kamut", "Couscous", "Farro", "Pan de pita", "Sémola", "Harina de matzá"};
+
+            // Verificar si los ingredientes contienen alguno de los ingredientes no aptos
+            if (ingredientess != null) {
+                for (String ingredienteNoApto : ingredientesNoAptos) {
+                    if (ingredientess.contains(ingredienteNoApto)) {
+                        sw_celiaco2.setChecked(false);
+                        break; // Si se encuentra un ingrediente no apto, salir del bucle
+                    }
+                }
+            }
+
     }
 
 
@@ -233,12 +251,29 @@ public class AgregarProducto extends AppCompatActivity {
         int stock = 0;
 
 
+
+
         // Validar que contenga al menos un ingrediente
         if (ingredientsTxt.isEmpty()) {
             isValid = false;
             Toast toast = Toast.makeText(AgregarProducto.this, "Por favor, ingrese al menos un ingrediente.", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP, 0, 200); // Establecer la posición del Toast
             toast.show(); // Mostrar el Toast
+        }else {
+            String ingredientess = ingredientes.toString();
+
+            // Lista de ingredientes no aptos para celíacos
+            String[] ingredientesNoAptos = {"Harina","Trigo", "Cebada", "Centeno", "Avena", "Malta", "Extracto de Malta", "Harina de espelta", "Triticale", "Seitan", "Bulgur", "Graham", "Kamut", "Couscous", "Farro", "Pan de pita", "Sémola", "Harina de matzá"};
+
+            // Verificar si los ingredientes contienen alguno de los ingredientes no aptos
+            if (ingredientess != null) {
+                for (String ingredienteNoApto : ingredientesNoAptos) {
+                    if (ingredientess.contains(ingredienteNoApto)) {
+                        sw_celiaco2.setChecked(false);
+                        break; // Si se encuentra un ingrediente no apto, salir del bucle
+                    }
+                }
+            }
         }
 
         // Validar que el precio sea mayor a cero

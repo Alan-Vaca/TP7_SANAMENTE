@@ -149,6 +149,28 @@ public class consultasProductos {
                 query += "LEFT JOIN comercios c ON c.idComercio = p.idComercio WHERE c.idUsuario = ? ";
             }
 
+            if(celiaco){
+                query += "AND p.ingredientes NOT LIKE '%Trigo%' " +
+                        "AND (p.ingredientes NOT LIKE '%Gluten%' or p.ingredientes LIKE '%Sin Gluten%')" +
+                        "AND p.ingredientes NOT LIKE '%Cebada%' " +
+                        "AND p.ingredientes NOT LIKE '%Centeno%' " +
+                        "AND p.ingredientes NOT LIKE '%Avena%' " +
+                        "AND p.ingredientes NOT LIKE '%Malta%' " +
+                        "AND p.ingredientes NOT LIKE '%Extracto de Malta%' " +
+                        "AND p.ingredientes NOT LIKE '%Harina de espelta%' " +
+                        "AND p.ingredientes NOT LIKE '%Triticale%' " +
+                        "AND p.ingredientes NOT LIKE '%Seitan%' " +
+                        "AND p.ingredientes NOT LIKE '%Bulgur%' " +
+                        "AND p.ingredientes NOT LIKE '%Graham%' " +
+                        "AND p.ingredientes NOT LIKE '%Kamut%' " +
+                        "AND p.ingredientes NOT LIKE '%Couscous%' " +
+                        "AND p.ingredientes NOT LIKE '%Farro%' " +
+                        "AND p.ingredientes NOT LIKE '%Pan de pita%' " +
+                        "AND p.ingredientes NOT LIKE '%Sémola%' " +
+                        "AND p.ingredientes NOT LIKE '%Harina%' " +
+                        "AND p.ingredientes NOT LIKE '%Harina de matzá%' ";
+            }
+
             query += "GROUP BY p.idProducto, p.nombreProducto, p.ingredientes, p.precio, p.stock, p.estado, p.idComercio, p.fechaAlta ";
 
             if (hipertenso || diabetico || celiaco) {

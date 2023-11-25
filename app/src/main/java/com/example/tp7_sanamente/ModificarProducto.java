@@ -253,11 +253,25 @@ public class ModificarProducto extends AppCompatActivity {
 
             sw_hipertenso.setChecked(aptoHipertenso);
 
-                if(productoSeleccionado != null){
-                    if(productoSeleccionado.getIngredientes().contains("harina")){
-                        aptoCeliaco = false;
+
+
+
+            if (productoSeleccionado != null) {
+                String ingredientes = productoSeleccionado.getIngredientes();
+
+                // Lista de ingredientes no aptos para celíacos
+                String[] ingredientesNoAptos = {"Harina","Trigo", "Cebada", "Centeno", "Avena", "Malta", "Extracto de Malta", "Harina de espelta", "Triticale", "Seitan", "Bulgur", "Graham", "Kamut", "Couscous", "Farro", "Pan de pita", "Sémola", "Harina de matzá"};
+
+                // Verificar si los ingredientes contienen alguno de los ingredientes no aptos
+                if (ingredientes != null) {
+                    for (String ingredienteNoApto : ingredientesNoAptos) {
+                        if (ingredientes.contains(ingredienteNoApto)) {
+                            aptoCeliaco = false;
+                            break; // Si se encuentra un ingrediente no apto, salir del bucle
+                        }
                     }
                 }
+            }
 
             sw_celiaco.setChecked(aptoCeliaco);
             sw_diabetico.setChecked(aptoDiabetico);
@@ -734,12 +748,29 @@ public class ModificarProducto extends AppCompatActivity {
         }
 
 
+        /*
         if(!restriccion.getAlergico().trim().isEmpty())
             if(producto.getIngredientes().toUpperCase().trim().contains(restriccion.getAlergico().trim().toUpperCase())){
 
                 msjAdvertencias += '\n' + " POR SU SEGURIDAD RECOMENDAMOS NO COMPRAR ESTE PRODUCTO YA QUE ES ALERGICO. (" + restriccion.getAlergico().trim().toUpperCase() + ")" + '\n';
             }
 
+*/
+
+        if (restriccion.isCeliaco()) {
+            String[] ingredientesNoAptos = {"Harina","Trigo", "Cebada", "Centeno", "Avena", "Malta", "Extracto de Malta", "Harina de espelta", "Triticale", "Seitan", "Bulgur", "Graham", "Kamut", "Couscous", "Farro", "Pan de pita", "Sémola", "Harina de matzá"};
+
+            String ingredientesProducto = producto.getIngredientes().toUpperCase();
+
+            for (String ingredienteNoApto : ingredientesNoAptos) {
+                if (ingredientesProducto.contains(ingredienteNoApto.toUpperCase())) {
+                    alergico = true;
+                    // Puedes agregar un mensaje de advertencia si lo necesitas
+                    msjAdvertencias += '\n' + "POR SU SEGURIDAD, RECOMENDAMOS NO COMPRAR ESTE PRODUCTO, YA QUE CONTIENE UN INGREDIENTE NO APTO PARA CELIACOS" + '\n';
+                    break;  // Si encuentras un ingrediente no apto, puedes salir del bucle
+                }
+            }
+        }
 
         if (NoAptoDiabetico || NoAptoCeliaco || NoAptoHipertenso || alergico) {
             msjAdvertencias = "ADVERTENCIA" + '\n' + '\n' + msjAdvertencias + '\n';
